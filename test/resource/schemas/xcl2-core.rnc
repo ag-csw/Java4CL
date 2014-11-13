@@ -1,0 +1,152 @@
+default namespace = "http://purl.org/xcl/2.0/"
+
+## Common Logic Syntax XCL2 (Draft)
+start |= clDocument
+#start |= clText
+#start |= clStatement
+#start |= clSentence
+clDocument = element Document { Document.type}
+Document.type = clCommon, clText* 
+
+## Texts
+clText |= Construct
+#clText |= Restrict
+#clText |= Import
+
+## -Text Constructions
+Construct = element Construct { Construct.type }
+Construct.type = clCommon, (clText | clStatement | clSentence)*
+
+## -Domain Restrictions
+#Restrict = element Restrict { Restrict.type }
+#Restrict.type = clCommon, clTerm, clText?
+
+## -Imports
+#Import = element Import { Import.type }
+#Import.type = clCommon, Name
+
+## Statements
+clStatement |= Out
+#clStatement |= In
+#clStatement |= Titling
+#clStatement |= Schema
+
+## -Discourse Statements
+Out = element Out { Discourse.type }
+#In = element In { Discourse.type }
+Discourse.type = clCommon, clTerm+
+
+## -Text Titlings
+#Titling = element Titling { Titling.type }
+#Titling.type = clCommon, Name, clText
+
+## Schemas
+#Schema = element Schema { Schema.type }
+#Schema.type = clCommon, Marker+, (Schema | clSentence) 
+
+## Sentences
+clSentence |= Atom
+clSentence |= Equal
+#clSentence |= And
+clSentence |= Or
+clSentence |= Not
+#clSentence |= Implies
+#clSentence |= Equivalent
+#clSentence |= Forall
+clSentence |= Exists
+
+## -Atomic Formulas
+Atom = element Atom { Atom.type }
+Atom.type = clCommon, clTerm, clTermSequence
+
+## -Equals
+Equal = element Equal { Equal.type }
+Equal.type = clCommon, clTerm, clTerm
+
+## -Connectives
+#And = element And { AndOr.type }
+Or = element Or { AndOr.type }
+AndOr.type = clCommon, clSentence*
+Not = element Not { Not.type }
+Not.type = clCommon, clSentence
+#Implies = element Implies { Implies.type }
+#Implies.type = clCommon, clSentence, clSentence
+#Equivalent = element Equivalent { Equivalent.type }
+#Equivalent.type = clCommon, clSentence, clSentence
+
+## -Quantifications
+#Forall = element Forall { Quantifier.type }
+Exists = element Exists { Quantifier.type }
+Quantifier.type = clCommon, Name+, clSentence
+
+## Term Sequences
+clTermSequence &= clTerm*
+#clTermSequence &= Marker*
+
+## Terms
+#clTerm |= Apply
+clTerm |= Name
+
+## -Functional Terms
+#Apply = element Apply { Apply.type }
+#Apply.type = clCommon, clTerm, clTermSequence
+
+## -Names
+Name = element Name { Name.type }
+Name.type |= clCommon, cri.attrib
+#Name.type |= clCommon, symbol
+Name.type |= key.attrib?, (text & anyElement*)
+#symbol = element symbol { symbol.type }
+#symbol.type = text & anyElement*
+
+## Constrained Names in Quantifiers
+#Quantifier.type |= clCommon, Name-constrained+, clSentence
+#Name-constrained = element Name { Name-constrained.type }
+#Name-constrained.type |= clCommon, type*, cri.attrib
+#Name-constrained.type |= clCommon, type*, symbol
+#Name-constrained.type |= key.attrib?, (text & anyElement*)
+#type = element type { type.type }
+#type.type = Name
+
+## Data
+#clTerm |= Data
+#Data = element Data { Data.type }
+#Data.type |= clCommon, symbol-data
+#Data.type |= key.attrib?, datatype.attrib?, (text & anyElement*)
+#symbol-data = element symbol { symbol-data.type }
+#symbol-data.type = datatype.attrib?, (text & anyElement*)
+#datatype.attrib = attribute datatype { curieOrAbsIRI.datatype }
+
+## Sequence Markers
+#Marker = element Marker { Marker.type }
+#Marker.type |=  clCommon, symbol
+#Marker.type |=  key.attrib?, (text & anyElement*)
+
+## The clCommon pattern: Prefixes, Comments, Keys
+clCommon &= key.attrib?
+#clCommon &= Prefix*
+#clCommon &= Comment?
+#clCommon &= base.attrib?
+#Prefix = element Prefix { Prefix.type }
+#Prefix.type = pre.attrib, iri.attrib
+#pre.attrib = attribute pre { pre.datatype }
+#pre.datatype = xsd:NCName?
+#Comment =
+#  element Comment {
+#    attribute * { text }*,
+#    (text & anyElement*)
+#  }
+iri.attrib = attribute iri { absIRI.datatype }
+#key.attrib = attribute key { curieOrAbsIRI.datatype }
+key.attrib |= empty
+cri.attrib = attribute cri { curieOrAbsIRI.datatype }
+#curieOrAbsIRI.datatype |= curie.datatype
+curieOrAbsIRI.datatype |= absIRI.datatype
+#curie.datatype = xsd:string { minLength = "1" pattern = "(([\i-[:]][\c-[:]]*)?:)?.*" }
+absIRI.datatype = xsd:anyURI { pattern = "[\i-[:]][\c-[:]]*:.*" }
+#base.attrib = attribute xml:base {xsd:anyURI}
+anyElement =
+  element * {
+    attribute * { text }*,
+    (text & anyElement*)
+  }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Import xmlns="http://purl.org/xcl/2.0/" key=":imp" xml:base="http://example.org/import.xcl#"><Prefix pre="" iri="http://example.org/import.xcl#"/><Prefix pre="ex" iri="http://example.org/"/><Comment key="comment1">
+    This is a CL2 text consisting of a single importation,
+    using all forms of IRI abbreviation.
+  </Comment><Name cri="ex:text.xcl"/></Import>
