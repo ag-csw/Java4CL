@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="../schemas/xcl2.rnc" type="application/relax-ng-compact-syntax"?>
-<Import xmlns="http://purl.org/xcl/2.0/" key=":imp" xml:base="http://example.org/import.xcl#">
-  <Comment key="comment1">
+<xcl:Import xmlns:xcl="http://purl.org/xcl/2.0/" key=":imp" xml:base="http://example.org/import.xcl#">
+  <xcl:Comment key="comment1">
     This is a CL2 text consisting of a single importation,
     using all forms of IRI abbreviation.
-  </Comment>
+  </xcl:Comment>
   <!-- XML comments should not be parsed. -->
-  <Prefix pre="" iri="http://example.org/import.xcl#"/>
-  <Prefix pre="ex" iri="http://example.org/"/>
-  <Name cri="ex:text.xcl"/>
-</Import>
+  <xcl:Prefix pre="" iri="http://example.org/import.xcl#"/>
+  <xcl:Prefix pre="ex" iri="http://example.org/"/>
+  <xcl:Name cri="ex:text.xcl"/>
+</xcl:Import>
