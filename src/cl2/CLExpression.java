@@ -1,7 +1,7 @@
 package cl2;
 
-import api4kb.Expression;
+import api4kb.KnowledgeExpression;
 
-public interface CLExpression extends CLKnowledgeResource, Expression {
+public interface CLExpression extends CLKnowledgeResource, KnowledgeExpression {
 
 }

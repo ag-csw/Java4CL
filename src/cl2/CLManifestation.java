@@ -1,8 +1,8 @@
 package cl2;
 
-import api4kb.Manifestation;
+import api4kb.KnowledgeManifestation;
 
 public interface CLManifestation<T> extends CLKnowledgeResource,
-		Manifestation<T> {
+		KnowledgeManifestation<T> {
 
 }

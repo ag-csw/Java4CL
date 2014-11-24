@@ -22,9 +22,9 @@ The output result should be obtainable as follows:
 // Concatenate the xml header with this string 
 // Write the string to a file.
 
-2. Using ImportationManifestation.parse.toXCL.
+2. Using ImportationManifestation.parse.manifest(XCL2).
 // Call the parse method of the ImportationManifestation 
-// Call the toXCL method of the resultin ImportationExpression to obtain an XML element
+// Call the manifest(XCL2) method of the resulting ImportationExpression to obtain an XML element
 // Call the toString (or equivalent) method on this XML element
 // Concatenate the xml header with this string 
 // Write the string to a file.
