@@ -13,32 +13,54 @@ import api4kb.Option;
 import api4kb.None;
 
 public class CLCommentExpression implements CLComment, CLExpression {
-	public CLCommentExpression() {
-		this("");
-	}
-
-	public CLCommentExpression(String symbol) {
-		this(symbol, new None<CLCommentExpression>());
-	}
-
-    public CLCommentExpression(String symbol, Option<CLCommentExpression> comment) {
+	
+	// Package-Private Constructors
+	 // Component-bawed constructor
+    CLCommentExpression(String symbol, Option<CLCommentExpression> comment) {
 		this.symbol = symbol;
 		this.comment = comment;
+        mapManifest = new HashMap< CLDialect<?>, CLCommentManifestation<?>>();
 	}
     
-    public <T> CLCommentExpression(
+	// Lazy lifting constructor - argument is an Encoding
+    <T> CLCommentExpression(
     		CLCommentManifestation<T> manifestation) {
         mapManifest = new HashMap< CLDialect<?>, CLCommentManifestation<?>>();
         mapManifest.put(manifestation.getDialect(), manifestation);
     }
 
+	// private fields
 	private String symbol;
     private Option<CLCommentExpression> comment;
 	private final KRRLanguage lang = CL.lang;	
-	private HashMap< CLDialect<?>, CLCommentManifestation<?>> mapManifest;
+	private final HashMap< CLDialect<?>, CLCommentManifestation<?>> mapManifest;
 	// TODO implement cache for conceptualize method
-	//private HashMap< ImmutableEnvironment, CLCommentAsset> mapAsset;
+	//private final HashMap< ImmutableEnvironment, CLCommentAsset> mapAsset;
 
+	// Static Factory Methods
+	public static CLCommentExpression eagerNewInstance(
+			String symbol, 
+			Option<CLCommentExpression> comment){
+		return new CLCommentExpression(symbol, comment);
+	}
+
+	public static CLCommentExpression  eagerNewInstance(
+			String symbol) {
+		return eagerNewInstance(symbol, new None<CLCommentExpression>());
+	}
+
+	
+	public static CLCommentExpression  eagerNewInstance() {
+		return eagerNewInstance("");
+	}
+
+	public static <T> CLCommentExpression  lazyNewInstance(
+    		CLCommentManifestation<T> manifestation) {
+		return new CLCommentExpression(manifestation);
+	}
+
+	
+	
 	public String getSymbol() {
 		if (symbol == null) {
 			Entry<CLDialect<?>, CLCommentManifestation<?>> entry = mapManifest.entrySet().iterator().next();
@@ -82,19 +104,21 @@ public class CLCommentExpression implements CLComment, CLExpression {
 		return this.toString().hashCode();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> CLCommentManifestation<?> manifest(KRRDialect<T> dialect)
+	public <T> CLCommentManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		if ( dialect.lang.equals(this.lang) ) {
 			// check the cache
+			CLDialect<T> cldialect = (CLDialect<T>) dialect ;
 			if ( !mapManifest.containsKey(dialect) ) {
 				//  TODO if not in the cache then 
 				// create and cache				
-				// Testing the construct while ignoring the comment
-				CLCommentManifestation<T> manifestation = new CLCommentManifestation<T>(symbol, 
-						((CLDialect<T>) dialect));
+				CLCommentManifestation<T> manifestation = CLCommentManifestation.eagerNewInstance(symbol, 
+						cldialect);
+				mapManifest.put(cldialect, manifestation);
 			}
-			return mapManifest.get(dialect);
+			return (CLCommentManifestation<T>) mapManifest.get(cldialect);
 		}
 		else {
 			throw new DialectIncompatibleException();

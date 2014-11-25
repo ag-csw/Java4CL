@@ -7,17 +7,19 @@ import api4kb.KRRLanguage;
 
 public final class CL {
 
-	private CL() {
-		// TODO Auto-generated constructor stub
-	}
+	// private constructor to enforce non-instantiability
+	private CL() {}
 	
-	public static KRRLanguage lang = new KRRLanguage("Common Logic");
-	
+	// public fields
+	//TODO use static factory methods on KRRLanguage and CLDialect
+	//     to reuse a single instance
+	public static KRRLanguage lang = new KRRLanguage("Common Logic");	 
 	public static KRRDialect<Element> xcl2dom = new CLDialect<Element>("XCL2");
 	public static KRRDialect<String> clif = new CLDialect<String>("CLIF");
 	
+	// tests for syntactic categories
 	public static Boolean isComment(Object x, KRRDialect<?> dialect){
-		// TODO implement test for particular dialects
+		// TODO implement case tests for particular dialects
 		return false;
 	}
 
