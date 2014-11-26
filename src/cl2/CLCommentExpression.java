@@ -15,7 +15,7 @@ import api4kb.None;
 public class CLCommentExpression implements CLComment, CLExpression {
 	
 	// Package-Private Constructors
-	 // Component-bawed constructor
+	 // Component-based constructor
     CLCommentExpression(String symbol, Option<CLCommentExpression> comment) {
 		this.symbol = symbol;
 		this.comment = comment;
@@ -104,21 +104,28 @@ public class CLCommentExpression implements CLComment, CLExpression {
 		return this.toString().hashCode();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> CLCommentManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
+		CLCommentManifestation<T> manifestation;
 		if ( dialect.lang.equals(this.lang) ) {
 			// check the cache
 			CLDialect<T> cldialect = (CLDialect<T>) dialect ;
 			if ( !mapManifest.containsKey(dialect) ) {
 				//  TODO if not in the cache then 
 				// create and cache				
-				CLCommentManifestation<T> manifestation = CLCommentManifestation.eagerNewInstance(symbol, 
+				manifestation = CLCommentManifestation.eagerNewInstance(symbol, 
 						cldialect);
 				mapManifest.put(cldialect, manifestation);
 			}
-			return (CLCommentManifestation<T>) mapManifest.get(cldialect);
+			else {
+				// This cast is safe because the cache is created with key-value pairs
+				// that have matching generic parameters.
+				@SuppressWarnings("unchecked")
+				CLCommentManifestation<T> cachedManifestation = (CLCommentManifestation<T>) mapManifest.get(cldialect);
+				manifestation = cachedManifestation;
+			}
+			return manifestation; 
 		}
 		else {
 			throw new DialectIncompatibleException();
