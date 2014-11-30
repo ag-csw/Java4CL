@@ -2,6 +2,7 @@ package cl2;
 
 import java.util.HashMap;
 
+import api4kb.AbstractKnowledgeManifestation;
 import api4kb.Configuration;
 import api4kb.EncodingSystem;
 import api4kb.EncodingSystemIncompatible;
@@ -10,10 +11,11 @@ import api4kb.None;
 import api4kb.Option;
 import api4kb.Some;
 
-public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> {
+public class CLCommentManifestation<T> extends AbstractKnowledgeManifestation<T> implements CLComment, CLManifestation<T> {
 
 	// Package-Private Constructors
 	// Wrapper-based constructor
+	// TODO elevate this constructor to AbstractKnowledgeManifestation
 	 CLCommentManifestation(T value, CLDialect<T> dialect) {
 		this.value = value;
 		this.dialect = dialect;
@@ -21,6 +23,7 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 	}
 	
 	 // Component-based constructor
+	// TODO elevate this constructor to AbstractCLComment
 	CLCommentManifestation(String symbol, Option<CLCommentManifestation<T>> comment, CLDialect<T> dialect) {
 		this.symbol = symbol;
 		this.comment = comment;
@@ -34,6 +37,7 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 	}
 	
 	// Lazy lowering constructor - argument is expression and dialect
+	// TODO elevate this method implementation to AbstractKnowledgeManifestation
 	 CLCommentManifestation(CLCommentExpression expression, CLDialect<T> dialect) {
 		this.expression = expression;
 		this.dialect = dialect;
@@ -41,7 +45,8 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 	}
 
 	// TODO Lazy lifting constructor - argument is an Encoding
-
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
+	
 	// private fields
 	private T value;
 	private String symbol;
@@ -52,6 +57,7 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 	private CLCommentExpression expression;
 
 	// TODO Static Factory Methods
+	// TODO elevate this constructor to AbstractCLComment
 	public static <T> CLCommentManifestation<?> eagerNewInstance(
 			String symbol, 
 			Option<CLCommentManifestation<T>> comment,
@@ -60,6 +66,7 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 		return new CLCommentManifestation<T>(symbol, comment, dialect);
 	}
 	
+	// TODO elevate this constructor to AbstractCLComment
 	public static <T> CLCommentManifestation<T> eagerNewInstance(
 			String symbol, 
 			CLDialect<T> dialect
@@ -67,12 +74,14 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 		return new CLCommentManifestation<T>(symbol, new None<CLCommentManifestation<T>>(), dialect);
 	}
 	
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public T getValue() {
 		return value;
 	}
 
 
+	// TODO elevate this constructor to AbstractCLComment
 	@Override
 	public String getSymbol() {
 		// check the cache
@@ -83,6 +92,7 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 		return symbol;
 	}
 
+	// TODO elevate this constructor to AbstractCLKnowledgeResource
 	@Override
 	public Option<CLCommentManifestation<T>> getComment() {
 		// check the cache
@@ -94,11 +104,13 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 	}
 
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public CLDialect<T> getDialect() {
 		return dialect;
 	}
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public Configuration<?> getConfiguration() {
 		// check the cache
@@ -108,11 +120,13 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 		return configuration;
 	}
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public String toString() {
   	  return this.getValue().toString();
 	}
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public <S> KnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
 			throws EncodingSystemIncompatible {
@@ -121,25 +135,31 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 		return encoding;
 	}
 	
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public void clearEncode(EncodingSystem<T, ?> system) {
 		mapEncoding.remove(system);		
 	}
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public CLCommentExpression parse() {
 		if (expression == null) {
 			if (symbol == null) {
 				// lazy parse
-				this.expression = new CLCommentExpression(this);
+				this.expression = CLCommentExpression.lazyNewInstance(this);
 			}
 			else {
 				if (comment.isEmpty()) {
-				  this.expression = CLKnowledgeResources.eagerCLCommentExpression(symbol);
+				  this.expression = 
+						  CLCommentExpression.eagerNewInstance(symbol);
 				}
 				else {
 				  this.expression = 
-						  CLKnowledgeResources.eagerCLCommentExpression(symbol, new Some<CLCommentExpression>( ((Some<CLCommentManifestation<T>>) comment).getValue().parse()) );
+						  CLCommentExpression.eagerNewInstance(
+								  symbol, 
+								  new Some<CLCommentExpression>( ((Some<CLCommentManifestation<T>>) 
+										  comment).getValue().parse()) );
 				}
 			}
 		}
@@ -147,11 +167,13 @@ public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> 
 	}
 
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public void clearParse() {
        expression = null;				
 	}
 
+    // TODO elevate this method implementation to AbstractKnowledgeManifestation
 	@Override
 	public void clear() {
 		clearParse();

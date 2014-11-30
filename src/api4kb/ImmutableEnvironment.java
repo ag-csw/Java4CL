@@ -1,23 +1,14 @@
 package api4kb;
 
-public class ImmutableEnvironment implements Immutable {
+public interface ImmutableEnvironment extends Immutable {
+	
+	// TODO change return type to Immutable Collection from FJ
+	public KRRLanguage[] getLanguages();
+	//
+    public Boolean containsLanguage(KRRLanguage lang);
+    //
+    public Boolean isFocused();
+    //
+    public KnowledgeExpression translate( KnowledgeExpression expression, KRRLanguage language)  throws UnsupportedTranslationException;
 
-    public ImmutableEnvironment(KRRLanguage[] languages,
-			LanguageMapping[] translations) {
-		Languages = languages;
-		Translations = translations;
-	}
-	private final KRRLanguage[] Languages;
-    private final LanguageMapping[] Translations;
-	public KRRLanguage[] getLanguages() {
-		return Languages;
-	}
-	public LanguageMapping[] getTranslations() {
-		return Translations;
-	}
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
 }

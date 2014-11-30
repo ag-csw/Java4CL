@@ -14,16 +14,16 @@ import api4kb.None;
 
 public class CLCommentExpression implements CLComment, CLExpression {
 	
-	// Package-Private Constructors
+	// Private Constructors
 	 // Component-based constructor
-    CLCommentExpression(String symbol, Option<CLCommentExpression> comment) {
+    private CLCommentExpression(String symbol, Option<CLCommentExpression> comment) {
 		this.symbol = symbol;
 		this.comment = comment;
         mapManifest = new HashMap< CLDialect<?>, CLCommentManifestation<?>>();
 	}
     
-	// Lazy lifting constructor - argument is an Encoding
-    <T> CLCommentExpression(
+	// Lazy lifting constructor - argument is a Manifestation
+    private <T> CLCommentExpression(
     		CLCommentManifestation<T> manifestation) {
         mapManifest = new HashMap< CLDialect<?>, CLCommentManifestation<?>>();
         mapManifest.put(manifestation.getDialect(), manifestation);
@@ -108,7 +108,7 @@ public class CLCommentExpression implements CLComment, CLExpression {
 	public <T> CLCommentManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		CLCommentManifestation<T> manifestation;
-		if ( dialect.lang.equals(this.lang) ) {
+		if ( dialect.getLanguage().equals(lang) ) {
 			// check the cache
 			CLDialect<T> cldialect = (CLDialect<T>) dialect ;
 			if ( !mapManifest.containsKey(dialect) ) {

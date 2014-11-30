@@ -1,12 +1,9 @@
 package api4kb;
 
-public class KRRLanguage {
+public interface KRRLanguage {
 
-	public KRRLanguage(String name) {
-		super();
-		Name = name;
-	}
+	public String getName();
+	// TODO
+	//public KRRLogic getLogic();
 
-	public final String Name;
-		
 }
