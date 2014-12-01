@@ -25,9 +25,12 @@ public interface KnowledgeExpression extends KnowledgeResource {
 	// with generic T for the format (e.g. String, XML Element)
 	<T> KnowledgeManifestation<?> manifest( KRRDialect<T> dialect) 
 			throws DialectIncompatibleException;
-	
-	
+			
 	// lifting method
-	KnowledgeAsset conceptualize( ImmutableEnvironment e);
+	KnowledgeAsset conceptualize( ImmutableEnvironment e) throws IncompatibleEnvironmentException;
+
+	void clearManifest();
+
+	void clearAsset();
 
 }

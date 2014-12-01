@@ -7,7 +7,7 @@ public interface KnowledgeAsset extends KnowledgeResource {
 	void clearExpress(KRRLanguage lang);
 
 	//getter for environment
-	ImmutableEnvironment getEnvironement();
+	ImmutableEnvironment getEnvironment();
 
 	@Override
 	String toString();

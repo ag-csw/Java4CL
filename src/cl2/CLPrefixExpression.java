@@ -62,4 +62,16 @@ public class CLPrefixExpression implements CLPrefix, CLExpression {
 		return null;
 	}
 
+	@Override
+	public void clearManifest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearAsset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
