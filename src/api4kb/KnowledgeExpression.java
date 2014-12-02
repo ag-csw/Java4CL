@@ -27,7 +27,7 @@ public interface KnowledgeExpression extends KnowledgeResource {
 			throws DialectIncompatibleException;
 			
 	// lifting method
-	KnowledgeAsset conceptualize( ImmutableEnvironment e) throws IncompatibleEnvironmentException;
+	KnowledgeAsset conceptualize( ImmutableEnvironment e) throws EnvironmentIncompatibleException;
 
 	void clearManifest();
 

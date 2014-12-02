@@ -3,7 +3,7 @@ package cl2;
 import api4kb.AbstractKnowledgeManifestation;
 import api4kb.DialectIncompatibleException;
 import api4kb.EncodingSystem;
-import api4kb.EncodingSystemIncompatible;
+import api4kb.EncodingSystemIncompatibleException;
 import api4kb.KnowledgeEncoding;
 import api4kb.KnowledgeExpression;
 import api4kb.KnowledgeResource;
@@ -74,6 +74,7 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 		return new CLCommentManifestation<T>(encoding);
 	}
 
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	@Override
 	public String getSymbol() {
 		// check the cache and evaluate if necessary
@@ -88,6 +89,7 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 		return null;
 	}
 
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	@Override
 	public Option<CLCommentManifestation<T>> getComment() {
 		// check the cache and evaluate if necessary
@@ -113,11 +115,13 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 		return getValue().toString();
 	}
 
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	// determines if a KnowledgeResource is equal to this one
 	public Boolean equals(KnowledgeResource that) {
 		return this.toString().equals(that);
 	}
 
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	// overriding hashCode to agree with equal
 	@Override
 	public int hashCode() {
@@ -127,14 +131,14 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 	
 	@Override
 	protected <S> KnowledgeEncoding<T, S> evalEncoding(
-			EncodingSystem<T, S> system) throws EncodingSystemIncompatible {
-		// TODO Auto-generated method stub
+			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException {
+		// TODO implement eager lowering to encoding
 		return null;
 	}
 
 	@Override
 	protected KnowledgeExpression evalExpression() {
-		// TODO Auto-generated method stub
+		// TODO implement eager lifting to expression
 		return null;
 	}
 

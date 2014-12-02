@@ -1,58 +1,33 @@
 package cl2;
 
+import api4kb.AbstractKnowledgeEncoding;
 import api4kb.EncodingSystem;
-import api4kb.KRRDialect;
-import api4kb.KnowledgeEncoding;
+import api4kb.KnowledgeItem;
 import api4kb.KnowledgeManifestation;
 
-public class CLEncoding<T, S> implements KnowledgeEncoding<T, S>,
-CLKnowledgeResource {
+public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> {
 
-   public CLEncoding(S value, EncodingSystem<T, S> system, CLDialect<T> dialect) {
-		this.value = value;
-		this.system = system;
-		this.dialect = dialect;
+   public CLEncoding(S stream, CLDialect<T> dialect, EncodingSystem<T, S> system) {
+	   super(stream, dialect, system);
 	}
 
-private S value;
-   private KnowledgeManifestation<T> manifestation;
-   private EncodingSystem<T, S> system;
-   private CLDialect<T> dialect;
-   
+  
 	@Override
-	public void clear() {
-		manifestation = null;		
+	protected KnowledgeManifestation<T> evalManifestation() {
+		//TODO implement eager lifting to manifestation manifestation
+		// Case 1. from encoding
+		// Case 2. from item
+		return null;
 	}
 
 	@Override
-	public S getValue() {
-		return value;
+	public <R> KnowledgeItem<T, S, R> reproduce(R destination) {
+		// TODO implement eager lowering to item
+		// Case 1. from encoding
+		// Case 2. from manifestation
+		// Case 3. from expression
+		return null;
 	}
 
-	@Override
-	public void clearDecode() {
-		manifestation = null;		
-	}
-
-	@Override
-	public EncodingSystem<T, S> getEncodingSystem() {
-		return system;
-	}
-
-	@Override
-	public KRRDialect<T> getDialect() {
-		return dialect;
-	}
-
-	@Override
-	public KnowledgeManifestation<T> decode() {
-		if (manifestation == null) {
-			T x = system.decode(value);
-			if (CL.isComment(x, dialect)) {
-			  manifestation = new CLCommentManifestation<T>(x, dialect);
-			}  
-		}
-		return manifestation;
-	} 
 
 }

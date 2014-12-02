@@ -94,7 +94,7 @@ public abstract class AbstractKnowledgeExpression implements
 
 	@Override
 	public KnowledgeAsset conceptualize(ImmutableEnvironment e)
-			throws IncompatibleEnvironmentException {
+			throws EnvironmentIncompatibleException {
 		if (!mapAsset.containsKey(e)) {
 			KnowledgeAsset asset = evalAsset(e);
 			return asset;
@@ -107,7 +107,7 @@ public abstract class AbstractKnowledgeExpression implements
 
 	// nonpublic helper method
 	protected abstract KnowledgeAsset evalAsset(ImmutableEnvironment e)
-			throws IncompatibleEnvironmentException;
+			throws EnvironmentIncompatibleException;
 	
 	<T> void manifestSafePut(KRRDialect<T> dialect, KnowledgeManifestation<T> manifest) {
 		mapManifest.put(dialect, manifest);

@@ -3,7 +3,7 @@ package cl2;
 import api4kb.AbstractKnowledgeExpression;
 import api4kb.ImmutableEnvironment;
 import api4kb.DialectIncompatibleException;
-import api4kb.IncompatibleEnvironmentException;
+import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialect;
 import api4kb.KRRLanguage;
 import api4kb.KnowledgeAsset;
@@ -176,7 +176,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 
 	@Override
 	protected KnowledgeAsset evalAsset(ImmutableEnvironment e)
-			throws IncompatibleEnvironmentException {
+			throws EnvironmentIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -63,7 +63,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 					synchronized (mapEncoding) {
 						EncodingSystem<T, ?> system = mapEncoding.keySet()
 								.iterator().next();
-						value = mapEncoding.get(system).decode().getValue();
+						value = (T) mapEncoding.get(system).decode().getValue();
 					}
 				}
 
@@ -94,7 +94,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	// public encode implemented
 	@Override
 	public <S> KnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
-			throws EncodingSystemIncompatible {
+			throws EncodingSystemIncompatibleException {
 		if (!mapEncoding.containsKey(system)) {
 			KnowledgeEncoding<T, S> encoding = evalEncoding(system);
 			encodingSafePut(system, encoding);
@@ -110,7 +110,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// non-public lowering evaluation method
 	protected abstract <S> KnowledgeEncoding<T, S> evalEncoding(
-			EncodingSystem<T, S> system) throws EncodingSystemIncompatible;
+			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException;
 
 	// public parse implemented
 	@Override
