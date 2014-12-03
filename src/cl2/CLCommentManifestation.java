@@ -1,128 +1,145 @@
 package cl2;
 
-import java.util.HashMap;
-
-import api4kb.Configuration;
+import api4kb.AbstractKnowledgeManifestation;
 import api4kb.DialectIncompatibleException;
 import api4kb.EncodingSystem;
-import api4kb.EncodingSystemIncompatible;
+import api4kb.EncodingSystemIncompatibleException;
 import api4kb.KnowledgeEncoding;
+import api4kb.KnowledgeExpression;
+import api4kb.KnowledgeResource;
+import api4kb.None;
 import api4kb.Option;
-import api4kb.Some;
 
-public class CLCommentManifestation<T> implements CLComment, CLManifestation<T> {
+public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestation<T> implements CLComment {
 
-	public CLCommentManifestation(T value, CLDialect<T> dialect) {
-		this.value = value;
-		this.dialect = dialect;
+	// Package-Private Constructors
+	CLCommentManifestation(T value, CLDialect<T> dialect) {
+		super(value, dialect);
 	}
 	
-	public CLCommentManifestation(String symbol, CLDialect<T> dialect) {
+	 // Component-based constructor
+	CLCommentManifestation(String symbol, Option<CLCommentManifestation<T>> comment, CLDialect<T> dialect) {
+        //TODO verify that comment is compatible with dialect
+		super(dialect);
 		this.symbol = symbol;
-		this.dialect = dialect;
-		//TODO For each dialect construct the T value
-		if (dialect == CL.clif) {
-			
-		}
+		this.comment = comment;
 	}
 
-	private T value;
+	// Lazy lowering constructor
+	private CLCommentManifestation(
+			CLCommentExpression expression, CLDialect<T> dialect) throws DialectIncompatibleException {
+		super(expression, dialect);
+	}
+
+	// Lazy lifting constructor
+	private <S> CLCommentManifestation(CLEncoding<T, S> encoding) {
+		// TODO verify that encoding is a Comment
+		super(encoding);
+	}
+
+	// private fields
 	private String symbol;
 	private Option<CLCommentManifestation<T>> comment;
-	private CLDialect<T> dialect;
-	private Configuration<?> configuration;
-	private HashMap< EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>> mapEncoding;
-	private CLCommentExpression expression;
 
-	@Override
-	public T getValue() {
-		return value;
+	// Static Factory Methods
+	public static <T> CLCommentManifestation<T> eagerNewInstance(
+			String symbol, 
+			Option<CLCommentManifestation<T>> comment,
+			CLDialect<T> dialect
+			){
+		return new CLCommentManifestation<T>(symbol, comment, dialect);
+	}
+	
+	public static <T> CLCommentManifestation<T> eagerNewInstance(
+			String symbol, 
+			CLDialect<T> dialect
+			){
+		return eagerNewInstance(symbol, 
+				new None<CLCommentManifestation<T>>(), dialect);
 	}
 
+	public static <T> CLCommentManifestation<T>  eagerNewInstance(CLDialect<T> dialect) {
+		return eagerNewInstance("", dialect);
+	}
 
+	public static <T> CLCommentManifestation<T> lazyNewInstance(
+			CLCommentExpression expression,
+			CLDialect<T> dialect
+			) throws DialectIncompatibleException{
+		return new CLCommentManifestation<T>(expression, dialect);
+	}
+
+	public static <T, S> CLCommentManifestation<T> lazyNewInstance(
+			CLEncoding<T, S> encoding){
+		return new CLCommentManifestation<T>(encoding);
+	}
+
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	@Override
 	public String getSymbol() {
-		// check the cache
+		// check the cache and evaluate if necessary
 		if (symbol == null){
-			// TODO parse using methods appropriate to the format
-			// and cache			
+			symbol = evalSymbol();
 		}
 		return symbol;
 	}
+	
+	private String evalSymbol() {
+		// TODO parse value using methods appropriate to the format
+		return null;
+	}
 
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	@Override
 	public Option<CLCommentManifestation<T>> getComment() {
-		// check the cache
+		// check the cache and evaluate if necessary
 		if (comment == null){
-			// TODO parse using methods appropriate to the format
-			// and cache			
+			comment = evalComment();
 		}
 		return comment;
 	}
 
+	private Option<CLCommentManifestation<T>> evalComment() {
+		// TODO parse value using methods appropriate to the format
+		return null;
+	}
 
 	@Override
 	public CLDialect<T> getDialect() {
-		return dialect;
-	}
-
-	@Override
-	public Configuration<?> getConfiguration() {
-		// check the cache
-		if (configuration == null){
-		// TODO create and cache
-		}
-		return configuration;
-	}
-
-	@Override
-	public String toString() {
-  	  return this.getValue().toString();
-	}
-
-	@Override
-	public <S> KnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
-			throws EncodingSystemIncompatible {
-		CLEncoding<T, S> encoding = 
-				new CLEncoding<T, S>(system.code(value), system, dialect);
-		return encoding;
+		return (CLDialect<T>) dialect;
 	}
 	
 	@Override
-	public void clearEncode(EncodingSystem<T, ?> system) {
-		mapEncoding.remove(system);		
+	public String toString() {
+		//TODO incorporate the dialect in a message header
+		return getValue().toString();
+	}
+
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// determines if a KnowledgeResource is equal to this one
+	public Boolean equals(KnowledgeResource that) {
+		return this.toString().equals(that);
+	}
+
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// overriding hashCode to agree with equal
+	@Override
+	public int hashCode() {
+		return this.toString().hashCode();
+	}
+
+	
+	@Override
+	protected <S> KnowledgeEncoding<T, S> evalEncoding(
+			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException {
+		// TODO implement eager lowering to encoding
+		return null;
 	}
 
 	@Override
-	public CLCommentExpression parse() {
-		if (expression == null) {
-			if (symbol == null) {
-				// lazy parse
-				CLCommentExpression expression = new CLCommentExpression(this);
-			}
-			else {
-				if (comment.isEmpty()) {
-				  CLCommentExpression expression = new CLCommentExpression(symbol);
-				}
-				else {
-				  CLCommentExpression expression = 
-				    new CLCommentExpression(symbol, new Some<CLCommentExpression>( ((Some<CLCommentManifestation<T>>) comment).getValue().parse()) );
-				}
-			}
-		}
-		return expression;
-	}
-
-
-	@Override
-	public void clearParse() {
-       expression = null;				
-	}
-
-	@Override
-	public void clear() {
-		clearParse();
-		mapEncoding.clear();
+	protected KnowledgeExpression evalExpression() {
+		// TODO implement eager lifting to expression
+		return null;
 	}
 
 }

@@ -31,7 +31,7 @@ public interface KnowledgeManifestation<T> extends KnowledgeResource {
 	// lowering method accepts a parameter indicating the encoding system
 	// with generic T for the format (e.g. ByteSequence, byte{}, ...)
 	<S> KnowledgeEncoding<T, S> encode( EncodingSystem<T, S> system) 
-			throws EncodingSystemIncompatible;
+			throws EncodingSystemIncompatibleException;
 
 	// lifting method
 	KnowledgeExpression parse();

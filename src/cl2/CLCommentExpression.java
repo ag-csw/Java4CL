@@ -1,67 +1,149 @@
 package cl2;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
+import api4kb.AbstractKnowledgeExpression;
 import api4kb.ImmutableEnvironment;
 import api4kb.DialectIncompatibleException;
+import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialect;
 import api4kb.KRRLanguage;
 import api4kb.KnowledgeAsset;
+import api4kb.KnowledgeManifestation;
 import api4kb.KnowledgeResource;
+import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
 import api4kb.None;
+import api4kb.Some;
+import api4kb.UnsupportedTranslationException;
 
-public class CLCommentExpression implements CLComment, CLExpression {
-	public CLCommentExpression() {
-		this("");
-	}
+public class CLCommentExpression extends AbstractKnowledgeExpression implements
+		CLComment, CLExpression {
 
-	public CLCommentExpression(String symbol) {
-		this(symbol, new None<CLCommentExpression>());
-	}
-
-    public CLCommentExpression(String symbol, Option<CLCommentExpression> comment) {
+	// Private Constructors
+	// Component-based constructor
+	private CLCommentExpression(String symbol,
+			Option<CLCommentExpression> comment) {
+		super(CL.lang);
 		this.symbol = symbol;
 		this.comment = comment;
 	}
-    
-    public <T> CLCommentExpression(
-    		CLCommentManifestation<T> manifestation) {
-        mapManifest = new HashMap< CLDialect<?>, CLCommentManifestation<?>>();
-        mapManifest.put(manifestation.getDialect(), manifestation);
-    }
 
+	// Lazy lowering constructor
+	private <T> CLCommentExpression(CLCommentAsset asset)
+			throws UnsupportedTranslationException {
+		super(asset, CL.lang);
+	}
+
+	// Lazy lifting constructor
+	private <T> CLCommentExpression(CLCommentManifestation<T> manifestation) {
+		super(manifestation);
+	}
+
+	// private fields
 	private String symbol;
-    private Option<CLCommentExpression> comment;
-	private final KRRLanguage lang = CL.lang;	
-	private HashMap< CLDialect<?>, CLCommentManifestation<?>> mapManifest;
-	// TODO implement cache for conceptualize method
-	//private HashMap< ImmutableEnvironment, CLCommentAsset> mapAsset;
+	private Option<CLCommentExpression> comment;
 
+	// Static Factory Methods
+	public static CLCommentExpression eagerNewInstance(String symbol,
+			Option<CLCommentExpression> comment) {
+		return new CLCommentExpression(symbol, comment);
+	}
+
+	public static CLCommentExpression eagerNewInstance(String symbol) {
+		return eagerNewInstance(symbol, new None<CLCommentExpression>());
+	}
+
+	public static CLCommentExpression eagerNewInstance() {
+		return eagerNewInstance("");
+	}
+
+	public static <T> CLCommentExpression lazyNewInstance(CLCommentAsset asset)
+			throws UnsupportedTranslationException {
+		return new CLCommentExpression(asset);
+	}
+
+	public static <T> CLCommentExpression lazyNewInstance(
+			CLCommentManifestation<T> manifestation) {
+		return new CLCommentExpression(manifestation) {
+		};
+	}
+
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	@Override
 	public String getSymbol() {
+		// check the cache and evaluate if necessary
 		if (symbol == null) {
-			Entry<CLDialect<?>, CLCommentManifestation<?>> entry = mapManifest.entrySet().iterator().next();
-			symbol = entry.getValue().getSymbol();
+			symbol = evalSymbol();
 		}
 		return symbol;
 	}
 
+	private String evalSymbol() {
+		// A. check the manifestation cache
+		if (!mapManifest.isEmpty()) {
+			return ((CLCommentManifestation<?>) mapManifest.values().iterator()
+					.next()).getSymbol();
+		}
+		// B. if A fails, check the asset cache and apply a language
+		// translation from the environment
+		else {
+			KnowledgeAsset asset = mapAsset.values().iterator().next();
+			try {
+				return ((CLCommentExpression) asset.express(CL.lang))
+						.getSymbol();
+			} catch (LanguageIncompatibleException e) {
+				assert false : "Faulty lazy expression constructor";
+				return null;
+			}
+		}
+	}
+
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	@Override
 	public Option<CLCommentExpression> getComment() {
 		// check the cache
-		if (comment == null){
-			// TODO parse using methods appropriate to the format
-			// and cache			
+		if (comment == null) {
+			comment = evalComment();
 		}
 		return comment;
+	}
+
+	private Option<CLCommentExpression> evalComment() {
+		// A. check the manifestation cache
+		if (!mapManifest.isEmpty()) {
+			CLCommentManifestation<?> manifest = (CLCommentManifestation<?>) mapManifest
+					.values().iterator().next();
+			Option<?> maybeComment = manifest.getComment();
+			if (maybeComment.isEmpty()) {
+				return new None<CLCommentExpression>();
+			} else {
+				// TODO cleanup - use FJ Option and map over parse()
+				@SuppressWarnings("unchecked")
+				CLCommentManifestation<?> commentM = ((Some<CLCommentManifestation<?>>) maybeComment)
+						.getValue();
+				CLCommentExpression commentE = (CLCommentExpression) commentM
+						.parse();
+				return new Some<CLCommentExpression>(commentE);
+			}
+		}
+		// B. if A fails, check the asset cache and apply a language
+		// translation from the environment
+		else {
+			KnowledgeAsset asset = mapAsset.values().iterator().next();
+			try {
+				return ((CLCommentExpression) asset.express(CL.lang))
+						.getComment();
+			} catch (LanguageIncompatibleException e) {
+				assert false : "Faulty lazy expression constructor";
+				return null;
+			}
+		}
 	}
 
 	@Override
 	public KRRLanguage getLanguage() {
 		return lang;
 	}
-	
+
 	@Override
 	public String toString() {
 		try {
@@ -71,64 +153,32 @@ public class CLCommentExpression implements CLComment, CLExpression {
 		}
 	}
 
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
 	// determines if a KnowledgeResource is equal to this one
 	public Boolean equals(KnowledgeResource that) {
-	  return this.toString().equals(that);
+		return this.toString().equals(that);
 	}
-	
-	// overriding hashCode to agree with toString
+
+	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// overriding hashCode to agree with equal
 	@Override
 	public int hashCode() {
 		return this.toString().hashCode();
 	}
-	
+
+
 	@Override
-	public <T> CLCommentManifestation<?> manifest(KRRDialect<T> dialect)
+	protected <T> KnowledgeManifestation<T> evalManifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
-		if ( dialect.lang.equals(this.lang) ) {
-			// check the cache
-			if ( !mapManifest.containsKey(dialect) ) {
-				//  TODO if not in the cache then 
-				// create and cache				
-				// Testing the construct while ignoring the comment
-				CLCommentManifestation<T> manifestation = new CLCommentManifestation<T>(symbol, 
-						((CLDialect<T>) dialect));
-			}
-			return mapManifest.get(dialect);
-		}
-		else {
-			throw new DialectIncompatibleException();
-		}
-	}
-
-	@Override
-	public void clearManifest(KRRDialect<?> dialect) {
-		this.mapManifest.remove(dialect);
-		
-	}
-
-	@Override
-	public KnowledgeAsset conceptualize(ImmutableEnvironment e) {
-		// TODO  check for compatibiity between the language and
-		// the environment
-		// if not compatible, throw an appropriate exception
-		// else check if in the cache
-		// if not in the cache then
-		// create, cache and return
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void clearConceptualize(ImmutableEnvironment environment) {
+	protected KnowledgeAsset evalAsset(ImmutableEnvironment e)
+			throws EnvironmentIncompatibleException {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
-	
-	@Override
-	public void clear() {
-		this.mapManifest.clear();
-		//this.mapAsset.clear();		
-	}
-
 
 }

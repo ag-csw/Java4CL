@@ -68,4 +68,16 @@ public class CLNameExpression implements CLExpression, CLName {
 		return null;
 	}
 
+	@Override
+	public void clearManifest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearAsset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
