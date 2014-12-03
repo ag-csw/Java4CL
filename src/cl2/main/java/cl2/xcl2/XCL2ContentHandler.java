@@ -1,18 +1,18 @@
 /**
  * 
  */
-package de.fuberlin.csw.java4cl.xcl;
+package cl2.xcl2;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+//import javax.xml.parsers.ParserConfigurationException;
+//import javax.xml.parsers.SAXParser;
+//import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-import cl2.CLImportation;
+// import cl2.CLImportation;
 
 /**
  * @author ralph
@@ -115,15 +115,15 @@ public class XCL2ContentHandler implements ContentHandler {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SAXParserFactory spf = SAXParserFactory.newInstance();
-	    spf.setNamespaceAware(true);
-	    try {
-			SAXParser saxParser = spf.newSAXParser();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		}
+//		SAXParserFactory spf = SAXParserFactory.newInstance();
+//	    spf.setNamespaceAware(true);
+//	    try {
+//			SAXParser saxParser = spf.newSAXParser();
+//		} catch (ParserConfigurationException e) {
+//			e.printStackTrace();
+//		} catch (SAXException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 }
