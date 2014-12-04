@@ -16,7 +16,7 @@ public final class CL {
 	// instantiate anonymous subclass of AbstractKRRLanguage
 	public static KRRLanguage lang = new AbstractKRRLanguage("Common Logic") {};	 
 	// uses static factory methods on CLDialect
-	public static CLDialect<Element> xcl2dom = CLDialect.newInstance("XCL2");
+	public static CLDialect<Element> xcl2dom = CLDialect.newInstance("XCL2-dom4j");
 	public static CLDialect<String> clif = CLDialect.newInstance("CLIF");
 	public static final Namespace NS_XCL2 = Namespace.get("http://purl.org/xcl/2.0/");	
 	// tests for syntactic categories

@@ -65,6 +65,8 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 								.iterator().next();
 						value = (T) mapEncoding.get(system).decode().getValue();
 					}
+				} else {
+					assert false : "AbstractKnowledgeExpression is in inconsistent state";
 				}
 
 			}

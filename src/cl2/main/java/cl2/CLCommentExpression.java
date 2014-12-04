@@ -13,7 +13,9 @@ import api4kb.Option;
 import api4kb.None;
 import api4kb.Some;
 import api4kb.UnsupportedTranslationException;
+
 import org.dom4j.dom.DOMElement;
+import org.dom4j.dom.DOMText;
 
 public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		CLComment, CLExpression {
@@ -45,6 +47,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 	// Static Factory Methods
 	public static CLCommentExpression eagerNewInstance(String symbol,
 			Option<CLCommentExpression> comment) {
+		LOG.debug("Symbol passed to constructor: {}", symbol);
 		return new CLCommentExpression(symbol, comment);
 	}
 
@@ -67,13 +70,16 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		};
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	@Override
 	public String getSymbol() {
 		// check the cache and evaluate if necessary
 		if (symbol == null) {
+			LOG.debug("Found no cached manifestation for symbol {}");
 			symbol = evalSymbol();
 		}
+		LOG.debug("Symbol to be returned by getSymbol(): {}", symbol);
 		return symbol;
 	}
 
@@ -97,7 +103,8 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		}
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	@Override
 	public Option<CLCommentExpression> getComment() {
 		// check the cache
@@ -149,58 +156,72 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		try {
 			return this.manifest(CL.xcl2dom).toString();
 		} catch (DialectIncompatibleException e) {
-			return e.getMessage();
+			assert false : "Faulty Dialect Compatibility Check";
+			return "Faulty Dialect Compatibility Check";
 		}
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	// determines if a KnowledgeResource is equal to this one
 	public Boolean equals(KnowledgeResource that) {
 		return this.toString().equals(that);
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	// overriding hashCode to agree with equal
 	@Override
 	public int hashCode() {
 		return this.toString().hashCode();
 	}
 
+	@Override
+	public <T> CLCommentManifestation<T> manifest(KRRDialect<T> dialect)
+			throws DialectIncompatibleException {
+		try {
+			return (CLCommentManifestation<T>) super.manifest(dialect);
+		} catch (DialectIncompatibleException e) {
+			throw e;
+		}
+	}
 
 	@Override
 	protected <T> CLCommentManifestation<T> evalManifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		if (dialect.getLanguage() != CL.lang) {
 			throw new DialectIncompatibleException();
-		} else {
-			if (dialect != CL.xcl2dom) {
-				// TODO implement other CL dialects
-				throw new DialectIncompatibleException();
-			} else {
-				// TODO this really belongs in the XCL2 package
-				if ((symbol != null) && (comment != null)) {
-				  DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
-				  if (!(comment.isEmpty())){
-					  element.appendChild(((Some<CLCommentExpression>) comment).getValue().manifest(CL.xcl2dom).getValue());
-					  DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
-					  symbolElement.setText(symbol);
-					  element.appendChild(symbolElement);
-				  } else {
-					  element.setText(symbol);					  
-				  }
-				  // If this point is reached, then T is Element, and the factory method will produce a result of the correct type already
-				  // so the case is only necessary for the compiler.
-				  @SuppressWarnings("unchecked")
-				CLCommentManifestation<T> manifestation = (CLCommentManifestation<T>) CLCommentManifestation.getNewWrapperInstance(element, CL.xcl2dom);
-				return manifestation;
-				} else {
-					assert false: "Call to evalManifest when uninitialized.";
-				}
-			}
 		}
-		assert false: "Should throw or return before reaching here";
+		if (dialect != CL.xcl2dom) {
+			// TODO implement other CL dialects
+			throw new DialectIncompatibleException();
+		}
+		// TODO this really belongs in the XCL2 package
+		if ((symbol != null) && (comment != null)) {
+			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
+			if (!(comment.isEmpty())) {
+				element.appendChild(((Some<CLCommentExpression>) comment)
+						.getValue().manifest(CL.xcl2dom).getValue());
+				DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
+				symbolElement.add(new DOMText(symbol));
+				element.appendChild(symbolElement);
+			} else {
+				element.add(new DOMText(symbol));
+			}
+			// If this point is reached, then T is Element, and the factory
+			// method will produce a result of the correct type already
+			// so the case is only necessary for the compiler.
+			@SuppressWarnings("unchecked")
+			CLCommentManifestation<T> manifestation = (CLCommentManifestation<T>) CLCommentManifestation
+					.getNewWrapperInstance(element, CL.xcl2dom);
+			return manifestation;
+		} else {
+			assert false : "Call to evalManifest when uninitialized.";
+		}
+		assert false : "Should throw or return before reaching here";
 		return null;
 	}
+
 	@Override
 	protected KnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {

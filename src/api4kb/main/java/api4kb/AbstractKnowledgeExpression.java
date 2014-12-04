@@ -2,6 +2,9 @@ package api4kb;
 
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractKnowledgeExpression implements
 		KnowledgeExpression {
 
@@ -32,6 +35,7 @@ public abstract class AbstractKnowledgeExpression implements
 	protected final HashMap<KRRDialect<?>, KnowledgeManifestation<?>> mapManifest;
 	protected final HashMap<ImmutableEnvironment, KnowledgeAsset> mapAsset;
 	protected final KRRLanguage lang;
+	public static final Logger LOG = LoggerFactory.getLogger("AbstractKnowledgeExpression");
 
 	@Override
 	public void clear() {
@@ -75,7 +79,11 @@ public abstract class AbstractKnowledgeExpression implements
 	@Override
 	public <T> KnowledgeManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
+		if (dialect.getLanguage() != lang){
+			throw new DialectIncompatibleException();
+		}
 		if (!mapManifest.containsKey(dialect)) {
+			LOG.debug("Found no cached manifestation for: {}", dialect.getName());
 			KnowledgeManifestation<T> manifest = evalManifest(dialect);
 			manifestSafePut(dialect, manifest);
 			return manifest;
