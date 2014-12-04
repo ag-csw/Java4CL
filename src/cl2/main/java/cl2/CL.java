@@ -17,7 +17,7 @@ public final class CL {
 	// uses static factory methods on CLDialect
 	public static CLDialect<Element> xcl2dom = CLDialect.newInstance("XCL2");
 	public static CLDialect<String> clif = CLDialect.newInstance("CLIF");
-	
+	public static final Namespace NS_XCL2 = Namespace.getNamespace("http://purl.org/xcl/2.0/");	
 	// tests for syntactic categories
 	public static Boolean isComment(Object x, KRRDialect<?> dialect){
 		// TODO implement case tests for particular dialects
