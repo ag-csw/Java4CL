@@ -14,6 +14,7 @@ import api4kb.Option;
 import api4kb.None;
 import api4kb.Some;
 import api4kb.UnsupportedTranslationException;
+import org.dom4j.dom.DOMElement;
 
 public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		CLComment, CLExpression {
@@ -168,10 +169,32 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 
 
 	@Override
-	protected <T> KnowledgeManifestation<T> evalManifest(KRRDialect<T> dialect)
+	protected <T> CLCommentManifestation<T> evalManifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
-		// TODO Auto-generated method stub
-		return null;
+		if (dialect.getLanguage() != CL.lang) {
+			throw new DialectIncompatibleException();
+		} else {
+			if (dialect != CL.xcl2dom) {
+				// TODO implement other CL dialects
+				throw new DialectIncompatibleException();
+			} else {
+				// TODO this really belongs in the XCL2 package
+				if ((symbol != null) && (comment != null)) {
+				  DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
+				  if (!(comment.isEmpty())){
+					  hasCommentElement.appendChild(comment.getValue().manifest(CL.xcl2.dom).getValue());
+					  new symbolElemement = new DOMElement("symbol", CL.NS_XCL2);
+					  symbolElement.setTextContent(symbol);
+					  element.appendChild(symbolElement);
+				  } else {
+					  element.setTextContent(symbol);					  
+				  }
+				return CLCommentManifestation.eagerNewInstance(element, CL.xcl2dom);
+				} else {
+					assert false: "Call to evalManifest when uninitialized."
+				}
+			}
+		}
 	}
 
 	@Override
