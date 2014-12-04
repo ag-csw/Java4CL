@@ -7,7 +7,6 @@ import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialect;
 import api4kb.KRRLanguage;
 import api4kb.KnowledgeAsset;
-import api4kb.KnowledgeManifestation;
 import api4kb.KnowledgeResource;
 import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
@@ -182,21 +181,26 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 				if ((symbol != null) && (comment != null)) {
 				  DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
 				  if (!(comment.isEmpty())){
-					  hasCommentElement.appendChild(comment.getValue().manifest(CL.xcl2.dom).getValue());
-					  new symbolElemement = new DOMElement("symbol", CL.NS_XCL2);
-					  symbolElement.setTextContent(symbol);
+					  element.appendChild(((Some<CLCommentExpression>) comment).getValue().manifest(CL.xcl2dom).getValue());
+					  DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
+					  symbolElement.setText(symbol);
 					  element.appendChild(symbolElement);
 				  } else {
-					  element.setTextContent(symbol);					  
+					  element.setText(symbol);					  
 				  }
-				return CLCommentManifestation.eagerNewInstance(element, CL.xcl2dom);
+				  // If this point is reached, then T is Element, and the factory method will produce a result of the correct type already
+				  // so the case is only necessary for the compiler.
+				  @SuppressWarnings("unchecked")
+				CLCommentManifestation<T> manifestation = (CLCommentManifestation<T>) CLCommentManifestation.getNewWrapperInstance(element, CL.xcl2dom);
+				return manifestation;
 				} else {
-					assert false: "Call to evalManifest when uninitialized."
+					assert false: "Call to evalManifest when uninitialized.";
 				}
 			}
 		}
+		assert false: "Should throw or return before reaching here";
+		return null;
 	}
-
 	@Override
 	protected KnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {

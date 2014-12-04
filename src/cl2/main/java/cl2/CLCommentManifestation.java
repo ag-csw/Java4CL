@@ -42,7 +42,11 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 	private Option<CLCommentManifestation<T>> comment;
 
 	// Static Factory Methods
-	public static <T> CLCommentManifestation<T> eagerNewInstance(
+	public static <T> CLCommentManifestation<T> getNewWrapperInstance(T value, CLDialect<T> dialect) {
+		return new CLCommentManifestation<T>(value, dialect);
+	}
+
+	public static <T> CLCommentManifestation<T> getNewComponentInstance(
 			String symbol, 
 			Option<CLCommentManifestation<T>> comment,
 			CLDialect<T> dialect
@@ -50,16 +54,16 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 		return new CLCommentManifestation<T>(symbol, comment, dialect);
 	}
 	
-	public static <T> CLCommentManifestation<T> eagerNewInstance(
+	public static <T> CLCommentManifestation<T> getNewComponentInstance(
 			String symbol, 
 			CLDialect<T> dialect
 			){
-		return eagerNewInstance(symbol, 
+		return getNewComponentInstance(symbol, 
 				new None<CLCommentManifestation<T>>(), dialect);
 	}
 
-	public static <T> CLCommentManifestation<T>  eagerNewInstance(CLDialect<T> dialect) {
-		return eagerNewInstance("", dialect);
+	public static <T> CLCommentManifestation<T>  getNewComponentInstance(CLDialect<T> dialect) {
+		return getNewComponentInstance("", dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> lazyNewInstance(
