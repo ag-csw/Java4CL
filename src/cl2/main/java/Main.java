@@ -16,13 +16,12 @@ public class Main {
 		
 		String myCommentSymbol = "blah blah ...";
 		CLCommentExpression myCommentExpression = CLCommentExpression.eagerNewInstance(myCommentSymbol);
-		LOG.debug("myCommentExpression.getSymbol(): {}", myCommentExpression.getSymbol());
-		LOG.debug("myCommentExpression.toString(): {}", myCommentExpression.toString());
 		CLCommentManifestation<Element> myCommentManifestation;
 		try {
 			myCommentManifestation = myCommentExpression.manifest(CL.xcl2dom);
-			LOG.debug("myCommentManifestation.toString(): {}", myCommentManifestation.toString());
-			LOG.debug("myCommentManifestation.toString(): {}", myCommentManifestation.getValue().getFirstChild().toString());
+			CLCommentExpression anotherCommentExpression = CLCommentExpression.lazyNewInstance(myCommentManifestation);
+			anotherCommentExpression.getSymbol();
+			anotherCommentExpression.getComment();
 		} catch (DialectIncompatibleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

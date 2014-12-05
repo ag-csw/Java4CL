@@ -9,6 +9,7 @@ public abstract class AbstractKnowledgeExpression implements
 		KnowledgeExpression {
 
 	public <T> AbstractKnowledgeExpression(KRRLanguage lang) {
+		LOG.debug("Starting expression constructor for language: {}", lang);
 		this.lang = lang;
 		mapManifest = new HashMap<KRRDialect<?>, KnowledgeManifestation<?>>();
 		mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAsset>();
@@ -17,6 +18,7 @@ public abstract class AbstractKnowledgeExpression implements
 	// Lazy lifting constructor - argument is a Manifestation
 	public <T> AbstractKnowledgeExpression(
 			KnowledgeManifestation<T> manifestation) {
+		LOG.debug("Starting lazy lifting expression construtor with manifestation: {}", manifestation);
 		mapManifest = new HashMap<KRRDialect<?>, KnowledgeManifestation<?>>();
 		manifestSafePut(manifestation.getDialect(), manifestation);
 		lang = manifestation.getDialect().getLanguage();
@@ -26,6 +28,8 @@ public abstract class AbstractKnowledgeExpression implements
 	// Lazy lowering constructor - argument is an Asset
 	public AbstractKnowledgeExpression(KnowledgeAsset asset, KRRLanguage lang)
 			throws UnsupportedTranslationException {
+		LOG.debug("Starting lazy lowering expression construtor with asset: {}", asset);
+		LOG.debug("Starting expression construtor for language: {}", lang);
 		this.lang = lang;
 		mapManifest = new HashMap<KRRDialect<?>, KnowledgeManifestation<?>>();
 		mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAsset>();
@@ -35,7 +39,7 @@ public abstract class AbstractKnowledgeExpression implements
 	protected final HashMap<KRRDialect<?>, KnowledgeManifestation<?>> mapManifest;
 	protected final HashMap<ImmutableEnvironment, KnowledgeAsset> mapAsset;
 	protected final KRRLanguage lang;
-	public static final Logger LOG = LoggerFactory.getLogger("AbstractKnowledgeExpression");
+	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void clear() {
@@ -79,11 +83,15 @@ public abstract class AbstractKnowledgeExpression implements
 	@Override
 	public <T> KnowledgeManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
+		LOG.debug("Starting evaluation of the manifest of expression");
+		LOG.debug("  Dialect of the manifestation: {}", dialect);
+		LOG.debug("  Language of the expression: {}", lang);
 		if (dialect.getLanguage() != lang){
 			throw new DialectIncompatibleException();
 		}
+		LOG.debug("Manifestation cache: {}", mapManifest);
 		if (!mapManifest.containsKey(dialect)) {
-			LOG.debug("Found no cached manifestation for: {}", dialect.getName());
+			LOG.debug("Found no cached manifestation for: {}", dialect);
 			KnowledgeManifestation<T> manifest = evalManifest(dialect);
 			manifestSafePut(dialect, manifest);
 			return manifest;

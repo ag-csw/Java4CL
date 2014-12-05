@@ -1,5 +1,8 @@
 package api4kb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractKnowledgeEncoding<T, S> implements
 		KnowledgeEncoding<T, S> {
 	// Initializing-only constructor
@@ -29,6 +32,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	public <R> AbstractKnowledgeEncoding(KnowledgeItem<T, S, R> input) {
 		this.dialect = input.getDialect();
 		this.system = input.getEncodingSystem();
+		// TODO this is not lazy
 		this.stream = input.run();
 	}
 
@@ -37,9 +41,11 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	protected final KRRDialect<T> dialect;
 	protected final EncodingSystem<T, S> system;
 	protected KnowledgeManifestation<T> manifestation;
+	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public S getStream() {
+		// add get for lazy constructor from Item
 		if (stream == null) {
 			if (!(manifestation == null)) {
 				try {
@@ -71,6 +77,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	// public reproduce
+	//TODO implement here, as this is not specific to language
 	@Override
 	abstract public <R> KnowledgeItem<T, S, R> reproduce(R destination);
 

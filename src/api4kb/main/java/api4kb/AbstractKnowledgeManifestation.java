@@ -2,6 +2,9 @@ package api4kb;
 
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class AbstractKnowledgeManifestation<T> implements
 		KnowledgeManifestation<T> {
 	// Initializing-only constructor
@@ -44,6 +47,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	protected Configuration<?> configuration;
 	protected final HashMap<EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>> mapEncoding;
 	protected KnowledgeExpression expression;
+	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public T getValue() {
