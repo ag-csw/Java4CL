@@ -47,7 +47,6 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 	// Static Factory Methods
 	public static CLCommentExpression eagerNewInstance(String symbol,
 			Option<CLCommentExpression> comment) {
-		LOG.debug("Symbol passed to constructor: {}", symbol);
 		return new CLCommentExpression(symbol, comment);
 	}
 
@@ -75,16 +74,17 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 	@Override
 	public String getSymbol() {
 		// check the cache and evaluate if necessary
+		LOG.debug("Symbol cache: {}", symbol);
 		if (symbol == null) {
 			LOG.debug("Found no cached manifestation for symbol {}");
 			symbol = evalSymbol();
 		}
-		LOG.debug("Symbol to be returned by getSymbol(): {}", symbol);
 		return symbol;
 	}
 
 	private String evalSymbol() {
 		// A. check the manifestation cache
+		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!mapManifest.isEmpty()) {
 			return ((CLCommentManifestation<?>) mapManifest.values().iterator()
 					.next()).getSymbol();
@@ -108,6 +108,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 	@Override
 	public Option<CLCommentExpression> getComment() {
 		// check the cache
+		LOG.debug("Comment cache: {}", comment);
 		if (comment == null) {
 			comment = evalComment();
 		}
@@ -116,10 +117,13 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 
 	private Option<CLCommentExpression> evalComment() {
 		// A. check the manifestation cache
-		if (!mapManifest.isEmpty()) {
+		LOG.debug("Manifest cache: {}", mapManifest);
+		if (!(mapManifest.isEmpty())) {
 			CLCommentManifestation<?> manifest = (CLCommentManifestation<?>) mapManifest
 					.values().iterator().next();
+			LOG.debug("manifest: {}", manifest);
 			Option<?> maybeComment = manifest.getComment();
+			LOG.debug("maybeComment: {}", maybeComment);
 			if (maybeComment.isEmpty()) {
 				return new None<CLCommentExpression>();
 			} else {
@@ -197,6 +201,8 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 			throw new DialectIncompatibleException();
 		}
 		// TODO this really belongs in the XCL2 package
+		LOG.debug("Symbol cache: {}", symbol);
+		LOG.debug("comment cache: {}", comment);
 		if ((symbol != null) && (comment != null)) {
 			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
 			if (!(comment.isEmpty())) {

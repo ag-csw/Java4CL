@@ -1,5 +1,13 @@
 package cl2;
 
+import java.util.Iterator;
+
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.dom.DOMElement;
+import org.dom4j.dom.DOMText;
+import org.w3c.dom.NodeList;
+
 import api4kb.AbstractKnowledgeManifestation;
 import api4kb.DialectIncompatibleException;
 import api4kb.EncodingSystem;
@@ -9,25 +17,28 @@ import api4kb.KnowledgeExpression;
 import api4kb.KnowledgeResource;
 import api4kb.None;
 import api4kb.Option;
+import api4kb.Some;
 
-public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestation<T> implements CLComment {
+public final class CLCommentManifestation<T> extends
+		AbstractKnowledgeManifestation<T> implements CLComment {
 
 	// Package-Private Constructors
 	CLCommentManifestation(T value, CLDialect<T> dialect) {
 		super(value, dialect);
 	}
-	
-	 // Component-based constructor
-	CLCommentManifestation(String symbol, Option<CLCommentManifestation<T>> comment, CLDialect<T> dialect) {
-        //TODO verify that comment is compatible with dialect
+
+	// Component-based constructor
+	CLCommentManifestation(String symbol,
+			Option<CLCommentManifestation<T>> comment, CLDialect<T> dialect) {
+		// TODO verify that comment is compatible with dialect
 		super(dialect);
 		this.symbol = symbol;
 		this.comment = comment;
 	}
 
 	// Lazy lowering constructor
-	private CLCommentManifestation(
-			CLCommentExpression expression, CLDialect<T> dialect) throws DialectIncompatibleException {
+	private CLCommentManifestation(CLCommentExpression expression,
+			CLDialect<T> dialect) throws DialectIncompatibleException {
 		super(expression, dialect);
 	}
 
@@ -42,100 +53,122 @@ public final class CLCommentManifestation<T> extends AbstractKnowledgeManifestat
 	private Option<CLCommentManifestation<T>> comment;
 
 	// Static Factory Methods
-	public static <T> CLCommentManifestation<T> getNewWrapperInstance(T value, CLDialect<T> dialect) {
+	public static <T> CLCommentManifestation<T> getNewWrapperInstance(T value,
+			CLDialect<T> dialect) {
 		return new CLCommentManifestation<T>(value, dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> getNewComponentInstance(
-			String symbol, 
-			Option<CLCommentManifestation<T>> comment,
-			CLDialect<T> dialect
-			){
+			String symbol, Option<CLCommentManifestation<T>> comment,
+			CLDialect<T> dialect) {
 		return new CLCommentManifestation<T>(symbol, comment, dialect);
 	}
-	
+
 	public static <T> CLCommentManifestation<T> getNewComponentInstance(
-			String symbol, 
-			CLDialect<T> dialect
-			){
-		return getNewComponentInstance(symbol, 
+			String symbol, CLDialect<T> dialect) {
+		return getNewComponentInstance(symbol,
 				new None<CLCommentManifestation<T>>(), dialect);
 	}
 
-	public static <T> CLCommentManifestation<T>  getNewComponentInstance(CLDialect<T> dialect) {
+	public static <T> CLCommentManifestation<T> getNewComponentInstance(
+			CLDialect<T> dialect) {
 		return getNewComponentInstance("", dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> lazyNewInstance(
-			CLCommentExpression expression,
-			CLDialect<T> dialect
-			) throws DialectIncompatibleException{
+			CLCommentExpression expression, CLDialect<T> dialect)
+			throws DialectIncompatibleException {
 		return new CLCommentManifestation<T>(expression, dialect);
 	}
 
 	public static <T, S> CLCommentManifestation<T> lazyNewInstance(
-			CLEncoding<T, S> encoding){
+			CLEncoding<T, S> encoding) {
 		return new CLCommentManifestation<T>(encoding);
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	@Override
 	public String getSymbol() {
 		// check the cache and evaluate if necessary
-		if (symbol == null){
+		if (symbol == null) {
 			symbol = evalSymbol();
 		}
 		return symbol;
 	}
-	
+
 	private String evalSymbol() {
 		// TODO parse value using methods appropriate to the format
 		return null;
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	@Override
 	public Option<CLCommentManifestation<T>> getComment() {
 		// check the cache and evaluate if necessary
-		if (comment == null){
+		if (comment == null) {
 			comment = evalComment();
 		}
 		return comment;
 	}
 
 	private Option<CLCommentManifestation<T>> evalComment() {
-		// TODO parse value using methods appropriate to the format
-		return null;
+		// default value
+		if (symbol == null)
+			symbol = "";
+		comment = new None<CLCommentManifestation<T>>();
+		if (dialect != CL.xcl2dom) {
+			// TODO implement other CL dialects
+		} else {
+			DOMElement element = (DOMElement) value;
+			symbol = element.getText();
+			for (Object i : element.elements()) {
+				Element child = (Element) i;
+				// TODO write isSymbolEdge method
+				if (child.getName().equals("symbol")) {
+					symbol = child.getText();
+				}
+				// TODO write isComment method
+				if (child.getName().equals("Comment")) {
+					comment = new Some(getNewWrapperInstance((T) child, (CLDialect<T>) dialect));
+				}
+
+			}
+		}
+		return comment;
 	}
 
 	@Override
 	public CLDialect<T> getDialect() {
 		return (CLDialect<T>) dialect;
 	}
-	
+
 	@Override
 	public String toString() {
-		//TODO incorporate the dialect in a message header
+		// TODO incorporate the dialect in a message header
 		return getValue().toString();
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	// determines if a KnowledgeResource is equal to this one
 	public Boolean equals(KnowledgeResource that) {
 		return this.toString().equals(that);
 	}
 
-	//TODO Shift implementation to AbstractCLComment and incorporate by composition
+	// TODO Shift implementation to AbstractCLComment and incorporate by
+	// composition
 	// overriding hashCode to agree with equal
 	@Override
 	public int hashCode() {
 		return this.toString().hashCode();
 	}
 
-	
 	@Override
 	protected <S> KnowledgeEncoding<T, S> evalEncoding(
-			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException {
+			EncodingSystem<T, S> system)
+			throws EncodingSystemIncompatibleException {
 		// TODO implement eager lowering to encoding
 		return null;
 	}
