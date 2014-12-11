@@ -2,7 +2,7 @@ package cl2;
 
 import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialectType;
-import api4kb.DialectIncompatibleException;
+import api4kb.DialectTypeIncompatibleException;
 import api4kb.KRRLanguage;
 import api4kb.UnsupportedTranslationException;
 
@@ -46,7 +46,7 @@ public abstract class CLPrefixExpression extends CLExpression implements CLPrefi
 
 	@Override
 	public <T> CLManifestation<T> manifest(KRRDialectType<T> dialect)
-			throws DialectIncompatibleException {
+			throws DialectTypeIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
 	}

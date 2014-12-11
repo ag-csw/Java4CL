@@ -26,13 +26,13 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// Lazy lowering constructor - argument is expression and dialect
 	public AbstractKnowledgeManifestation(AbstractKnowledgeExpression expression,
-			KRRDialectType<T> dialect) throws DialectIncompatibleException {
+			KRRDialectType<T> dialect) throws DialectTypeIncompatibleException {
 		if (expression.getLanguage().equals(dialect.getLanguage())) {
 			this.expression = expression;
 			this.dialect = dialect;
 			mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		} else {
-			throw new DialectIncompatibleException();
+			throw new DialectTypeIncompatibleException();
 		}
 	}
 
@@ -60,7 +60,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 					// expression object, making the unchecked cast safe
 					T exprvalue = (T) expression.manifest(dialect).getValue();
 					value = exprvalue;
-				} catch (DialectIncompatibleException e) {
+				} catch (DialectTypeIncompatibleException e) {
 					assert false : "Faulty lazy lowering constructor";
 				}
 			} else {

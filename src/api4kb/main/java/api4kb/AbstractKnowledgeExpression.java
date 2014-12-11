@@ -86,26 +86,26 @@ public abstract class AbstractKnowledgeExpression implements
 	public String toString(){
 	  try {
 		return manifest().toString();
-	} catch (DialectIncompatibleException e) {
+	} catch (DialectTypeIncompatibleException e) {
 		return toString();
 	}	
 	}
 
 	// default lowering method returns a manifestation in the default dialect
 	// for that language
-	public AbstractKnowledgeManifestation<?> manifest() throws DialectIncompatibleException{
+	public AbstractKnowledgeManifestation<?> manifest() throws DialectTypeIncompatibleException{
 		return manifest(lang.defaultDialect());
 	}
 	
 	// lowering method accepts a parameter indicating the dialect
 	// with generic T for the format (e.g. String, XML Element)
 	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialectType<T> dialect)
-			throws DialectIncompatibleException {
+			throws DialectTypeIncompatibleException {
 		LOG.debug("Starting evaluation of the manifest of expression");
 		LOG.debug("  Dialect of the manifestation: {}", dialect);
 		LOG.debug("  Language of the expression: {}", lang);
 		if (dialect.getLanguage() != lang){
-			throw new DialectIncompatibleException();
+			throw new DialectTypeIncompatibleException();
 		}
 		LOG.debug("Manifestation cache: {}", mapManifest);
 		if (!mapManifest.containsKey(dialect)) {
@@ -124,7 +124,7 @@ public abstract class AbstractKnowledgeExpression implements
 
 	// nonpublic helper method
 	protected abstract <T> AbstractKnowledgeManifestation<T> evalManifest(
-			KRRDialectType<T> dialect) throws DialectIncompatibleException;
+			KRRDialectType<T> dialect) throws DialectTypeIncompatibleException;
 
 	// lifting method
    public KnowledgeAsset conceptualize(ImmutableEnvironment e)

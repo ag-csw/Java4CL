@@ -2,7 +2,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
-import api4kb.DialectIncompatibleException;
+import api4kb.DialectTypeIncompatibleException;
 import cl2.CL;
 import cl2.CLCommentExpression;
 import cl2.CLCommentManifestation;
@@ -22,7 +22,7 @@ public class Main {
 			CLCommentExpression anotherCommentExpression = CLCommentExpression.lazyNewInstance(myCommentManifestation);
 			anotherCommentExpression.getSymbol();
 			anotherCommentExpression.getComment();
-		} catch (DialectIncompatibleException e) {
+		} catch (DialectTypeIncompatibleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

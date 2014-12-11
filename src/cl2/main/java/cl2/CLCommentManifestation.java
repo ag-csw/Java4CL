@@ -2,7 +2,7 @@ package cl2;
 
 import org.dom4j.dom.DOMElement;
 
-import api4kb.DialectIncompatibleException;
+import api4kb.DialectTypeIncompatibleException;
 import api4kb.CodecSystem;
 import api4kb.EncodingSystemIncompatibleException;
 import api4kb.KnowledgeResource;
@@ -29,7 +29,7 @@ public final class CLCommentManifestation<T> extends
 
 	// Lazy lowering constructor
 	private CLCommentManifestation(CLCommentExpression expression,
-			CLDialectType<T> dialect) throws DialectIncompatibleException {
+			CLDialectType<T> dialect) throws DialectTypeIncompatibleException {
 		super(expression, dialect);
 	}
 
@@ -68,7 +68,7 @@ public final class CLCommentManifestation<T> extends
 
 	public static <T> CLCommentManifestation<T> lazyNewInstance(
 			CLCommentExpression expression, CLDialectType<T> dialect)
-			throws DialectIncompatibleException {
+			throws DialectTypeIncompatibleException {
 		return new CLCommentManifestation<T>(expression, dialect);
 	}
 

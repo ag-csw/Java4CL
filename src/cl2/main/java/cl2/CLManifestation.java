@@ -1,7 +1,7 @@
 package cl2;
 
 import api4kb.AbstractKnowledgeManifestation;
-import api4kb.DialectIncompatibleException;
+import api4kb.DialectTypeIncompatibleException;
 import api4kb.KRRDialectType;
 
 public abstract class CLManifestation<T> extends
@@ -17,7 +17,7 @@ public abstract class CLManifestation<T> extends
 		// TODO Auto-generated constructor stub
 	}
 
-	public CLManifestation(CLExpression expression, CLDialectType<T> dialect) throws DialectIncompatibleException {
+	public CLManifestation(CLExpression expression, CLDialectType<T> dialect) throws DialectTypeIncompatibleException {
 		super(expression, dialect);
 		// TODO Auto-generated constructor stub
 	}

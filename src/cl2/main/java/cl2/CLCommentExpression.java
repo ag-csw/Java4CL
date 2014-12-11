@@ -1,7 +1,7 @@
 package cl2;
 
 import api4kb.ImmutableEnvironment;
-import api4kb.DialectIncompatibleException;
+import api4kb.DialectTypeIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialectType;
 import api4kb.KRRLanguage;
@@ -157,7 +157,7 @@ public class CLCommentExpression extends CLExpression implements
 	public String toString() {
 		try {
 			return this.manifest(CL.xcl2dom).toString();
-		} catch (DialectIncompatibleException e) {
+		} catch (DialectTypeIncompatibleException e) {
 			assert false : "Faulty Dialect Compatibility Check";
 			return "Faulty Dialect Compatibility Check";
 		}
@@ -180,23 +180,23 @@ public class CLCommentExpression extends CLExpression implements
 
 	@Override
 	public <T> CLCommentManifestation<T> manifest(KRRDialectType<T> dialect)
-			throws DialectIncompatibleException {
+			throws DialectTypeIncompatibleException {
 		try {
 			return (CLCommentManifestation<T>) super.manifest(dialect);
-		} catch (DialectIncompatibleException e) {
+		} catch (DialectTypeIncompatibleException e) {
 			throw e;
 		}
 	}
 
 	@Override
 	protected <T> CLCommentManifestation<T> evalManifest(KRRDialectType<T> dialect)
-			throws DialectIncompatibleException {
+			throws DialectTypeIncompatibleException {
 		if (dialect.getLanguage() != CL.lang) {
-			throw new DialectIncompatibleException();
+			throw new DialectTypeIncompatibleException();
 		}
 		if (dialect != CL.xcl2dom) {
 			// TODO implement other CL dialects
-			throw new DialectIncompatibleException();
+			throw new DialectTypeIncompatibleException();
 		}
 		// TODO this really belongs in the XCL2 package
 		LOG.debug("Symbol cache: {}", symbol);
