@@ -1,12 +1,12 @@
 package cl2;
 
 import api4kb.AbstractKnowledgeEncoding;
-import api4kb.EncodingSystem;
+import api4kb.CodecSystem;
 import api4kb.AbstractKnowledgeItem;
 
 public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements CLKnowledgeResource {
 
-   public CLEncoding(S stream, CLDialect<T> dialect, EncodingSystem<T, S> system) {
+   public CLEncoding(S stream, CLDialect<T> dialect, CodecSystem<T, S> system) {
 	   super(stream, dialect, system);
 	}
 

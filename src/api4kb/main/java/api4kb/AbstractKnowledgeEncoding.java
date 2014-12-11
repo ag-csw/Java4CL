@@ -9,14 +9,14 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 		KnowledgeEncoding<T, S>, LazyInitializing<S> {
 	// Initializing-only constructor
 	public AbstractKnowledgeEncoding(KRRDialect<T> dialect,
-			EncodingSystem<T, S> system) {
+			CodecSystem<T, S> system) {
 		this.dialect = dialect;
 		this.system = system;
 	}
 
 	// Wrapper-based constructor
 	public AbstractKnowledgeEncoding(S value, KRRDialect<T> dialect,
-			EncodingSystem<T, S> system) {
+			CodecSystem<T, S> system) {
 		this.value = value;
 		this.dialect = dialect;
 		this.system = system;
@@ -24,7 +24,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
 	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestation<T> manifestation,
-			EncodingSystem<T, S> system) {
+			CodecSystem<T, S> system) {
 		    this.manifestation = manifestation;
 			this.dialect = manifestation.getDialect();
 			this.system = system;
@@ -33,7 +33,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	// Lazy lifting constructor - argument is a KnowledgeItem
 	public <R> AbstractKnowledgeEncoding(AbstractKnowledgeItem<T, S, R> input) {
 		this.dialect = input.getDialect();
-		this.system = input.getEncodingSystem();
+		this.system = input.getCodecSystem();
 		// TODO this is not lazy
 		this.value = input.read();
 	}
@@ -41,7 +41,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	// protected fields
 	protected S value;
 	protected final KRRDialect<T> dialect;
-	protected final EncodingSystem<T, S> system;
+	protected final CodecSystem<T, S> system;
 	protected AbstractKnowledgeManifestation<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -68,7 +68,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	@Override
-	public EncodingSystem<T, S> getEncodingSystem() {
+	public CodecSystem<T, S> getCodecSystem() {
 		return system;
 	}
 

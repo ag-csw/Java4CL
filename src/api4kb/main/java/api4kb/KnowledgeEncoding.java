@@ -8,7 +8,7 @@ public interface KnowledgeEncoding<T, S> extends KnowledgeResource {
 	S getValue();
 		
 	//getter for encoding system
-	EncodingSystem<T, S> getEncodingSystem();
+	CodecSystem<T, S> getCodecSystem();
 	
 	//getter for dialect
 	KRRDialect<T> getDialect();

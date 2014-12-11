@@ -12,7 +12,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	// Initializing-only constructor
 	public AbstractKnowledgeManifestation(KRRDialect<T> dialect) {
 		this.dialect = dialect;
-		mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
+		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
 	// Wrapper-based constructor
@@ -21,7 +21,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		// value should be checked for validity relative to dialect
 		this.value = value;
 		this.dialect = dialect;
-		mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
+		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
 	// Lazy lowering constructor - argument is expression and dialect
@@ -30,7 +30,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		if (expression.getLanguage().equals(dialect.getLanguage())) {
 			this.expression = expression;
 			this.dialect = dialect;
-			mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
+			mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		} else {
 			throw new DialectIncompatibleException();
 		}
@@ -39,15 +39,15 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	// Lazy lifting constructor - argument is an Encoding
 	public <S> AbstractKnowledgeManifestation(AbstractKnowledgeEncoding<T, S> encoding) {
 		this.dialect = encoding.getDialect();
-		mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
-		encodingSafePut(encoding.getEncodingSystem(), encoding);
+		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
+		encodingSafePut(encoding.getCodecSystem(), encoding);
 	}
 
 	// protected fields
 	protected T value;
 	protected final KRRDialect<T> dialect;
 	protected Configuration<?> configuration;
-	protected final HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding;
+	protected final HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding;
 	protected AbstractKnowledgeExpression expression;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -66,7 +66,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 			} else {
 				if (!mapEncoding.isEmpty()) {
 					synchronized (mapEncoding) {
-						EncodingSystem<T, ?> system = mapEncoding.keySet()
+						CodecSystem<T, ?> system = mapEncoding.keySet()
 								.iterator().next();
 						value = (T) mapEncoding.get(system).decode().getValue();
 					}
@@ -94,7 +94,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// lowering method accepts a parameter indicating the encoding system
 	// with generic T for the format (e.g. ByteSequence, byte{}, ...)
-	public <S> AbstractKnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
+	public <S> AbstractKnowledgeEncoding<T, S> encode(CodecSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
 		if (!mapEncoding.containsKey(system)) {
 			AbstractKnowledgeEncoding<T, S> encoding = evalEncoding(system);
@@ -111,7 +111,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// non-public lowering evaluation method
 	protected abstract <S> AbstractKnowledgeEncoding<T, S> evalEncoding(
-			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException;
+			CodecSystem<T, S> system) throws EncodingSystemIncompatibleException;
 
 	// lifting method
 	public AbstractKnowledgeExpression parse() {
@@ -129,7 +129,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	
 	
 	// clear memoization cache of the manifest method for the particular dialect
-	public void clearEncode(EncodingSystem<T, ?> system) {
+	public void clearEncode(CodecSystem<T, ?> system) {
 		// If the encoding cache does not contain this key, do nothing
 		synchronized (mapEncoding) {
 			if ((mapEncoding.containsKey(system))) {
@@ -162,14 +162,14 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	@Override
 	public void clear() {
 		synchronized (mapEncoding) {
-			for (EncodingSystem<T, ?> system : mapEncoding.keySet()) {
+			for (CodecSystem<T, ?> system : mapEncoding.keySet()) {
 				clearEncode(system);
 			}
 		}
 		clearParse();
 	}
 	
-	<S> void encodingSafePut(EncodingSystem<T, S> system, AbstractKnowledgeEncoding<T,S> encoding) {
+	<S> void encodingSafePut(CodecSystem<T, S> system, AbstractKnowledgeEncoding<T,S> encoding) {
 		mapEncoding.put(system, encoding);
 	}
 

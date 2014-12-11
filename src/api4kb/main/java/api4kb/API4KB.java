@@ -11,8 +11,8 @@ public final class API4KB {
 	API4KB() {}
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 	
-	public static EncodingSystem<Element, InputStream> EncodingSystemXMLUTF8 =
-			new EncodingSystem<Element, InputStream>() {
+	public static CodecSystem<Element, InputStream> CodecSystemXMLUTF8 =
+			new CodecSystem<Element, InputStream>() {
 
 				@Override
 				public InputStream code(Element t) {

@@ -1,6 +1,6 @@
 package api4kb;
 
-public interface EncodingSystem<T, S> {
+public interface CodecSystem<T, S> {
 
 	public S code( T t);
 	

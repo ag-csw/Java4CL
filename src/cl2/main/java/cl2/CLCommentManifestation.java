@@ -3,7 +3,7 @@ package cl2;
 import org.dom4j.dom.DOMElement;
 
 import api4kb.DialectIncompatibleException;
-import api4kb.EncodingSystem;
+import api4kb.CodecSystem;
 import api4kb.EncodingSystemIncompatibleException;
 import api4kb.KnowledgeResource;
 import api4kb.None;
@@ -158,7 +158,7 @@ public final class CLCommentManifestation<T> extends
 
 	@Override
 	protected <S> CLEncoding<T, S> evalEncoding(
-			EncodingSystem<T, S> system)
+			CodecSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
 		// TODO implement eager lowering to encoding
 		return null;

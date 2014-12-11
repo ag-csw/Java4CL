@@ -11,7 +11,7 @@ public abstract class AbstractKnowledgeItem<T, S, R> implements KnowledgeItem<T,
 
 
 	//getter for encoding system
-	abstract EncodingSystem<T, S> getEncodingSystem();	
+	abstract CodecSystem<T, S> getCodecSystem();	
 
 	//lifting method
 	abstract KnowledgeEncoding<T, S> prototype();
