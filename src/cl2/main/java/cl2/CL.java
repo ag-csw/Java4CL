@@ -14,7 +14,12 @@ public final class CL {
 	
 	// public fields
 	// instantiate anonymous subclass of AbstractKRRLanguage
-	public static KRRLanguage lang = new AbstractKRRLanguage("Common Logic") {};	 
+	public static KRRLanguage lang = new AbstractKRRLanguage("Common Logic") {
+
+		@Override
+		public KRRDialect<Element> defaultDialect() {
+			return xcl2dom;
+		}};	 
 	// uses static factory methods on CLDialect
 	public static CLDialect<Element> xcl2dom = CLDialect.newInstance("XCL2-dom4j");
 	public static CLDialect<String> clif = CLDialect.newInstance("CLIF");

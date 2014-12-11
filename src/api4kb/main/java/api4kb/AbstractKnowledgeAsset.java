@@ -12,7 +12,7 @@ public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 
 	}
 
-	@Override
+	// clear memoization cache of the express method for the particular dialect
 	public void clearExpress(KRRLanguage lang) {
 		// TODO Auto-generated method stub
 
@@ -24,7 +24,7 @@ public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 		return null;
 	}
 
-	@Override
+	// lowering method accepts a parameter indicating the language
 	public AbstractKnowledgeExpression express(KRRLanguage lang)
 			throws LanguageIncompatibleException {
 		// TODO Auto-generated method stub

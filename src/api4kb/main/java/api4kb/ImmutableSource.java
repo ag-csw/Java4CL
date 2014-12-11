@@ -1,5 +1,5 @@
 package api4kb;
 
-public interface ImmutableSource extends Immutable {
+public interface ImmutableSource extends Immutable, Source {
 
 }

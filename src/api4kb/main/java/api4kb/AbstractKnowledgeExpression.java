@@ -41,34 +41,31 @@ public abstract class AbstractKnowledgeExpression implements
 	protected final KRRLanguage lang;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	@Override
 	public void clear() {
 		clearManifest();
 		clearAsset();
 	}
 
-	@Override
 	public void clearManifest() {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapManifest.clear();
 	}
 
-	@Override
 	public void clearAsset() {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapAsset.clear();
 	}
 
-	@Override
+	// clear memoization cache of the manifest method for the particular dialect
 	public void clearManifest(KRRDialect<?> dialect) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapManifest.remove(dialect);
 	}
 
-	@Override
+	// clear memoization cache of the conceptualize method for the particular environment
 	public void clearConceptualize(ImmutableEnvironment environment) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
@@ -80,7 +77,28 @@ public abstract class AbstractKnowledgeExpression implements
 		return lang;
 	}
 
+	// provides a canonical String serialization of the Expression based on a
+	// preferred Manifestation type
+	// should give the same output as chaining the manifest method (called on the
+	// preferred dialect and the default configuration) with the 
+	// toString method of the manifestation.
 	@Override
+	public String toString(){
+	  try {
+		return manifest().toString();
+	} catch (DialectIncompatibleException e) {
+		return toString();
+	}	
+	}
+
+	// default lowering method returns a manifestation in the default dialect
+	// for that language
+	public AbstractKnowledgeManifestation<?> manifest() throws DialectIncompatibleException{
+		return manifest(lang.defaultDialect());
+	}
+	
+	// lowering method accepts a parameter indicating the dialect
+	// with generic T for the format (e.g. String, XML Element)
 	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		LOG.debug("Starting evaluation of the manifest of expression");
@@ -108,8 +126,8 @@ public abstract class AbstractKnowledgeExpression implements
 	protected abstract <T> AbstractKnowledgeManifestation<T> evalManifest(
 			KRRDialect<T> dialect) throws DialectIncompatibleException;
 
-	@Override
-	public KnowledgeAsset conceptualize(ImmutableEnvironment e)
+	// lifting method
+   public KnowledgeAsset conceptualize(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {
 		if (!mapAsset.containsKey(e)) {
 			KnowledgeAsset asset = evalAsset(e);

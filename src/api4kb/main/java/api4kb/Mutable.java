@@ -1,7 +1,10 @@
 package api4kb;
 
-public interface Mutable {
+public interface Mutable<A extends Immutable> {
 	// getter for the Immutable snapshot
-	Immutable snapshot();
+	A getSnapshot();
+
+	// setter for the Immutable snapshot
+	void setSnapshot(A snapshot);
 
 }

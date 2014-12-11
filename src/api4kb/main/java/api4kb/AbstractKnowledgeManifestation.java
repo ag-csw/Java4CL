@@ -84,22 +84,16 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		return dialect;
 	}
 
+	// provides a canonical String representation of the Manifestation based on the
+	// default configuration
 	@Override
 	public String toString() {
 		return this.getValue().toString();
 	}
 
-	@Override
-	public Configuration<?> getConfiguration() {
-		// check the cache
-		if (configuration == null) {
-			// TODO create and cache
-		}
-		return configuration;
-	}
 
-	// public encode implemented
-	@Override
+	// lowering method accepts a parameter indicating the encoding system
+	// with generic T for the format (e.g. ByteSequence, byte{}, ...)
 	public <S> AbstractKnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
 		if (!mapEncoding.containsKey(system)) {
@@ -119,8 +113,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	protected abstract <S> AbstractKnowledgeEncoding<T, S> evalEncoding(
 			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException;
 
-	// public parse implemented
-	@Override
+	// lifting method
 	public AbstractKnowledgeExpression parse() {
 		if (expression == null) {
 			expression = evalExpression();
@@ -135,7 +128,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	protected abstract AbstractKnowledgeExpression evalExpression();
 	
 	
-	@Override
+	// clear memoization cache of the manifest method for the particular dialect
 	public void clearEncode(EncodingSystem<T, ?> system) {
 		// If the encoding cache does not contain this key, do nothing
 		synchronized (mapEncoding) {
@@ -151,7 +144,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		}
 	}
 
-	@Override
+	// clear memoization cache of the parse method
 	public void clearParse() {
 		// If the expression cache is empty, do nothing
 		synchronized (mapEncoding) {
@@ -180,5 +173,18 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		mapEncoding.put(system, encoding);
 	}
 
+	// TODO
+	//getter for configuration describing the transformation from the
+	// canonical value ( of type T) to the actual value as returned by getValue()
+	// The format of the configuration is represented as a wildcard because
+	// in general it will depend on the dialect.
+	// For example, an XML-based dialect would have an XSLT-based configuration.
+	//public Configuration<?> getConfiguration() {
+	//	// check the cache
+	//	if (configuration == null) {
+			// TODO create and cache
+	//	}
+	//	return configuration;
+	//}
 
 }

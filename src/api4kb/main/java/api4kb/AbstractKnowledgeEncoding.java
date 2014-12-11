@@ -31,11 +31,11 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	// Lazy lifting constructor - argument is a KnowledgeItem
-	public <R> AbstractKnowledgeEncoding(KnowledgeItem<T, S, R> input) {
+	public <R> AbstractKnowledgeEncoding(AbstractKnowledgeItem<T, S, R> input) {
 		this.dialect = input.getDialect();
 		this.system = input.getEncodingSystem();
 		// TODO this is not lazy
-		this.value = input.run();
+		this.value = input.read();
 	}
 
 	// protected fields
@@ -77,13 +77,11 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 		return this.getValue().toString();
 	}
 
-	// public reproduce
+	// lowering method
 	//TODO implement here, as this is not specific to language
-	@Override
 	abstract public <R> KnowledgeItem<T, S, R> reproduce(R destination);
 
-	// public parse implemented
-	@Override
+	// lifting method
 	public AbstractKnowledgeManifestation<T> decode() {
 		if (manifestation == null) {
 			manifestation = evalManifestation();
@@ -97,7 +95,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	// nonpublic lifting evaluation method
 	protected abstract AbstractKnowledgeManifestation<T> evalManifestation();	
 	
-	@Override
+	// clear memoization cache of the decode method
 	public void clearDecode() {
 		// If the manifestation cache is empty, do nothing
 			if (manifestation != null) {
