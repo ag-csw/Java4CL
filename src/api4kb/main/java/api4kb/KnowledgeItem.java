@@ -10,7 +10,7 @@ public interface KnowledgeItem<T, S, R> extends KnowledgeResource {
 	R getDestination();
 	
 	//getter for dialect
-	KRRDialect<T> getDialect();
+	KRRDialectType<T> getDialect();
 
 	
 

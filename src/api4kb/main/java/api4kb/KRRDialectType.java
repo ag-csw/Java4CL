@@ -1,6 +1,6 @@
 package api4kb;
 
-public interface KRRDialect<T> {
+public interface KRRDialectType<T> {
 
 	public String getName();
 	public KRRLanguage getLanguage();

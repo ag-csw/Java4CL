@@ -2,12 +2,12 @@ package cl2;
 
 import api4kb.AbstractKnowledgeManifestation;
 import api4kb.DialectIncompatibleException;
-import api4kb.KRRDialect;
+import api4kb.KRRDialectType;
 
 public abstract class CLManifestation<T> extends
 		AbstractKnowledgeManifestation<T> implements CLKnowledgeResource {
 
-	public CLManifestation(T value, KRRDialect<T> dialect) {
+	public CLManifestation(T value, KRRDialectType<T> dialect) {
 		super(value, dialect);
 		// TODO Auto-generated constructor stub
 	}

@@ -3,7 +3,7 @@ package api4kb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKRRDialect<T> implements KRRDialect<T> {
+public abstract class AbstractKRRDialect<T> implements KRRDialectType<T> {
 
 	public AbstractKRRDialect(String name, KRRLanguage lang) {
 		this.name = name;

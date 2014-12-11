@@ -11,7 +11,7 @@ public abstract class AbstractKnowledgeExpression implements
 	public <T> AbstractKnowledgeExpression(KRRLanguage lang) {
 		LOG.debug("Starting expression constructor for language: {}", lang);
 		this.lang = lang;
-		mapManifest = new HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>>();
+		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
 		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 	}
 
@@ -19,7 +19,7 @@ public abstract class AbstractKnowledgeExpression implements
 	public <T> AbstractKnowledgeExpression(
 			AbstractKnowledgeManifestation<T> manifestation) {
 		LOG.debug("Starting lazy lifting expression construtor with manifestation: {}", manifestation);
-		mapManifest = new HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>>();
+		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
 		manifestSafePut(manifestation.getDialect(), manifestation);
 		lang = manifestation.getDialect().getLanguage();
 		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
@@ -31,12 +31,12 @@ public abstract class AbstractKnowledgeExpression implements
 		LOG.debug("Starting lazy lowering expression construtor with asset: {}", asset);
 		LOG.debug("Starting expression construtor for language: {}", lang);
 		this.lang = lang;
-		mapManifest = new HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>>();
+		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
 		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 		mapAsset.put(asset.getEnvironment(), asset);
 	}
 
-	protected final HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>> mapManifest;
+	protected final HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest;
 	protected final HashMap<ImmutableEnvironment, AbstractKnowledgeAsset> mapAsset;
 	protected final KRRLanguage lang;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -59,7 +59,7 @@ public abstract class AbstractKnowledgeExpression implements
 	}
 
 	// clear memoization cache of the manifest method for the particular dialect
-	public void clearManifest(KRRDialect<?> dialect) {
+	public void clearManifest(KRRDialectType<?> dialect) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapManifest.remove(dialect);
@@ -99,7 +99,7 @@ public abstract class AbstractKnowledgeExpression implements
 	
 	// lowering method accepts a parameter indicating the dialect
 	// with generic T for the format (e.g. String, XML Element)
-	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialect<T> dialect)
+	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialectType<T> dialect)
 			throws DialectIncompatibleException {
 		LOG.debug("Starting evaluation of the manifest of expression");
 		LOG.debug("  Dialect of the manifestation: {}", dialect);
@@ -124,7 +124,7 @@ public abstract class AbstractKnowledgeExpression implements
 
 	// nonpublic helper method
 	protected abstract <T> AbstractKnowledgeManifestation<T> evalManifest(
-			KRRDialect<T> dialect) throws DialectIncompatibleException;
+			KRRDialectType<T> dialect) throws DialectIncompatibleException;
 
 	// lifting method
    public KnowledgeAsset conceptualize(ImmutableEnvironment e)
@@ -143,7 +143,7 @@ public abstract class AbstractKnowledgeExpression implements
 	protected abstract KnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException;
 	
-	<T> void manifestSafePut(KRRDialect<T> dialect, AbstractKnowledgeManifestation<T> manifest) {
+	<T> void manifestSafePut(KRRDialectType<T> dialect, AbstractKnowledgeManifestation<T> manifest) {
 		mapManifest.put(dialect, manifest);
 	}
 	

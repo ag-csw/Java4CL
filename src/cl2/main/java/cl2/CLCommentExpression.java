@@ -3,7 +3,7 @@ package cl2;
 import api4kb.ImmutableEnvironment;
 import api4kb.DialectIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
-import api4kb.KRRDialect;
+import api4kb.KRRDialectType;
 import api4kb.KRRLanguage;
 import api4kb.KnowledgeResource;
 import api4kb.LanguageIncompatibleException;
@@ -179,7 +179,7 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	@Override
-	public <T> CLCommentManifestation<T> manifest(KRRDialect<T> dialect)
+	public <T> CLCommentManifestation<T> manifest(KRRDialectType<T> dialect)
 			throws DialectIncompatibleException {
 		try {
 			return (CLCommentManifestation<T>) super.manifest(dialect);
@@ -189,7 +189,7 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	@Override
-	protected <T> CLCommentManifestation<T> evalManifest(KRRDialect<T> dialect)
+	protected <T> CLCommentManifestation<T> evalManifest(KRRDialectType<T> dialect)
 			throws DialectIncompatibleException {
 		if (dialect.getLanguage() != CL.lang) {
 			throw new DialectIncompatibleException();

@@ -6,6 +6,6 @@ public interface KRRLanguage {
 	// TODO
 	//public KRRLogic getLogic();
 	
-	public KRRDialect<?> defaultDialect();
+	public KRRDialectType<?> defaultDialect();
 
 }

@@ -1,7 +1,7 @@
 package cl2;
 
 import api4kb.ImmutableEnvironment;
-import api4kb.KRRDialect;
+import api4kb.KRRDialectType;
 import api4kb.DialectIncompatibleException;
 import api4kb.KRRLanguage;
 import api4kb.AbstractKnowledgeAsset;
@@ -52,14 +52,14 @@ public abstract class CLNameExpression extends CLExpression implements CLName {
 	}
 
 	@Override
-	public <T> CLManifestation<T> manifest(KRRDialect<T> dialect)
+	public <T> CLManifestation<T> manifest(KRRDialectType<T> dialect)
 			throws DialectIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void clearManifest(KRRDialect<?> dialect) {
+	public void clearManifest(KRRDialectType<?> dialect) {
 		// TODO Auto-generated method stub
 		
 	}
