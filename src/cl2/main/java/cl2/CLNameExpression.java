@@ -4,8 +4,9 @@ import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialect;
 import api4kb.DialectIncompatibleException;
 import api4kb.KRRLanguage;
-import api4kb.KnowledgeAsset;
-import api4kb.KnowledgeManifestation;
+import api4kb.AbstractKnowledgeAsset;
+import api4kb.AbstractKnowledgeManifestation;
+import api4kb.Option;
 
 public class CLNameExpression implements CLExpression, CLName {
 
@@ -14,7 +15,7 @@ public class CLNameExpression implements CLExpression, CLName {
 	}
 
 	@Override
-	public CLCommentExpression comment() {
+	public Option<CLComment> comment() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -38,7 +39,7 @@ public class CLNameExpression implements CLExpression, CLName {
 	}
 
 	@Override
-	public <T> KnowledgeManifestation<?> manifest(KRRDialect<T> dialect)
+	public <T> AbstractKnowledgeManifestation<?> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
@@ -51,7 +52,7 @@ public class CLNameExpression implements CLExpression, CLName {
 	}
 
 	@Override
-	public KnowledgeAsset conceptualize(ImmutableEnvironment e) {
+	public AbstractKnowledgeAsset conceptualize(ImmutableEnvironment e) {
 		// TODO Auto-generated method stub
 		return null;
 	}

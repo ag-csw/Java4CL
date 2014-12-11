@@ -2,15 +2,17 @@ package api4kb;
 
 import java.util.HashMap;
 
+import lazykb.LazyInitializing;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractKnowledgeManifestation<T> implements
-		KnowledgeManifestation<T> {
+		KnowledgeManifestation<T>, LazyInitializing<T> {
 	// Initializing-only constructor
 	public AbstractKnowledgeManifestation(KRRDialect<T> dialect) {
 		this.dialect = dialect;
-		mapEncoding = new HashMap<EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>>();
+		mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
 	// Wrapper-based constructor
@@ -19,25 +21,25 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		// value should be checked for validity relative to dialect
 		this.value = value;
 		this.dialect = dialect;
-		mapEncoding = new HashMap<EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>>();
+		mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
 	// Lazy lowering constructor - argument is expression and dialect
-	public AbstractKnowledgeManifestation(KnowledgeExpression expression,
+	public AbstractKnowledgeManifestation(AbstractKnowledgeExpression expression,
 			KRRDialect<T> dialect) throws DialectIncompatibleException {
 		if (expression.getLanguage().equals(dialect.getLanguage())) {
 			this.expression = expression;
 			this.dialect = dialect;
-			mapEncoding = new HashMap<EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>>();
+			mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		} else {
 			throw new DialectIncompatibleException();
 		}
 	}
 
 	// Lazy lifting constructor - argument is an Encoding
-	public <S> AbstractKnowledgeManifestation(KnowledgeEncoding<T, S> encoding) {
+	public <S> AbstractKnowledgeManifestation(AbstractKnowledgeEncoding<T, S> encoding) {
 		this.dialect = encoding.getDialect();
-		mapEncoding = new HashMap<EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>>();
+		mapEncoding = new HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		encodingSafePut(encoding.getEncodingSystem(), encoding);
 	}
 
@@ -45,8 +47,8 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	protected T value;
 	protected final KRRDialect<T> dialect;
 	protected Configuration<?> configuration;
-	protected final HashMap<EncodingSystem<T, ?>, KnowledgeEncoding<T, ?>> mapEncoding;
-	protected KnowledgeExpression expression;
+	protected final HashMap<EncodingSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding;
+	protected AbstractKnowledgeExpression expression;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
@@ -56,7 +58,6 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 				try {
 					// type compatibility is ensured within the
 					// expression object, making the unchecked cast safe
-					@SuppressWarnings("unchecked")
 					T exprvalue = (T) expression.manifest(dialect).getValue();
 					value = exprvalue;
 				} catch (DialectIncompatibleException e) {
@@ -99,28 +100,28 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// public encode implemented
 	@Override
-	public <S> KnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
+	public <S> AbstractKnowledgeEncoding<T, S> encode(EncodingSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
 		if (!mapEncoding.containsKey(system)) {
-			KnowledgeEncoding<T, S> encoding = evalEncoding(system);
+			AbstractKnowledgeEncoding<T, S> encoding = evalEncoding(system);
 			encodingSafePut(system, encoding);
 			return encoding;
 		} else {
 			// TODO type compatibility should be checked before caching
 			// so that the type case is safe
 			@SuppressWarnings("unchecked")
-			KnowledgeEncoding<T, S> encoding = (KnowledgeEncoding<T, S>) mapEncoding.get(system);
+			AbstractKnowledgeEncoding<T, S> encoding = (AbstractKnowledgeEncoding<T, S>) mapEncoding.get(system);
 			return encoding;
 		}
 	}
 
 	// non-public lowering evaluation method
-	protected abstract <S> KnowledgeEncoding<T, S> evalEncoding(
+	protected abstract <S> AbstractKnowledgeEncoding<T, S> evalEncoding(
 			EncodingSystem<T, S> system) throws EncodingSystemIncompatibleException;
 
 	// public parse implemented
 	@Override
-	public KnowledgeExpression parse() {
+	public AbstractKnowledgeExpression parse() {
 		if (expression == null) {
 			expression = evalExpression();
 			return expression;
@@ -131,7 +132,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	}
 
 	// nonpublic lifting evaluation method
-	protected abstract KnowledgeExpression evalExpression();
+	protected abstract AbstractKnowledgeExpression evalExpression();
 	
 	
 	@Override
@@ -175,7 +176,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		clearParse();
 	}
 	
-	<S> void encodingSafePut(EncodingSystem<T, S> system, KnowledgeEncoding<T,S> encoding) {
+	<S> void encodingSafePut(EncodingSystem<T, S> system, AbstractKnowledgeEncoding<T,S> encoding) {
 		mapEncoding.put(system, encoding);
 	}
 

@@ -1,19 +1,14 @@
 package cl2;
 
-import java.util.Iterator;
-
 import org.dom4j.Element;
-import org.dom4j.Node;
 import org.dom4j.dom.DOMElement;
-import org.dom4j.dom.DOMText;
-import org.w3c.dom.NodeList;
 
+import api4kb.AbstractKnowledgeEncoding;
+import api4kb.AbstractKnowledgeExpression;
 import api4kb.AbstractKnowledgeManifestation;
 import api4kb.DialectIncompatibleException;
 import api4kb.EncodingSystem;
 import api4kb.EncodingSystemIncompatibleException;
-import api4kb.KnowledgeEncoding;
-import api4kb.KnowledgeExpression;
 import api4kb.KnowledgeResource;
 import api4kb.None;
 import api4kb.Option;
@@ -131,7 +126,7 @@ public final class CLCommentManifestation<T> extends
 				}
 				// TODO write isComment method
 				if (child.getName().equals("Comment")) {
-					comment = new Some(getNewWrapperInstance((T) child, (CLDialect<T>) dialect));
+					comment = new Some<CLCommentManifestation<T>>(getNewWrapperInstance((T) child, (CLDialect<T>) dialect));
 				}
 
 			}
@@ -166,7 +161,7 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	@Override
-	protected <S> KnowledgeEncoding<T, S> evalEncoding(
+	protected <S> AbstractKnowledgeEncoding<T, S> evalEncoding(
 			EncodingSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
 		// TODO implement eager lowering to encoding
@@ -174,7 +169,7 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	@Override
-	protected KnowledgeExpression evalExpression() {
+	protected AbstractKnowledgeExpression evalExpression() {
 		// TODO implement eager lifting to expression
 		return null;
 	}

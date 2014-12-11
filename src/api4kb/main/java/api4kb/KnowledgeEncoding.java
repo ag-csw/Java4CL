@@ -5,7 +5,7 @@ public interface KnowledgeEncoding<T, S> extends KnowledgeResource {
 	
 	// getter for wrapped stream
 	// S should be some type of stream
-	S getStream();
+	S getValue();
 
 	// clear memoization cache of the decode method
 	void clearDecode();

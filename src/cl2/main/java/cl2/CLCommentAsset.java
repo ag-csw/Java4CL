@@ -1,13 +1,13 @@
 package cl2;
 
-import api4kb.ImmutableEnvironment;
+import api4kb.AbstractKnowledgeAsset;
+import api4kb.AbstractKnowledgeExpression;
+import api4kb.GraphImmutableEnvironment;
 import api4kb.KRRLanguage;
-import api4kb.KnowledgeAsset;
-import api4kb.KnowledgeExpression;
 import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
 
-public class CLCommentAsset implements CLComment, KnowledgeAsset {
+public class CLCommentAsset extends AbstractKnowledgeAsset implements CLComment {
 
 	@Override
 	public void clear() {
@@ -22,13 +22,13 @@ public class CLCommentAsset implements CLComment, KnowledgeAsset {
 	}
 
 	@Override
-	public ImmutableEnvironment getEnvironment() {
+	public GraphImmutableEnvironment getEnvironment() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KnowledgeExpression express(KRRLanguage lang)
+	public AbstractKnowledgeExpression express(KRRLanguage lang)
 			throws LanguageIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;

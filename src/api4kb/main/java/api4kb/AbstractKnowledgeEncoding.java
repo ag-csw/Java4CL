@@ -1,10 +1,12 @@
 package api4kb;
 
+import lazykb.LazyInitializing;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class AbstractKnowledgeEncoding<T, S> implements
-		KnowledgeEncoding<T, S> {
+		KnowledgeEncoding<T, S>, LazyInitializing<S> {
 	// Initializing-only constructor
 	public AbstractKnowledgeEncoding(KRRDialect<T> dialect,
 			EncodingSystem<T, S> system) {
@@ -13,15 +15,15 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	// Wrapper-based constructor
-	public AbstractKnowledgeEncoding(S stream, KRRDialect<T> dialect,
+	public AbstractKnowledgeEncoding(S value, KRRDialect<T> dialect,
 			EncodingSystem<T, S> system) {
-		this.stream = stream;
+		this.value = value;
 		this.dialect = dialect;
 		this.system = system;
 	}
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
-	public AbstractKnowledgeEncoding(KnowledgeManifestation<T> manifestation,
+	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestation<T> manifestation,
 			EncodingSystem<T, S> system) {
 		    this.manifestation = manifestation;
 			this.dialect = manifestation.getDialect();
@@ -33,24 +35,23 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 		this.dialect = input.getDialect();
 		this.system = input.getEncodingSystem();
 		// TODO this is not lazy
-		this.stream = input.run();
+		this.value = input.run();
 	}
 
 	// protected fields
-	protected S stream;
+	protected S value;
 	protected final KRRDialect<T> dialect;
 	protected final EncodingSystem<T, S> system;
-	protected KnowledgeManifestation<T> manifestation;
+	protected AbstractKnowledgeManifestation<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public S getStream() {
+	public S getValue() {
 		// add get for lazy constructor from Item
-		if (stream == null) {
+		if (value == null) {
 			if (!(manifestation == null)) {
 				try {
-					S manistream = manifestation.encode(system).getStream();
-					stream = manistream;
+					value = manifestation.encode(system).getValue();
 				} catch (EncodingSystemIncompatibleException e) {
 					assert false : "Faulty lazy lowering constructor";
 				}
@@ -58,7 +59,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 				assert false: "Inconsistent state";
 			}
 		}
-		return stream;
+		return value;
 	}
 
 	@Override
@@ -73,7 +74,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 
 	@Override
 	public String toString() {
-		return this.getStream().toString();
+		return this.getValue().toString();
 	}
 
 	// public reproduce
@@ -83,7 +84,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 
 	// public parse implemented
 	@Override
-	public KnowledgeManifestation<T> decode() {
+	public AbstractKnowledgeManifestation<T> decode() {
 		if (manifestation == null) {
 			manifestation = evalManifestation();
 			return manifestation;
@@ -94,7 +95,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	// nonpublic lifting evaluation method
-	protected abstract KnowledgeManifestation<T> evalManifestation();	
+	protected abstract AbstractKnowledgeManifestation<T> evalManifestation();	
 	
 	@Override
 	public void clearDecode() {
@@ -102,8 +103,8 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 			if (manifestation != null) {
 				// Before clearing the expression cache, be sure that this
 				// will not put the object into an invalid state
-				if (stream == null) {
-					stream = getStream();
+				if (value == null) {
+					value = getValue();
 				}
 				manifestation = null;
 			}

@@ -11,33 +11,33 @@ public abstract class AbstractKnowledgeExpression implements
 	public <T> AbstractKnowledgeExpression(KRRLanguage lang) {
 		LOG.debug("Starting expression constructor for language: {}", lang);
 		this.lang = lang;
-		mapManifest = new HashMap<KRRDialect<?>, KnowledgeManifestation<?>>();
-		mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAsset>();
+		mapManifest = new HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>>();
+		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 	}
 
 	// Lazy lifting constructor - argument is a Manifestation
 	public <T> AbstractKnowledgeExpression(
-			KnowledgeManifestation<T> manifestation) {
+			AbstractKnowledgeManifestation<T> manifestation) {
 		LOG.debug("Starting lazy lifting expression construtor with manifestation: {}", manifestation);
-		mapManifest = new HashMap<KRRDialect<?>, KnowledgeManifestation<?>>();
+		mapManifest = new HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>>();
 		manifestSafePut(manifestation.getDialect(), manifestation);
 		lang = manifestation.getDialect().getLanguage();
-		mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAsset>();
+		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractKnowledgeExpression(KnowledgeAsset asset, KRRLanguage lang)
+	public AbstractKnowledgeExpression(AbstractKnowledgeAsset asset, KRRLanguage lang)
 			throws UnsupportedTranslationException {
 		LOG.debug("Starting lazy lowering expression construtor with asset: {}", asset);
 		LOG.debug("Starting expression construtor for language: {}", lang);
 		this.lang = lang;
-		mapManifest = new HashMap<KRRDialect<?>, KnowledgeManifestation<?>>();
-		mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAsset>();
+		mapManifest = new HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>>();
+		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 		mapAsset.put(asset.getEnvironment(), asset);
 	}
 
-	protected final HashMap<KRRDialect<?>, KnowledgeManifestation<?>> mapManifest;
-	protected final HashMap<ImmutableEnvironment, KnowledgeAsset> mapAsset;
+	protected final HashMap<KRRDialect<?>, AbstractKnowledgeManifestation<?>> mapManifest;
+	protected final HashMap<ImmutableEnvironment, AbstractKnowledgeAsset> mapAsset;
 	protected final KRRLanguage lang;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -81,7 +81,7 @@ public abstract class AbstractKnowledgeExpression implements
 	}
 
 	@Override
-	public <T> KnowledgeManifestation<T> manifest(KRRDialect<T> dialect)
+	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		LOG.debug("Starting evaluation of the manifest of expression");
 		LOG.debug("  Dialect of the manifestation: {}", dialect);
@@ -92,20 +92,20 @@ public abstract class AbstractKnowledgeExpression implements
 		LOG.debug("Manifestation cache: {}", mapManifest);
 		if (!mapManifest.containsKey(dialect)) {
 			LOG.debug("Found no cached manifestation for: {}", dialect);
-			KnowledgeManifestation<T> manifest = evalManifest(dialect);
+			AbstractKnowledgeManifestation<T> manifest = evalManifest(dialect);
 			manifestSafePut(dialect, manifest);
 			return manifest;
 		} else {
 			// type compatibility is checked before caching
 			// so that the type case is safe
 			@SuppressWarnings("unchecked")
-			KnowledgeManifestation<T> manifest = (KnowledgeManifestation<T>) mapManifest.get(dialect);
+			AbstractKnowledgeManifestation<T> manifest = (AbstractKnowledgeManifestation<T>) mapManifest.get(dialect);
 			return manifest;
 		}
 	}
 
 	// nonpublic helper method
-	protected abstract <T> KnowledgeManifestation<T> evalManifest(
+	protected abstract <T> AbstractKnowledgeManifestation<T> evalManifest(
 			KRRDialect<T> dialect) throws DialectIncompatibleException;
 
 	@Override
@@ -125,7 +125,7 @@ public abstract class AbstractKnowledgeExpression implements
 	protected abstract KnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException;
 	
-	<T> void manifestSafePut(KRRDialect<T> dialect, KnowledgeManifestation<T> manifest) {
+	<T> void manifestSafePut(KRRDialect<T> dialect, AbstractKnowledgeManifestation<T> manifest) {
 		mapManifest.put(dialect, manifest);
 	}
 	

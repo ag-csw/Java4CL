@@ -1,8 +1,14 @@
 package cl2;
 
-import api4kb.KnowledgeManifestation;
+import api4kb.AbstractKnowledgeManifestation;
+import api4kb.KRRDialect;
 
-public interface CLManifestation<T> extends CLKnowledgeResource,
-		KnowledgeManifestation<T> {
+public abstract class CLManifestation<T> extends
+		AbstractKnowledgeManifestation<T> implements CLKnowledgeResource {
+
+	public CLManifestation(T value, KRRDialect<T> dialect) {
+		super(value, dialect);
+		// TODO Auto-generated constructor stub
+	}
 
 }

@@ -3,10 +3,6 @@ package api4kb;
 public interface KnowledgeManifestation<T> extends KnowledgeResource {
 	public KnowedgeSourceLevel level = KnowedgeSourceLevel.MANIFESTATION;
 	
-	// getter for wrapped data
-	// T may be String, XML Element or some other Character-oriented data structure
-	T getValue();
-
 	// clear memoization cache of the manifest method for the particular dialect
 	void clearEncode(EncodingSystem<T, ?> system);
 

@@ -6,7 +6,7 @@ import api4kb.DialectIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialect;
 import api4kb.KRRLanguage;
-import api4kb.KnowledgeAsset;
+import api4kb.AbstractKnowledgeAsset;
 import api4kb.KnowledgeResource;
 import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
@@ -92,7 +92,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			KnowledgeAsset asset = mapAsset.values().iterator().next();
+			AbstractKnowledgeAsset asset = mapAsset.values().iterator().next();
 			try {
 				return ((CLCommentExpression) asset.express(CL.lang))
 						.getSymbol();
@@ -139,7 +139,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			KnowledgeAsset asset = mapAsset.values().iterator().next();
+			AbstractKnowledgeAsset asset = mapAsset.values().iterator().next();
 			try {
 				return ((CLCommentExpression) asset.express(CL.lang))
 						.getComment();
@@ -229,7 +229,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 	}
 
 	@Override
-	protected KnowledgeAsset evalAsset(ImmutableEnvironment e)
+	protected AbstractKnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
