@@ -14,13 +14,13 @@ public final class CLCommentManifestation<T> extends
 		CLManifestation<T> implements CLComment {
 
 	// Package-Private Constructors
-	CLCommentManifestation(T value, CLDialect<T> dialect) {
+	CLCommentManifestation(T value, CLDialectType<T> dialect) {
 		super(value, dialect);
 	}
 
 	// Component-based constructor
 	CLCommentManifestation(String symbol,
-			Option<CLCommentManifestation<T>> comment, CLDialect<T> dialect) {
+			Option<CLCommentManifestation<T>> comment, CLDialectType<T> dialect) {
 		// TODO verify that comment is compatible with dialect
 		super(dialect);
 		this.symbol = symbol;
@@ -29,7 +29,7 @@ public final class CLCommentManifestation<T> extends
 
 	// Lazy lowering constructor
 	private CLCommentManifestation(CLCommentExpression expression,
-			CLDialect<T> dialect) throws DialectIncompatibleException {
+			CLDialectType<T> dialect) throws DialectIncompatibleException {
 		super(expression, dialect);
 	}
 
@@ -45,29 +45,29 @@ public final class CLCommentManifestation<T> extends
 
 	// Static Factory Methods
 	public static <T> CLCommentManifestation<T> getNewWrapperInstance(T value,
-			CLDialect<T> dialect) {
+			CLDialectType<T> dialect) {
 		return new CLCommentManifestation<T>(value, dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> getNewComponentInstance(
 			String symbol, Option<CLCommentManifestation<T>> comment,
-			CLDialect<T> dialect) {
+			CLDialectType<T> dialect) {
 		return new CLCommentManifestation<T>(symbol, comment, dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> getNewComponentInstance(
-			String symbol, CLDialect<T> dialect) {
+			String symbol, CLDialectType<T> dialect) {
 		return getNewComponentInstance(symbol,
 				new None<CLCommentManifestation<T>>(), dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> getNewComponentInstance(
-			CLDialect<T> dialect) {
+			CLDialectType<T> dialect) {
 		return getNewComponentInstance("", dialect);
 	}
 
 	public static <T> CLCommentManifestation<T> lazyNewInstance(
-			CLCommentExpression expression, CLDialect<T> dialect)
+			CLCommentExpression expression, CLDialectType<T> dialect)
 			throws DialectIncompatibleException {
 		return new CLCommentManifestation<T>(expression, dialect);
 	}
@@ -122,7 +122,7 @@ public final class CLCommentManifestation<T> extends
 				}
 				// TODO write isComment method
 				if (child.getName().equals("Comment")) {
-					comment = new Some<CLCommentManifestation<T>>(getNewWrapperInstance((T) child, (CLDialect<T>) dialect));
+					comment = new Some<CLCommentManifestation<T>>(getNewWrapperInstance((T) child, (CLDialectType<T>) dialect));
 				}
 
 			}
@@ -131,8 +131,8 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	@Override
-	public CLDialect<T> getDialect() {
-		return (CLDialect<T>) dialect;
+	public CLDialectType<T> getDialect() {
+		return (CLDialectType<T>) dialect;
 	}
 
 	@Override

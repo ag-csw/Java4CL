@@ -6,7 +6,7 @@ import api4kb.AbstractKnowledgeItem;
 
 public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements CLKnowledgeResource {
 
-   public CLEncoding(S stream, CLDialect<T> dialect, CodecSystem<T, S> system) {
+   public CLEncoding(S stream, CLDialectType<T> dialect, CodecSystem<T, S> system) {
 	   super(stream, dialect, system);
 	}
 

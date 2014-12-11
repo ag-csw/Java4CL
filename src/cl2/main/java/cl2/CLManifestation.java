@@ -12,12 +12,12 @@ public abstract class CLManifestation<T> extends
 		// TODO Auto-generated constructor stub
 	}
 
-	public CLManifestation(CLDialect<T> dialect) {
+	public CLManifestation(CLDialectType<T> dialect) {
 		super(dialect);
 		// TODO Auto-generated constructor stub
 	}
 
-	public CLManifestation(CLExpression expression, CLDialect<T> dialect) throws DialectIncompatibleException {
+	public CLManifestation(CLExpression expression, CLDialectType<T> dialect) throws DialectIncompatibleException {
 		super(expression, dialect);
 		// TODO Auto-generated constructor stub
 	}
