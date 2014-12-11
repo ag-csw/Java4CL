@@ -1,11 +1,7 @@
 package cl2;
 
-import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
-import api4kb.AbstractKnowledgeEncoding;
-import api4kb.AbstractKnowledgeExpression;
-import api4kb.AbstractKnowledgeManifestation;
 import api4kb.DialectIncompatibleException;
 import api4kb.EncodingSystem;
 import api4kb.EncodingSystemIncompatibleException;
@@ -15,7 +11,7 @@ import api4kb.Option;
 import api4kb.Some;
 
 public final class CLCommentManifestation<T> extends
-		AbstractKnowledgeManifestation<T> implements CLComment {
+		CLManifestation<T> implements CLComment {
 
 	// Package-Private Constructors
 	CLCommentManifestation(T value, CLDialect<T> dialect) {
@@ -119,7 +115,7 @@ public final class CLCommentManifestation<T> extends
 			DOMElement element = (DOMElement) value;
 			symbol = element.getText();
 			for (Object i : element.elements()) {
-				Element child = (Element) i;
+				DOMElement child = (DOMElement) i;
 				// TODO write isSymbolEdge method
 				if (child.getName().equals("symbol")) {
 					symbol = child.getText();
@@ -161,7 +157,7 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	@Override
-	protected <S> AbstractKnowledgeEncoding<T, S> evalEncoding(
+	protected <S> CLEncoding<T, S> evalEncoding(
 			EncodingSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
 		// TODO implement eager lowering to encoding
@@ -169,7 +165,7 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	@Override
-	protected AbstractKnowledgeExpression evalExpression() {
+	protected CLCommentExpression evalExpression() {
 		// TODO implement eager lifting to expression
 		return null;
 	}

@@ -1,12 +1,10 @@
 package cl2;
 
-import api4kb.AbstractKnowledgeExpression;
 import api4kb.ImmutableEnvironment;
 import api4kb.DialectIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialect;
 import api4kb.KRRLanguage;
-import api4kb.AbstractKnowledgeAsset;
 import api4kb.KnowledgeResource;
 import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
@@ -17,8 +15,8 @@ import api4kb.UnsupportedTranslationException;
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 
-public class CLCommentExpression extends AbstractKnowledgeExpression implements
-		CLComment, CLExpression {
+public class CLCommentExpression extends CLExpression implements
+		CLComment {
 
 	// Private Constructors
 	// Component-based constructor
@@ -92,7 +90,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			AbstractKnowledgeAsset asset = mapAsset.values().iterator().next();
+			CLCommentAsset asset = (CLCommentAsset) mapAsset.values().iterator().next();
 			try {
 				return ((CLCommentExpression) asset.express(CL.lang))
 						.getSymbol();
@@ -139,7 +137,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			AbstractKnowledgeAsset asset = mapAsset.values().iterator().next();
+			CLCommentAsset asset = (CLCommentAsset) mapAsset.values().iterator().next();
 			try {
 				return ((CLCommentExpression) asset.express(CL.lang))
 						.getComment();
@@ -229,7 +227,7 @@ public class CLCommentExpression extends AbstractKnowledgeExpression implements
 	}
 
 	@Override
-	protected AbstractKnowledgeAsset evalAsset(ImmutableEnvironment e)
+	protected CLCommentAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;

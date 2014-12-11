@@ -5,12 +5,25 @@ import api4kb.KRRDialect;
 import api4kb.DialectIncompatibleException;
 import api4kb.KRRLanguage;
 import api4kb.AbstractKnowledgeAsset;
-import api4kb.AbstractKnowledgeManifestation;
 import api4kb.Option;
+import api4kb.UnsupportedTranslationException;
 
-public class CLNameExpression implements CLExpression, CLName {
+public abstract class CLNameExpression extends CLExpression implements CLName {
 
-	public CLNameExpression() {
+
+	public CLNameExpression(CLAsset asset, KRRLanguage lang)
+			throws UnsupportedTranslationException {
+		super(asset, lang);
+		// TODO Auto-generated constructor stub
+	}
+
+	public <T> CLNameExpression(CLManifestation<T> manifestation) {
+		super(manifestation);
+		// TODO Auto-generated constructor stub
+	}
+
+	public <T> CLNameExpression(KRRLanguage lang) {
+		super(lang);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -39,7 +52,7 @@ public class CLNameExpression implements CLExpression, CLName {
 	}
 
 	@Override
-	public <T> AbstractKnowledgeManifestation<?> manifest(KRRDialect<T> dialect)
+	public <T> CLManifestation<T> manifest(KRRDialect<T> dialect)
 			throws DialectIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
