@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractKnowledgeEncoding<T, S> implements
 		KnowledgeEncoding<T, S>, LazyInitializing<S> {
 	// Initializing-only constructor
-	public AbstractKnowledgeEncoding(KRRDialectType<T> dialectType,
+	public AbstractKnowledgeEncoding(AbstractKRRDialectType<T> dialectType,
 			CodecSystem<T, S> system) {
 		this.dialectType = dialectType;
 		this.system = system;
 	}
 
 	// Wrapper-based constructor
-	public AbstractKnowledgeEncoding(S value, KRRDialectType<T> dialectType,
+	public AbstractKnowledgeEncoding(S value, AbstractKRRDialectType<T> dialectType,
 			CodecSystem<T, S> system) {
 		this(dialectType, system);
 		this.value = value;
@@ -37,10 +37,15 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 
 	// protected fields
 	protected S value;
-	protected final KRRDialectType<T> dialectType;
+	protected final AbstractKRRDialectType<T> dialectType;
 	protected final CodecSystem<T, S> system;
 	protected AbstractKnowledgeManifestation<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
+
+	@Override
+	public KnowledgeSourceLevel getLevel() {
+		return level;
+	}
 
 	@Override
 	public S getValue() {
@@ -60,7 +65,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	@Override
-	public KRRDialectType<T> getDialectType() {
+	public AbstractKRRDialectType<T> getDialectType() {
 		return dialectType;
 	}
 

@@ -1,8 +1,11 @@
 package api4kb;
 
-public interface KnowledgeExpression extends KnowledgeResource {
+import elevation.Liftable;
+import elevation.Lowerable;
+
+public interface KnowledgeExpression extends KnowledgeResource, Liftable, Lowerable {
 	
-	public KnowedgeSourceLevel level = KnowedgeSourceLevel.EXPRESSION;
+	public KnowledgeSourceLevel level = KnowledgeSourceLevel.EXPRESSION;
 			
 	//getter for language
 	KRRLanguage getLanguage();

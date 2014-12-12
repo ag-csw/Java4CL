@@ -1,9 +1,31 @@
 package api4kb;
 
+import java.util.HashMap;
+
+
 public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
+
+	private ImmutableEnvironment environment;
+	private final HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression>();
 
 	public AbstractKnowledgeAsset() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public AbstractKnowledgeAsset(
+			AbstractKnowledgeExpression expression,
+			ImmutableEnvironment e) {
+		mapExpressionSafePut(expression);
+		this.environment = e;
+	}
+
+	private void mapExpressionSafePut(AbstractKnowledgeExpression expression) {
+		mapExpression.put(expression.getLanguage(), expression);		
+	}
+
+	@Override
+	public KnowledgeSourceLevel getLevel() {
+		return level;
 	}
 
 	@Override
@@ -14,7 +36,8 @@ public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 
 	// clear memoization cache of the express method for the particular dialect
 	public void clearExpress(KRRLanguage lang) {
-		// TODO Auto-generated method stub
+		// TODO verify that this doesn't put the object into an inconsistent state
+		mapExpression.remove(lang);
 
 	}
 

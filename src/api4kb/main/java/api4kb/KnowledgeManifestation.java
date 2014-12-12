@@ -1,7 +1,10 @@
 package api4kb;
 
-public interface KnowledgeManifestation<T> extends KnowledgeResource {
-	public KnowedgeSourceLevel level = KnowedgeSourceLevel.MANIFESTATION;
+import elevation.Liftable;
+import elevation.Lowerable;
+
+public interface KnowledgeManifestation<T> extends KnowledgeResource, Liftable, Lowerable {
+	public KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
 	
 	//getter for wrapped object
 	T getValue();

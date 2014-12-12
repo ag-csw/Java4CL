@@ -23,11 +23,11 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 		return name;
 	}
 	@Override
-	public KRRDialect getDialect(){
+	public AbstractKRRDialect getDialect(){
 		return dialect;
 	}
 	@Override
-	public KRRLanguage getLanguage(){
+	public AbstractKRRLanguage getLanguage(){
 		return lang;
 	}
 	@Override

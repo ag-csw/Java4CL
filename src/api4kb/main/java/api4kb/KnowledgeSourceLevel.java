@@ -1,5 +1,5 @@
 package api4kb;
 
-public enum KnowedgeSourceLevel {
+public enum KnowledgeSourceLevel {
   ASSET, EXPRESSION, MANIFESTATION, ENCODING, ITEM, 
 }

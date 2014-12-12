@@ -1,5 +1,6 @@
 package cl2;
 
+import api4kb.AbstractKRRLanguage;
 import api4kb.ImmutableEnvironment;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
@@ -149,7 +150,7 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	@Override
-	public KRRLanguage getLanguage() {
+	public AbstractKRRLanguage getLanguage() {
 		return lang;
 	}
 

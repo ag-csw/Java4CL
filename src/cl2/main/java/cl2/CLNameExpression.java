@@ -1,5 +1,6 @@
 package cl2;
 
+import api4kb.AbstractKRRLanguage;
 import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialectType;
 import api4kb.DialectTypeIncompatibleException;
@@ -77,7 +78,7 @@ public abstract class CLNameExpression extends CLExpression implements CLName {
 	}
 
 	@Override
-	public KRRLanguage getLanguage() {
+	public AbstractKRRLanguage getLanguage() {
 		// TODO Auto-generated method stub
 		return null;
 	}

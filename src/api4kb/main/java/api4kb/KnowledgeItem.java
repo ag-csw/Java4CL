@@ -1,7 +1,9 @@
 package api4kb;
 
-public interface KnowledgeItem<T, S, R> extends KnowledgeResource {
-	public KnowedgeSourceLevel level = KnowedgeSourceLevel.ITEM;
+import elevation.Liftable;
+
+public interface KnowledgeItem<T, S, R> extends KnowledgeResource, Liftable {
+	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ITEM;
 
 	// getter for wrapped IO object
 	IO<S> getValue();

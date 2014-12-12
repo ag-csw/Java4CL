@@ -10,13 +10,13 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractKnowledgeManifestation<T> implements
 		KnowledgeManifestation<T>, LazyInitializing<T> {
 	// Initializing-only constructor
-	public AbstractKnowledgeManifestation(KRRDialectType<T> dialectType) {
+	public AbstractKnowledgeManifestation(AbstractKRRDialectType<T> dialectType) {
 		this.dialectType = dialectType;
 		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
 	// Wrapper-based constructor
-	public AbstractKnowledgeManifestation(T value, KRRDialectType<T> dialect) {
+	public AbstractKnowledgeManifestation(T value, AbstractKRRDialectType<T> dialect) {
 		//TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
 		this.value = value;
@@ -26,7 +26,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// Lazy lowering constructor - argument is expression and dialect
 	public AbstractKnowledgeManifestation(AbstractKnowledgeExpression expression,
-			KRRDialectType<T> dialectType) throws DialectTypeIncompatibleException {
+			AbstractKRRDialectType<T> dialectType) throws DialectTypeIncompatibleException {
 		if (expression.getLanguage().equals(dialectType.getDialect().getLanguage())) {
 			this.expression = expression;
 			this.dialectType = dialectType;
@@ -45,11 +45,16 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// protected fields
 	protected T value;
-	protected final KRRDialectType<T> dialectType;
+	protected final AbstractKRRDialectType<T> dialectType;
 	protected Configuration<?> configuration;
 	protected final HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding;
 	protected AbstractKnowledgeExpression expression;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
+
+	@Override
+	public KnowledgeSourceLevel getLevel() {
+		return level;
+	}
 
 	@Override
 	public T getValue() {
@@ -80,7 +85,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	}
 
 	@Override
-	public KRRDialectType<T> getDialectType() {
+	public AbstractKRRDialectType<T> getDialectType() {
 		return dialectType;
 	}
 

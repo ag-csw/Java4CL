@@ -1,7 +1,10 @@
 package api4kb;
 
-public interface KnowledgeEncoding<T, S> extends KnowledgeResource {
-	public KnowedgeSourceLevel level = KnowedgeSourceLevel.ENCODING;
+import elevation.Liftable;
+import elevation.Lowerable;
+
+public interface KnowledgeEncoding<T, S> extends KnowledgeResource, Liftable, Lowerable {
+	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ENCODING;
 	
 	// getter for wrapped stream
 	// S should be some type of stream

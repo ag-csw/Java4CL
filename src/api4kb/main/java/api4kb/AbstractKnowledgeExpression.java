@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractKnowledgeExpression implements
 		KnowledgeExpression {
 
-	public <T> AbstractKnowledgeExpression(KRRLanguage lang) {
+	public <T> AbstractKnowledgeExpression(AbstractKRRLanguage lang) {
 		LOG.debug("Starting expression constructor for language: {}", lang);
 		this.lang = lang;
 		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
@@ -18,28 +18,29 @@ public abstract class AbstractKnowledgeExpression implements
 	// Lazy lifting constructor - argument is a Manifestation
 	public <T> AbstractKnowledgeExpression(
 			AbstractKnowledgeManifestation<T> manifestation) {
+		this(manifestation.getDialectType().getLanguage());
 		LOG.debug("Starting lazy lifting expression construtor with manifestation: {}", manifestation);
-		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
 		manifestSafePut(manifestation);
-		lang = manifestation.getDialectType().getLanguage();
-		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractKnowledgeExpression(AbstractKnowledgeAsset asset, KRRLanguage lang)
+	public AbstractKnowledgeExpression(AbstractKnowledgeAsset asset, AbstractKRRLanguage lang)
 			throws UnsupportedTranslationException {
+		this(lang);
 		LOG.debug("Starting lazy lowering expression construtor with asset: {}", asset);
 		LOG.debug("Starting expression construtor for language: {}", lang);
-		this.lang = lang;
-		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
-		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 		mapAsset.put(asset.getEnvironment(), asset);
 	}
 
 	protected final HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest;
 	protected final HashMap<ImmutableEnvironment, AbstractKnowledgeAsset> mapAsset;
-	protected final KRRLanguage lang;
+	protected final AbstractKRRLanguage lang;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
+
+	@Override
+	public KnowledgeSourceLevel getLevel() {
+		return level;
+	}
 
 	@Override
 	public void clear() {
@@ -74,7 +75,7 @@ public abstract class AbstractKnowledgeExpression implements
 	}
 
 	@Override
-	public KRRLanguage getLanguage() {
+	public AbstractKRRLanguage getLanguage() {
 		return lang;
 	}
 

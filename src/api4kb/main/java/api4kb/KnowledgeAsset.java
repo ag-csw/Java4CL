@@ -1,7 +1,9 @@
 package api4kb;
 
-public interface KnowledgeAsset extends KnowledgeResource {
-	public KnowedgeSourceLevel level = KnowedgeSourceLevel.ASSET;
+import elevation.Lowerable;
+
+public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
+	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ASSET;
 
 	//getter for environment
 	ImmutableEnvironment getEnvironment();
