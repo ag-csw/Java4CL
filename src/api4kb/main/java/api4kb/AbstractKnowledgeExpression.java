@@ -20,8 +20,8 @@ public abstract class AbstractKnowledgeExpression implements
 			AbstractKnowledgeManifestation<T> manifestation) {
 		LOG.debug("Starting lazy lifting expression construtor with manifestation: {}", manifestation);
 		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
-		manifestSafePut(manifestation.getDialect(), manifestation);
-		lang = manifestation.getDialect().getLanguage();
+		manifestSafePut(manifestation);
+		lang = manifestation.getDialectType().getLanguage();
 		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 	}
 
@@ -112,7 +112,7 @@ public abstract class AbstractKnowledgeExpression implements
 		if (!mapManifest.containsKey(dialectType)) {
 			LOG.debug("Found no cached manifestation for: {}", dialectType);
 			AbstractKnowledgeManifestation<T> manifest = evalManifest(dialectType);
-			manifestSafePut(dialectType, manifest);
+			manifestSafePut(manifest);
 			return manifest;
 		} else {
 			// type compatibility is checked before caching
@@ -144,8 +144,8 @@ public abstract class AbstractKnowledgeExpression implements
 	protected abstract KnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException;
 	
-	<T> void manifestSafePut(KRRDialectType<T> dialectType, AbstractKnowledgeManifestation<T> manifest) {
-		mapManifest.put(dialectType, manifest);
+	<T> void manifestSafePut(AbstractKnowledgeManifestation<T> manifest) {
+		mapManifest.put(manifest.getDialectType(), manifest);
 	}
 	
 

@@ -8,39 +8,36 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractKnowledgeEncoding<T, S> implements
 		KnowledgeEncoding<T, S>, LazyInitializing<S> {
 	// Initializing-only constructor
-	public AbstractKnowledgeEncoding(KRRDialectType<T> dialect,
+	public AbstractKnowledgeEncoding(KRRDialectType<T> dialectType,
 			CodecSystem<T, S> system) {
-		this.dialect = dialect;
+		this.dialectType = dialectType;
 		this.system = system;
 	}
 
 	// Wrapper-based constructor
-	public AbstractKnowledgeEncoding(S value, KRRDialectType<T> dialect,
+	public AbstractKnowledgeEncoding(S value, KRRDialectType<T> dialectType,
 			CodecSystem<T, S> system) {
+		this(dialectType, system);
 		this.value = value;
-		this.dialect = dialect;
-		this.system = system;
 	}
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
 	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestation<T> manifestation,
 			CodecSystem<T, S> system) {
+    		this(manifestation.getDialectType(), system);
 		    this.manifestation = manifestation;
-			this.dialect = manifestation.getDialect();
-			this.system = system;
 	}
 
 	// Lazy lifting constructor - argument is a KnowledgeItem
 	public <R> AbstractKnowledgeEncoding(AbstractKnowledgeItem<T, S, R> input) {
-		this.dialect = input.getDialect();
-		this.system = input.getCodecSystem();
+		this(input.getDialectType(), input.getCodecSystem());
 		// TODO this is not lazy
 		this.value = input.read();
 	}
 
 	// protected fields
 	protected S value;
-	protected final KRRDialectType<T> dialect;
+	protected final KRRDialectType<T> dialectType;
 	protected final CodecSystem<T, S> system;
 	protected AbstractKnowledgeManifestation<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -63,8 +60,8 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	@Override
-	public KRRDialectType<T> getDialect() {
-		return dialect;
+	public KRRDialectType<T> getDialectType() {
+		return dialectType;
 	}
 
 	@Override

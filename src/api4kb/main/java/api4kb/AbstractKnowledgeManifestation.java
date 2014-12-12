@@ -38,7 +38,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// Lazy lifting constructor - argument is an Encoding
 	public <S> AbstractKnowledgeManifestation(AbstractKnowledgeEncoding<T, S> encoding) {
-		this.dialectType = encoding.getDialect();
+		this.dialectType = encoding.getDialectType();
 		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		encodingSafePut(encoding.getCodecSystem(), encoding);
 	}
@@ -80,7 +80,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 	}
 
 	@Override
-	public KRRDialectType<T> getDialect() {
+	public KRRDialectType<T> getDialectType() {
 		return dialectType;
 	}
 

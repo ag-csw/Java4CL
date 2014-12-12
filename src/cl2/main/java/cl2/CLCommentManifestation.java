@@ -131,7 +131,7 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	@Override
-	public CLDialectType<T> getDialect() {
+	public CLDialectType<T> getDialectType() {
 		return (CLDialectType<T>) dialectType;
 	}
 

@@ -29,9 +29,7 @@ public final class CL {
 		};	 
 		
 		
-	public static CLDialect xcl2 = new CLDialect("XCL2") {
-		
-	};
+	public static CLDialect xcl2 = new CLDialect("XCL2") {};
 	
 	public static CLDialectType<Element> xcl2dom = 
 			new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class){}; 
