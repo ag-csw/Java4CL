@@ -2,9 +2,9 @@ package cl2;
 
 import org.w3c.dom.Element;
 
+import api4kb.KRRDialect;
 import api4kb.KRRDialectType;
 import api4kb.AbstractKRRLanguage;
-import api4kb.KRRLanguage;
 import org.dom4j.*;
 
 public final class CL {
@@ -14,15 +14,28 @@ public final class CL {
 	
 	// public fields
 	// instantiate anonymous subclass of AbstractKRRLanguage
-	public static KRRLanguage lang = new AbstractKRRLanguage("Common Logic") {
+	public static AbstractKRRLanguage lang = new AbstractKRRLanguage("Common Logic") {
 
 		@Override
-		public KRRDialectType<Element> defaultDialect() {
+		public KRRDialectType<Element> defaultDialectType() {
 			return xcl2dom;
-		}};	 
-	// uses static factory methods on CLDialect
-	public static CLDialectType<Element> xcl2dom = CLDialectType.newInstance("XCL2-dom4j");
-	public static CLDialectType<String> clif = CLDialectType.newInstance("CLIF");
+		}
+
+		@Override
+		public KRRDialect defaultDialect() {
+			return xcl2;
+		}
+
+		};	 
+		
+		
+	public static CLDialect xcl2 = new CLDialect("XCL2") {
+		
+	};
+	
+	public static CLDialectType<Element> xcl2dom = 
+			new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class){}; 
+	
 	public static final Namespace NS_XCL2 = Namespace.get("http://purl.org/xcl/2.0/");	
 	// tests for syntactic categories
 	public static Boolean isComment(Object x, KRRDialectType<?> dialect){

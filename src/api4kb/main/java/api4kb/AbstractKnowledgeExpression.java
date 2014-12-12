@@ -41,6 +41,7 @@ public abstract class AbstractKnowledgeExpression implements
 	protected final KRRLanguage lang;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public void clear() {
 		clearManifest();
 		clearAsset();
@@ -59,10 +60,10 @@ public abstract class AbstractKnowledgeExpression implements
 	}
 
 	// clear memoization cache of the manifest method for the particular dialect
-	public void clearManifest(KRRDialectType<?> dialect) {
+	public void clearManifest(KRRDialectType<?> dialectType) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
-		mapManifest.remove(dialect);
+		mapManifest.remove(dialectType);
 	}
 
 	// clear memoization cache of the conceptualize method for the particular environment
@@ -94,37 +95,37 @@ public abstract class AbstractKnowledgeExpression implements
 	// default lowering method returns a manifestation in the default dialect
 	// for that language
 	public AbstractKnowledgeManifestation<?> manifest() throws DialectTypeIncompatibleException{
-		return manifest(lang.defaultDialect());
+		return manifest(lang.defaultDialectType());
 	}
 	
 	// lowering method accepts a parameter indicating the dialect
 	// with generic T for the format (e.g. String, XML Element)
-	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialectType<T> dialect)
+	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialectType<T> dialectType)
 			throws DialectTypeIncompatibleException {
 		LOG.debug("Starting evaluation of the manifest of expression");
-		LOG.debug("  Dialect of the manifestation: {}", dialect);
+		LOG.debug("  Dialect of the manifestation: {}", dialectType);
 		LOG.debug("  Language of the expression: {}", lang);
-		if (dialect.getLanguage() != lang){
+		if (dialectType.getLanguage() != lang){
 			throw new DialectTypeIncompatibleException();
 		}
 		LOG.debug("Manifestation cache: {}", mapManifest);
-		if (!mapManifest.containsKey(dialect)) {
-			LOG.debug("Found no cached manifestation for: {}", dialect);
-			AbstractKnowledgeManifestation<T> manifest = evalManifest(dialect);
-			manifestSafePut(dialect, manifest);
+		if (!mapManifest.containsKey(dialectType)) {
+			LOG.debug("Found no cached manifestation for: {}", dialectType);
+			AbstractKnowledgeManifestation<T> manifest = evalManifest(dialectType);
+			manifestSafePut(dialectType, manifest);
 			return manifest;
 		} else {
 			// type compatibility is checked before caching
 			// so that the type case is safe
 			@SuppressWarnings("unchecked")
-			AbstractKnowledgeManifestation<T> manifest = (AbstractKnowledgeManifestation<T>) mapManifest.get(dialect);
+			AbstractKnowledgeManifestation<T> manifest = (AbstractKnowledgeManifestation<T>) mapManifest.get(dialectType);
 			return manifest;
 		}
 	}
 
 	// nonpublic helper method
 	protected abstract <T> AbstractKnowledgeManifestation<T> evalManifest(
-			KRRDialectType<T> dialect) throws DialectTypeIncompatibleException;
+			KRRDialectType<T> dialectType) throws DialectTypeIncompatibleException;
 
 	// lifting method
    public KnowledgeAsset conceptualize(ImmutableEnvironment e)
@@ -143,8 +144,8 @@ public abstract class AbstractKnowledgeExpression implements
 	protected abstract KnowledgeAsset evalAsset(ImmutableEnvironment e)
 			throws EnvironmentIncompatibleException;
 	
-	<T> void manifestSafePut(KRRDialectType<T> dialect, AbstractKnowledgeManifestation<T> manifest) {
-		mapManifest.put(dialect, manifest);
+	<T> void manifestSafePut(KRRDialectType<T> dialectType, AbstractKnowledgeManifestation<T> manifest) {
+		mapManifest.put(dialectType, manifest);
 	}
 	
 

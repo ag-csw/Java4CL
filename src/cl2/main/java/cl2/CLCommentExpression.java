@@ -92,7 +92,7 @@ public class CLCommentExpression extends CLExpression implements
 		else {
 			CLCommentAsset asset = (CLCommentAsset) mapAsset.values().iterator().next();
 			try {
-				return ((CLCommentExpression) asset.express(CL.lang))
+				return asset.express(CL.lang)
 						.getSymbol();
 			} catch (LanguageIncompatibleException e) {
 				assert false : "Faulty lazy expression constructor";
@@ -139,7 +139,7 @@ public class CLCommentExpression extends CLExpression implements
 		else {
 			CLCommentAsset asset = (CLCommentAsset) mapAsset.values().iterator().next();
 			try {
-				return ((CLCommentExpression) asset.express(CL.lang))
+				return asset.express(CL.lang)
 						.getComment();
 			} catch (LanguageIncompatibleException e) {
 				assert false : "Faulty lazy expression constructor";

@@ -14,9 +14,11 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	// private final Logic logic;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	@Override
 	public String getName() {
 		return name;
 	}
+	@Override
 	public String toString() {
 		return name;
 	}

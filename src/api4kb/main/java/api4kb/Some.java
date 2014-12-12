@@ -6,6 +6,7 @@ public class Some<T> implements Option<T> {
 		this.value = value;
 	}
 	private final T value;
+	@Override
 	public Boolean isEmpty() {
 		return false;
 	}

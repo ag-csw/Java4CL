@@ -6,7 +6,10 @@ public interface KnowledgeManifestation<T> extends KnowledgeResource {
 	//getter for wrapped object
 	T getValue();
 	
-	//getter for dialect
+	//getter for dialect type
 	KRRDialectType<T> getDialect();
+	
+	Class<T> getType();
+	
 	
 }

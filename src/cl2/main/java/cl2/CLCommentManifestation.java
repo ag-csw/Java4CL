@@ -109,7 +109,7 @@ public final class CLCommentManifestation<T> extends
 		if (symbol == null)
 			symbol = "";
 		comment = new None<CLCommentManifestation<T>>();
-		if (dialect != CL.xcl2dom) {
+		if (dialectType != CL.xcl2dom) {
 			// TODO implement other CL dialects
 		} else {
 			DOMElement element = (DOMElement) value;
@@ -122,7 +122,7 @@ public final class CLCommentManifestation<T> extends
 				}
 				// TODO write isComment method
 				if (child.getName().equals("Comment")) {
-					comment = new Some<CLCommentManifestation<T>>(getNewWrapperInstance((T) child, (CLDialectType<T>) dialect));
+					comment = new Some<CLCommentManifestation<T>>(getNewWrapperInstance((T) child, (CLDialectType<T>) dialectType));
 				}
 
 			}
@@ -132,7 +132,7 @@ public final class CLCommentManifestation<T> extends
 
 	@Override
 	public CLDialectType<T> getDialect() {
-		return (CLDialectType<T>) dialect;
+		return (CLDialectType<T>) dialectType;
 	}
 
 	@Override
@@ -167,6 +167,12 @@ public final class CLCommentManifestation<T> extends
 	@Override
 	protected CLCommentExpression evalExpression() {
 		// TODO implement eager lifting to expression
+		return null;
+	}
+
+	@Override
+	public Class<T> getType() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

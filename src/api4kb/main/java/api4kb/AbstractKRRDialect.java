@@ -1,7 +1,22 @@
 package api4kb;
 
-public abstract class AbstractKRRDialect {
+public abstract class AbstractKRRDialect implements KRRDialect {
 	
-	public abstract <T> KRRDialectType<T> getDialectType() throws DialectTypeIncompatibleException;
+	private String name;
+	private AbstractKRRLanguage lang;
+
+	public AbstractKRRDialect(String name, AbstractKRRLanguage lang) {
+		this.name = name;
+		this.lang = lang;
+	}
+
+	@Override
+	public String getName(){
+		return name;
+	}
+	@Override
+	public AbstractKRRLanguage getLanguage(){
+		return lang;
+	}
 
 }

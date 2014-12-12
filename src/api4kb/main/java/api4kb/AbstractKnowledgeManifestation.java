@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractKnowledgeManifestation<T> implements
 		KnowledgeManifestation<T>, LazyInitializing<T> {
 	// Initializing-only constructor
-	public AbstractKnowledgeManifestation(KRRDialectType<T> dialect) {
-		this.dialect = dialect;
+	public AbstractKnowledgeManifestation(KRRDialectType<T> dialectType) {
+		this.dialectType = dialectType;
 		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
@@ -20,16 +20,16 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 		//TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
 		this.value = value;
-		this.dialect = dialect;
+		this.dialectType = dialect;
 		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 	}
 
 	// Lazy lowering constructor - argument is expression and dialect
 	public AbstractKnowledgeManifestation(AbstractKnowledgeExpression expression,
-			KRRDialectType<T> dialect) throws DialectTypeIncompatibleException {
-		if (expression.getLanguage().equals(dialect.getLanguage())) {
+			KRRDialectType<T> dialectType) throws DialectTypeIncompatibleException {
+		if (expression.getLanguage().equals(dialectType.getDialect().getLanguage())) {
 			this.expression = expression;
-			this.dialect = dialect;
+			this.dialectType = dialectType;
 			mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		} else {
 			throw new DialectTypeIncompatibleException();
@@ -38,14 +38,14 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	// Lazy lifting constructor - argument is an Encoding
 	public <S> AbstractKnowledgeManifestation(AbstractKnowledgeEncoding<T, S> encoding) {
-		this.dialect = encoding.getDialect();
+		this.dialectType = encoding.getDialect();
 		mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
 		encodingSafePut(encoding.getCodecSystem(), encoding);
 	}
 
 	// protected fields
 	protected T value;
-	protected final KRRDialectType<T> dialect;
+	protected final KRRDialectType<T> dialectType;
 	protected Configuration<?> configuration;
 	protected final HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding;
 	protected AbstractKnowledgeExpression expression;
@@ -58,7 +58,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 				try {
 					// type compatibility is ensured within the
 					// expression object, making the unchecked cast safe
-					T exprvalue = (T) expression.manifest(dialect).getValue();
+					T exprvalue = expression.manifest(dialectType).getValue();
 					value = exprvalue;
 				} catch (DialectTypeIncompatibleException e) {
 					assert false : "Faulty lazy lowering constructor";
@@ -68,7 +68,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 					synchronized (mapEncoding) {
 						CodecSystem<T, ?> system = mapEncoding.keySet()
 								.iterator().next();
-						value = (T) mapEncoding.get(system).decode().getValue();
+						value = mapEncoding.get(system).decode().getValue();
 					}
 				} else {
 					assert false : "AbstractKnowledgeExpression is in inconsistent state";
@@ -81,7 +81,7 @@ public abstract class AbstractKnowledgeManifestation<T> implements
 
 	@Override
 	public KRRDialectType<T> getDialect() {
-		return dialect;
+		return dialectType;
 	}
 
 	// provides a canonical String representation of the Manifestation based on the
