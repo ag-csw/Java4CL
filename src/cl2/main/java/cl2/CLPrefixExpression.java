@@ -1,16 +1,18 @@
 package cl2;
 
 import api4kb.AbstractKRRLanguage;
+import api4kb.GraphImmutableEnvironment;
 import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialectType;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.KRRLanguage;
+import api4kb.KnowledgeAssetLI;
 import api4kb.UnsupportedTranslationException;
 
 public abstract class CLPrefixExpression extends CLExpression implements CLPrefix {
 
 
-	public CLPrefixExpression(CLAsset asset, KRRLanguage lang)
+	public CLPrefixExpression(KnowledgeAssetLI asset, KRRLanguage lang)
 			throws UnsupportedTranslationException {
 		super(asset, lang);
 		// TODO Auto-generated constructor stub
@@ -59,7 +61,7 @@ public abstract class CLPrefixExpression extends CLExpression implements CLPrefi
 	}
 
 	@Override
-	public CLAsset conceptualize(ImmutableEnvironment e) {
+	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
 		// TODO Auto-generated method stub
 		return null;
 	}

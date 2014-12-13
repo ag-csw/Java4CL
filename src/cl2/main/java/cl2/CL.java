@@ -1,11 +1,28 @@
 package cl2;
 
-import org.w3c.dom.Element;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 
-import api4kb.KRRDialect;
-import api4kb.KRRDialectType;
-import api4kb.AbstractKRRLanguage;
-import org.dom4j.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.dom4j.Namespace;
+import org.w3c.dom.Document;
+
+import api4kb.*;
+
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+
 
 public final class CL {
 
@@ -36,9 +53,31 @@ public final class CL {
 	
 	public static final Namespace NS_XCL2 = Namespace.get("http://purl.org/xcl/2.0/");	
 	// tests for syntactic categories
-	public static Boolean isComment(Object x, KRRDialectType<?> dialect){
-		// TODO implement case tests for particular dialects
+	public static Boolean isComment(Object x, CLDialectType<?> dialect){
+		// TODO include a field for checking syntactic category, independent of format or level
 		return false;
 	}
+	
+	public static CodecSystem<Element, byte[]> dom2bytearray = new CodecSystem<Element, byte[]>(){
+
+		@Override
+		public byte[] code(Element node) throws EncoderException, TransformerException, UnsupportedEncodingException, IOException {
+			
+			TransformerFactory transFactory = TransformerFactory.newInstance();
+			Transformer transformer = transFactory.newTransformer();
+			StringWriter buffer = new StringWriter();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.transform(new DOMSource(node),
+			      new StreamResult(buffer));
+			return buffer.toString().getBytes("UTF-8");
+		}
+
+		@Override
+		public Element decode(byte[] bytes) throws DecoderException, ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException {
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = domFactory.newDocumentBuilder();
+			Document doc = builder.parse(new String(bytes, "UTF-8"));
+			return doc.getDocumentElement();
+		}};
 
 }

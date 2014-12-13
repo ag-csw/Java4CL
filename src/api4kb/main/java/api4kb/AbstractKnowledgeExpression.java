@@ -5,14 +5,13 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKnowledgeExpression implements
+public abstract class AbstractKnowledgeExpression extends AbstractKnowledgeResource implements
 		KnowledgeExpression {
 
-	public <T> AbstractKnowledgeExpression(AbstractKRRLanguage lang) {
-		LOG.debug("Starting expression constructor for language: {}", lang);
+	// initializing only constructor
+	protected <T> AbstractKnowledgeExpression(AbstractKRRLanguage lang) {
+		LOG.debug("Starting initializing constructor for language: {}", lang);
 		this.lang = lang;
-		mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
-		mapAsset = new HashMap<ImmutableEnvironment, AbstractKnowledgeAsset>();
 	}
 
 	// Lazy lifting constructor - argument is a Manifestation
@@ -24,7 +23,7 @@ public abstract class AbstractKnowledgeExpression implements
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractKnowledgeExpression(AbstractKnowledgeAsset asset, AbstractKRRLanguage lang)
+	public AbstractKnowledgeExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang)
 			throws UnsupportedTranslationException {
 		this(lang);
 		LOG.debug("Starting lazy lowering expression construtor with asset: {}", asset);
@@ -32,8 +31,8 @@ public abstract class AbstractKnowledgeExpression implements
 		mapAsset.put(asset.getEnvironment(), asset);
 	}
 
-	protected final HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest;
-	protected final HashMap<ImmutableEnvironment, AbstractKnowledgeAsset> mapAsset;
+	protected final HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
+	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
 	protected final AbstractKRRLanguage lang;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -129,25 +128,42 @@ public abstract class AbstractKnowledgeExpression implements
 			KRRDialectType<T> dialectType) throws DialectTypeIncompatibleException;
 
 	// lifting method
-   public KnowledgeAsset conceptualize(ImmutableEnvironment e)
+   public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {
+	   LOG.debug("Starting conceptualization relative to environment : {}", e);
 		if (!mapAsset.containsKey(e)) {
-			KnowledgeAsset asset = evalAsset(e);
+			LOG.debug("No asset is cached for this environment. Evaluating...");
+			KnowledgeAssetLI asset = evalAsset(e);
+			LOG.debug("Asset evaluated: {}", asset);
 			return asset;
 		} else {
-			KnowledgeAsset asset = mapAsset.get(e);
+			KnowledgeAssetLI asset = mapAsset.get(e);
+			LOG.debug("Asset obtained from cache: {}", asset);
 			return asset;
 		}
 
 	}
 
 	// nonpublic helper method
-	protected abstract KnowledgeAsset evalAsset(ImmutableEnvironment e)
-			throws EnvironmentIncompatibleException;
+	protected KnowledgeAssetLI evalAsset(GraphImmutableEnvironment e)
+			throws EnvironmentIncompatibleException{
+		KnowledgeAssetLI asset = new KnowledgeAssetLI(this, e){};
+		return asset;
+	}
 	
 	<T> void manifestSafePut(AbstractKnowledgeManifestation<T> manifest) {
 		mapManifest.put(manifest.getDialectType(), manifest);
 	}
 	
+	// verify that some other equivalent property has been set
+	// before forgetting initial value, to avoid leaving object
+	// in inconsistent "state".
+	@Override
+	public void clearInitialValue() {
+		if ((!mapManifest.isEmpty()) | (!mapAsset.isEmpty())) {
+			super.unsafeClearInitialValue();
+		}
+	}
+
 
 }

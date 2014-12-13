@@ -3,8 +3,6 @@ package cl2;
 import org.dom4j.dom.DOMElement;
 
 import api4kb.DialectTypeIncompatibleException;
-import api4kb.CodecSystem;
-import api4kb.EncodingSystemIncompatibleException;
 import api4kb.KnowledgeResource;
 import api4kb.None;
 import api4kb.Option;
@@ -85,6 +83,7 @@ public final class CLCommentManifestation<T> extends
 		if (symbol == null) {
 			symbol = evalSymbol();
 		}
+		LOG.debug("Symbol : {}", symbol);
 		return symbol;
 	}
 
@@ -101,6 +100,7 @@ public final class CLCommentManifestation<T> extends
 		if (comment == null) {
 			comment = evalComment();
 		}
+		LOG.debug("Comment : {}", comment);
 		return comment;
 	}
 
@@ -156,13 +156,6 @@ public final class CLCommentManifestation<T> extends
 		return this.toString().hashCode();
 	}
 
-	@Override
-	protected <S> CLEncoding<T, S> evalEncoding(
-			CodecSystem<T, S> system)
-			throws EncodingSystemIncompatibleException {
-		// TODO implement eager lowering to encoding
-		return null;
-	}
 
 	@Override
 	protected CLCommentExpression evalExpression() {
@@ -175,5 +168,6 @@ public final class CLCommentManifestation<T> extends
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

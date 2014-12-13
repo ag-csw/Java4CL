@@ -4,7 +4,7 @@ import elevation.Liftable;
 import elevation.Lowerable;
 
 public interface KnowledgeManifestation<T> extends KnowledgeResource, Liftable, Lowerable {
-	public KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
+	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
 	
 	//getter for wrapped object
 	T getValue();
@@ -13,6 +13,7 @@ public interface KnowledgeManifestation<T> extends KnowledgeResource, Liftable, 
 	KRRDialectType<T> getDialectType();
 	
 	Class<T> getType();
+	
 	
 	
 }

@@ -2,21 +2,30 @@ package api4kb;
 
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 
-	private ImmutableEnvironment environment;
+public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource implements KnowledgeAsset {
+
+	private final GraphImmutableEnvironment environment;
 	private final HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression>();
+	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKnowledgeAsset() {
-		// TODO Auto-generated constructor stub
+	// initializing only constructor
+	AbstractKnowledgeAsset(GraphImmutableEnvironment env) {
+		LOG.debug("Starting initializing asset construtor with environment: {}", env);
+		this.environment = env;
 	}
-	
-	public AbstractKnowledgeAsset(
+    
+	// lazy lifting constructor
+	protected AbstractKnowledgeAsset(
 			AbstractKnowledgeExpression expression,
-			ImmutableEnvironment e) {
+			GraphImmutableEnvironment env) {
+		this(env);
+		LOG.debug("Starting lazy lifting asset construtor with expression: {}", expression);
+		initialValue = expression;
 		mapExpressionSafePut(expression);
-		this.environment = e;
 	}
 
 	private void mapExpressionSafePut(AbstractKnowledgeExpression expression) {
@@ -42,16 +51,34 @@ public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 	}
 
 	@Override
-	public GraphImmutableEnvironment getEnvironment() {
-		// TODO Auto-generated method stub
-		return null;
+	public ImmutableEnvironment getEnvironment() {
+		return environment;
 	}
 
 	// lowering method accepts a parameter indicating the language
 	public AbstractKnowledgeExpression express(KRRLanguage lang)
 			throws LanguageIncompatibleException {
-		// TODO Auto-generated method stub
+		LOG.debug("Starting express with language: {}", lang);
+		if (!environment.containsLanguage(lang)){
+			throw new LanguageIncompatibleException("Requested language is not contained in environment:" + lang.toString());
+		}
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)){
+			LOG.debug("Using cached intial value for express: {}", initialValue);
+			return (AbstractKnowledgeExpression) initialValue;
+		}
+		// TODO implement mapping application from environment
 		return null;
 	}
+	
+	// verify that some other equivalent property has been set
+	// before forgetting initial value, to avoid leaving object
+	// in inconsistent "state".
+	@Override
+	public void clearInitialValue() {
+		if (!mapExpression.isEmpty()) {
+			super.unsafeClearInitialValue();
+		}
+	}
+
 
 }

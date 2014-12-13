@@ -1,23 +1,30 @@
 package api4kb;
 
-import lazykb.LazyInitializing;
 
+public abstract class AbstractKnowledgeItem<T, S, R>  extends AbstractKnowledgeResource implements KnowledgeItem<T, S, R>{
 
-public abstract class AbstractKnowledgeItem<T, S, R> implements KnowledgeItem<T, S, R>, LazyInitializing<IO<S>>{
+	private AbstractKnowledgeItem(AbstractKRRDialectType<T> dialectType,
+			IO<S> value, CodecSystem<T, S> system) {
+		this.dialectType = dialectType;
+		this.value = value;
+		this.system = system;
+	}
 
 	private AbstractKRRDialectType<T> dialectType;
-
-	public AbstractKnowledgeItem() {
-		// TODO Auto-generated constructor stub
-	}
+	private IO<S> value;
+	private AbstractKnowledgeEncoding<T, S> encoding;
+	private R destination;
+	private CodecSystem<T,S> system;
 
 	@Override
 	public KnowledgeSourceLevel getLevel() {
 		return level;
 	}
 
-	//getter for encoding system
-	abstract CodecSystem<T, S> getCodecSystem();	
+	@Override
+	public CodecSystem<T, S> getCodecSystem() {
+		return system;
+	};	
 
 	//lifting method
 	abstract KnowledgeEncoding<T, S> prototype();
@@ -29,21 +36,16 @@ public abstract class AbstractKnowledgeItem<T, S, R> implements KnowledgeItem<T,
 	abstract S read();
 
 	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void clear();
 
 	@Override
 	public IO<S> getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return value;
 	}
 
 	@Override
 	public R getDestination() {
-		// TODO Auto-generated method stub
-		return null;
+		return destination;
 	}
 
 	@Override
@@ -51,6 +53,15 @@ public abstract class AbstractKnowledgeItem<T, S, R> implements KnowledgeItem<T,
 		return dialectType;
 	}
 
+	// verify that some other equivalent property has been set
+	// before forgetting initial value, to avoid leaving object
+	// in inconsistent "state".
+	@Override
+	public void clearInitialValue() {
+		if ((value != null) | (encoding != null)) {
+			super.unsafeClearInitialValue();
+		}
+	}
 
 
 }

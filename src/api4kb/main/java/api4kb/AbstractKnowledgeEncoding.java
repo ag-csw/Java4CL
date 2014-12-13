@@ -1,12 +1,11 @@
 package api4kb;
 
-import lazykb.LazyInitializing;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKnowledgeEncoding<T, S> implements
-		KnowledgeEncoding<T, S>, LazyInitializing<S> {
+
+public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeResource implements
+		KnowledgeEncoding<T, S> {
 	// Initializing-only constructor
 	public AbstractKnowledgeEncoding(AbstractKRRDialectType<T> dialectType,
 			CodecSystem<T, S> system) {
@@ -74,11 +73,6 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 		return system;
 	}
 
-	@Override
-	public String toString() {
-		return this.getValue().toString();
-	}
-
 	// lowering method
 	//TODO implement here, as this is not specific to language
 	abstract public <R> KnowledgeItem<T, S, R> reproduce(R destination);
@@ -114,6 +108,16 @@ public abstract class AbstractKnowledgeEncoding<T, S> implements
 	public void clear() {
 		clearDecode();
 	}
-	
+
+	// verify that some other equivalent property has been set
+	// before forgetting initial value, to avoid leaving object
+	// in inconsistent "state".
+	@Override
+	public void clearInitialValue() {
+		if ((value != null) | (manifestation != null)) {
+			super.unsafeClearInitialValue();
+		}
+	}
+
 
 }

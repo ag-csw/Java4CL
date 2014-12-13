@@ -10,6 +10,17 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 	   super(stream, dialect, system);
 	}
 
+	public CLEncoding(CLManifestation<T> manifestation, CodecSystem<T, S> system) {
+	 super(manifestation, system);
+}
+
+	// static factory methods
+   public static <T, S> CLEncoding<T, S> lazyNewInstance(
+			CLManifestation<T> manifestation, CodecSystem<T, S> system)
+			 {
+		return new CLEncoding<T, S>(manifestation, system);
+	}
+
   
 	@Override
 	protected CLManifestation<T> evalManifestation() {
@@ -26,6 +37,12 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 		// Case 2. from manifestation
 		// Case 3. from expression
 		return null;
+	}
+
+
+	@Override
+	public CLManifestation<T> decode() {
+		return (CLManifestation<T>) super.decode();
 	}
 
 

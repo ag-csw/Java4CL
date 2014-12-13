@@ -1,18 +1,19 @@
 package cl2;
 
 import api4kb.AbstractKRRLanguage;
+import api4kb.GraphImmutableEnvironment;
 import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialectType;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.KRRLanguage;
-import api4kb.AbstractKnowledgeAsset;
+import api4kb.KnowledgeAssetLI;
 import api4kb.Option;
 import api4kb.UnsupportedTranslationException;
 
 public abstract class CLNameExpression extends CLExpression implements CLName {
 
 
-	public CLNameExpression(CLAsset asset, KRRLanguage lang)
+	public CLNameExpression(KnowledgeAssetLI asset, KRRLanguage lang)
 			throws UnsupportedTranslationException {
 		super(asset, lang);
 		// TODO Auto-generated constructor stub
@@ -66,7 +67,7 @@ public abstract class CLNameExpression extends CLExpression implements CLName {
 	}
 
 	@Override
-	public AbstractKnowledgeAsset conceptualize(ImmutableEnvironment e) {
+	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
 		// TODO Auto-generated method stub
 		return null;
 	}

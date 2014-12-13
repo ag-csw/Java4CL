@@ -1,5 +1,7 @@
 package api4kb;
 
+import java.util.Arrays;
+
 public class GraphImmutableEnvironment implements
 		ImmutableEnvironment {
 	
@@ -42,7 +44,8 @@ public class GraphImmutableEnvironment implements
 
 	@Override
 	public Boolean containsLanguage(KRRLanguage lang) {
-		// TODO Auto-generated method stub
+		//TODO change languages to a set because we never are interested in random access by index
+        Arrays.asList(languages).contains(lang);
 		return null;
 	}
 

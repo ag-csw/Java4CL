@@ -1,11 +1,12 @@
 package cl2;
 
 import api4kb.AbstractKRRLanguage;
+import api4kb.GraphImmutableEnvironment;
 import api4kb.ImmutableEnvironment;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
 import api4kb.KRRDialectType;
-import api4kb.KRRLanguage;
+import api4kb.KnowledgeAssetLI;
 import api4kb.KnowledgeResource;
 import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
@@ -29,7 +30,7 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	// Lazy lowering constructor
-	private <T> CLCommentExpression(CLCommentAsset asset)
+	private <T> CLCommentExpression(KnowledgeAssetLI asset)
 			throws UnsupportedTranslationException {
 		super(asset, CL.lang);
 	}
@@ -57,11 +58,13 @@ public class CLCommentExpression extends CLExpression implements
 		return eagerNewInstance("");
 	}
 
-	public static <T> CLCommentExpression lazyNewInstance(CLCommentAsset asset)
+	// lazy lowering
+	public static <T> CLCommentExpression lazyNewInstance(KnowledgeAssetLI asset)
 			throws UnsupportedTranslationException {
 		return new CLCommentExpression(asset);
 	}
 
+	// lazy lifting
 	public static <T> CLCommentExpression lazyNewInstance(
 			CLCommentManifestation<T> manifestation) {
 		return new CLCommentExpression(manifestation) {
@@ -91,9 +94,9 @@ public class CLCommentExpression extends CLExpression implements
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			CLCommentAsset asset = (CLCommentAsset) mapAsset.values().iterator().next();
+			KnowledgeAssetLI asset = mapAsset.values().iterator().next();
 			try {
-				return asset.express(CL.lang)
+				return ((CLCommentExpression) asset.express(CL.lang))
 						.getSymbol();
 			} catch (LanguageIncompatibleException e) {
 				assert false : "Faulty lazy expression constructor";
@@ -138,9 +141,9 @@ public class CLCommentExpression extends CLExpression implements
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			CLCommentAsset asset = (CLCommentAsset) mapAsset.values().iterator().next();
+			KnowledgeAssetLI asset = mapAsset.values().iterator().next();
 			try {
-				return asset.express(CL.lang)
+				return ((CLCommentExpression) asset.express(CL.lang))
 						.getComment();
 			} catch (LanguageIncompatibleException e) {
 				assert false : "Faulty lazy expression constructor";
@@ -228,10 +231,15 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	@Override
-	protected CLCommentAsset evalAsset(ImmutableEnvironment e)
+	protected KnowledgeAssetLI evalAsset(GraphImmutableEnvironment e)
 			throws EnvironmentIncompatibleException {
-		// TODO Auto-generated method stub
-		return null;
+		return super.evalAsset(e);
+	}
+
+	@Override
+	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e)
+			throws EnvironmentIncompatibleException {
+		return  super.conceptualize(e);
 	}
 
 }
