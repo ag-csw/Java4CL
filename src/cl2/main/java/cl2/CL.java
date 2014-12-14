@@ -16,11 +16,15 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.dom4j.Namespace;
 import org.w3c.dom.Document;
-
-import api4kb.*;
-
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
+
+import api4kb.AbstractCodecSystem;
+import api4kb.AbstractKRRDialect;
+import api4kb.AbstractKRRDialectType;
+import api4kb.AbstractKRRLanguage;
+import api4kb.DecoderException;
+import api4kb.EncoderException;
 
 
 
@@ -34,12 +38,12 @@ public final class CL {
 	public static AbstractKRRLanguage lang = new AbstractKRRLanguage("Common Logic") {
 
 		@Override
-		public KRRDialectType<Element> defaultDialectType() {
+		public AbstractKRRDialectType<Element> defaultDialectType() {
 			return xcl2dom;
 		}
 
 		@Override
-		public KRRDialect defaultDialect() {
+		public AbstractKRRDialect defaultDialect() {
 			return xcl2;
 		}
 
@@ -48,8 +52,6 @@ public final class CL {
 		
 	public static CLDialect xcl2 = new CLDialect("XCL2") {};
 	
-	public static CLDialectType<Element> xcl2dom = 
-			new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class){}; 
 	
 	public static final Namespace NS_XCL2 = Namespace.get("http://purl.org/xcl/2.0/");	
 	// tests for syntactic categories
@@ -58,7 +60,7 @@ public final class CL {
 		return false;
 	}
 	
-	public static CodecSystem<Element, byte[]> dom2bytearray = new CodecSystem<Element, byte[]>(){
+	public static AbstractCodecSystem<Element, byte[]> domUTF8bytearray = new AbstractCodecSystem<Element, byte[]>(){
 
 		@Override
 		public byte[] code(Element node) throws EncoderException, TransformerException, UnsupportedEncodingException, IOException {
@@ -79,5 +81,9 @@ public final class CL {
 			Document doc = builder.parse(new String(bytes, "UTF-8"));
 			return doc.getDocumentElement();
 		}};
+		public static CLDialectType<Element> xcl2dom = 
+				new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class, domUTF8bytearray){}; 
 
 }
+
+

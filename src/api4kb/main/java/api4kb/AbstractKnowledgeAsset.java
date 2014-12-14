@@ -18,18 +18,21 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource i
 		this.environment = env;
 	}
     
-	// lazy lifting constructor
+	// lazy lifting constructor - argument is an Expression and environment
 	protected AbstractKnowledgeAsset(
 			AbstractKnowledgeExpression expression,
 			GraphImmutableEnvironment env) {
 		this(env);
+		// TODO check that environment and language of expression are compatible.
 		LOG.debug("Starting lazy lifting asset construtor with expression: {}", expression);
 		initialValue = expression;
 		mapExpressionSafePut(expression);
 	}
 
 	private void mapExpressionSafePut(AbstractKnowledgeExpression expression) {
-		mapExpression.put(expression.getLanguage(), expression);		
+		LOG.debug("Starting expression safeput", expression);
+		AbstractKRRLanguage lang = expression.getLanguage();
+		mapExpression.put(lang, expression);		
 	}
 
 	@Override
@@ -55,20 +58,44 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource i
 		return environment;
 	}
 
-	// lowering method accepts a parameter indicating the language
+	// default lowering method returns an expression in the default language
+	// for this environment
+	public AbstractKnowledgeExpression express() throws LanguageIncompatibleException{
+			return express(environment.getDefaultLanguage());
+	}
+
+	// lowering method with a parameter indicating the language
 	public AbstractKnowledgeExpression express(KRRLanguage lang)
 			throws LanguageIncompatibleException {
 		LOG.debug("Starting express with language: {}", lang);
 		if (!environment.containsLanguage(lang)){
-			throw new LanguageIncompatibleException("Requested language is not contained in environment:" + lang.toString());
+			throw new LanguageIncompatibleException("Requested language is not contained in environment:" + lang);
 		}
+		// TODO consider replacing level check with instanceof
 		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)){
-			LOG.debug("Using cached intial value for express: {}", initialValue);
-			return (AbstractKnowledgeExpression) initialValue;
+			AbstractKnowledgeExpression expression = (AbstractKnowledgeExpression) initialValue;
+			LOG.debug("Found cached intial value for expression: {}", expression);
+			if (expression.getLanguage() == lang){
+			  LOG.debug("Using cached intial value");
+			  return expression;
+			}
 		}
-		// TODO implement mapping application from environment
-		return null;
+		if (mapExpression.containsKey(lang)){			
+			LOG.debug("Found cached expression in this language");
+			AbstractKnowledgeExpression expression = mapExpression.get(lang);
+			LOG.debug("Using cached expression: {}", expression);
+            return expression;
+		}
+		LOG.debug("Found no cached expression for: {}", lang);
+		// Last resort: create a new expression
+		return newExpression(lang);
 	}
+	
+	// eager lowering
+	AbstractKnowledgeExpression newExpression(KRRLanguage lang){
+		return new AbstractKnowledgeExpression((AbstractKRRLanguage) lang){};
+
+	};
 	
 	// verify that some other equivalent property has been set
 	// before forgetting initial value, to avoid leaving object

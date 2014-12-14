@@ -1,19 +1,19 @@
 package cl2;
 
+import api4kb.AbstractKRRDialectType;
 import api4kb.AbstractKRRLanguage;
 import api4kb.GraphImmutableEnvironment;
 import api4kb.ImmutableEnvironment;
-import api4kb.KRRDialectType;
 import api4kb.DialectTypeIncompatibleException;
-import api4kb.KRRLanguage;
 import api4kb.KnowledgeAssetLI;
+import api4kb.LanguageIncompatibleException;
 import api4kb.UnsupportedTranslationException;
 
 public abstract class CLPrefixExpression extends CLExpression implements CLPrefix {
 
 
-	public CLPrefixExpression(KnowledgeAssetLI asset, KRRLanguage lang)
-			throws UnsupportedTranslationException {
+	public CLPrefixExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang)
+			throws UnsupportedTranslationException, LanguageIncompatibleException {
 		super(asset, lang);
 		// TODO Auto-generated constructor stub
 	}
@@ -24,7 +24,7 @@ public abstract class CLPrefixExpression extends CLExpression implements CLPrefi
 		// TODO Auto-generated constructor stub
 	}
 
-	public <T> CLPrefixExpression(KRRLanguage lang) {
+	public <T> CLPrefixExpression(AbstractKRRLanguage lang) {
 		super(lang);
 		// TODO Auto-generated constructor stub
 	}
@@ -48,14 +48,14 @@ public abstract class CLPrefixExpression extends CLExpression implements CLPrefi
 	}
 
 	@Override
-	public <T> CLManifestation<T> manifest(KRRDialectType<T> dialect)
+	public <T> CLManifestation<T> manifest(AbstractKRRDialectType<T> dialect)
 			throws DialectTypeIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void clearManifest(KRRDialectType<?> dialect) {
+	public void clearManifest(AbstractKRRDialectType<?> dialect) {
 		// TODO Auto-generated method stub
 		
 	}

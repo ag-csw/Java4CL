@@ -1,14 +1,21 @@
 package api4kb;
 
+import java.util.HashSet;
+
 public interface ImmutableEnvironment extends Immutable {
 	
 	// TODO change return type to Immutable Collection from FJ
-	public KRRLanguage[] getLanguages();
+	HashSet<KRRLanguage> getLanguages();
+	HashSet<KRRLanguage> getFocusLanguages();
 	//
-    public Boolean containsLanguage(KRRLanguage lang);
+    Boolean containsLanguage(KRRLanguage lang);
     //
-    public Boolean isFocused();
+    Boolean isFocused();
     //
-    public KnowledgeExpression translate( KnowledgeExpression expression, KRRLanguage language)  throws UnsupportedTranslationException;
+    KnowledgeExpression translate( KnowledgeExpression expression, KRRLanguage language)  throws UnsupportedTranslationException;
+    //
+    KRRLanguage getDefaultLanguage();
+	KnowledgeExpression apply(KnowledgeExpression expression,
+			KRRLanguage endLanguage) throws LanguageIncompatibleException;
 
 }

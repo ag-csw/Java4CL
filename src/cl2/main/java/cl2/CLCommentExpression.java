@@ -1,13 +1,11 @@
 package cl2;
 
-import api4kb.AbstractKRRLanguage;
+import api4kb.AbstractKRRDialectType;
+import api4kb.AbstractKnowledgeManifestation;
 import api4kb.GraphImmutableEnvironment;
-import api4kb.ImmutableEnvironment;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.EnvironmentIncompatibleException;
-import api4kb.KRRDialectType;
 import api4kb.KnowledgeAssetLI;
-import api4kb.KnowledgeResource;
 import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
 import api4kb.None;
@@ -16,6 +14,7 @@ import api4kb.UnsupportedTranslationException;
 
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
+import org.w3c.dom.Element;
 
 public class CLCommentExpression extends CLExpression implements
 		CLComment {
@@ -31,7 +30,7 @@ public class CLCommentExpression extends CLExpression implements
 
 	// Lazy lowering constructor
 	private <T> CLCommentExpression(KnowledgeAssetLI asset)
-			throws UnsupportedTranslationException {
+			throws LanguageIncompatibleException, UnsupportedTranslationException {
 		super(asset, CL.lang);
 	}
 
@@ -60,7 +59,7 @@ public class CLCommentExpression extends CLExpression implements
 
 	// lazy lowering
 	public static <T> CLCommentExpression lazyNewInstance(KnowledgeAssetLI asset)
-			throws UnsupportedTranslationException {
+			throws UnsupportedTranslationException, LanguageIncompatibleException {
 		return new CLCommentExpression(asset);
 	}
 
@@ -152,48 +151,29 @@ public class CLCommentExpression extends CLExpression implements
 		}
 	}
 
-	@Override
-	public AbstractKRRLanguage getLanguage() {
-		return lang;
-	}
 
 	@Override
-	public String toString() {
-		try {
-			return this.manifest(CL.xcl2dom).toString();
-		} catch (DialectTypeIncompatibleException e) {
-			assert false : "Faulty Dialect Compatibility Check";
-			return "Faulty Dialect Compatibility Check";
-		}
-	}
-
-	// TODO Shift implementation to AbstractCLComment and incorporate by
-	// composition
-	// determines if a KnowledgeResource is equal to this one
-	public Boolean equals(KnowledgeResource that) {
-		return this.toString().equals(that);
-	}
-
-	// TODO Shift implementation to AbstractCLComment and incorporate by
-	// composition
-	// overriding hashCode to agree with equal
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
-	}
-
-	@Override
-	public <T> CLCommentManifestation<T> manifest(KRRDialectType<T> dialect)
+	public CLCommentManifestation<Element> manifest()
 			throws DialectTypeIncompatibleException {
-		try {
-			return (CLCommentManifestation<T>) super.manifest(dialect);
-		} catch (DialectTypeIncompatibleException e) {
-			throw e;
-		}
+		LOG.debug("Starting default manifest of expression");
+			return (CLCommentManifestation<Element>) manifest(CL.lang.defaultDialectType());
 	}
 
 	@Override
-	protected <T> CLCommentManifestation<T> evalManifest(KRRDialectType<T> dialect)
+	public <T> CLCommentManifestation<T> manifest(AbstractKRRDialectType<T> dialectType)
+			throws DialectTypeIncompatibleException {
+		    AbstractKnowledgeManifestation<T> manifestation = super.manifest(dialectType);
+			LOG.debug("Starting manifest of expression");
+		    if (manifestation instanceof CLCommentManifestation<?>) {
+		    	return (CLCommentManifestation<T>) manifestation;
+		    }
+		    // last resort create a new manifestation with lazy lowering
+		    // this means discarding the manifestation created in the superclass
+			return CLCommentManifestation.lazyNewInstance(this, (CLDialectType<T>) dialectType);
+	}
+
+	// TODO this needs to be implemented through other methods
+	protected <T> CLCommentManifestation<T> evalManifest(AbstractKRRDialectType<T> dialect)
 			throws DialectTypeIncompatibleException {
 		if (dialect.getLanguage() != CL.lang) {
 			throw new DialectTypeIncompatibleException();
@@ -230,11 +210,6 @@ public class CLCommentExpression extends CLExpression implements
 		return null;
 	}
 
-	@Override
-	protected KnowledgeAssetLI evalAsset(GraphImmutableEnvironment e)
-			throws EnvironmentIncompatibleException {
-		return super.evalAsset(e);
-	}
 
 	@Override
 	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e)

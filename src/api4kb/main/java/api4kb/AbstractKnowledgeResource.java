@@ -9,12 +9,12 @@ public abstract class AbstractKnowledgeResource implements KnowledgeResource,
 	}
 
 	// package-private constructor for lazy initialization
-	AbstractKnowledgeResource(KnowledgeResource initialValue) {
+	AbstractKnowledgeResource(AbstractKnowledgeResource initialValue) {
 		this.initialValue = initialValue;
 	}
 
    // cache for lazy initialization
-	KnowledgeResource initialValue;
+	protected AbstractKnowledgeResource initialValue;
 	
     // public clear cache method for forgetting initializing value
 	// which can be called after some eager evaluation has been performed.
@@ -30,7 +30,7 @@ public abstract class AbstractKnowledgeResource implements KnowledgeResource,
 
 
     // package-private getter for direct access to cache
-	KnowledgeResource getInitialValue() {
+	public AbstractKnowledgeResource getInitialValue() {
 		return initialValue;
 	}
 

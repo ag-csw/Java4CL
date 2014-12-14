@@ -4,7 +4,7 @@ package api4kb;
 public abstract class AbstractKnowledgeItem<T, S, R>  extends AbstractKnowledgeResource implements KnowledgeItem<T, S, R>{
 
 	private AbstractKnowledgeItem(AbstractKRRDialectType<T> dialectType,
-			IO<S> value, CodecSystem<T, S> system) {
+			IO<S> value, AbstractCodecSystem<T, S> system) {
 		this.dialectType = dialectType;
 		this.value = value;
 		this.system = system;
@@ -14,7 +14,7 @@ public abstract class AbstractKnowledgeItem<T, S, R>  extends AbstractKnowledgeR
 	private IO<S> value;
 	private AbstractKnowledgeEncoding<T, S> encoding;
 	private R destination;
-	private CodecSystem<T,S> system;
+	private AbstractCodecSystem<T,S> system;
 
 	@Override
 	public KnowledgeSourceLevel getLevel() {
@@ -22,7 +22,7 @@ public abstract class AbstractKnowledgeItem<T, S, R>  extends AbstractKnowledgeR
 	}
 
 	@Override
-	public CodecSystem<T, S> getCodecSystem() {
+	public AbstractCodecSystem<T, S> getCodecSystem() {
 		return system;
 	};	
 

@@ -9,6 +9,7 @@ public abstract class AbstractKnowledgeManifestation<T> extends
 		AbstractKnowledgeResource implements KnowledgeManifestation<T> {
 	// Initializing-only constructor
 	public AbstractKnowledgeManifestation(AbstractKRRDialectType<T> dialectType) {
+		LOG.debug("Starting initializing constructor for dialect type: {}", dialectType);
 		this.dialectType = dialectType;
 	}
 
@@ -20,6 +21,18 @@ public abstract class AbstractKnowledgeManifestation<T> extends
 		this(dialectType);
 		this.value = value;
 	}
+	
+	// Lazy lifting constructor - argument is an Encoding
+	public <S> AbstractKnowledgeManifestation(
+			AbstractKnowledgeEncoding<T, S> encoding) {
+		this(encoding.getDialectType());
+		LOG.debug(
+				"Starting lazy lifting expression construtor with encoding: {}",
+				encoding);
+        initialValue = encoding;
+		// TODO make memoization of encode optional?
+		encodingSafePut(encoding);
+	}
 
 	// Lazy lowering constructor - argument is expression and dialect
 	public AbstractKnowledgeManifestation(
@@ -27,35 +40,45 @@ public abstract class AbstractKnowledgeManifestation<T> extends
 			AbstractKRRDialectType<T> dialectType)
 			throws DialectTypeIncompatibleException {
 		this(dialectType);
-		if (expression.getLanguage().equals(dialectType.getLanguage())) {
-			this.expression = expression;
-		} else {
-			throw new DialectTypeIncompatibleException();
+		LOG.debug("Starting lazy lowering manifestation constructor");
+		if (!expression.getLanguage().equals(dialectType.getLanguage())) {
+			throw new DialectTypeIncompatibleException("Requested dialect type is not compatible with the language.");
 		}
+		LOG.debug("Language compatibility verified");
+		initialValue = expression;
+		this.expression = expression;
 	}
 
-	// Lazy lifting constructor - argument is an Encoding
-	public <S> AbstractKnowledgeManifestation(
-			AbstractKnowledgeEncoding<T, S> encoding) {
-		this(encoding.getDialectType());
-		initialEncoding = encoding;
-		// TODO make memoization of encode optional
-		encodingSafePut(encoding.getCodecSystem(), encoding);
-	}
 
 	// protected fields
-	protected T value;
+    // final properties 
 	protected final AbstractKRRDialectType<T> dialectType;
+	// mutable internal properties
+	protected T value;
+	// TODO configuration not yet untilized
 	protected Configuration<?> configuration;
+	// cache for lifting and lowering methods
 	protected final HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding = new HashMap<CodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
-	protected AbstractKnowledgeEncoding<T, ?> initialEncoding;
 	protected AbstractKnowledgeExpression expression;
+	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public KnowledgeSourceLevel getLevel() {
+		LOG.debug("Getting level: {}", level);
 		return level;
 	}
+
+	@Override
+	public AbstractKRRDialectType<T> getDialectType() {
+		return dialectType;
+	}
+	
+	@Override
+	public Class<T> getType(){
+		return dialectType.getType();
+	}
+
 
 	@Override
 	public T getValue() {
@@ -70,8 +93,8 @@ public abstract class AbstractKnowledgeManifestation<T> extends
 				assert false : "Faulty lazy lowering constructor";
 			}
 		}
-		if (initialEncoding != null) {
-			value = initialEncoding.decode().getValue();
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.ENCODING)) {
+			value = ((AbstractKnowledgeEncoding<T, ?>) initialValue).decode().getValue();
 			return value;
 		}
 		if (!mapEncoding.isEmpty()) {
@@ -80,66 +103,94 @@ public abstract class AbstractKnowledgeManifestation<T> extends
 						.next();
 				value = mapEncoding.get(system).decode().getValue();
 			}
-		} else {
-			assert false : "AbstractKnowledgeExpression is in inconsistent state";
+		} 
+		try {
+			value = eval();
+		} catch (DialectTypeIncompatibleException e) {
+			assert false : "Faulty component constructor";
 		}
-
 		return value;
 	}
+	
+	protected abstract T eval() throws DialectTypeIncompatibleException;
 
-	@Override
-	public AbstractKRRDialectType<T> getDialectType() {
-		return dialectType;
-	}
 
-	// provides a canonical String representation of the Manifestation based on
-	// the
-	// default configuration
-	@Override
-	public String toString() {
-		return this.getValue().toString();
+	// default lowering method returns an encoding in the default codec system
+	// for that dialect type
+	public AbstractKnowledgeEncoding<T, byte[]> encode()
+			throws DialectTypeIncompatibleException, EncodingSystemIncompatibleException {
+		return (AbstractKnowledgeEncoding<T, byte[]>) encode(dialectType.defaultSystem());
 	}
 
 	// lowering method accepts a parameter indicating the encoding system
 	// with generic T for the format (e.g. ByteSequence, byte{}, ...)
-	public <S> AbstractKnowledgeEncoding<T, S> encode(CodecSystem<T, S> system)
+	public <S> AbstractKnowledgeEncoding<T, S> encode(AbstractCodecSystem<T, S> system)
 			throws EncodingSystemIncompatibleException {
-		if (!mapEncoding.containsKey(system)) {
-			// TODO This is not lazy, but this is abstract so it is not possible
-			// to call the lazy constructor here.
-			AbstractKnowledgeEncoding<T, S> encoding = evalEncoding(system);
-			LOG.debug("encoding from eager evaluation : {}:", encoding);
-			encodingSafePut(system, encoding);
-			return encoding;
-		} else {
-			// TODO type compatibility should be checked before caching
-			// so that the type case is safe
+		LOG.debug("Starting encode of manifestation");
+		LOG.debug("  Codec system: {}", system);
+		LOG.debug("  Dialect of the manifestation: {}", dialectType);
+		LOG.debug("  Language of the expression: {}", dialectType.getLanguage());
+		// TODO consider replacing level check with instanceof
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.ENCODING)){
 			@SuppressWarnings("unchecked")
-			AbstractKnowledgeEncoding<T, S> encoding = (AbstractKnowledgeEncoding<T, S>) mapEncoding
-					.get(system);
-			LOG.debug("encoding from cache : {}:", encoding);
+			AbstractKnowledgeEncoding<T, ?> encoding = (AbstractKnowledgeEncoding<T, ?>) initialValue;
+			LOG.debug("Found cached intial value for encoding: {}", encoding);
+			if (encoding.getCodecSystem() == system){
+			  LOG.debug("Using cached intial value");
+			  return (AbstractKnowledgeEncoding<T, S>) encoding;
+			}
+		}
+		if (mapEncoding.containsKey(system)) {
+			LOG.debug("Found cached encoding for requested codec");
+			@SuppressWarnings("unchecked")
+			AbstractKnowledgeEncoding<T, S> encoding = (AbstractKnowledgeEncoding<T, S>) mapEncoding.get(system);
+			LOG.debug("Using cached encoding: {}", encoding);
 			return encoding;
 		}
+		LOG.debug("Found no cached encoding for: {}", system);
+		// Last resort: create a new expression
+		return newEncoding(system);
+
 	}
 
-	// non-public lowering evaluation method
-	protected abstract <S> AbstractKnowledgeEncoding<T, S> evalEncoding(
-			CodecSystem<T, S> system)
-			throws EncodingSystemIncompatibleException;
+	// eager lowering
+	<S> AbstractKnowledgeEncoding<T,S> newEncoding(AbstractCodecSystem<T, S> system){
+		return new AbstractKnowledgeEncoding<T, S>(dialectType, system){};
+	}
 
 	// lifting method
 	public AbstractKnowledgeExpression parse() {
-		if (expression == null) {
-			expression = evalExpression();
+		LOG.debug("Starting parse");
+		if (expression != null) {
+			LOG.debug("Found cached value for expression: {}", expression);
 			return expression;
-		} else {
-			return expression;
-		}
-
+		} 
+		LOG.debug("Found no cached expression");
+		// Last resort: create a new expression
+		return newExpression();
 	}
 
-	// nonpublic lifting evaluation method
-	protected abstract AbstractKnowledgeExpression evalExpression();
+	// eager lifting
+	AbstractKnowledgeExpression newExpression(){
+		return new AbstractKnowledgeExpression(this){};
+
+	};
+
+
+
+	<S> void encodingSafePut(AbstractKnowledgeEncoding<T, S> encoding) {
+		mapEncoding.put(encoding.getCodecSystem(), encoding);
+	}
+
+	// verify that some other equivalent property has been set
+	// before forgetting initial value, to avoid leaving object
+	// in inconsistent "state".
+	@Override
+	public void clearInitialValue() {
+		if ((value != null) | (!mapEncoding.isEmpty()) | (expression != null)) {
+			super.unsafeClearInitialValue();
+		}
+	}
 
 	// clear memoization cache of the manifest method for the particular dialect
 	public void clearEncode(CodecSystem<T, ?> system) {
@@ -180,21 +231,6 @@ public abstract class AbstractKnowledgeManifestation<T> extends
 			}
 		}
 		clearParse();
-	}
-
-	<S> void encodingSafePut(CodecSystem<T, S> system,
-			AbstractKnowledgeEncoding<T, S> encoding) {
-		mapEncoding.put(system, encoding);
-	}
-
-	// verify that some other equivalent property has been set
-	// before forgetting initial value, to avoid leaving object
-	// in inconsistent "state".
-	@Override
-	public void clearInitialValue() {
-		if ((value != null) | (!mapEncoding.isEmpty()) | (expression != null)) {
-			super.unsafeClearInitialValue();
-		}
 	}
 
 	// TODO

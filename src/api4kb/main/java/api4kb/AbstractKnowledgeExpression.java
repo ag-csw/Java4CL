@@ -5,8 +5,8 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKnowledgeExpression extends AbstractKnowledgeResource implements
-		KnowledgeExpression {
+public abstract class AbstractKnowledgeExpression extends
+		AbstractKnowledgeResource implements KnowledgeExpression {
 
 	// initializing only constructor
 	protected <T> AbstractKnowledgeExpression(AbstractKRRLanguage lang) {
@@ -18,27 +18,167 @@ public abstract class AbstractKnowledgeExpression extends AbstractKnowledgeResou
 	public <T> AbstractKnowledgeExpression(
 			AbstractKnowledgeManifestation<T> manifestation) {
 		this(manifestation.getDialectType().getLanguage());
-		LOG.debug("Starting lazy lifting expression construtor with manifestation: {}", manifestation);
+		LOG.debug(
+				"Starting lazy lifting expression construtor with manifestation: {}",
+				manifestation);
+		initialValue = manifestation;
 		manifestSafePut(manifestation);
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractKnowledgeExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang)
-			throws UnsupportedTranslationException {
+	public AbstractKnowledgeExpression(KnowledgeAssetLI asset,
+			AbstractKRRLanguage lang) throws LanguageIncompatibleException {
 		this(lang);
-		LOG.debug("Starting lazy lowering expression construtor with asset: {}", asset);
-		LOG.debug("Starting expression construtor for language: {}", lang);
-		mapAsset.put(asset.getEnvironment(), asset);
+		LOG.debug(
+				"Starting lazy lowering expression construtor");
+		if (!asset.getEnvironment().containsLanguage(lang)) {
+			throw new LanguageIncompatibleException("Requested language is not in the environment.");
+		}
+		LOG.debug("Language compatibility verified");
+		initialValue = asset;
+		assetSafePut(asset);
 	}
 
-	protected final HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest = new HashMap<KRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
-	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
+	// protected fields
+    // final properties 
 	protected final AbstractKRRLanguage lang;
+	// cache for lifting and lowering methods
+	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
+	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
+	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public KnowledgeSourceLevel getLevel() {
+		LOG.debug("Getting level: {}", level);
 		return level;
+	}
+
+	@Override
+	public AbstractKRRLanguage getLanguage() {
+		LOG.debug("Getting language: {}", lang);
+		return lang;
+	}
+
+	// default lowering method returns a manifestation in the default dialect
+	// for that language
+	public AbstractKnowledgeManifestation<?> manifest()
+			throws DialectTypeIncompatibleException {
+		LOG.debug("Starting default manifest of expression");
+		return manifest(lang.defaultDialectType());
+	}
+
+	// lowering method with a parameter indicating the dialect
+	// with generic T for the format (e.g. String, XML Element)
+	public <T> AbstractKnowledgeManifestation<T> manifest(
+			AbstractKRRDialectType<T> dialectType)
+			throws DialectTypeIncompatibleException {
+		LOG.debug("Starting manifest of expression");
+		LOG.debug("  Dialect of the manifestation: {}", dialectType);
+		LOG.debug("  Language of the expression: {}", lang);
+		if (dialectType.getLanguage() != lang) {
+			throw new DialectTypeIncompatibleException(
+					"Requested dialect type is not supported:"
+							+ lang.toString() + " : " + dialectType.toString());
+		}
+		// TODO consider replacing level check with instanceof
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.MANIFESTATION)){
+			AbstractKnowledgeManifestation<?> manifestation = (AbstractKnowledgeManifestation<?>) initialValue;
+			LOG.debug("Found cached intial value for manifestation: {}", manifestation);
+			if (manifestation.getDialectType() == dialectType){
+			  LOG.debug("Using cached intial value");
+			  return (AbstractKnowledgeManifestation<T>) manifestation;
+			}
+		}
+		if (mapManifest.containsKey(dialectType)) {
+			LOG.debug("Found cached manifestation for requested dialect Type");
+			@SuppressWarnings("unchecked")
+			AbstractKnowledgeManifestation<T> manifestation = (AbstractKnowledgeManifestation<T>) mapManifest.get(dialectType);
+			LOG.debug("Using cached manifestation: {}", manifestation);
+			return manifestation;
+		}
+		LOG.debug("Found no cached manifestation for: {}", dialectType);
+		// Last resort: create a new expression
+		return newManifestation(dialectType);
+	}
+
+	// eager lowering
+	<T> AbstractKnowledgeManifestation<T> newManifestation(AbstractKRRDialectType<T> dialectType){
+		return new AbstractKnowledgeManifestation<T>(dialectType){
+
+
+			@Override
+			protected T eval() throws DialectTypeIncompatibleException {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+	};
+	}
+
+	// default lifting method returns a asset in the default environment
+	// for this language
+	public AbstractKnowledgeAsset conceptualize() throws EnvironmentIncompatibleException{
+		if (lang.getDefaultEnvironment() != null){	
+		  return conceptualize(lang.getDefaultEnvironment());
+		}
+		// TODO create a singleton environment containing the language
+		throw new EnvironmentIncompatibleException();
+	}
+
+	// lifting method with a parameter indicating the language
+	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment environment)
+			throws EnvironmentIncompatibleException {
+		LOG.debug("Starting conceptualization relative to environment : {}", environment);
+		if (!environment.containsLanguage(lang)){
+			throw new EnvironmentIncompatibleException("Requested envionment does not contain the language:" + lang);
+		}
+		// TODO consider replacing level check with instanceof
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.ASSET)){
+			KnowledgeAssetLI asset = (KnowledgeAssetLI) initialValue;
+			LOG.debug("Found cached intial value for asset: {}", asset);
+			if (asset.getEnvironment().equals(environment)){
+			  LOG.debug("Using cached intial value");
+			  return asset;
+			}
+		}
+		if (mapAsset.containsKey(lang)){			
+			LOG.debug("Found cached asset in this language");
+			KnowledgeAssetLI asset = mapAsset.get(environment);
+			LOG.debug("Using cached expression: {}", asset);
+            return asset;
+		}
+		LOG.debug("Found no cached expression for: {}", environment);
+		// Last resort: create a new asset
+		return newAsset(environment);
+	}
+	
+	// eager lifting
+	KnowledgeAssetLI newAsset(GraphImmutableEnvironment environment){
+		return new KnowledgeAssetLI(this, environment);
+
+	};
+
+
+
+	<T> void manifestSafePut(AbstractKnowledgeManifestation<T> manifest) {
+		mapManifest.put(manifest.getDialectType(), manifest);
+	}
+
+	void assetSafePut(KnowledgeAssetLI asset) {
+		mapAsset.put(asset.getEnvironment(), asset);
+	}
+
+	// verify that some other equivalent property has been set
+	// before forgetting initial value, to avoid leaving object
+	// in inconsistent "state".
+	@Override
+	public void clearInitialValue() {
+		LOG.debug("Starting clearInitialValue");
+		if ((!mapManifest.isEmpty()) | (!mapAsset.isEmpty())) {
+			LOG.debug("Safe to clear initial value");
+			super.unsafeClearInitialValue();
+		}
 	}
 
 	@Override
@@ -60,110 +200,21 @@ public abstract class AbstractKnowledgeExpression extends AbstractKnowledgeResou
 	}
 
 	// clear memoization cache of the manifest method for the particular dialect
-	public void clearManifest(KRRDialectType<?> dialectType) {
+	public void clearManifest(AbstractKRRDialectType<?> dialectType) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapManifest.remove(dialectType);
 	}
 
-	// clear memoization cache of the conceptualize method for the particular environment
+	// clear memoization cache of the conceptualize method for the particular
+	// environment
 	public void clearConceptualize(ImmutableEnvironment environment) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapAsset.remove(environment);
 	}
 
-	@Override
-	public AbstractKRRLanguage getLanguage() {
-		return lang;
-	}
 
-	// provides a canonical String serialization of the Expression based on a
-	// preferred Manifestation type
-	// should give the same output as chaining the manifest method (called on the
-	// preferred dialect and the default configuration) with the 
-	// toString method of the manifestation.
-	@Override
-	public String toString(){
-	  try {
-		return manifest().toString();
-	} catch (DialectTypeIncompatibleException e) {
-		return toString();
-	}	
-	}
-
-	// default lowering method returns a manifestation in the default dialect
-	// for that language
-	public AbstractKnowledgeManifestation<?> manifest() throws DialectTypeIncompatibleException{
-		return manifest(lang.defaultDialectType());
-	}
-	
-	// lowering method accepts a parameter indicating the dialect
-	// with generic T for the format (e.g. String, XML Element)
-	public <T> AbstractKnowledgeManifestation<T> manifest(KRRDialectType<T> dialectType)
-			throws DialectTypeIncompatibleException {
-		LOG.debug("Starting evaluation of the manifest of expression");
-		LOG.debug("  Dialect of the manifestation: {}", dialectType);
-		LOG.debug("  Language of the expression: {}", lang);
-		if (dialectType.getLanguage() != lang){
-			throw new DialectTypeIncompatibleException();
-		}
-		LOG.debug("Manifestation cache: {}", mapManifest);
-		if (!mapManifest.containsKey(dialectType)) {
-			LOG.debug("Found no cached manifestation for: {}", dialectType);
-			AbstractKnowledgeManifestation<T> manifest = evalManifest(dialectType);
-			manifestSafePut(manifest);
-			return manifest;
-		} else {
-			// type compatibility is checked before caching
-			// so that the type case is safe
-			@SuppressWarnings("unchecked")
-			AbstractKnowledgeManifestation<T> manifest = (AbstractKnowledgeManifestation<T>) mapManifest.get(dialectType);
-			return manifest;
-		}
-	}
-
-	// nonpublic helper method
-	protected abstract <T> AbstractKnowledgeManifestation<T> evalManifest(
-			KRRDialectType<T> dialectType) throws DialectTypeIncompatibleException;
-
-	// lifting method
-   public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e)
-			throws EnvironmentIncompatibleException {
-	   LOG.debug("Starting conceptualization relative to environment : {}", e);
-		if (!mapAsset.containsKey(e)) {
-			LOG.debug("No asset is cached for this environment. Evaluating...");
-			KnowledgeAssetLI asset = evalAsset(e);
-			LOG.debug("Asset evaluated: {}", asset);
-			return asset;
-		} else {
-			KnowledgeAssetLI asset = mapAsset.get(e);
-			LOG.debug("Asset obtained from cache: {}", asset);
-			return asset;
-		}
-
-	}
-
-	// nonpublic helper method
-	protected KnowledgeAssetLI evalAsset(GraphImmutableEnvironment e)
-			throws EnvironmentIncompatibleException{
-		KnowledgeAssetLI asset = new KnowledgeAssetLI(this, e){};
-		return asset;
-	}
-	
-	<T> void manifestSafePut(AbstractKnowledgeManifestation<T> manifest) {
-		mapManifest.put(manifest.getDialectType(), manifest);
-	}
-	
-	// verify that some other equivalent property has been set
-	// before forgetting initial value, to avoid leaving object
-	// in inconsistent "state".
-	@Override
-	public void clearInitialValue() {
-		if ((!mapManifest.isEmpty()) | (!mapAsset.isEmpty())) {
-			super.unsafeClearInitialValue();
-		}
-	}
 
 
 }

@@ -23,35 +23,62 @@ public class Main {
 		LOG.debug("Hello. This is the Java4CL package. The current time is {}.", System.currentTimeMillis());
 		
 		String myCommentSymbol = "blah blah ...";
+		LOG.debug("Eager expression instantiation starting");
 		CLCommentExpression myCommentExpression = CLCommentExpression.eagerNewInstance(myCommentSymbol);
-		CLCommentManifestation<Element> myCommentManifestation;
+		myCommentExpression.getLevel();
+		myCommentExpression.getLanguage();
+		//myCommentExpression.clearInitialValue();
+		assert myCommentExpression.getSymbol() == myCommentSymbol: "Symbol evalution incorrect.";
+		myCommentExpression.getComment();
+		CLCommentManifestation<Element> myCommentManifestation = null;
 		try {
+			LOG.debug("Manifest method call starting");
 			myCommentManifestation = myCommentExpression.manifest(CL.xcl2dom);
-			CLCommentExpression anotherCommentExpression = CLCommentExpression.lazyNewInstance(myCommentManifestation);
-			anotherCommentExpression.getSymbol();
-			anotherCommentExpression.getComment();
-			try {
-				CLEncoding<Element, byte[]> myEncoding = myCommentManifestation.encode(CL.dom2bytearray);
-				LOG.debug("Lazy instantiation : {}", myEncoding);
-				CLManifestation<Element> anotherManifestation = myEncoding.decode();
-				LOG.debug("Double Lazy instantiation : {}", anotherManifestation);
-				anotherManifestation.getValue();
-				CLCommentManifestation<Element> anotherCommentManifestation = (CLCommentManifestation<Element>) anotherManifestation;
-				anotherCommentManifestation.getSymbol();
-				anotherCommentManifestation.getComment();
-			} catch (EncodingSystemIncompatibleException e) {
-				e.printStackTrace();
-			}
+			LOG.debug("Manifest method returns: {}", myCommentManifestation);
 		} catch (DialectTypeIncompatibleException e) {
 			e.printStackTrace();
 		}
+		assert myCommentManifestation.parse() == myCommentExpression: "Manifest call is not lazy";
+		LOG.debug("Lazy expression instantiation starting");
+		CLCommentExpression anotherCommentExpression = CLCommentExpression.lazyNewInstance(myCommentManifestation);
+		assert  myCommentExpression != anotherCommentExpression: "Failed check that lazy new instantiation gives new instance";
+		try {
+			assert myCommentExpression == anotherCommentExpression.manifest().parse(): "Failed check that lazy new instantiation gives wrapper of old instance";
+		} catch (DialectTypeIncompatibleException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		anotherCommentExpression.getLevel();
+		anotherCommentExpression.getLanguage();
+		assert anotherCommentExpression.getSymbol() == myCommentSymbol: "Symbol evalution incorrect.";
+		anotherCommentExpression.getComment();
 		Builder builder = new GraphImmutableEnvironment.Builder();
 		builder.addLanguages(CL.lang);
+		GraphImmutableEnvironment env = builder.build();
+		// TODO put this into cl2 package
+		CL.lang.setDefaultEnvironment(env);
+		LOG.debug("Checking addition of language: {}", env.containsLanguage(CL.lang) );
 		try {
+			LOG.debug("Lazy asset instantiation starting");
 			KnowledgeAssetLI myCommentAsset = myCommentExpression.conceptualize(builder.build());
-			//myCommentAsset.express(CL.lang);
-		} catch (EnvironmentIncompatibleException e) {
+			LOG.debug("myCommentAsset: {}", myCommentAsset);
+			LOG.debug("Checking lazy express method on asset : {}", myCommentAsset.express(CL.lang) == myCommentExpression);
+		} catch (EnvironmentIncompatibleException | LanguageIncompatibleException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.exit(0);
+		// this is not working yet
+		try {
+			LOG.debug("Lazy encode instantiation starting");
+			CLEncoding<Element, byte[]> myEncoding = myCommentManifestation.encode(CL.domUTF8bytearray);
+			CLManifestation<Element> anotherManifestation = myEncoding.decode();
+			LOG.debug("Double Lazy instantiation : {}", anotherManifestation);
+			anotherManifestation.getValue();
+			CLCommentManifestation<Element> anotherCommentManifestation = (CLCommentManifestation<Element>) anotherManifestation;
+			anotherCommentManifestation.getSymbol();
+			anotherCommentManifestation.getComment();
+		} catch (EncodingSystemIncompatibleException e) {
 			e.printStackTrace();
 		}
 		LOG.debug("Done");

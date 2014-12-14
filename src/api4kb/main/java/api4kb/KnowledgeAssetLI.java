@@ -15,5 +15,10 @@ public class KnowledgeAssetLI extends AbstractKnowledgeAsset {
 		return new KnowledgeAssetLI(expression, env);
 	}
 
+	@Override
+	AbstractKnowledgeExpression newExpression(KRRLanguage lang) {
+		return null;
+	}
+
 
 }

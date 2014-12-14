@@ -1,5 +1,7 @@
 package api4kb;
 
+import java.io.Console;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,21 +10,21 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 		KnowledgeEncoding<T, S> {
 	// Initializing-only constructor
 	public AbstractKnowledgeEncoding(AbstractKRRDialectType<T> dialectType,
-			CodecSystem<T, S> system) {
+			AbstractCodecSystem<T, S> system) {
 		this.dialectType = dialectType;
 		this.system = system;
 	}
 
 	// Wrapper-based constructor
 	public AbstractKnowledgeEncoding(S value, AbstractKRRDialectType<T> dialectType,
-			CodecSystem<T, S> system) {
+			AbstractCodecSystem<T, S> system) {
 		this(dialectType, system);
 		this.value = value;
 	}
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
 	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestation<T> manifestation,
-			CodecSystem<T, S> system) {
+			AbstractCodecSystem<T, S> system) {
     		this(manifestation.getDialectType(), system);
 		    this.manifestation = manifestation;
 	}
@@ -37,7 +39,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	// protected fields
 	protected S value;
 	protected final AbstractKRRDialectType<T> dialectType;
-	protected final CodecSystem<T, S> system;
+	protected final AbstractCodecSystem<T, S> system;
 	protected AbstractKnowledgeManifestation<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -73,14 +75,42 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 		return system;
 	}
 
+	// default lowering method returns an item for the default receiver
+	// which is the console for this implementation
+	public AbstractKnowledgeItem<T, S, Console> reproduce(){
+		return reproduce(System.console());
+	}
+
 	// lowering method
-	//TODO implement here, as this is not specific to language
-	abstract public <R> KnowledgeItem<T, S, R> reproduce(R destination);
+	public <R> AbstractKnowledgeItem<T, S, R> reproduce(R destination){
+		LOG.debug("Starting encode of manifestation");
+		LOG.debug("  Codec system: {}", system);
+		LOG.debug("  Dialect of the manifestation: {}", dialectType);
+		LOG.debug("  Language of the expression: {}", dialectType.getLanguage());
+		// TODO consider replacing level check with instanceof
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.ITEM)){
+			@SuppressWarnings("unchecked")
+			AbstractKnowledgeItem<T, S, ?> encoding = (AbstractKnowledgeItem<T, S, ?>) initialValue;
+			LOG.debug("Found cached intial value for encoding: {}", encoding);
+			if (encoding.getCodecSystem() == system){
+			  LOG.debug("Using cached intial value");
+			  return (AbstractKnowledgeItem<T, S, R>) encoding;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		return null;
+
+	}
 
 	// lifting method
 	public AbstractKnowledgeManifestation<T> decode() {
 		if (manifestation == null) {
-			manifestation = evalManifestation();
+			//TODO implement
 			return manifestation;
 		} else {
 			return manifestation;
@@ -88,8 +118,6 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 
 	}
 
-	// nonpublic lifting evaluation method
-	protected abstract AbstractKnowledgeManifestation<T> evalManifestation();	
 	
 	// clear memoization cache of the decode method
 	public void clearDecode() {

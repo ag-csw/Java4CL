@@ -1,9 +1,14 @@
 package cl2;
 
 import org.dom4j.dom.DOMElement;
+import org.dom4j.dom.DOMText;
+import org.w3c.dom.Node;
 
+import api4kb.AbstractCodecSystem;
+import api4kb.AbstractKnowledgeEncoding;
 import api4kb.DialectTypeIncompatibleException;
-import api4kb.KnowledgeResource;
+import api4kb.EncodingSystemIncompatibleException;
+import api4kb.KnowledgeSourceLevel;
 import api4kb.None;
 import api4kb.Option;
 import api4kb.Some;
@@ -12,15 +17,15 @@ public final class CLCommentManifestation<T> extends
 		CLManifestation<T> implements CLComment {
 
 	// Package-Private Constructors
-	CLCommentManifestation(T value, CLDialectType<T> dialect) {
-		super(value, dialect);
+	CLCommentManifestation(T value, CLDialectType<T> dialectType) {
+		super(value, dialectType);
 	}
 
 	// Component-based constructor
 	CLCommentManifestation(String symbol,
-			Option<CLCommentManifestation<T>> comment, CLDialectType<T> dialect) {
+			Option<CLCommentManifestation<T>> comment, CLDialectType<T> dialectType) {
 		// TODO verify that comment is compatible with dialect
-		super(dialect);
+		super(dialectType);
 		this.symbol = symbol;
 		this.comment = comment;
 	}
@@ -40,7 +45,7 @@ public final class CLCommentManifestation<T> extends
 	// private fields
 	private String symbol;
 	private Option<CLCommentManifestation<T>> comment;
-
+	
 	// Static Factory Methods
 	public static <T> CLCommentManifestation<T> getNewWrapperInstance(T value,
 			CLDialectType<T> dialect) {
@@ -75,40 +80,81 @@ public final class CLCommentManifestation<T> extends
 		return new CLCommentManifestation<T>(encoding);
 	}
 
+
 	// TODO Shift implementation to AbstractCLComment and incorporate by
 	// composition
 	@Override
 	public String getSymbol() {
-		// check the cache and evaluate if necessary
-		if (symbol == null) {
-			symbol = evalSymbol();
+		// check the symbol cache directly
+		if (symbol != null) {
+			LOG.debug("Symbol found in cache : {}", symbol);
+			return symbol;
 		}
-		LOG.debug("Symbol : {}", symbol);
-		return symbol;
+		// try for the initial value next, if it is an expression
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)) {
+			// FIXME - symbol should be a node list for manifestation
+			symbol = ((CLCommentExpression) initialValue).getSymbol();
+			LOG.debug("Symbol obtained from initial value : {}", symbol);
+			return symbol;
+		}
+		// try for the expression value next
+		if (expression != null) {
+			// FIXME - symbol should be a node list for manifestation
+			symbol = ((CLCommentExpression) expression).getSymbol();
+			LOG.debug("Symbol obtained from cached expression : {}", symbol);
+			return symbol;
+		}
+		return evalSymbol();
 	}
 
 	private String evalSymbol() {
 		// TODO parse value using methods appropriate to the format
-		return null;
+		// also cache the comment at this time
+		// FIXME this is a default implementation only
+		symbol = "";
+    	comment = new None<CLCommentManifestation<T>>();
+    	return symbol;
 	}
 
 	// TODO Shift implementation to AbstractCLComment and incorporate by
 	// composition
 	@Override
 	public Option<CLCommentManifestation<T>> getComment() {
-		// check the cache and evaluate if necessary
-		if (comment == null) {
-			comment = evalComment();
+		// check the comment cache directly
+		if (comment != null) {
+			LOG.debug("comment found in cache : {}", comment);
+			return comment;
 		}
-		LOG.debug("Comment : {}", comment);
-		return comment;
+		// try for the initial value next, if it is an expression
+		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)) {
+			Option<CLCommentExpression> exprcomment = ((CLCommentExpression) initialValue).getComment();
+			if (exprcomment.isEmpty()) {
+				comment = new None<CLCommentManifestation<T>>();
+				LOG.debug("comment obtained from initial value : {}", comment);
+				return comment;
+			}
+			CLCommentExpression exprcommentval = ((Some<CLCommentExpression>) exprcomment).getValue();
+			
+			CLCommentManifestation<T> commentval;
+			try {
+				commentval = exprcommentval.manifest(this.getDialectType());
+				comment = new Some<CLCommentManifestation<T>>(commentval);
+				return comment;
+			} catch (DialectTypeIncompatibleException e) {
+				assert false: "Faulty constructor";
+			}
+		}
+		return evalComment();
 	}
 
 	private Option<CLCommentManifestation<T>> evalComment() {
-		// default value
-		if (symbol == null)
+		// FIXME default value
+		if (comment == null) {
 			symbol = "";
-		comment = new None<CLCommentManifestation<T>>();
+		    comment = new None<CLCommentManifestation<T>>();
+		}
+	    return comment;
+		/**
 		if (dialectType != CL.xcl2dom) {
 			// TODO implement other CL dialects
 		} else {
@@ -128,6 +174,7 @@ public final class CLCommentManifestation<T> extends
 			}
 		}
 		return comment;
+		**/
 	}
 
 	@Override
@@ -135,33 +182,6 @@ public final class CLCommentManifestation<T> extends
 		return (CLDialectType<T>) dialectType;
 	}
 
-	@Override
-	public String toString() {
-		// TODO incorporate the dialect in a message header
-		return getValue().toString();
-	}
-
-	// TODO Shift implementation to AbstractCLComment and incorporate by
-	// composition
-	// determines if a KnowledgeResource is equal to this one
-	public Boolean equals(KnowledgeResource that) {
-		return this.toString().equals(that);
-	}
-
-	// TODO Shift implementation to AbstractCLComment and incorporate by
-	// composition
-	// overriding hashCode to agree with equal
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
-	}
-
-
-	@Override
-	protected CLCommentExpression evalExpression() {
-		// TODO implement eager lifting to expression
-		return null;
-	}
 
 	@Override
 	public Class<T> getType() {
@@ -169,5 +189,51 @@ public final class CLCommentManifestation<T> extends
 		return null;
 	}
 
+	@Override
+	protected T eval() throws DialectTypeIncompatibleException {
+		if (dialectType != CL.xcl2dom) {
+			// TODO implement other CL dialects
+			throw new DialectTypeIncompatibleException();
+		}
+		// TODO this really belongs in the XCL2 package
+		// TODO need to integrate with evalManifest method of CLCommentExpression
+		// The method here should be fundamental.
+		LOG.debug("Symbol cache: {}", symbol);
+		LOG.debug("comment cache: {}", comment);
+		if ((symbol != null) && (comment != null)) {
+			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
+			if (!(comment.isEmpty())) {
+				element.appendChild((Node) ((Some<CLCommentManifestation<T>>) comment).getValue().getValue());
+				DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
+				symbolElement.add(new DOMText(symbol));
+				element.appendChild(symbolElement);
+			} else {
+				element.add(new DOMText(symbol));
+			}
+			return (T) element;
+		} else {
+			assert false : "Call to eval when components are uninitialized.";
+    		return null;
+		}
+	}
+
+	@Override
+	public CLEncoding<T, byte[]> encode()
+			throws DialectTypeIncompatibleException, EncodingSystemIncompatibleException {
+		LOG.debug("Starting default manifest of expression");
+			return (CLEncoding<T, byte[] >) encode(dialectType.defaultSystem());
+	}
+
+	@Override
+	public <S> CLEncoding<T, S> encode(AbstractCodecSystem<T, S> system) throws EncodingSystemIncompatibleException {
+		    AbstractKnowledgeEncoding<T, S> encoding = super.encode(system);
+			LOG.debug("Starting manifest of expression");
+		    if (encoding instanceof CLEncoding<?, ?>) {
+		    	return (CLEncoding<T, S>) encoding;
+		    }
+		    // last resort create a new manifestation with lazy lowering
+		    // this means discarding the manifestation created in the superclass
+			return CLEncoding.lazyNewInstance(this, system);
+	}
 
 }
