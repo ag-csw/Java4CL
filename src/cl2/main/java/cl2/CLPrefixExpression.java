@@ -7,19 +7,18 @@ import api4kb.ImmutableEnvironment;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.KnowledgeAssetLI;
 import api4kb.LanguageIncompatibleException;
-import api4kb.UnsupportedTranslationException;
 
 public abstract class CLPrefixExpression extends CLExpression implements CLPrefix {
 
 
 	public CLPrefixExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang)
-			throws UnsupportedTranslationException, LanguageIncompatibleException {
+			throws IllegalArgumentException, LanguageIncompatibleException {
 		super(asset, lang);
 		// TODO Auto-generated constructor stub
 	}
 
 	public <T> CLPrefixExpression(
-			CLManifestation<T> manifestation) {
+			CLManifestationG<T> manifestation) {
 		super(manifestation);
 		// TODO Auto-generated constructor stub
 	}
@@ -48,7 +47,7 @@ public abstract class CLPrefixExpression extends CLExpression implements CLPrefi
 	}
 
 	@Override
-	public <T> CLManifestation<T> manifest(AbstractKRRDialectType<T> dialect)
+	public <T> CLManifestationG<T> manifest(AbstractKRRDialectType<T> dialect)
 			throws DialectTypeIncompatibleException {
 		// TODO Auto-generated method stub
 		return null;

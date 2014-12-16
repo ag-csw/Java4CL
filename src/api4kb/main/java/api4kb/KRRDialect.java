@@ -6,5 +6,6 @@ public interface KRRDialect {
 	
 	public KRRLanguage getLanguage();
 	
+	public KRRDialectType<?> getDefaultDialectType();
 
 }

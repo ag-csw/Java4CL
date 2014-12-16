@@ -1,28 +1,34 @@
 package cl2;
 
-import api4kb.AbstractKnowledgeExpression;
-import api4kb.AbstractKRRLanguage;
+import api4kb.AbstractKRRDialectType;
+import api4kb.AbstractKnowledgeManifestationG;
 import api4kb.CodecSystem;
+import api4kb.DialectTypeIncompatibleException;
 import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialect;
 import api4kb.KRRDialectType;
 import api4kb.KRRLanguage;
-import api4kb.KnowledgeAssetLI;
-import api4kb.LanguageIncompatibleException;
 
-public abstract class CLExpression extends AbstractKnowledgeExpression implements CLKnowledgeResource {
+public abstract class CLManifestationG<T> extends
+		AbstractKnowledgeManifestationG<T> implements CLKnowledgeResource {
 
-	public <T> CLExpression(AbstractKRRLanguage lang) {
-		super(CL.lang);
+	public CLManifestationG(T value, AbstractKRRDialectType<T> dialect) {
+		super(value, dialect);
+		// TODO Auto-generated constructor stub
 	}
 
-	public CLExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang)
-			throws IllegalArgumentException, LanguageIncompatibleException {
-		super(asset, CL.lang);
+	public CLManifestationG(CLDialectType<T> dialect) {
+		super(dialect);
+		// TODO Auto-generated constructor stub
 	}
 
-	public <T> CLExpression(CLManifestationG<T> manifestation) {
-		super(manifestation);
+	public CLManifestationG(CLExpression expression, CLDialectType<T> dialect) throws DialectTypeIncompatibleException {
+		super(expression, dialect);
+	}
+
+	public <S> CLManifestationG(CLEncoding<T, S> encoding) {
+		super(encoding);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -66,7 +72,7 @@ public abstract class CLExpression extends AbstractKnowledgeExpression implement
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 
 
 }

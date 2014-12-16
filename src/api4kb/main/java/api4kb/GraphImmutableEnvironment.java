@@ -89,11 +89,16 @@ public class GraphImmutableEnvironment implements
 
 	@Override
 	public KnowledgeExpression translate(KnowledgeExpression expression,
-			KRRLanguage language) throws UnsupportedTranslationException {
-		// TODO Auto-generated method stub
+			KRRLanguage endlanguage) throws IllegalArgumentException {
+		KRRLanguage startLanguage = expression.getLanguage();
+		KRRLanguagePair pair = new KRRLanguagePair(startLanguage, endlanguage);
+		if(!translations.containsKey(pair)){
+			throw new IllegalArgumentException("Environment does not contain a mapping from " + startLanguage + " to " + endlanguage);
+		}		
+		//TODO apply mapping
 		return null;
 	}
-
+	
 	@Override
 	public KRRLanguage getDefaultLanguage() {
 		return defaultLanguage;

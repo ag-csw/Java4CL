@@ -1,6 +1,6 @@
 package api4kb;
 
-public class EncodingSystemIncompatibleException extends Exception {
+public class EncodingSystemIncompatibleException extends IllegalArgumentException {
 
 	/**
 	 * 
@@ -26,10 +26,5 @@ public class EncodingSystemIncompatibleException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EncodingSystemIncompatibleException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
 
 }

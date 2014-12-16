@@ -3,17 +3,13 @@ package api4kb;
 import elevation.Liftable;
 import elevation.Lowerable;
 
-public interface KnowledgeManifestation<T> extends KnowledgeResource, Liftable, Lowerable {
+public interface KnowledgeManifestation extends KnowledgeResource, Liftable, Lowerable {
 	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
+	//getter for dialect
+	KRRDialect getDialect();
 	
-	//getter for wrapped object
-	T getValue();
-	
-	//getter for dialect type
-	KRRDialectType<T> getDialectType();
-	
-	Class<T> getType();
-	
-	
-	
+	//getter for wrapped objects
+	<T> T getValue();
+
+
 }

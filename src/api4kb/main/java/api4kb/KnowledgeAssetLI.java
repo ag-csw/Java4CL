@@ -17,7 +17,9 @@ public class KnowledgeAssetLI extends AbstractKnowledgeAsset {
 
 	@Override
 	AbstractKnowledgeExpression newExpression(KRRLanguage lang) {
-		return null;
+		// TODO check the initial value first
+		AbstractKnowledgeExpression expression = super.mapExpression.values().iterator().next(); 
+		return (AbstractKnowledgeExpression) getEnvironment().apply(expression, lang);
 	}
 
 

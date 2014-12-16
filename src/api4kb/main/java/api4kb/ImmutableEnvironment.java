@@ -12,7 +12,7 @@ public interface ImmutableEnvironment extends Immutable {
     //
     Boolean isFocused();
     //
-    KnowledgeExpression translate( KnowledgeExpression expression, KRRLanguage language)  throws UnsupportedTranslationException;
+    KnowledgeExpression translate( KnowledgeExpression expression, KRRLanguage language)  throws IllegalArgumentException;
     //
     KRRLanguage getDefaultLanguage();
 	KnowledgeExpression apply(KnowledgeExpression expression,

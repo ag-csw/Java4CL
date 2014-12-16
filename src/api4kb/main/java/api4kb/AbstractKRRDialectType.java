@@ -40,6 +40,7 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 	public String toString(){
 		return lang.getName() + "." + name;
 	}
+	@Override
 	public AbstractCodecSystem<T, ?> defaultSystem() {
 		return defaultSystem;
 	}

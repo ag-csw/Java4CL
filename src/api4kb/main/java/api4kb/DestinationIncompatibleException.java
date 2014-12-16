@@ -1,6 +1,6 @@
 package api4kb;
 
-public class DestinationIncompatibleException extends Exception {
+public class DestinationIncompatibleException extends IllegalArgumentException {
 
 	/**
 	 * 
@@ -26,10 +26,5 @@ public class DestinationIncompatibleException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DestinationIncompatibleException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
 
 }

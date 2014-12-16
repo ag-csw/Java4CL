@@ -23,7 +23,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	}
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
-	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestation<T> manifestation,
+	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestationG<T> manifestation,
 			AbstractCodecSystem<T, S> system) {
     		this(manifestation.getDialectType(), system);
 		    this.manifestation = manifestation;
@@ -40,7 +40,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	protected S value;
 	protected final AbstractKRRDialectType<T> dialectType;
 	protected final AbstractCodecSystem<T, S> system;
-	protected AbstractKnowledgeManifestation<T> manifestation;
+	protected AbstractKnowledgeManifestationG<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
@@ -71,7 +71,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	}
 
 	@Override
-	public CodecSystem<T, S> getCodecSystem() {
+	public AbstractCodecSystem<T, S> getCodecSystem() {
 		return system;
 	}
 
@@ -108,7 +108,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	}
 
 	// lifting method
-	public AbstractKnowledgeManifestation<T> decode() {
+	public AbstractKnowledgeManifestationG<T> decode() {
 		if (manifestation == null) {
 			//TODO implement
 			return manifestation;

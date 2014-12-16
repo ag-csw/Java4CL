@@ -11,9 +11,9 @@ import api4kb.KnowledgeAssetLI;
 import api4kb.LanguageIncompatibleException;
 import cl2.CL;
 import cl2.CLCommentExpression;
-import cl2.CLCommentManifestation;
+import cl2.CLCommentManifestationG;
 import cl2.CLEncoding;
-import cl2.CLManifestation;
+import cl2.CLManifestationG;
 
 public class Main {
 
@@ -30,7 +30,7 @@ public class Main {
 		//myCommentExpression.clearInitialValue();
 		assert myCommentExpression.getSymbol() == myCommentSymbol: "Symbol evalution incorrect.";
 		myCommentExpression.getComment();
-		CLCommentManifestation<Element> myCommentManifestation = null;
+		CLCommentManifestationG<Element> myCommentManifestation = null;
 		try {
 			LOG.debug("Manifest method call starting");
 			myCommentManifestation = myCommentExpression.manifest(CL.xcl2dom);
@@ -72,10 +72,10 @@ public class Main {
 		try {
 			LOG.debug("Lazy encode instantiation starting");
 			CLEncoding<Element, byte[]> myEncoding = myCommentManifestation.encode(CL.domUTF8bytearray);
-			CLManifestation<Element> anotherManifestation = myEncoding.decode();
+			CLManifestationG<Element> anotherManifestation = myEncoding.decode();
 			LOG.debug("Double Lazy instantiation : {}", anotherManifestation);
 			anotherManifestation.getValue();
-			CLCommentManifestation<Element> anotherCommentManifestation = (CLCommentManifestation<Element>) anotherManifestation;
+			CLCommentManifestationG<Element> anotherCommentManifestation = (CLCommentManifestationG<Element>) anotherManifestation;
 			anotherCommentManifestation.getSymbol();
 			anotherCommentManifestation.getComment();
 		} catch (EncodingSystemIncompatibleException e) {

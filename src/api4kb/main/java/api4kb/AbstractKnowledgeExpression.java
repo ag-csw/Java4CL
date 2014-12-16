@@ -16,7 +16,7 @@ public abstract class AbstractKnowledgeExpression extends
 
 	// Lazy lifting constructor - argument is a Manifestation
 	public <T> AbstractKnowledgeExpression(
-			AbstractKnowledgeManifestation<T> manifestation) {
+			AbstractKnowledgeManifestationG<T> manifestation) {
 		this(manifestation.getDialectType().getLanguage());
 		LOG.debug(
 				"Starting lazy lifting expression construtor with manifestation: {}",
@@ -43,10 +43,11 @@ public abstract class AbstractKnowledgeExpression extends
     // final properties 
 	protected final AbstractKRRLanguage lang;
 	// cache for lifting and lowering methods
-	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestation<?>> mapManifest = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestation<?>>();
+	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapManifest = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
 	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
+	protected static final Logger SLOG = LoggerFactory.getLogger(AbstractKnowledgeExpression.class);
 
 	@Override
 	public KnowledgeSourceLevel getLevel() {
@@ -62,7 +63,7 @@ public abstract class AbstractKnowledgeExpression extends
 
 	// default lowering method returns a manifestation in the default dialect
 	// for that language
-	public AbstractKnowledgeManifestation<?> manifest()
+	public AbstractKnowledgeManifestationG<?> manifest()
 			throws DialectTypeIncompatibleException {
 		LOG.debug("Starting default manifest of expression");
 		return manifest(lang.defaultDialectType());
@@ -70,7 +71,7 @@ public abstract class AbstractKnowledgeExpression extends
 
 	// lowering method with a parameter indicating the dialect
 	// with generic T for the format (e.g. String, XML Element)
-	public <T> AbstractKnowledgeManifestation<T> manifest(
+	public <T> AbstractKnowledgeManifestationG<T> manifest(
 			AbstractKRRDialectType<T> dialectType)
 			throws DialectTypeIncompatibleException {
 		LOG.debug("Starting manifest of expression");
@@ -83,17 +84,17 @@ public abstract class AbstractKnowledgeExpression extends
 		}
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.MANIFESTATION)){
-			AbstractKnowledgeManifestation<?> manifestation = (AbstractKnowledgeManifestation<?>) initialValue;
+			AbstractKnowledgeManifestationG<?> manifestation = (AbstractKnowledgeManifestationG<?>) initialValue;
 			LOG.debug("Found cached intial value for manifestation: {}", manifestation);
 			if (manifestation.getDialectType() == dialectType){
 			  LOG.debug("Using cached intial value");
-			  return (AbstractKnowledgeManifestation<T>) manifestation;
+			  return (AbstractKnowledgeManifestationG<T>) manifestation;
 			}
 		}
 		if (mapManifest.containsKey(dialectType)) {
 			LOG.debug("Found cached manifestation for requested dialect Type");
 			@SuppressWarnings("unchecked")
-			AbstractKnowledgeManifestation<T> manifestation = (AbstractKnowledgeManifestation<T>) mapManifest.get(dialectType);
+			AbstractKnowledgeManifestationG<T> manifestation = (AbstractKnowledgeManifestationG<T>) mapManifest.get(dialectType);
 			LOG.debug("Using cached manifestation: {}", manifestation);
 			return manifestation;
 		}
@@ -103,18 +104,8 @@ public abstract class AbstractKnowledgeExpression extends
 	}
 
 	// eager lowering
-	<T> AbstractKnowledgeManifestation<T> newManifestation(AbstractKRRDialectType<T> dialectType){
-		return new AbstractKnowledgeManifestation<T>(dialectType){
-
-
-			@Override
-			protected T eval() throws DialectTypeIncompatibleException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-	};
-	}
+	protected abstract<T> AbstractKnowledgeManifestationG<T> newManifestation(AbstractKRRDialectType<T> dialectType);
+	//	return new AbstractKnowledgeManifestationG<T>(dialectType){}
 
 	// default lifting method returns a asset in the default environment
 	// for this language
@@ -154,14 +145,14 @@ public abstract class AbstractKnowledgeExpression extends
 	}
 	
 	// eager lifting
-	KnowledgeAssetLI newAsset(GraphImmutableEnvironment environment){
+	protected KnowledgeAssetLI newAsset(GraphImmutableEnvironment environment){
 		return new KnowledgeAssetLI(this, environment);
 
 	};
 
 
 
-	<T> void manifestSafePut(AbstractKnowledgeManifestation<T> manifest) {
+	<T> void manifestSafePut(AbstractKnowledgeManifestationG<T> manifest) {
 		mapManifest.put(manifest.getDialectType(), manifest);
 	}
 

@@ -1,6 +1,6 @@
 package api4kb;
 
-public class EnvironmentIncompatibleException extends Exception {
+public class EnvironmentIncompatibleException extends IllegalArgumentException {
 
 	/**
 	 * 
@@ -12,11 +12,6 @@ public class EnvironmentIncompatibleException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EnvironmentIncompatibleException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
 
 	public EnvironmentIncompatibleException(String message, Throwable cause) {
 		super(message, cause);

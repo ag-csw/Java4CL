@@ -3,6 +3,11 @@ package cl2;
 import api4kb.AbstractKnowledgeEncoding;
 import api4kb.AbstractCodecSystem;
 import api4kb.AbstractKnowledgeItem;
+import api4kb.CodecSystem;
+import api4kb.ImmutableEnvironment;
+import api4kb.KRRDialect;
+import api4kb.KRRDialectType;
+import api4kb.KRRLanguage;
 
 public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements CLKnowledgeResource {
 
@@ -10,13 +15,13 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 	   super(stream, dialect, system);
 	}
 
-	public CLEncoding(CLManifestation<T> manifestation, AbstractCodecSystem<T, S> system) {
+	public CLEncoding(CLManifestationG<T> manifestation, AbstractCodecSystem<T, S> system) {
 	 super(manifestation, system);
 }
 
 	// static factory methods
    public static <T, S> CLEncoding<T, S> lazyNewInstance(
-			CLManifestation<T> manifestation, AbstractCodecSystem<T, S> system)
+			CLManifestationG<T> manifestation, AbstractCodecSystem<T, S> system)
 			 {
 		return new CLEncoding<T, S>(manifestation, system);
 	}
@@ -34,8 +39,50 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 
 
 	@Override
-	public CLManifestation<T> decode() {
-		return (CLManifestation<T>) super.decode();
+	public CLManifestationG<T> decode() {
+		return (CLManifestationG<T>) super.decode();
+	}
+
+	@Override
+	public ImmutableEnvironment getDefaultEnvironment() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KRRLanguage getDefaultLanguage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KRRDialect getDefaultDialect() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KRRDialectType<?> getDefaultDialectType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CodecSystem<?, ?> getDefaultCodecSystem() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getDefaultReceiver() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getDefaultSender() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

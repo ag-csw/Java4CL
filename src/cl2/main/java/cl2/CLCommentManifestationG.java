@@ -6,24 +6,30 @@ import org.w3c.dom.Node;
 
 import api4kb.AbstractCodecSystem;
 import api4kb.AbstractKnowledgeEncoding;
+import api4kb.AbstractKnowledgeExpression;
+import api4kb.CodecSystem;
 import api4kb.DialectTypeIncompatibleException;
 import api4kb.EncodingSystemIncompatibleException;
+import api4kb.ImmutableEnvironment;
+import api4kb.KRRDialect;
+import api4kb.KRRDialectType;
+import api4kb.KRRLanguage;
 import api4kb.KnowledgeSourceLevel;
 import api4kb.None;
 import api4kb.Option;
 import api4kb.Some;
 
-public final class CLCommentManifestation<T> extends
-		CLManifestation<T> implements CLComment {
+public final class CLCommentManifestationG<T> extends
+		CLManifestationG<T> implements CLComment {
 
 	// Package-Private Constructors
-	CLCommentManifestation(T value, CLDialectType<T> dialectType) {
+	CLCommentManifestationG(T value, CLDialectType<T> dialectType) {
 		super(value, dialectType);
 	}
 
 	// Component-based constructor
-	CLCommentManifestation(String symbol,
-			Option<CLCommentManifestation<T>> comment, CLDialectType<T> dialectType) {
+	CLCommentManifestationG(String symbol,
+			Option<CLCommentManifestationG<T>> comment, CLDialectType<T> dialectType) {
 		// TODO verify that comment is compatible with dialect
 		super(dialectType);
 		this.symbol = symbol;
@@ -31,53 +37,53 @@ public final class CLCommentManifestation<T> extends
 	}
 
 	// Lazy lowering constructor
-	private CLCommentManifestation(CLCommentExpression expression,
+	private CLCommentManifestationG(CLCommentExpression expression,
 			CLDialectType<T> dialect) throws DialectTypeIncompatibleException {
 		super(expression, dialect);
 	}
 
 	// Lazy lifting constructor
-	private <S> CLCommentManifestation(CLEncoding<T, S> encoding) {
+	private <S> CLCommentManifestationG(CLEncoding<T, S> encoding) {
 		// TODO verify that encoding is a Comment
 		super(encoding);
 	}
 
 	// private fields
 	private String symbol;
-	private Option<CLCommentManifestation<T>> comment;
+	private Option<CLCommentManifestationG<T>> comment;
 	
 	// Static Factory Methods
-	public static <T> CLCommentManifestation<T> getNewWrapperInstance(T value,
+	public static <T> CLCommentManifestationG<T> getNewWrapperInstance(T value,
 			CLDialectType<T> dialect) {
-		return new CLCommentManifestation<T>(value, dialect);
+		return new CLCommentManifestationG<T>(value, dialect);
 	}
 
-	public static <T> CLCommentManifestation<T> getNewComponentInstance(
-			String symbol, Option<CLCommentManifestation<T>> comment,
+	public static <T> CLCommentManifestationG<T> getNewComponentInstance(
+			String symbol, Option<CLCommentManifestationG<T>> comment,
 			CLDialectType<T> dialect) {
-		return new CLCommentManifestation<T>(symbol, comment, dialect);
+		return new CLCommentManifestationG<T>(symbol, comment, dialect);
 	}
 
-	public static <T> CLCommentManifestation<T> getNewComponentInstance(
+	public static <T> CLCommentManifestationG<T> getNewComponentInstance(
 			String symbol, CLDialectType<T> dialect) {
 		return getNewComponentInstance(symbol,
-				new None<CLCommentManifestation<T>>(), dialect);
+				new None<CLCommentManifestationG<T>>(), dialect);
 	}
 
-	public static <T> CLCommentManifestation<T> getNewComponentInstance(
+	public static <T> CLCommentManifestationG<T> getNewComponentInstance(
 			CLDialectType<T> dialect) {
 		return getNewComponentInstance("", dialect);
 	}
 
-	public static <T> CLCommentManifestation<T> lazyNewInstance(
+	public static <T> CLCommentManifestationG<T> lazyNewInstance(
 			CLCommentExpression expression, CLDialectType<T> dialect)
 			throws DialectTypeIncompatibleException {
-		return new CLCommentManifestation<T>(expression, dialect);
+		return new CLCommentManifestationG<T>(expression, dialect);
 	}
 
-	public static <T, S> CLCommentManifestation<T> lazyNewInstance(
+	public static <T, S> CLCommentManifestationG<T> lazyNewInstance(
 			CLEncoding<T, S> encoding) {
-		return new CLCommentManifestation<T>(encoding);
+		return new CLCommentManifestationG<T>(encoding);
 	}
 
 
@@ -112,14 +118,14 @@ public final class CLCommentManifestation<T> extends
 		// also cache the comment at this time
 		// FIXME this is a default implementation only
 		symbol = "";
-    	comment = new None<CLCommentManifestation<T>>();
+    	comment = new None<CLCommentManifestationG<T>>();
     	return symbol;
 	}
 
 	// TODO Shift implementation to AbstractCLComment and incorporate by
 	// composition
 	@Override
-	public Option<CLCommentManifestation<T>> getComment() {
+	public Option<CLCommentManifestationG<T>> getComment() {
 		// check the comment cache directly
 		if (comment != null) {
 			LOG.debug("comment found in cache : {}", comment);
@@ -129,16 +135,16 @@ public final class CLCommentManifestation<T> extends
 		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)) {
 			Option<CLCommentExpression> exprcomment = ((CLCommentExpression) initialValue).getComment();
 			if (exprcomment.isEmpty()) {
-				comment = new None<CLCommentManifestation<T>>();
+				comment = new None<CLCommentManifestationG<T>>();
 				LOG.debug("comment obtained from initial value : {}", comment);
 				return comment;
 			}
 			CLCommentExpression exprcommentval = ((Some<CLCommentExpression>) exprcomment).getValue();
 			
-			CLCommentManifestation<T> commentval;
+			CLCommentManifestationG<T> commentval;
 			try {
 				commentval = exprcommentval.manifest(this.getDialectType());
-				comment = new Some<CLCommentManifestation<T>>(commentval);
+				comment = new Some<CLCommentManifestationG<T>>(commentval);
 				return comment;
 			} catch (DialectTypeIncompatibleException e) {
 				assert false: "Faulty constructor";
@@ -147,11 +153,11 @@ public final class CLCommentManifestation<T> extends
 		return evalComment();
 	}
 
-	private Option<CLCommentManifestation<T>> evalComment() {
+	private Option<CLCommentManifestationG<T>> evalComment() {
 		// FIXME default value
 		if (comment == null) {
 			symbol = "";
-		    comment = new None<CLCommentManifestation<T>>();
+		    comment = new None<CLCommentManifestationG<T>>();
 		}
 	    return comment;
 		/**
@@ -168,7 +174,7 @@ public final class CLCommentManifestation<T> extends
 				}
 				// TODO write isComment method
 				if (child.getName().equals("Comment")) {
-					comment = new Some<CLCommentManifestation<T>>(getNewWrapperInstance((T) child, (CLDialectType<T>) dialectType));
+					comment = new Some<CLCommentManifestationG<T>>(getNewWrapperInstance((T) child, (CLDialectType<T>) dialectType));
 				}
 
 			}
@@ -203,7 +209,7 @@ public final class CLCommentManifestation<T> extends
 		if ((symbol != null) && (comment != null)) {
 			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
 			if (!(comment.isEmpty())) {
-				element.appendChild((Node) ((Some<CLCommentManifestation<T>>) comment).getValue().getValue());
+				element.appendChild((Node) ((Some<CLCommentManifestationG<T>>) comment).getValue().getValue());
 				DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
 				symbolElement.add(new DOMText(symbol));
 				element.appendChild(symbolElement);
@@ -234,6 +240,22 @@ public final class CLCommentManifestation<T> extends
 		    // last resort create a new manifestation with lazy lowering
 		    // this means discarding the manifestation created in the superclass
 			return CLEncoding.lazyNewInstance(this, system);
+	}
+
+	
+	@Override
+	protected
+	<S> AbstractKnowledgeEncoding<T, S> newEncoding(
+			AbstractCodecSystem<T, S> system) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected
+	AbstractKnowledgeExpression newExpression() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

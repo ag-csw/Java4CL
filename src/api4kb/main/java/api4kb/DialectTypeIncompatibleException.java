@@ -1,6 +1,6 @@
 package api4kb;
 
-public class DialectTypeIncompatibleException extends Exception {
+public class DialectTypeIncompatibleException extends IllegalArgumentException {
 
 	/**
 	 * 
@@ -23,12 +23,6 @@ public class DialectTypeIncompatibleException extends Exception {
 
 	public DialectTypeIncompatibleException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	public DialectTypeIncompatibleException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 

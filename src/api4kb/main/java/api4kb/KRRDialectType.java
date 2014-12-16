@@ -9,5 +9,7 @@ public interface KRRDialectType<T> {
 	public KRRLanguage getLanguage();
 
 	public Class<T> getType();
+
+	public CodecSystem<T, ?> defaultSystem();
 	
 }

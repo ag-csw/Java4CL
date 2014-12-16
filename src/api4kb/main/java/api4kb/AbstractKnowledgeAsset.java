@@ -5,11 +5,13 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import elevation.SelfLoweringAsset;
 
-public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource implements KnowledgeAsset {
+
+public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource implements KnowledgeAsset, SelfLoweringAsset {
 
 	private final GraphImmutableEnvironment environment;
-	private final HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression>();
+	protected final HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression>();
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// initializing only constructor
@@ -60,11 +62,13 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource i
 
 	// default lowering method returns an expression in the default language
 	// for this environment
+	@Override
 	public AbstractKnowledgeExpression express() throws LanguageIncompatibleException{
 			return express(environment.getDefaultLanguage());
 	}
 
 	// lowering method with a parameter indicating the language
+	@Override
 	public AbstractKnowledgeExpression express(KRRLanguage lang)
 			throws LanguageIncompatibleException {
 		LOG.debug("Starting express with language: {}", lang);
@@ -92,10 +96,8 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource i
 	}
 	
 	// eager lowering
-	AbstractKnowledgeExpression newExpression(KRRLanguage lang){
-		return new AbstractKnowledgeExpression((AbstractKRRLanguage) lang){};
-
-	};
+	abstract AbstractKnowledgeExpression newExpression(KRRLanguage lang);
+	//{ return new AbstractKnowledgeExpression((AbstractKRRLanguage) lang){};
 	
 	// verify that some other equivalent property has been set
 	// before forgetting initial value, to avoid leaving object
@@ -106,6 +108,44 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource i
 			super.unsafeClearInitialValue();
 		}
 	}
+
+	@Override
+	public ImmutableEnvironment getDefaultEnvironment() {
+		return getEnvironment();
+	}
+
+	@Override
+	public KRRLanguage getDefaultLanguage() {
+		return getDefaultEnvironment().getDefaultLanguage();
+	}
+
+	@Override
+	public KRRDialect getDefaultDialect() {
+		return getDefaultLanguage().defaultDialect();
+	}
+
+	@Override
+	public KRRDialectType<?> getDefaultDialectType() {
+		return getDefaultDialect().getDefaultDialectType();
+	}
+
+	@Override
+	public CodecSystem<?, ?> getDefaultCodecSystem() {
+		return getDefaultDialectType().defaultSystem();
+	}
+
+	@Override
+	public KRRLanguage getDefaultReceiver() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public KRRLanguage getDefaultSender() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

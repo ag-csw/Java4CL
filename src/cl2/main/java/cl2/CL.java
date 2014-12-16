@@ -25,12 +25,13 @@ import api4kb.AbstractKRRDialectType;
 import api4kb.AbstractKRRLanguage;
 import api4kb.DecoderException;
 import api4kb.EncoderException;
+import api4kb.KRRDialectType;
 
 
 
 public final class CL {
 
-	// private constructor to enforce non-instanciability
+	// private constructor to enforce non-instantiability
 	private CL() {}
 	
 	// public fields
@@ -50,7 +51,14 @@ public final class CL {
 		};	 
 		
 		
-	public static CLDialect xcl2 = new CLDialect("XCL2") {};
+	public static CLDialect xcl2 = new CLDialect("XCL2"){
+		@Override
+		public CLDialectType<Element> getDefaultDialectType() {
+			return xcl2dom;
+		}
+
+	};
+
 	
 	
 	public static final Namespace NS_XCL2 = Namespace.get("http://purl.org/xcl/2.0/");	
@@ -82,7 +90,8 @@ public final class CL {
 			return doc.getDocumentElement();
 		}};
 		public static CLDialectType<Element> xcl2dom = 
-				new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class, domUTF8bytearray){}; 
+				new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class, domUTF8bytearray){};
+				
 
 }
 
