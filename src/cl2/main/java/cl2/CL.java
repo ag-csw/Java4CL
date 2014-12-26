@@ -9,6 +9,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -70,46 +71,48 @@ public final class CL {
 		@Override
 		public byte[] code(Element node) {
 
-			try {
 				TransformerFactory transFactory = TransformerFactory
 						.newInstance();
-				Transformer transformer = transFactory.newTransformer();
+				Transformer transformer;
+				try {
+					transformer = transFactory.newTransformer();
+				} catch (TransformerConfigurationException e) {
+					throw new RuntimeException(e);
+				}
 				StringWriter buffer = new StringWriter();
 				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
 						"yes");
-				transformer.transform(new DOMSource(node), new StreamResult(
-						buffer));
-				return buffer.toString().getBytes("UTF-8");
-			} catch (TransformerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
+				try {
+					transformer.transform(new DOMSource(node), new StreamResult(
+							buffer));
+				} catch (TransformerException e) {
+					throw new RuntimeException(e);
+				}
+				try {
+					return buffer.toString().getBytes("UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					throw new RuntimeException(e);
+				}
 		}
 
 		@Override
-		public Element decode(byte[] bytes) throws UnsupportedEncodingException {
+		public Element decode(byte[] bytes) {
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder;
 			try {
 				builder = domFactory.newDocumentBuilder();
-				Document doc = builder.parse(new String(bytes, "UTF-8"));
-				return doc.getDocumentElement();
 			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
-			return null;
+			Document doc;
+			try {
+				doc = builder.parse(new String(bytes, "UTF-8"));
+			} catch (SAXException | IOException e) {
+				throw new RuntimeException(e);
+			}
+			return doc.getDocumentElement();
+
 		}
 	};
 	public static CLDialectType<Element> xcl2dom = new CLDialectType<Element>(

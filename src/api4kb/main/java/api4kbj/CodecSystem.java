@@ -1,11 +1,10 @@
 package api4kbj;
 
-import java.io.UnsupportedEncodingException;
 
 public interface CodecSystem<T, S> {
 
-	public S code(T t) throws UnsupportedEncodingException;
+	public S code(T t);
 
-	public T decode(S s) throws UnsupportedEncodingException;
+	public T decode(S s);
 
 }
