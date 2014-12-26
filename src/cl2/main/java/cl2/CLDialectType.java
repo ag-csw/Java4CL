@@ -1,7 +1,7 @@
 package cl2;
 
-import api4kb.AbstractCodecSystem;
-import api4kb.AbstractKRRDialectType;
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKRRDialectType;
 
 public abstract class CLDialectType<T> extends AbstractKRRDialectType<T> {
 

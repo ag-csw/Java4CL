@@ -1,6 +1,6 @@
 package cl2;
 
-import api4kb.AbstractKRRDialect;
+import api4kbj.AbstractKRRDialect;
 
 public abstract class CLDialect extends AbstractKRRDialect {
 

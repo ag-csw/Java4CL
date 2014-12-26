@@ -1,12 +1,12 @@
 package elevation;
 
-import api4kb.AbstractKnowledgeAsset;
-import api4kb.AbstractKnowledgeEncoding;
-import api4kb.AbstractKnowledgeExpression;
-import api4kb.AbstractKnowledgeItem;
-import api4kb.AbstractKnowledgeManifestationG;
-import api4kb.ImmutableEnvironment;
-import api4kb.KnowledgeResource;
+import api4kbj.AbstractKnowledgeAsset;
+import api4kbj.AbstractKnowledgeEncoding;
+import api4kbj.AbstractKnowledgeExpression;
+import api4kbj.AbstractKnowledgeItem;
+import api4kbj.AbstractKnowledgeManifestationG;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KnowledgeResource;
 
 public abstract class AbstractLifter implements Lifter {
 

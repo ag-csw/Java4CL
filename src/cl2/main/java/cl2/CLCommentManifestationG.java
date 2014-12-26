@@ -4,13 +4,13 @@ import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 import org.w3c.dom.Node;
 
-import api4kb.AbstractCodecSystem;
-import api4kb.AbstractKnowledgeEncoding;
-import api4kb.AbstractKnowledgeExpression;
-import api4kb.KnowledgeSourceLevel;
-import api4kb.None;
-import api4kb.Option;
-import api4kb.Some;
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKnowledgeEncoding;
+import api4kbj.AbstractKnowledgeExpression;
+import api4kbj.KnowledgeSourceLevel;
+import api4kbj.None;
+import api4kbj.Option;
+import api4kbj.Some;
 
 public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 		implements CLComment {

@@ -1,6 +1,6 @@
 package cl2;
 
-import api4kb.Option;
+import api4kbj.Option;
 
 public interface CLName extends CLKnowledgeResource {
 	// getter for comment

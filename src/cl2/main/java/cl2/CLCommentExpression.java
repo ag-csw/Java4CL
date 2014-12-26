@@ -1,12 +1,12 @@
 package cl2;
 
-import api4kb.AbstractKRRDialectType;
-import api4kb.AbstractKnowledgeManifestationG;
-import api4kb.GraphImmutableEnvironment;
-import api4kb.KnowledgeAssetLI;
-import api4kb.Option;
-import api4kb.None;
-import api4kb.Some;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.AbstractKnowledgeManifestationG;
+import api4kbj.GraphImmutableEnvironment;
+import api4kbj.KnowledgeAssetLI;
+import api4kbj.None;
+import api4kbj.Option;
+import api4kbj.Some;
 
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;

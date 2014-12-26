@@ -1,6 +1,6 @@
 package cl2;
 
-import api4kb.KnowledgeResource;
+import api4kbj.KnowledgeResource;
 
 public interface CLKnowledgeResource extends KnowledgeResource {
 

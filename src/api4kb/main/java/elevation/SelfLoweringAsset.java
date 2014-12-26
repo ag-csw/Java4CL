@@ -1,8 +1,8 @@
 package elevation;
 
-import api4kb.AbstractKnowledgeExpression;
-import api4kb.KRRLanguage;
-import api4kb.KnowledgeAsset;
+import api4kbj.AbstractKnowledgeExpression;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeAsset;
 
 public interface SelfLoweringAsset extends SelfLowering, KnowledgeAsset {
 

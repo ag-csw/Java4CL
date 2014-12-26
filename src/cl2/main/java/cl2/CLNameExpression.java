@@ -1,11 +1,11 @@
 package cl2;
 
-import api4kb.AbstractKRRDialectType;
-import api4kb.AbstractKRRLanguage;
-import api4kb.GraphImmutableEnvironment;
-import api4kb.ImmutableEnvironment;
-import api4kb.KnowledgeAssetLI;
-import api4kb.Option;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.AbstractKRRLanguage;
+import api4kbj.GraphImmutableEnvironment;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KnowledgeAssetLI;
+import api4kbj.Option;
 
 public abstract class CLNameExpression extends CLExpression implements CLName {
 

@@ -19,10 +19,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import api4kb.AbstractCodecSystem;
-import api4kb.AbstractKRRDialect;
-import api4kb.AbstractKRRDialectType;
-import api4kb.AbstractKRRLanguage;
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKRRDialect;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.AbstractKRRLanguage;
 
 public final class CL {
 

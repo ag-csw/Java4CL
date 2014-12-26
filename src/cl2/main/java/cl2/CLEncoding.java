@@ -1,13 +1,13 @@
 package cl2;
 
-import api4kb.AbstractKnowledgeEncoding;
-import api4kb.AbstractCodecSystem;
-import api4kb.AbstractKnowledgeItem;
-import api4kb.CodecSystem;
-import api4kb.ImmutableEnvironment;
-import api4kb.KRRDialect;
-import api4kb.KRRDialectType;
-import api4kb.KRRLanguage;
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKnowledgeEncoding;
+import api4kbj.AbstractKnowledgeItem;
+import api4kbj.CodecSystem;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KRRDialect;
+import api4kbj.KRRDialectType;
+import api4kbj.KRRLanguage;
 
 public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 		CLKnowledgeResource {

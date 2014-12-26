@@ -1,12 +1,12 @@
 package cl2;
 
-import api4kb.AbstractKRRDialectType;
-import api4kb.AbstractKnowledgeManifestationG;
-import api4kb.CodecSystem;
-import api4kb.ImmutableEnvironment;
-import api4kb.KRRDialect;
-import api4kb.KRRDialectType;
-import api4kb.KRRLanguage;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.AbstractKnowledgeManifestationG;
+import api4kbj.CodecSystem;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KRRDialect;
+import api4kbj.KRRDialectType;
+import api4kbj.KRRLanguage;
 
 public abstract class CLManifestationG<T> extends
 		AbstractKnowledgeManifestationG<T> implements CLKnowledgeResource {
