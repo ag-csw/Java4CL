@@ -45,12 +45,12 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 
 	private void mapExpressionSafePut(AbstractKnowledgeExpression expression) {
 		LOG.debug("Starting expression safeput", expression);
-		AbstractKRRLanguage lang = expression.getLanguage();
+		AbstractKRRLanguage lang = expression.language();
 		mapExpression.put(lang, expression);
 	}
 
 	@Override
-	public KnowledgeSourceLevel getLevel() {
+	public KnowledgeSourceLevel level() {
 		return level;
 	}
 
@@ -69,7 +69,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	}
 
 	@Override
-	public ImmutableEnvironment getEnvironment() {
+	public ImmutableEnvironment environment() {
 		return environment;
 	}
 
@@ -77,7 +77,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	// for this environment
 	@Override
 	public AbstractKnowledgeExpression express() {
-		return express(environment.getDefaultLanguage());
+		return express(environment.defaultLanguage());
 	}
 
 	// lowering method with a parameter indicating the language
@@ -91,11 +91,11 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		}
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
-				&& (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)) {
+				&& (initialValue.level() == KnowledgeSourceLevel.EXPRESSION)) {
 			AbstractKnowledgeExpression expression = (AbstractKnowledgeExpression) initialValue;
 			LOG.debug("Found cached intial value for expression: {}",
 					expression);
-			if (expression.getLanguage() == lang) {
+			if (expression.language() == lang) {
 				LOG.debug("Using cached intial value");
 				return expression;
 			}
@@ -127,38 +127,38 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	}
 
 	@Override
-	public ImmutableEnvironment getDefaultEnvironment() {
-		return getEnvironment();
+	public ImmutableEnvironment defaultEnvironment() {
+		return environment();
 	}
 
 	@Override
-	public KRRLanguage getDefaultLanguage() {
-		return getDefaultEnvironment().getDefaultLanguage();
+	public KRRLanguage defaultLanguage() {
+		return defaultEnvironment().defaultLanguage();
 	}
 
 	@Override
-	public KRRDialect getDefaultDialect() {
-		return getDefaultLanguage().defaultDialect();
+	public KRRDialect defaultDialect() {
+		return defaultLanguage().defaultDialect();
 	}
 
 	@Override
-	public KRRDialectType<?> getDefaultDialectType() {
-		return getDefaultDialect().getDefaultDialectType();
+	public KRRDialectType<?> defaultDialectType() {
+		return defaultDialect().defaultDialectType();
 	}
 
 	@Override
-	public CodecSystem<?, ?> getDefaultCodecSystem() {
-		return getDefaultDialectType().defaultSystem();
+	public CodecSystem<?, ?> defaultCodecSystem() {
+		return defaultDialectType().defaultSystem();
 	}
 
 	@Override
-	public KRRLanguage getDefaultReceiver() {
+	public KRRLanguage defaultReceiver() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KRRLanguage getDefaultSender() {
+	public KRRLanguage defaultSender() {
 		// TODO Auto-generated method stub
 		return null;
 	}

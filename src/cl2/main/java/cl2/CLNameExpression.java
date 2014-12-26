@@ -73,7 +73,7 @@ public abstract class CLNameExpression extends CLExpression implements CLName {
 	}
 
 	@Override
-	public AbstractKRRLanguage getLanguage() {
+	public AbstractKRRLanguage language() {
 		// TODO Auto-generated method stub
 		return null;
 	}

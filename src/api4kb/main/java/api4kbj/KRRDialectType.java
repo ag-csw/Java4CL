@@ -2,13 +2,13 @@ package api4kbj;
 
 public interface KRRDialectType<T> {
 
-	public String getName();
+	public String name();
 
-	public KRRDialect getDialect();
+	public KRRDialect dialect();
 
-	public KRRLanguage getLanguage();
+	public KRRLanguage language();
 
-	public Class<T> getType();
+	public Class<T> type();
 
 	public CodecSystem<T, ?> defaultSystem();
 

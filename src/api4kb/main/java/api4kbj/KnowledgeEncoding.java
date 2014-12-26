@@ -9,12 +9,12 @@ public interface KnowledgeEncoding<T, S> extends KnowledgeResource, Liftable,
 
 	// getter for wrapped stream
 	// S should be some type of stream
-	S getValue();
+	S value();
 
 	// getter for encoding system
-	CodecSystem<T, S> getCodecSystem();
+	CodecSystem<T, S> codecSystem();
 
 	// getter for dialect type
-	KRRDialectType<T> getDialectType();
+	KRRDialectType<T> dialectType();
 
 }

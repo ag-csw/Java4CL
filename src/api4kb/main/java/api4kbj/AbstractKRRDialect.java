@@ -12,17 +12,17 @@ public abstract class AbstractKRRDialect implements KRRDialect {
 	}
 
 	@Override
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
 	@Override
-	public AbstractKRRLanguage getLanguage() {
+	public AbstractKRRLanguage language() {
 		return lang;
 	}
 
 	@Override
-	public AbstractKRRDialectType<?> getDefaultDialectType() {
+	public AbstractKRRDialectType<?> defaultDialectType() {
 		return defaultDialectType;
 	}
 

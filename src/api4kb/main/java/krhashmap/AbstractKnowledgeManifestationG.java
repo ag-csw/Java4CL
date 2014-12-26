@@ -33,7 +33,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 	// Lazy lifting constructor - argument is an Encoding
 	public <S> AbstractKnowledgeManifestationG(
 			AbstractKnowledgeEncoding<T, S> encoding) {
-		this(encoding.getDialectType());
+		this(encoding.dialectType());
 		LOG.debug(
 				"Starting lazy lifting expression construtor with encoding: {}",
 				encoding);
@@ -48,7 +48,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 			AbstractKRRDialectType<T> dialectType) {
 		this(dialectType);
 		LOG.debug("Starting lazy lowering manifestation constructor");
-		if (!expression.getLanguage().equals(dialectType.getLanguage())) {
+		if (!expression.language().equals(dialectType.language())) {
 			throw new IllegalArgumentException(
 					"Requested dialect type is not compatible with the language.");
 		}
@@ -71,41 +71,41 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public KnowledgeSourceLevel getLevel() {
+	public KnowledgeSourceLevel level() {
 		LOG.debug("Getting level: {}", level);
 		return level;
 	}
 
 	@Override
-	public AbstractKRRDialectType<T> getDialectType() {
+	public AbstractKRRDialectType<T> dialectType() {
 		return dialectType;
 	}
 
 	@Override
-	public Class<T> getType() {
-		return dialectType.getType();
+	public Class<T> type() {
+		return dialectType.type();
 	}
 
 	@Override
-	public T getValue() {
+	public T value() {
 		if (value != null) {
 			return value;
 		}
 		if (expression != null) {
-			value = expression.manifest(dialectType).getValue();
+			value = expression.manifest(dialectType).value();
 			return value;
 		}
 		if ((initialValue != null)
-				&& (initialValue.getLevel() == KnowledgeSourceLevel.ENCODING)) {
+				&& (initialValue.level() == KnowledgeSourceLevel.ENCODING)) {
 			value = ((AbstractKnowledgeEncoding<T, ?>) initialValue).decode()
-					.getValue();
+					.value();
 			return value;
 		}
 		if (!mapEncoding.isEmpty()) {
 			synchronized (mapEncoding) {
 				CodecSystem<T, ?> system = mapEncoding.keySet().iterator()
 						.next();
-				value = mapEncoding.get(system).decode().getValue();
+				value = mapEncoding.get(system).decode().value();
 			}
 		}
 		value = eval();
@@ -128,14 +128,14 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 		LOG.debug("Starting encode of manifestation");
 		LOG.debug("  Codec system: {}", system);
 		LOG.debug("  Dialect of the manifestation: {}", dialectType);
-		LOG.debug("  Language of the expression: {}", dialectType.getLanguage());
+		LOG.debug("  Language of the expression: {}", dialectType.language());
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
-				&& (initialValue.getLevel() == KnowledgeSourceLevel.ENCODING)) {
+				&& (initialValue.level() == KnowledgeSourceLevel.ENCODING)) {
 			@SuppressWarnings("unchecked")
 			AbstractKnowledgeEncoding<T, ?> encoding = (AbstractKnowledgeEncoding<T, ?>) initialValue;
 			LOG.debug("Found cached intial value for encoding: {}", encoding);
-			if (encoding.getCodecSystem() == system) {
+			if (encoding.codecSystem() == system) {
 				LOG.debug("Using cached intial value");
 				return (AbstractKnowledgeEncoding<T, S>) encoding;
 			}
@@ -178,7 +178,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 	// return new AbstractKnowledgeExpression(this){};
 
 	<S> void encodingSafePut(AbstractKnowledgeEncoding<T, S> encoding) {
-		mapEncoding.put(encoding.getCodecSystem(), encoding);
+		mapEncoding.put(encoding.codecSystem(), encoding);
 	}
 
 	// verify that some other equivalent property has been set
@@ -200,7 +200,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 				// will not put the object into an invalid state
 				if ((value == null) && (expression == null)
 						&& (mapEncoding.size() == 1)) {
-					value = this.getValue();
+					value = this.value();
 				}
 				mapEncoding.remove(system);
 			}
@@ -215,7 +215,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 				// Before clearing the expression cache, be sure that this
 				// will not put the object into an invalid state
 				if ((value == null) && mapEncoding.isEmpty()) {
-					value = this.getValue();
+					value = this.value();
 				}
 				expression = null;
 			}

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
+import api4kbj.ImmutableEnvironment;
 import cl2.CL;
 import cl2.CLCommentExpression;
 import cl2.CLCommentManifestationG;
@@ -17,6 +18,7 @@ public class Main {
 	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) {
+		GraphImmutableEnvironment env = (GraphImmutableEnvironment) CL.lang.defaultEnvironment();
 		LOG.debug(
 				"Hello. This is the Java4CL package. The current time is {}.",
 				System.currentTimeMillis());
@@ -25,8 +27,8 @@ public class Main {
 		LOG.debug("Eager expression instantiation starting");
 		CLCommentExpression myCommentExpression = CLCommentExpression
 				.eagerNewInstance(myCommentSymbol);
-		myCommentExpression.getLevel();
-		myCommentExpression.getLanguage();
+		myCommentExpression.level();
+		myCommentExpression.language();
 		// myCommentExpression.clearInitialValue();
 		assert myCommentExpression.getSymbol() == myCommentSymbol : "Symbol evalution incorrect.";
 		myCommentExpression.getComment();
@@ -41,20 +43,15 @@ public class Main {
 		assert myCommentExpression != anotherCommentExpression : "Failed check that lazy new instantiation gives new instance";
 		assert myCommentExpression == anotherCommentExpression.manifest()
 				.parse() : "Failed check that lazy new instantiation gives wrapper of old instance";
-		anotherCommentExpression.getLevel();
-		anotherCommentExpression.getLanguage();
+		anotherCommentExpression.level();
+		anotherCommentExpression.language();
 		assert anotherCommentExpression.getSymbol() == myCommentSymbol : "Symbol evalution incorrect.";
 		anotherCommentExpression.getComment();
-		Builder builder = new GraphImmutableEnvironment.Builder();
-		builder.addLanguages(CL.lang);
-		GraphImmutableEnvironment env = builder.build();
-		// TODO put this into cl2 package
-		CL.lang.setDefaultEnvironment(env);
 		LOG.debug("Checking addition of language: {}",
 				env.containsLanguage(CL.lang));
 		LOG.debug("Lazy asset instantiation starting");
 		KnowledgeAssetLI myCommentAsset = myCommentExpression
-				.conceptualize(builder.build());
+				.conceptualize(env);
 		LOG.debug("myCommentAsset: {}", myCommentAsset);
 		LOG.debug("Checking lazy express method on asset : {}",
 				myCommentAsset.express(CL.lang) == myCommentExpression);
@@ -65,7 +62,7 @@ public class Main {
 				.encode(CL.domUTF8bytearray);
 		CLManifestationG<Element> anotherManifestation = myEncoding.decode();
 		LOG.debug("Double Lazy instantiation : {}", anotherManifestation);
-		anotherManifestation.getValue();
+		anotherManifestation.value();
 		CLCommentManifestationG<Element> anotherCommentManifestation = (CLCommentManifestationG<Element>) anotherManifestation;
 		anotherCommentManifestation.getSymbol();
 		anotherCommentManifestation.getComment();

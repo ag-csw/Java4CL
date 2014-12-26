@@ -31,13 +31,13 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 	public AbstractKnowledgeEncoding(
 			AbstractKnowledgeManifestationG<T> manifestation,
 			AbstractCodecSystem<T, S> system) {
-		this(manifestation.getDialectType(), system);
+		this(manifestation.dialectType(), system);
 		this.manifestation = manifestation;
 	}
 
 	// Lazy lifting constructor - argument is a KnowledgeItem
 	public <R> AbstractKnowledgeEncoding(AbstractKnowledgeItem<T, S, R> input) {
-		this(input.getDialectType(), input.getCodecSystem());
+		this(input.dialectType(), input.codecSystem());
 		// TODO this is not lazy
 		this.value = input.read();
 	}
@@ -50,16 +50,16 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public KnowledgeSourceLevel getLevel() {
+	public KnowledgeSourceLevel level() {
 		return level;
 	}
 
 	@Override
-	public S getValue() {
+	public S value() {
 		// add get for lazy constructor from Item
 		if (value == null) {
 			if (!(manifestation == null)) {
-				value = manifestation.encode(system).getValue();
+				value = manifestation.encode(system).value();
 			} else {
 				assert false : "Inconsistent state";
 			}
@@ -68,12 +68,12 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 	}
 
 	@Override
-	public AbstractKRRDialectType<T> getDialectType() {
+	public AbstractKRRDialectType<T> dialectType() {
 		return dialectType;
 	}
 
 	@Override
-	public AbstractCodecSystem<T, S> getCodecSystem() {
+	public AbstractCodecSystem<T, S> codecSystem() {
 		return system;
 	}
 
@@ -88,14 +88,14 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 		LOG.debug("Starting encode of manifestation");
 		LOG.debug("  Codec system: {}", system);
 		LOG.debug("  Dialect of the manifestation: {}", dialectType);
-		LOG.debug("  Language of the expression: {}", dialectType.getLanguage());
+		LOG.debug("  Language of the expression: {}", dialectType.language());
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
-				&& (initialValue.getLevel() == KnowledgeSourceLevel.ITEM)) {
+				&& (initialValue.level() == KnowledgeSourceLevel.ITEM)) {
 			@SuppressWarnings("unchecked")
 			AbstractKnowledgeItem<T, S, ?> encoding = (AbstractKnowledgeItem<T, S, ?>) initialValue;
 			LOG.debug("Found cached intial value for encoding: {}", encoding);
-			if (encoding.getCodecSystem() == system) {
+			if (encoding.codecSystem() == system) {
 				LOG.debug("Using cached intial value");
 				return (AbstractKnowledgeItem<T, S, R>) encoding;
 			}
@@ -123,7 +123,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 			// Before clearing the expression cache, be sure that this
 			// will not put the object into an invalid state
 			if (value == null) {
-				value = getValue();
+				value = value();
 			}
 			manifestation = null;
 		}

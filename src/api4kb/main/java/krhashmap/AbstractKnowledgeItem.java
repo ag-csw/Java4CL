@@ -24,12 +24,12 @@ public abstract class AbstractKnowledgeItem<T, S, R> extends
 	private AbstractCodecSystem<T, S> system;
 
 	@Override
-	public KnowledgeSourceLevel getLevel() {
+	public KnowledgeSourceLevel level() {
 		return level;
 	}
 
 	@Override
-	public AbstractCodecSystem<T, S> getCodecSystem() {
+	public AbstractCodecSystem<T, S> codecSystem() {
 		return system;
 	};
 
@@ -46,17 +46,17 @@ public abstract class AbstractKnowledgeItem<T, S, R> extends
 	public abstract void clear();
 
 	@Override
-	public IO<S> getValue() {
+	public IO<S> value() {
 		return value;
 	}
 
 	@Override
-	public R getDestination() {
+	public R destination() {
 		return destination;
 	}
 
 	@Override
-	public AbstractKRRDialectType<T> getDialectType() {
+	public AbstractKRRDialectType<T> dialectType() {
 		return dialectType;
 	}
 

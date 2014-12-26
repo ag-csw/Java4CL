@@ -8,11 +8,11 @@ public interface KnowledgeManifestationG<T> extends KnowledgeResource,
 	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
 
 	// getter for wrapped object
-	T getValue();
+	T value();
 
 	// getter for dialect type
-	KRRDialectType<T> getDialectType();
+	KRRDialectType<T> dialectType();
 
-	Class<T> getType();
+	Class<T> type();
 
 }

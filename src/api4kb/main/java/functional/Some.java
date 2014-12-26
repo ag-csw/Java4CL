@@ -13,7 +13,7 @@ public class Some<T> implements Option<T> {
 		return false;
 	}
 
-	public T getValue() {
+	public T value() {
 		return value;
 	}
 

@@ -5,9 +5,9 @@ import java.util.Set;
 public interface ImmutableEnvironment extends Immutable {
 
 	// TODO change return type to Immutable Collection from FJ
-	Set<KRRLanguage> getLanguages();
+	Set<KRRLanguage> languages();
 
-	Set<KRRLanguage> getFocusLanguages();
+	Set<KRRLanguage> focusLanguages();
 
 	//
 	Boolean containsLanguage(KRRLanguage lang);
@@ -20,7 +20,7 @@ public interface ImmutableEnvironment extends Immutable {
 			KRRLanguage language);
 
 	//
-	KRRLanguage getDefaultLanguage();
+	KRRLanguage defaultLanguage();
 
 	KnowledgeExpression apply(KnowledgeExpression expression,
 			KRRLanguage endLanguage);

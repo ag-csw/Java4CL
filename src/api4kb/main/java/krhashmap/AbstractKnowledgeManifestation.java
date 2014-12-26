@@ -25,7 +25,7 @@ public abstract class AbstractKnowledgeManifestation extends
 			AbstractKRRDialectType<T> dialectType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
-		this(dialectType.getDialect());
+		this(dialectType.dialect());
 		mapValueSafePut(value, dialectType);
 	}
 
@@ -56,13 +56,13 @@ public abstract class AbstractKnowledgeManifestation extends
 	}
 
 	@Override
-	public KRRDialect getDialect() {
+	public KRRDialect dialect() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <T> T getValue() {
+	public <T> T value() {
 		// TODO Auto-generated method stub
 		return null;
 	}

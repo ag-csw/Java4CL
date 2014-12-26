@@ -8,9 +8,9 @@ public interface KnowledgeManifestation extends KnowledgeResource, Liftable,
 	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
 
 	// getter for dialect
-	KRRDialect getDialect();
+	KRRDialect dialect();
 
 	// getter for wrapped objects
-	<T> T getValue();
+	<T> T value();
 
 }

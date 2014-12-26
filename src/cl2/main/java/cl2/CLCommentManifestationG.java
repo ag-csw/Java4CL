@@ -91,7 +91,7 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 		}
 		// try for the initial value next, if it is an expression
 		if ((initialValue != null)
-				&& (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)) {
+				&& (initialValue.level() == KnowledgeSourceLevel.EXPRESSION)) {
 			// FIXME - symbol should be a node list for manifestation
 			symbol = ((CLCommentExpression) initialValue).getSymbol();
 			LOG.debug("Symbol obtained from initial value : {}", symbol);
@@ -127,7 +127,7 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 		}
 		// try for the initial value next, if it is an expression
 		if ((initialValue != null)
-				&& (initialValue.getLevel() == KnowledgeSourceLevel.EXPRESSION)) {
+				&& (initialValue.level() == KnowledgeSourceLevel.EXPRESSION)) {
 			Option<CLCommentExpression> exprcomment = ((CLCommentExpression) initialValue)
 					.getComment();
 			if (exprcomment.isEmpty()) {
@@ -136,10 +136,10 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 				return comment;
 			}
 			CLCommentExpression exprcommentval = ((Some<CLCommentExpression>) exprcomment)
-					.getValue();
+					.value();
 
 			CLCommentManifestationG<T> commentval;
-			commentval = exprcommentval.manifest(this.getDialectType());
+			commentval = exprcommentval.manifest(this.dialectType());
 			comment = new Some<CLCommentManifestationG<T>>(commentval);
 			return comment;
 		}
@@ -169,12 +169,12 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 	}
 
 	@Override
-	public CLDialectType<T> getDialectType() {
+	public CLDialectType<T> dialectType() {
 		return (CLDialectType<T>) dialectType;
 	}
 
 	@Override
-	public Class<T> getType() {
+	public Class<T> type() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -196,7 +196,7 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
 			if (!(comment.isEmpty())) {
 				element.appendChild((Node) ((Some<CLCommentManifestationG<T>>) comment)
-						.getValue().getValue());
+						.value().value());
 				DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
 				symbolElement.add(new DOMText(symbol));
 				element.appendChild(symbolElement);

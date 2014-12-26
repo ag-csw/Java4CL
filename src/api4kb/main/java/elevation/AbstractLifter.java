@@ -11,7 +11,7 @@ import api4kbj.KnowledgeResource;
 public abstract class AbstractLifter implements Lifter {
 
 	public AbstractKnowledgeAsset conceptualize(KnowledgeResource kr) {
-		return conceptualize(kr, kr.getDefaultEnvironment());
+		return conceptualize(kr, kr.defaultEnvironment());
 	}
 
 	@Override

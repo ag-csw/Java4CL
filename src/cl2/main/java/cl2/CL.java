@@ -1,5 +1,8 @@
 package cl2;
 
+import graphenvironment.GraphImmutableEnvironment;
+import graphenvironment.GraphImmutableEnvironment.Builder;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -24,6 +27,7 @@ import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialect;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
+import api4kbj.ImmutableEnvironment;
 
 public final class CL {
 
@@ -45,12 +49,23 @@ public final class CL {
 		public AbstractKRRDialect defaultDialect() {
 			return xcl2;
 		}
+		
+		@Override
+		public ImmutableEnvironment defaultEnvironment() {
+			if(defaultEnvironment == null) {
+		      Builder builder = new GraphImmutableEnvironment.Builder();
+		      builder.addLanguages(this);
+		      defaultEnvironment = builder.build();
+			}
+			return defaultEnvironment;
+		}
+		
 
 	};
 
 	public static CLDialect xcl2 = new CLDialect("XCL2") {
 		@Override
-		public CLDialectType<Element> getDefaultDialectType() {
+		public CLDialectType<Element> defaultDialectType() {
 			return xcl2dom;
 		}
 

@@ -25,43 +25,43 @@ public abstract class CLExpression extends AbstractKnowledgeExpression
 	}
 
 	@Override
-	public ImmutableEnvironment getDefaultEnvironment() {
+	public ImmutableEnvironment defaultEnvironment() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KRRLanguage getDefaultLanguage() {
+	public KRRLanguage defaultLanguage() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KRRDialect getDefaultDialect() {
+	public KRRDialect defaultDialect() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public KRRDialectType<?> getDefaultDialectType() {
+	public KRRDialectType<?> defaultDialectType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public CodecSystem<?, ?> getDefaultCodecSystem() {
+	public CodecSystem<?, ?> defaultCodecSystem() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object getDefaultReceiver() {
+	public Object defaultReceiver() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object getDefaultSender() {
+	public Object defaultSender() {
 		// TODO Auto-generated method stub
 		return null;
 	}

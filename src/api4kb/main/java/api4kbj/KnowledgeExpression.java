@@ -9,6 +9,6 @@ public interface KnowledgeExpression extends KnowledgeResource, Liftable,
 	public KnowledgeSourceLevel level = KnowledgeSourceLevel.EXPRESSION;
 
 	// getter for language
-	KRRLanguage getLanguage();
+	KRRLanguage language();
 
 }

@@ -121,7 +121,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 				// TODO cleanup - use FJ Option and map over parse()
 				@SuppressWarnings("unchecked")
 				CLCommentManifestationG<?> commentM = ((Some<CLCommentManifestationG<?>>) maybeComment)
-						.getValue();
+						.value();
 				CLCommentExpression commentE = (CLCommentExpression) commentM
 						.parse();
 				return new Some<CLCommentExpression>(commentE);
@@ -160,7 +160,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	// TODO this needs to be implemented through other methods
 	protected <T> CLCommentManifestationG<T> evalManifest(
 			AbstractKRRDialectType<T> dialect) {
-		if (dialect.getLanguage() != CL.lang) {
+		if (dialect.language() != CL.lang) {
 			throw new IllegalArgumentException(
 					"Requested dialect is not a CL dialect");
 		}
@@ -176,7 +176,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
 			if (!(comment.isEmpty())) {
 				element.appendChild(((Some<CLCommentExpression>) comment)
-						.getValue().manifest(CL.xcl2dom).getValue());
+						.value().manifest(CL.xcl2dom).value());
 				DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
 				symbolElement.add(new DOMText(symbol));
 				element.appendChild(symbolElement);

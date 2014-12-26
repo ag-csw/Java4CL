@@ -2,6 +2,8 @@ package graphenvironment;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import functional.Pair;
 import api4kbj.KRRLanguage;
@@ -71,14 +73,14 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	private final HashMap<Pair<KRRLanguage>, LanguageMapping> translations;
 	private final KRRLanguage defaultLanguage;
 
-	// TODO modify to change return type from array to immutable collection
+	// TODO modify to change return type to immutable collection
 	@Override
-	public HashSet<KRRLanguage> getLanguages() {
+	public Set<KRRLanguage> languages() {
 		return languages;
 	}
 
-	// TODO modify to change return type from array to immutable collection
-	public HashMap<Pair<KRRLanguage>, LanguageMapping> getTranslations() {
+	// TODO modify to change return type to immutable collection
+	public Map<Pair<KRRLanguage>, LanguageMapping> translations() {
 		return translations;
 	}
 
@@ -103,7 +105,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	@Override
 	public KnowledgeExpression translate(KnowledgeExpression expression,
 			KRRLanguage endlanguage) {
-		KRRLanguage startLanguage = expression.getLanguage();
+		KRRLanguage startLanguage = expression.language();
 		Pair<KRRLanguage> pair = new Pair<KRRLanguage>(startLanguage,
 				endlanguage);
 		if (!translations.containsKey(pair)) {
@@ -116,13 +118,13 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	}
 
 	@Override
-	public KRRLanguage getDefaultLanguage() {
+	public KRRLanguage defaultLanguage() {
 		return defaultLanguage;
 	}
 
 	// TODO modify to change return type from array to immutable collection
 	@Override
-	public HashSet<KRRLanguage> getFocusLanguages() {
+	public Set<KRRLanguage> focusLanguages() {
 		return focusLanguages;
 	}
 
@@ -131,7 +133,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 			KRRLanguage endLanguage) {
 		// check that the language of the expression is in the environment
 		// TODO all expressions to be in multiple languages
-		if (!languages.contains(expression.getLanguage())) {
+		if (!languages.contains(expression.language())) {
 			throw new IllegalArgumentException(
 					"Language of input expression to apply is not supported in the environment.");
 		}

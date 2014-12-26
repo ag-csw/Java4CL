@@ -7,15 +7,15 @@ public interface KnowledgeItem<T, S, R> extends KnowledgeResource, Liftable {
 	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ITEM;
 
 	// getter for wrapped IO object
-	IO<S> getValue();
+	IO<S> value();
 
 	// getter for destination
-	R getDestination();
+	R destination();
 
 	// getter for dialect type
-	KRRDialectType<T> getDialectType();
+	KRRDialectType<T> dialectType();
 
 	// getter for codec system
-	CodecSystem<T, S> getCodecSystem();
+	CodecSystem<T, S> codecSystem();
 
 }

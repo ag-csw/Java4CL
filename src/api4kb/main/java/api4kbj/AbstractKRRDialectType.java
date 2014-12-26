@@ -9,7 +9,7 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 			Class<T> type, AbstractCodecSystem<T, ?> defaultSystem) {
 		this.name = name;
 		this.dialect = dialect;
-		this.lang = dialect.getLanguage();
+		this.lang = dialect.language();
 		this.type = type;
 		this.defaultSystem = defaultSystem;
 	}
@@ -22,28 +22,28 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
 	@Override
-	public AbstractKRRDialect getDialect() {
+	public AbstractKRRDialect dialect() {
 		return dialect;
 	}
 
 	@Override
-	public AbstractKRRLanguage getLanguage() {
+	public AbstractKRRLanguage language() {
 		return lang;
 	}
 
 	@Override
-	public Class<T> getType() {
+	public Class<T> type() {
 		return type;
 	}
 
 	@Override
 	public String toString() {
-		return lang.getName() + "." + name;
+		return lang.name() + "." + name;
 	}
 
 	@Override

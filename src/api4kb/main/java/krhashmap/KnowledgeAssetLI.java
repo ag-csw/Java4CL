@@ -23,7 +23,7 @@ public class KnowledgeAssetLI extends AbstractKnowledgeAsset {
 		// TODO check the initial value first
 		AbstractKnowledgeExpression expression = super.mapExpression.values()
 				.iterator().next();
-		return (AbstractKnowledgeExpression) getEnvironment().apply(expression,
+		return (AbstractKnowledgeExpression) environment().apply(expression,
 				lang);
 	}
 

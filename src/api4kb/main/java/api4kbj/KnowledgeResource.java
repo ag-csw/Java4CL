@@ -3,27 +3,27 @@ package api4kbj;
 public interface KnowledgeResource extends ImmutableSource, KnowledgeSource {
 
 	// returns the abstraction level
-	KnowledgeSourceLevel getLevel();
+	KnowledgeSourceLevel level();
 
 	// get the default environment
-	ImmutableEnvironment getDefaultEnvironment();
+	ImmutableEnvironment defaultEnvironment();
 
 	// get the default language
-	KRRLanguage getDefaultLanguage();
+	KRRLanguage defaultLanguage();
 
 	// get the default dialect
-	KRRDialect getDefaultDialect();
+	KRRDialect defaultDialect();
 
 	// get the default dialect type
-	KRRDialectType<?> getDefaultDialectType();
+	KRRDialectType<?> defaultDialectType();
 
 	// get the default codec system
-	CodecSystem<?, ?> getDefaultCodecSystem();
+	CodecSystem<?, ?> defaultCodecSystem();
 
 	// get the default receiver
-	Object getDefaultReceiver();
+	Object defaultReceiver();
 
 	// get the default sender
-	Object getDefaultSender();
+	Object defaultSender();
 
 }

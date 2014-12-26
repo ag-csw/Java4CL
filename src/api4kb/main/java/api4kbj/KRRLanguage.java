@@ -2,7 +2,7 @@ package api4kbj;
 
 public interface KRRLanguage {
 
-	public String getName();
+	public String name();
 
 	// TODO
 	// public KRRLogic getLogic();
