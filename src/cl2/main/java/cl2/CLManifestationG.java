@@ -3,7 +3,6 @@ package cl2;
 import api4kb.AbstractKRRDialectType;
 import api4kb.AbstractKnowledgeManifestationG;
 import api4kb.CodecSystem;
-import api4kb.DialectTypeIncompatibleException;
 import api4kb.ImmutableEnvironment;
 import api4kb.KRRDialect;
 import api4kb.KRRDialectType;
@@ -22,7 +21,7 @@ public abstract class CLManifestationG<T> extends
 		// TODO Auto-generated constructor stub
 	}
 
-	public CLManifestationG(CLExpression expression, CLDialectType<T> dialect) throws DialectTypeIncompatibleException {
+	public CLManifestationG(CLExpression expression, CLDialectType<T> dialect) {
 		super(expression, dialect);
 	}
 
@@ -72,7 +71,5 @@ public abstract class CLManifestationG<T> extends
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-
 
 }

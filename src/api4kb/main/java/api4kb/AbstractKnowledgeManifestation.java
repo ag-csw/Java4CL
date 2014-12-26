@@ -13,33 +13,35 @@ public abstract class AbstractKnowledgeManifestation extends
 		LOG.debug("Starting initializing constructor for dialect: {}", dialect);
 		this.dialect = dialect;
 	}
-	
+
 	// Wrapper-based constructor
 	public <T> AbstractKnowledgeManifestation(T value,
 			AbstractKRRDialectType<T> dialectType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
 		this(dialectType.getDialect());
-	mapValueSafePut(value, dialectType);
+		mapValueSafePut(value, dialectType);
 	}
 
-	
 	// protected fields
-    // final properties 
+	// final properties
 	protected final AbstractKRRDialect dialect;
-	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapValue= new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
+	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapValue = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
 	// cache for lifting and lowering methods
 	protected final HashMap<AbstractCodecSystem<?, ?>, AbstractKnowledgeEncoding<?, ?>> mapEncoding = new HashMap<AbstractCodecSystem<?, ?>, AbstractKnowledgeEncoding<?, ?>>();
 	protected AbstractKnowledgeExpression expression;
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-	
-	protected abstract <T> void mapValueSafePut(T value, AbstractKRRDialectType<T> dialectType); 
-	/*{
-		AbstractKnowledgeManifestationG<T> manifest = new AbstractKnowledgeManifestationG<T>(value, dialectType){
 
-	}*/
+	protected abstract <T> void mapValueSafePut(T value,
+			AbstractKRRDialectType<T> dialectType);
 
+	/*
+	 * { AbstractKnowledgeManifestationG<T> manifest = new
+	 * AbstractKnowledgeManifestationG<T>(value, dialectType){
+	 * 
+	 * }
+	 */
 
 	@Override
 	public void clear() {

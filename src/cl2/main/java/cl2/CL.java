@@ -23,20 +23,17 @@ import api4kb.AbstractCodecSystem;
 import api4kb.AbstractKRRDialect;
 import api4kb.AbstractKRRDialectType;
 import api4kb.AbstractKRRLanguage;
-import api4kb.DecoderException;
-import api4kb.EncoderException;
-import api4kb.KRRDialectType;
-
-
 
 public final class CL {
 
 	// private constructor to enforce non-instantiability
-	private CL() {}
-	
+	private CL() {
+	}
+
 	// public fields
 	// instantiate anonymous subclass of AbstractKRRLanguage
-	public static AbstractKRRLanguage lang = new AbstractKRRLanguage("Common Logic") {
+	public static AbstractKRRLanguage lang = new AbstractKRRLanguage(
+			"Common Logic") {
 
 		@Override
 		public AbstractKRRDialectType<Element> defaultDialectType() {
@@ -48,10 +45,9 @@ public final class CL {
 			return xcl2;
 		}
 
-		};	 
-		
-		
-	public static CLDialect xcl2 = new CLDialect("XCL2"){
+	};
+
+	public static CLDialect xcl2 = new CLDialect("XCL2") {
 		@Override
 		public CLDialectType<Element> getDefaultDialectType() {
 			return xcl2dom;
@@ -59,40 +55,65 @@ public final class CL {
 
 	};
 
-	
-	
-	public static final Namespace NS_XCL2 = Namespace.get("http://purl.org/xcl/2.0/");	
+	public static final Namespace NS_XCL2 = Namespace
+			.get("http://purl.org/xcl/2.0/");
+
 	// tests for syntactic categories
-	public static Boolean isComment(Object x, CLDialectType<?> dialect){
-		// TODO include a field for checking syntactic category, independent of format or level
+	public static Boolean isComment(Object x, CLDialectType<?> dialect) {
+		// TODO include a field for checking syntactic category, independent of
+		// format or level
 		return false;
 	}
-	
-	public static AbstractCodecSystem<Element, byte[]> domUTF8bytearray = new AbstractCodecSystem<Element, byte[]>(){
+
+	public static AbstractCodecSystem<Element, byte[]> domUTF8bytearray = new AbstractCodecSystem<Element, byte[]>() {
 
 		@Override
-		public byte[] code(Element node) throws EncoderException, TransformerException, UnsupportedEncodingException, IOException {
-			
-			TransformerFactory transFactory = TransformerFactory.newInstance();
-			Transformer transformer = transFactory.newTransformer();
-			StringWriter buffer = new StringWriter();
-			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-			transformer.transform(new DOMSource(node),
-			      new StreamResult(buffer));
-			return buffer.toString().getBytes("UTF-8");
+		public byte[] code(Element node) {
+
+			try {
+				TransformerFactory transFactory = TransformerFactory
+						.newInstance();
+				Transformer transformer = transFactory.newTransformer();
+				StringWriter buffer = new StringWriter();
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+						"yes");
+				transformer.transform(new DOMSource(node), new StreamResult(
+						buffer));
+				return buffer.toString().getBytes("UTF-8");
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
 		}
 
 		@Override
-		public Element decode(byte[] bytes) throws DecoderException, ParserConfigurationException, UnsupportedEncodingException, SAXException, IOException {
-			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = domFactory.newDocumentBuilder();
-			Document doc = builder.parse(new String(bytes, "UTF-8"));
-			return doc.getDocumentElement();
-		}};
-		public static CLDialectType<Element> xcl2dom = 
-				new CLDialectType<Element>("XCL2-dom4j", xcl2, Element.class, domUTF8bytearray){};
-				
+		public Element decode(byte[] bytes) throws UnsupportedEncodingException {
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder builder;
+			try {
+				builder = domFactory.newDocumentBuilder();
+				Document doc = builder.parse(new String(bytes, "UTF-8"));
+				return doc.getDocumentElement();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	};
+	public static CLDialectType<Element> xcl2dom = new CLDialectType<Element>(
+			"XCL2-dom4j", xcl2, Element.class, domUTF8bytearray) {
+	};
 
 }
-
-

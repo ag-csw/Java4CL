@@ -27,12 +27,12 @@ public abstract class AbstractKnowledgeExpression extends
 
 	// Lazy lowering constructor - argument is an Asset
 	public AbstractKnowledgeExpression(KnowledgeAssetLI asset,
-			AbstractKRRLanguage lang) throws LanguageIncompatibleException {
+			AbstractKRRLanguage lang) {
 		this(lang);
-		LOG.debug(
-				"Starting lazy lowering expression construtor");
+		LOG.debug("Starting lazy lowering expression construtor");
 		if (!asset.getEnvironment().containsLanguage(lang)) {
-			throw new LanguageIncompatibleException("Requested language is not in the environment.");
+			throw new IllegalArgumentException(
+					"Requested language is not in the environment.");
 		}
 		LOG.debug("Language compatibility verified");
 		initialValue = asset;
@@ -40,14 +40,15 @@ public abstract class AbstractKnowledgeExpression extends
 	}
 
 	// protected fields
-    // final properties 
+	// final properties
 	protected final AbstractKRRLanguage lang;
 	// cache for lifting and lowering methods
 	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapManifest = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
 	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-	protected static final Logger SLOG = LoggerFactory.getLogger(AbstractKnowledgeExpression.class);
+	protected static final Logger SLOG = LoggerFactory
+			.getLogger(AbstractKnowledgeExpression.class);
 
 	@Override
 	public KnowledgeSourceLevel getLevel() {
@@ -63,8 +64,7 @@ public abstract class AbstractKnowledgeExpression extends
 
 	// default lowering method returns a manifestation in the default dialect
 	// for that language
-	public AbstractKnowledgeManifestationG<?> manifest()
-			throws DialectTypeIncompatibleException {
+	public AbstractKnowledgeManifestationG<?> manifest() {
 		LOG.debug("Starting default manifest of expression");
 		return manifest(lang.defaultDialectType());
 	}
@@ -72,29 +72,31 @@ public abstract class AbstractKnowledgeExpression extends
 	// lowering method with a parameter indicating the dialect
 	// with generic T for the format (e.g. String, XML Element)
 	public <T> AbstractKnowledgeManifestationG<T> manifest(
-			AbstractKRRDialectType<T> dialectType)
-			throws DialectTypeIncompatibleException {
+			AbstractKRRDialectType<T> dialectType) {
 		LOG.debug("Starting manifest of expression");
 		LOG.debug("  Dialect of the manifestation: {}", dialectType);
 		LOG.debug("  Language of the expression: {}", lang);
 		if (dialectType.getLanguage() != lang) {
-			throw new DialectTypeIncompatibleException(
+			throw new IllegalArgumentException(
 					"Requested dialect type is not supported:"
 							+ lang.toString() + " : " + dialectType.toString());
 		}
 		// TODO consider replacing level check with instanceof
-		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.MANIFESTATION)){
+		if ((initialValue != null)
+				&& (initialValue.getLevel() == KnowledgeSourceLevel.MANIFESTATION)) {
 			AbstractKnowledgeManifestationG<?> manifestation = (AbstractKnowledgeManifestationG<?>) initialValue;
-			LOG.debug("Found cached intial value for manifestation: {}", manifestation);
-			if (manifestation.getDialectType() == dialectType){
-			  LOG.debug("Using cached intial value");
-			  return (AbstractKnowledgeManifestationG<T>) manifestation;
+			LOG.debug("Found cached intial value for manifestation: {}",
+					manifestation);
+			if (manifestation.getDialectType() == dialectType) {
+				LOG.debug("Using cached intial value");
+				return (AbstractKnowledgeManifestationG<T>) manifestation;
 			}
 		}
 		if (mapManifest.containsKey(dialectType)) {
 			LOG.debug("Found cached manifestation for requested dialect Type");
 			@SuppressWarnings("unchecked")
-			AbstractKnowledgeManifestationG<T> manifestation = (AbstractKnowledgeManifestationG<T>) mapManifest.get(dialectType);
+			AbstractKnowledgeManifestationG<T> manifestation = (AbstractKnowledgeManifestationG<T>) mapManifest
+					.get(dialectType);
 			LOG.debug("Using cached manifestation: {}", manifestation);
 			return manifestation;
 		}
@@ -104,53 +106,56 @@ public abstract class AbstractKnowledgeExpression extends
 	}
 
 	// eager lowering
-	protected abstract<T> AbstractKnowledgeManifestationG<T> newManifestation(AbstractKRRDialectType<T> dialectType);
-	//	return new AbstractKnowledgeManifestationG<T>(dialectType){}
+	protected abstract <T> AbstractKnowledgeManifestationG<T> newManifestation(
+			AbstractKRRDialectType<T> dialectType);
+
+	// return new AbstractKnowledgeManifestationG<T>(dialectType){}
 
 	// default lifting method returns a asset in the default environment
 	// for this language
-	public AbstractKnowledgeAsset conceptualize() throws EnvironmentIncompatibleException{
-		if (lang.getDefaultEnvironment() != null){	
-		  return conceptualize(lang.getDefaultEnvironment());
+	public AbstractKnowledgeAsset conceptualize() {
+		if (lang.getDefaultEnvironment() != null) {
+			return conceptualize(lang.getDefaultEnvironment());
 		}
 		// TODO create a singleton environment containing the language
-		throw new EnvironmentIncompatibleException();
+		return null;
 	}
 
 	// lifting method with a parameter indicating the language
-	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment environment)
-			throws EnvironmentIncompatibleException {
-		LOG.debug("Starting conceptualization relative to environment : {}", environment);
-		if (!environment.containsLanguage(lang)){
-			throw new EnvironmentIncompatibleException("Requested envionment does not contain the language:" + lang);
+	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment environment) {
+		LOG.debug("Starting conceptualization relative to environment : {}",
+				environment);
+		if (!environment.containsLanguage(lang)) {
+			throw new IllegalArgumentException("Requested envionment"
+					+ environment.toString()
+					+ " does not contain the expression language:" + lang);
 		}
 		// TODO consider replacing level check with instanceof
-		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.ASSET)){
+		if ((initialValue != null)
+				&& (initialValue.getLevel() == KnowledgeSourceLevel.ASSET)) {
 			KnowledgeAssetLI asset = (KnowledgeAssetLI) initialValue;
 			LOG.debug("Found cached intial value for asset: {}", asset);
-			if (asset.getEnvironment().equals(environment)){
-			  LOG.debug("Using cached intial value");
-			  return asset;
+			if (asset.getEnvironment().equals(environment)) {
+				LOG.debug("Using cached intial value");
+				return asset;
 			}
 		}
-		if (mapAsset.containsKey(lang)){			
+		if (mapAsset.containsKey(lang)) {
 			LOG.debug("Found cached asset in this language");
 			KnowledgeAssetLI asset = mapAsset.get(environment);
 			LOG.debug("Using cached expression: {}", asset);
-            return asset;
+			return asset;
 		}
 		LOG.debug("Found no cached expression for: {}", environment);
 		// Last resort: create a new asset
 		return newAsset(environment);
 	}
-	
+
 	// eager lifting
-	protected KnowledgeAssetLI newAsset(GraphImmutableEnvironment environment){
+	protected KnowledgeAssetLI newAsset(GraphImmutableEnvironment environment) {
 		return new KnowledgeAssetLI(this, environment);
 
 	};
-
-
 
 	<T> void manifestSafePut(AbstractKnowledgeManifestationG<T> manifest) {
 		mapManifest.put(manifest.getDialectType(), manifest);
@@ -204,8 +209,5 @@ public abstract class AbstractKnowledgeExpression extends
 		// inconsistent state before removing
 		mapAsset.remove(environment);
 	}
-
-
-
 
 }

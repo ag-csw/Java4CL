@@ -5,27 +5,26 @@ import api4kb.AbstractKnowledgeEncoding;
 import api4kb.AbstractKnowledgeExpression;
 import api4kb.AbstractKnowledgeItem;
 import api4kb.AbstractKnowledgeManifestationG;
-import api4kb.EnvironmentIncompatibleException;
 import api4kb.ImmutableEnvironment;
 import api4kb.KnowledgeResource;
 
 public abstract class AbstractLifter implements Lifter {
-	
-	public AbstractKnowledgeAsset conceptualize(KnowledgeResource kr) throws EnvironmentIncompatibleException{
+
+	public AbstractKnowledgeAsset conceptualize(KnowledgeResource kr) {
 		return conceptualize(kr, kr.getDefaultEnvironment());
 	}
 
 	@Override
 	public abstract <T> AbstractKnowledgeAsset conceptualize(
-			AbstractKnowledgeManifestationG<T> kr, ImmutableEnvironment e) throws EnvironmentIncompatibleException;
+			AbstractKnowledgeManifestationG<T> kr, ImmutableEnvironment e);
 
 	@Override
 	public abstract <T, S> AbstractKnowledgeAsset conceptualize(
-			AbstractKnowledgeEncoding<T, S> kr, ImmutableEnvironment e) throws EnvironmentIncompatibleException;
+			AbstractKnowledgeEncoding<T, S> kr, ImmutableEnvironment e);
 
 	@Override
 	public abstract <T, S, R> AbstractKnowledgeAsset conceptualize(
-			AbstractKnowledgeItem<T, S, R> kr, ImmutableEnvironment e) throws EnvironmentIncompatibleException;
+			AbstractKnowledgeItem<T, S, R> kr, ImmutableEnvironment e);
 
 	@Override
 	public abstract <T> AbstractKnowledgeExpression parse(

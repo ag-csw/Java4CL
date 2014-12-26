@@ -9,24 +9,24 @@ import api4kb.KRRDialect;
 import api4kb.KRRDialectType;
 import api4kb.KRRLanguage;
 
-public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements CLKnowledgeResource {
+public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
+		CLKnowledgeResource {
 
-   public CLEncoding(S stream, CLDialectType<T> dialect, AbstractCodecSystem<T, S> system) {
-	   super(stream, dialect, system);
+	public CLEncoding(S stream, CLDialectType<T> dialect,
+			AbstractCodecSystem<T, S> system) {
+		super(stream, dialect, system);
 	}
 
-	public CLEncoding(CLManifestationG<T> manifestation, AbstractCodecSystem<T, S> system) {
-	 super(manifestation, system);
-}
+	public CLEncoding(CLManifestationG<T> manifestation,
+			AbstractCodecSystem<T, S> system) {
+		super(manifestation, system);
+	}
 
 	// static factory methods
-   public static <T, S> CLEncoding<T, S> lazyNewInstance(
-			CLManifestationG<T> manifestation, AbstractCodecSystem<T, S> system)
-			 {
+	public static <T, S> CLEncoding<T, S> lazyNewInstance(
+			CLManifestationG<T> manifestation, AbstractCodecSystem<T, S> system) {
 		return new CLEncoding<T, S>(manifestation, system);
 	}
-
-  
 
 	@Override
 	public <R> AbstractKnowledgeItem<T, S, R> reproduce(R destination) {
@@ -36,7 +36,6 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 		// Case 3. from expression
 		return null;
 	}
-
 
 	@Override
 	public CLManifestationG<T> decode() {
@@ -84,6 +83,5 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

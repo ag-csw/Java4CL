@@ -5,7 +5,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 
-	public AbstractKRRDialectType(String name, AbstractKRRDialect dialect, Class<T> type, AbstractCodecSystem<T, ?> defaultSystem) {
+	public AbstractKRRDialectType(String name, AbstractKRRDialect dialect,
+			Class<T> type, AbstractCodecSystem<T, ?> defaultSystem) {
 		this.name = name;
 		this.dialect = dialect;
 		this.lang = dialect.getLanguage();
@@ -19,31 +20,35 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 	private final AbstractKRRLanguage lang;
 	private final AbstractCodecSystem<T, ?> defaultSystem;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-	
+
 	@Override
-	public String getName(){
+	public String getName() {
 		return name;
 	}
+
 	@Override
-	public AbstractKRRDialect getDialect(){
+	public AbstractKRRDialect getDialect() {
 		return dialect;
 	}
+
 	@Override
-	public AbstractKRRLanguage getLanguage(){
+	public AbstractKRRLanguage getLanguage() {
 		return lang;
 	}
+
 	@Override
-	public Class<T> getType(){
+	public Class<T> getType() {
 		return type;
 	}
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return lang.getName() + "." + name;
 	}
+
 	@Override
 	public AbstractCodecSystem<T, ?> defaultSystem() {
 		return defaultSystem;
 	}
-
 
 }

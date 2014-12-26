@@ -8,16 +8,15 @@ import api4kb.KRRDialect;
 import api4kb.KRRDialectType;
 import api4kb.KRRLanguage;
 import api4kb.KnowledgeAssetLI;
-import api4kb.LanguageIncompatibleException;
 
-public abstract class CLExpression extends AbstractKnowledgeExpression implements CLKnowledgeResource {
+public abstract class CLExpression extends AbstractKnowledgeExpression
+		implements CLKnowledgeResource {
 
 	public <T> CLExpression(AbstractKRRLanguage lang) {
 		super(CL.lang);
 	}
 
-	public CLExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang)
-			throws IllegalArgumentException, LanguageIncompatibleException {
+	public CLExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang) {
 		super(asset, CL.lang);
 	}
 
@@ -66,7 +65,5 @@ public abstract class CLExpression extends AbstractKnowledgeExpression implement
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

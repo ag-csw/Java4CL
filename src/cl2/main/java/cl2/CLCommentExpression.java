@@ -2,16 +2,8 @@ package cl2;
 
 import api4kb.AbstractKRRDialectType;
 import api4kb.AbstractKnowledgeManifestationG;
-import api4kb.CodecSystem;
 import api4kb.GraphImmutableEnvironment;
-import api4kb.DialectTypeIncompatibleException;
-import api4kb.EnvironmentIncompatibleException;
-import api4kb.ImmutableEnvironment;
-import api4kb.KRRDialect;
-import api4kb.KRRDialectType;
-import api4kb.KRRLanguage;
 import api4kb.KnowledgeAssetLI;
-import api4kb.LanguageIncompatibleException;
 import api4kb.Option;
 import api4kb.None;
 import api4kb.Some;
@@ -20,8 +12,7 @@ import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 import org.w3c.dom.Element;
 
-public class CLCommentExpression extends CLExpression implements
-		CLComment {
+public class CLCommentExpression extends CLExpression implements CLComment {
 
 	// Private Constructors
 	// Component-based constructor
@@ -33,8 +24,7 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	// Lazy lowering constructor
-	private <T> CLCommentExpression(KnowledgeAssetLI asset)
-			throws LanguageIncompatibleException, IllegalArgumentException {
+	private <T> CLCommentExpression(KnowledgeAssetLI asset) {
 		super(asset, CL.lang);
 	}
 
@@ -50,8 +40,8 @@ public class CLCommentExpression extends CLExpression implements
 	// Static Factory Methods
 	public static CLCommentExpression eagerNewInstance(String symbol,
 			Option<CLCommentExpression> comment) {
-		    // TODO do we want a static logger for this concrete class
-		    SLOG.debug("Starting eagerNewInstance");
+		// TODO do we want a static logger for this concrete class
+		SLOG.debug("Starting eagerNewInstance");
 		return new CLCommentExpression(symbol, comment);
 	}
 
@@ -64,8 +54,7 @@ public class CLCommentExpression extends CLExpression implements
 	}
 
 	// lazy lowering
-	public static <T> CLCommentExpression lazyNewInstance(KnowledgeAssetLI asset)
-			throws IllegalArgumentException, LanguageIncompatibleException {
+	public static <T> CLCommentExpression lazyNewInstance(KnowledgeAssetLI asset) {
 		return new CLCommentExpression(asset);
 	}
 
@@ -93,20 +82,14 @@ public class CLCommentExpression extends CLExpression implements
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!mapManifest.isEmpty()) {
-			return ((CLCommentManifestationG<?>) mapManifest.values().iterator()
-					.next()).getSymbol();
+			return ((CLCommentManifestationG<?>) mapManifest.values()
+					.iterator().next()).getSymbol();
 		}
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
 			KnowledgeAssetLI asset = mapAsset.values().iterator().next();
-			try {
-				return ((CLCommentExpression) asset.express(CL.lang))
-						.getSymbol();
-			} catch (LanguageIncompatibleException e) {
-				assert false : "Faulty lazy expression constructor";
-				return null;
-			}
+			return ((CLCommentExpression) asset.express(CL.lang)).getSymbol();
 		}
 	}
 
@@ -147,46 +130,43 @@ public class CLCommentExpression extends CLExpression implements
 		// translation from the environment
 		else {
 			KnowledgeAssetLI asset = mapAsset.values().iterator().next();
-			try {
-				return ((CLCommentExpression) asset.express(CL.lang))
-						.getComment();
-			} catch (LanguageIncompatibleException e) {
-				assert false : "Faulty lazy expression constructor";
-				return null;
-			}
+			return ((CLCommentExpression) asset.express(CL.lang)).getComment();
 		}
 	}
 
-
 	@Override
-	public CLCommentManifestationG<Element> manifest()
-			throws DialectTypeIncompatibleException {
+	public CLCommentManifestationG<Element> manifest() {
 		LOG.debug("Starting default manifest of expression");
-			return (CLCommentManifestationG<Element>) manifest(CL.lang.defaultDialectType());
+		return (CLCommentManifestationG<Element>) manifest(CL.lang
+				.defaultDialectType());
 	}
 
 	@Override
-	public <T> CLCommentManifestationG<T> manifest(AbstractKRRDialectType<T> dialectType)
-			throws DialectTypeIncompatibleException {
-		    AbstractKnowledgeManifestationG<T> manifestation = super.manifest(dialectType);
-			LOG.debug("Starting manifest of expression");
-		    if (manifestation instanceof CLCommentManifestationG<?>) {
-		    	return (CLCommentManifestationG<T>) manifestation;
-		    }
-		    // last resort create a new manifestation with lazy lowering
-		    // this means discarding the manifestation created in the superclass
-			return CLCommentManifestationG.lazyNewInstance(this, (CLDialectType<T>) dialectType);
+	public <T> CLCommentManifestationG<T> manifest(
+			AbstractKRRDialectType<T> dialectType) {
+		AbstractKnowledgeManifestationG<T> manifestation = super
+				.manifest(dialectType);
+		LOG.debug("Starting manifest of expression");
+		if (manifestation instanceof CLCommentManifestationG<?>) {
+			return (CLCommentManifestationG<T>) manifestation;
+		}
+		// last resort create a new manifestation with lazy lowering
+		// this means discarding the manifestation created in the superclass
+		return CLCommentManifestationG.lazyNewInstance(this,
+				(CLDialectType<T>) dialectType);
 	}
 
 	// TODO this needs to be implemented through other methods
-	protected <T> CLCommentManifestationG<T> evalManifest(AbstractKRRDialectType<T> dialect)
-			throws DialectTypeIncompatibleException {
+	protected <T> CLCommentManifestationG<T> evalManifest(
+			AbstractKRRDialectType<T> dialect) {
 		if (dialect.getLanguage() != CL.lang) {
-			throw new DialectTypeIncompatibleException();
+			throw new IllegalArgumentException(
+					"Requested dialect is not a CL dialect");
 		}
 		if (dialect != CL.xcl2dom) {
 			// TODO implement other CL dialects
-			throw new DialectTypeIncompatibleException();
+			throw new IllegalArgumentException(
+					"This CL dialect is not yet supported.");
 		}
 		// TODO this really belongs in the XCL2 package
 		LOG.debug("Symbol cache: {}", symbol);
@@ -216,16 +196,13 @@ public class CLCommentExpression extends CLExpression implements
 		return null;
 	}
 
-
 	@Override
-	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e)
-			throws EnvironmentIncompatibleException {
-		return  super.conceptualize(e);
+	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
+		return super.conceptualize(e);
 	}
 
 	@Override
-	protected
-	<T> AbstractKnowledgeManifestationG<T> newManifestation(
+	protected <T> AbstractKnowledgeManifestationG<T> newManifestation(
 			AbstractKRRDialectType<T> dialectType) {
 		// TODO Auto-generated method stub
 		return null;

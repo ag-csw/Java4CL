@@ -5,26 +5,22 @@ import api4kb.AbstractKnowledgeEncoding;
 import api4kb.AbstractKnowledgeExpression;
 import api4kb.AbstractKnowledgeItem;
 import api4kb.AbstractKnowledgeManifestationG;
-import api4kb.EnvironmentIncompatibleException;
 import api4kb.ImmutableEnvironment;
 import api4kb.KnowledgeResource;
 
 public interface Lifter {
 
 	public AbstractKnowledgeAsset conceptualize(KnowledgeResource kr,
-			ImmutableEnvironment e) throws EnvironmentIncompatibleException;
+			ImmutableEnvironment e);
 
 	public <T> AbstractKnowledgeAsset conceptualize(
-			AbstractKnowledgeManifestationG<T> kr, ImmutableEnvironment e)
-			throws EnvironmentIncompatibleException;
+			AbstractKnowledgeManifestationG<T> kr, ImmutableEnvironment e);
 
 	public <T, S> AbstractKnowledgeAsset conceptualize(
-			AbstractKnowledgeEncoding<T, S> kr, ImmutableEnvironment e)
-			throws EnvironmentIncompatibleException;
+			AbstractKnowledgeEncoding<T, S> kr, ImmutableEnvironment e);
 
 	public <T, S, R> AbstractKnowledgeAsset conceptualize(
-			AbstractKnowledgeItem<T, S, R> kr, ImmutableEnvironment e)
-			throws EnvironmentIncompatibleException;
+			AbstractKnowledgeItem<T, S, R> kr, ImmutableEnvironment e);
 
 	public <T> AbstractKnowledgeExpression parse(
 			AbstractKnowledgeManifestationG<T> kr);

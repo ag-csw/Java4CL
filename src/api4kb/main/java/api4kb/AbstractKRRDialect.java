@@ -1,7 +1,7 @@
 package api4kb;
 
 public abstract class AbstractKRRDialect implements KRRDialect {
-	
+
 	private String name;
 	private AbstractKRRLanguage lang;
 	private AbstractKRRDialectType<?> defaultDialectType;
@@ -12,11 +12,12 @@ public abstract class AbstractKRRDialect implements KRRDialect {
 	}
 
 	@Override
-	public String getName(){
+	public String getName() {
 		return name;
 	}
+
 	@Override
-	public AbstractKRRLanguage getLanguage(){
+	public AbstractKRRLanguage getLanguage() {
 		return lang;
 	}
 

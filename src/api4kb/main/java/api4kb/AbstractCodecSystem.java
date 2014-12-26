@@ -1,9 +1,6 @@
 package api4kb;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
-
 
 public abstract class AbstractCodecSystem<T, S> implements CodecSystem<T, S> {
 
@@ -12,13 +9,13 @@ public abstract class AbstractCodecSystem<T, S> implements CodecSystem<T, S> {
 	}
 
 	@Override
-	public S code(T t) throws EncoderException, UnsupportedEncodingException, IOException, Exception {
+	public S code(T t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public T decode(S s) throws DecoderException, UnsupportedEncodingException, IOException, Exception {
+	public T decode(S s) throws UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		return null;
 	}

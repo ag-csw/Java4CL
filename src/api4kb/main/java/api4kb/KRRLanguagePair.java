@@ -5,12 +5,15 @@ public class KRRLanguagePair {
 		this.first = first;
 		this.second = second;
 	}
+
 	private KRRLanguage first;
 	private KRRLanguage second;
-	KRRLanguage _1(){
+
+	KRRLanguage _1() {
 		return first;
 	}
-	KRRLanguage _2(){
+
+	KRRLanguage _2() {
 		return second;
 	}
 

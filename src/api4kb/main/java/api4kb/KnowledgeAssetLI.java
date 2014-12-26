@@ -1,6 +1,5 @@
 package api4kb;
 
-
 public class KnowledgeAssetLI extends AbstractKnowledgeAsset {
 
 	// lazy lifting constructor
@@ -11,16 +10,18 @@ public class KnowledgeAssetLI extends AbstractKnowledgeAsset {
 
 	// lazy lifting static factory method
 	public static KnowledgeAssetLI lazyNewInstance(
-			AbstractKnowledgeExpression expression, GraphImmutableEnvironment env) {
+			AbstractKnowledgeExpression expression,
+			GraphImmutableEnvironment env) {
 		return new KnowledgeAssetLI(expression, env);
 	}
 
 	@Override
 	AbstractKnowledgeExpression newExpression(KRRLanguage lang) {
 		// TODO check the initial value first
-		AbstractKnowledgeExpression expression = super.mapExpression.values().iterator().next(); 
-		return (AbstractKnowledgeExpression) getEnvironment().apply(expression, lang);
+		AbstractKnowledgeExpression expression = super.mapExpression.values()
+				.iterator().next();
+		return (AbstractKnowledgeExpression) getEnvironment().apply(expression,
+				lang);
 	}
-
 
 }

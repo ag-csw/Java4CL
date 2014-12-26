@@ -5,9 +5,8 @@ import java.io.Console;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeResource implements
-		KnowledgeEncoding<T, S> {
+public abstract class AbstractKnowledgeEncoding<T, S> extends
+		AbstractKnowledgeResource implements KnowledgeEncoding<T, S> {
 	// Initializing-only constructor
 	public AbstractKnowledgeEncoding(AbstractKRRDialectType<T> dialectType,
 			AbstractCodecSystem<T, S> system) {
@@ -16,17 +15,19 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	}
 
 	// Wrapper-based constructor
-	public AbstractKnowledgeEncoding(S value, AbstractKRRDialectType<T> dialectType,
+	public AbstractKnowledgeEncoding(S value,
+			AbstractKRRDialectType<T> dialectType,
 			AbstractCodecSystem<T, S> system) {
 		this(dialectType, system);
 		this.value = value;
 	}
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
-	public AbstractKnowledgeEncoding(AbstractKnowledgeManifestationG<T> manifestation,
+	public AbstractKnowledgeEncoding(
+			AbstractKnowledgeManifestationG<T> manifestation,
 			AbstractCodecSystem<T, S> system) {
-    		this(manifestation.getDialectType(), system);
-		    this.manifestation = manifestation;
+		this(manifestation.getDialectType(), system);
+		this.manifestation = manifestation;
 	}
 
 	// Lazy lifting constructor - argument is a KnowledgeItem
@@ -53,13 +54,9 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 		// add get for lazy constructor from Item
 		if (value == null) {
 			if (!(manifestation == null)) {
-				try {
-					value = manifestation.encode(system).getValue();
-				} catch (EncodingSystemIncompatibleException e) {
-					assert false : "Faulty lazy lowering constructor";
-				}
+				value = manifestation.encode(system).getValue();
 			} else {
-				assert false: "Inconsistent state";
+				assert false : "Inconsistent state";
 			}
 		}
 		return value;
@@ -77,32 +74,28 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 
 	// default lowering method returns an item for the default receiver
 	// which is the console for this implementation
-	public AbstractKnowledgeItem<T, S, Console> reproduce(){
+	public AbstractKnowledgeItem<T, S, Console> reproduce() {
 		return reproduce(System.console());
 	}
 
 	// lowering method
-	public <R> AbstractKnowledgeItem<T, S, R> reproduce(R destination){
+	public <R> AbstractKnowledgeItem<T, S, R> reproduce(R destination) {
 		LOG.debug("Starting encode of manifestation");
 		LOG.debug("  Codec system: {}", system);
 		LOG.debug("  Dialect of the manifestation: {}", dialectType);
 		LOG.debug("  Language of the expression: {}", dialectType.getLanguage());
 		// TODO consider replacing level check with instanceof
-		if ((initialValue != null) && (initialValue.getLevel() == KnowledgeSourceLevel.ITEM)){
+		if ((initialValue != null)
+				&& (initialValue.getLevel() == KnowledgeSourceLevel.ITEM)) {
 			@SuppressWarnings("unchecked")
 			AbstractKnowledgeItem<T, S, ?> encoding = (AbstractKnowledgeItem<T, S, ?>) initialValue;
 			LOG.debug("Found cached intial value for encoding: {}", encoding);
-			if (encoding.getCodecSystem() == system){
-			  LOG.debug("Using cached intial value");
-			  return (AbstractKnowledgeItem<T, S, R>) encoding;
+			if (encoding.getCodecSystem() == system) {
+				LOG.debug("Using cached intial value");
+				return (AbstractKnowledgeItem<T, S, R>) encoding;
 			}
 		}
-		
-		
-		
-		
-		
-		
+
 		return null;
 
 	}
@@ -110,7 +103,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 	// lifting method
 	public AbstractKnowledgeManifestationG<T> decode() {
 		if (manifestation == null) {
-			//TODO implement
+			// TODO implement
 			return manifestation;
 		} else {
 			return manifestation;
@@ -118,18 +111,17 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 
 	}
 
-	
 	// clear memoization cache of the decode method
 	public void clearDecode() {
 		// If the manifestation cache is empty, do nothing
-			if (manifestation != null) {
-				// Before clearing the expression cache, be sure that this
-				// will not put the object into an invalid state
-				if (value == null) {
-					value = getValue();
-				}
-				manifestation = null;
+		if (manifestation != null) {
+			// Before clearing the expression cache, be sure that this
+			// will not put the object into an invalid state
+			if (value == null) {
+				value = getValue();
 			}
+			manifestation = null;
+		}
 	}
 
 	@Override
@@ -146,6 +138,5 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends AbstractKnowledgeR
 			super.unsafeClearInitialValue();
 		}
 	}
-
 
 }

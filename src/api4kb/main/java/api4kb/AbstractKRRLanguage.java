@@ -21,27 +21,33 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	public String getName() {
 		return name;
 	}
+
 	@Override
 	public String toString() {
 		return name;
 	}
+
 	// TODO
-	//public KRRLogic getLogic(){
-	//	return logic;
-	//}
+	// public KRRLogic getLogic(){
+	// return logic;
+	// }
 	@Override
 	public AbstractKRRDialect defaultDialect() {
 		return defaultDialect;
 	}
+
 	@Override
 	public AbstractKRRDialectType<?> defaultDialectType() {
 		return defaultDialectType;
 	}
+
 	public GraphImmutableEnvironment getDefaultEnvironment() {
 		return defaultEnvironment;
 	}
-	public void setDefaultEnvironment(GraphImmutableEnvironment defaultEnvironment) {
+
+	public void setDefaultEnvironment(
+			GraphImmutableEnvironment defaultEnvironment) {
 		this.defaultEnvironment = defaultEnvironment;
 	}
-			
+
 }
