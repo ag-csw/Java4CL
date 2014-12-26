@@ -1,4 +1,4 @@
-package api4kbj;
+package functional;
 
 public class Some<T> implements Option<T> {
 

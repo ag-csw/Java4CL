@@ -1,9 +1,15 @@
-package api4kbj;
+package krhashmap;
 
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKRRDialect;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.KRRDialect;
+import api4kbj.KnowledgeManifestation;
 
 public abstract class AbstractKnowledgeManifestation extends
 		AbstractKnowledgeResource implements KnowledgeManifestation {

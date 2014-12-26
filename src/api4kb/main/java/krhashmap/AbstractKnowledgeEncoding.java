@@ -1,9 +1,14 @@
-package api4kbj;
+package krhashmap;
 
 import java.io.Console;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.KnowledgeEncoding;
+import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractKnowledgeEncoding<T, S> extends
 		AbstractKnowledgeResource implements KnowledgeEncoding<T, S> {

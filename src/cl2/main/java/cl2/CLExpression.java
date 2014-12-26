@@ -1,13 +1,13 @@
 package cl2;
 
+import krhashmap.AbstractKnowledgeExpression;
+import krhashmap.KnowledgeAssetLI;
 import api4kbj.AbstractKRRLanguage;
-import api4kbj.AbstractKnowledgeExpression;
 import api4kbj.CodecSystem;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeAssetLI;
 
 public abstract class CLExpression extends AbstractKnowledgeExpression
 		implements CLKnowledgeResource {

@@ -1,10 +1,10 @@
 package cl2;
 
+import graphenvironment.GraphImmutableEnvironment;
+import krhashmap.KnowledgeAssetLI;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
-import api4kbj.GraphImmutableEnvironment;
 import api4kbj.ImmutableEnvironment;
-import api4kbj.KnowledgeAssetLI;
 
 public abstract class CLPrefixExpression extends CLExpression implements
 		CLPrefix {

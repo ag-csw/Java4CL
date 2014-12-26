@@ -1,4 +1,11 @@
-package api4kbj;
+package krhashmap;
+
+import functional.IO;
+import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.KnowledgeEncoding;
+import api4kbj.KnowledgeItem;
+import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractKnowledgeItem<T, S, R> extends
 		AbstractKnowledgeResource implements KnowledgeItem<T, S, R> {

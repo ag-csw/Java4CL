@@ -1,5 +1,6 @@
-package api4kbj;
+package krhashmap;
 
+import api4kbj.KnowledgeResource;
 import lazykb.LazyInitializing;
 
 public abstract class AbstractKnowledgeResource implements KnowledgeResource,

@@ -1,13 +1,13 @@
 package api4kbj;
 
-import java.util.HashSet;
+import java.util.Set;
 
 public interface ImmutableEnvironment extends Immutable {
 
 	// TODO change return type to Immutable Collection from FJ
-	HashSet<KRRLanguage> getLanguages();
+	Set<KRRLanguage> getLanguages();
 
-	HashSet<KRRLanguage> getFocusLanguages();
+	Set<KRRLanguage> getFocusLanguages();
 
 	//
 	Boolean containsLanguage(KRRLanguage lang);

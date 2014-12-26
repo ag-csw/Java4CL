@@ -1,6 +1,6 @@
 package elevation;
 
-import api4kbj.AbstractKnowledgeExpression;
+import krhashmap.AbstractKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeAsset;
 

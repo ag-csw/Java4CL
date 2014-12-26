@@ -1,8 +1,8 @@
 package cl2;
 
+import krhashmap.AbstractKnowledgeEncoding;
+import krhashmap.AbstractKnowledgeItem;
 import api4kbj.AbstractCodecSystem;
-import api4kbj.AbstractKnowledgeEncoding;
-import api4kbj.AbstractKnowledgeItem;
 import api4kbj.CodecSystem;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KRRDialect;

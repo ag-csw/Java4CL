@@ -1,6 +1,6 @@
 package cl2;
 
-import api4kbj.Option;
+import functional.Option;
 
 public interface CLComment extends CLKnowledgeResource {
 	// getter for symbol

@@ -1,7 +1,13 @@
-package api4kbj;
+package graphenvironment;
 
 import java.util.HashMap;
 import java.util.HashSet;
+
+import functional.Pair;
+import api4kbj.KRRLanguage;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KnowledgeExpression;
+import api4kbj.LanguageMapping;
 
 public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
@@ -9,7 +15,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 		// mutable properties to configure builder
 		private KRRLanguage defaultLanguage;
 		private HashSet<KRRLanguage> languages = new HashSet<KRRLanguage>();
-		private HashMap<KRRLanguagePair, LanguageMapping> translations = new HashMap<KRRLanguagePair, LanguageMapping>();
+		private HashMap<Pair<KRRLanguage>, LanguageMapping> translations = new HashMap<Pair<KRRLanguage>, LanguageMapping>();
 		private HashSet<KRRLanguage> focusLanguages;
 
 		//
@@ -38,7 +44,8 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
 		public void addTranslations(LanguageMapping... translations) {
 			for (LanguageMapping map : translations) {
-				this.translations.put(map.getPair(), map);
+				this.translations.put(new Pair<KRRLanguage>(
+						map.startLanguage(), map.endLanguage()), map);
 				// TOD Also add start and end languages to languages array, if
 				// not already present.
 				this.languages.add(map.startLanguage());
@@ -61,7 +68,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
 	private final HashSet<KRRLanguage> languages;
 	private final HashSet<KRRLanguage> focusLanguages;
-	private final HashMap<KRRLanguagePair, LanguageMapping> translations;
+	private final HashMap<Pair<KRRLanguage>, LanguageMapping> translations;
 	private final KRRLanguage defaultLanguage;
 
 	// TODO modify to change return type from array to immutable collection
@@ -71,7 +78,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	}
 
 	// TODO modify to change return type from array to immutable collection
-	public HashMap<KRRLanguagePair, LanguageMapping> getTranslations() {
+	public HashMap<Pair<KRRLanguage>, LanguageMapping> getTranslations() {
 		return translations;
 	}
 
@@ -97,7 +104,8 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	public KnowledgeExpression translate(KnowledgeExpression expression,
 			KRRLanguage endlanguage) {
 		KRRLanguage startLanguage = expression.getLanguage();
-		KRRLanguagePair pair = new KRRLanguagePair(startLanguage, endlanguage);
+		Pair<KRRLanguage> pair = new Pair<KRRLanguage>(startLanguage,
+				endlanguage);
 		if (!translations.containsKey(pair)) {
 			throw new IllegalArgumentException(
 					"Environment does not contain a mapping from "

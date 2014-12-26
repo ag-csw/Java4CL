@@ -1,11 +1,20 @@
-package api4kbj;
+package krhashmap;
 
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import api4kbj.AbstractKRRLanguage;
+import api4kbj.CodecSystem;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KRRDialect;
+import api4kbj.KRRDialectType;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeAsset;
+import api4kbj.KnowledgeSourceLevel;
 import elevation.SelfLoweringAsset;
+import graphenvironment.GraphImmutableEnvironment;
 
 public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		implements KnowledgeAsset, SelfLoweringAsset {

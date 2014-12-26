@@ -1,4 +1,7 @@
-package api4kbj;
+package krhashmap;
+
+import graphenvironment.GraphImmutableEnvironment;
+import api4kbj.KRRLanguage;
 
 public class KnowledgeAssetLI extends AbstractKnowledgeAsset {
 

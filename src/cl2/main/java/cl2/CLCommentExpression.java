@@ -1,16 +1,17 @@
 package cl2;
 
+import krhashmap.AbstractKnowledgeManifestationG;
+import krhashmap.KnowledgeAssetLI;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.AbstractKnowledgeManifestationG;
-import api4kbj.GraphImmutableEnvironment;
-import api4kbj.KnowledgeAssetLI;
-import api4kbj.None;
-import api4kbj.Option;
-import api4kbj.Some;
 
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 import org.w3c.dom.Element;
+
+import functional.None;
+import functional.Option;
+import functional.Some;
+import graphenvironment.GraphImmutableEnvironment;
 
 public class CLCommentExpression extends CLExpression implements CLComment {
 

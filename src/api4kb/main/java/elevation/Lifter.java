@@ -1,10 +1,10 @@
 package elevation;
 
-import api4kbj.AbstractKnowledgeAsset;
-import api4kbj.AbstractKnowledgeEncoding;
-import api4kbj.AbstractKnowledgeExpression;
-import api4kbj.AbstractKnowledgeItem;
-import api4kbj.AbstractKnowledgeManifestationG;
+import krhashmap.AbstractKnowledgeAsset;
+import krhashmap.AbstractKnowledgeEncoding;
+import krhashmap.AbstractKnowledgeExpression;
+import krhashmap.AbstractKnowledgeItem;
+import krhashmap.AbstractKnowledgeManifestationG;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KnowledgeResource;
 

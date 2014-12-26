@@ -1,4 +1,4 @@
-package api4kbj;
+package functional;
 
 public class None<T> implements Option<T> {
 

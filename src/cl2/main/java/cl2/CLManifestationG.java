@@ -1,7 +1,7 @@
 package cl2;
 
+import krhashmap.AbstractKnowledgeManifestationG;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.AbstractKnowledgeManifestationG;
 import api4kbj.CodecSystem;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KRRDialect;

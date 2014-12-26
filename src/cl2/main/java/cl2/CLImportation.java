@@ -1,6 +1,6 @@
 package cl2;
 
-import api4kbj.Option;
+import functional.Option;
 
 public interface CLImportation extends CLKnowledgeResource {
 	// getter for comment

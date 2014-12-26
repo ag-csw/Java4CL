@@ -1,16 +1,17 @@
 package cl2;
 
+import krhashmap.AbstractKnowledgeEncoding;
+import krhashmap.AbstractKnowledgeExpression;
+
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 import org.w3c.dom.Node;
 
+import functional.None;
+import functional.Option;
+import functional.Some;
 import api4kbj.AbstractCodecSystem;
-import api4kbj.AbstractKnowledgeEncoding;
-import api4kbj.AbstractKnowledgeExpression;
 import api4kbj.KnowledgeSourceLevel;
-import api4kbj.None;
-import api4kbj.Option;
-import api4kbj.Some;
 
 public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 		implements CLComment {

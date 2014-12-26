@@ -6,6 +6,4 @@ public interface LanguageMapping extends Mapping<KRRLanguage> {
 
 	KRRLanguage endLanguage();
 
-	KRRLanguagePair getPair();
-
 }

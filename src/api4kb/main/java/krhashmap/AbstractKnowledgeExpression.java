@@ -1,9 +1,17 @@
-package api4kbj;
+package krhashmap;
+
+import graphenvironment.GraphImmutableEnvironment;
 
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.AbstractKRRDialectType;
+import api4kbj.AbstractKRRLanguage;
+import api4kbj.ImmutableEnvironment;
+import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractKnowledgeExpression extends
 		AbstractKnowledgeResource implements KnowledgeExpression {
@@ -115,7 +123,8 @@ public abstract class AbstractKnowledgeExpression extends
 	// for this language
 	public AbstractKnowledgeAsset conceptualize() {
 		if (lang.getDefaultEnvironment() != null) {
-			return conceptualize(lang.getDefaultEnvironment());
+			return conceptualize((GraphImmutableEnvironment) lang
+					.getDefaultEnvironment());
 		}
 		// TODO create a singleton environment containing the language
 		return null;
