@@ -1,6 +1,6 @@
 package cl2;
 
-import krhashmap.AbstractKnowledgeEncoding;
+import krhashmap.AbstractBasicKnowledgeEncoding;
 import krhashmap.AbstractBasicKnowledgeExpression;
 
 import org.dom4j.dom.DOMElement;
@@ -218,7 +218,7 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 
 	@Override
 	public <S> CLEncoding<T, S> encode(AbstractCodecSystem<T, S> system) {
-		AbstractKnowledgeEncoding<T, S> encoding = super.encode(system);
+		AbstractBasicKnowledgeEncoding<T, S> encoding = super.encode(system);
 		LOG.debug("Starting manifest of expression");
 		if (encoding instanceof CLEncoding<?, ?>) {
 			return (CLEncoding<T, S>) encoding;
@@ -229,7 +229,7 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 	}
 
 	@Override
-	protected <S> AbstractKnowledgeEncoding<T, S> newEncoding(
+	protected <S> AbstractBasicKnowledgeEncoding<T, S> newEncoding(
 			AbstractCodecSystem<T, S> system) {
 		// TODO Auto-generated method stub
 		return null;

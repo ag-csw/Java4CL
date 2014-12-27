@@ -7,20 +7,21 @@ import org.slf4j.LoggerFactory;
 
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.KnowledgeEncoding;
+import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractKnowledgeEncoding<T, S> extends
-		AbstractKnowledgeResource implements KnowledgeEncoding<T, S> {
+public abstract class AbstractBasicKnowledgeEncoding<T, S> extends
+		AbstractKnowledgeResource implements BasicKnowledgeEncoding<T, S> {
 	// Initializing-only constructor
-	public AbstractKnowledgeEncoding(AbstractKRRDialectType<T> dialectType,
+	public AbstractBasicKnowledgeEncoding(
+			AbstractKRRDialectType<T> dialectType,
 			AbstractCodecSystem<T, S> system) {
 		this.dialectType = dialectType;
 		this.system = system;
 	}
 
 	// Wrapper-based constructor
-	public AbstractKnowledgeEncoding(S value,
+	public AbstractBasicKnowledgeEncoding(S value,
 			AbstractKRRDialectType<T> dialectType,
 			AbstractCodecSystem<T, S> system) {
 		this(dialectType, system);
@@ -28,15 +29,16 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 	}
 
 	// Lazy lowering constructor - argument is manifestation and encoding system
-	public AbstractKnowledgeEncoding(
-			AbstractKnowledgeManifestationG<T> manifestation,
+	public AbstractBasicKnowledgeEncoding(
+			AbstractBasicKnowledgeManifestationG<T> manifestation,
 			AbstractCodecSystem<T, S> system) {
 		this(manifestation.dialectType(), system);
 		this.manifestation = manifestation;
 	}
 
 	// Lazy lifting constructor - argument is a KnowledgeItem
-	public <R> AbstractKnowledgeEncoding(AbstractKnowledgeItem<T, S, R> input) {
+	public <R> AbstractBasicKnowledgeEncoding(
+			AbstractBasicKnowledgeItem<T, S, R> input) {
 		this(input.dialectType(), input.codecSystem());
 		// TODO this is not lazy
 		this.value = input.read();
@@ -46,7 +48,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 	protected S value;
 	protected final AbstractKRRDialectType<T> dialectType;
 	protected final AbstractCodecSystem<T, S> system;
-	protected AbstractKnowledgeManifestationG<T> manifestation;
+	protected AbstractBasicKnowledgeManifestationG<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
@@ -79,12 +81,12 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 
 	// default lowering method returns an item for the default receiver
 	// which is the console for this implementation
-	public AbstractKnowledgeItem<T, S, Console> reproduce() {
+	public AbstractBasicKnowledgeItem<T, S, Console> reproduce() {
 		return reproduce(System.console());
 	}
 
 	// lowering method
-	public <R> AbstractKnowledgeItem<T, S, R> reproduce(R destination) {
+	public <R> AbstractBasicKnowledgeItem<T, S, R> reproduce(R destination) {
 		LOG.debug("Starting encode of manifestation");
 		LOG.debug("  Codec system: {}", system);
 		LOG.debug("  Dialect of the manifestation: {}", dialectType);
@@ -93,11 +95,11 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 		if ((initialValue != null)
 				&& (initialValue.level() == KnowledgeSourceLevel.ITEM)) {
 			@SuppressWarnings("unchecked")
-			AbstractKnowledgeItem<T, S, ?> encoding = (AbstractKnowledgeItem<T, S, ?>) initialValue;
+			AbstractBasicKnowledgeItem<T, S, ?> encoding = (AbstractBasicKnowledgeItem<T, S, ?>) initialValue;
 			LOG.debug("Found cached intial value for encoding: {}", encoding);
 			if (encoding.codecSystem() == system) {
 				LOG.debug("Using cached intial value");
-				return (AbstractKnowledgeItem<T, S, R>) encoding;
+				return (AbstractBasicKnowledgeItem<T, S, R>) encoding;
 			}
 		}
 
@@ -106,7 +108,7 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 	}
 
 	// lifting method
-	public AbstractKnowledgeManifestationG<T> decode() {
+	public AbstractBasicKnowledgeManifestationG<T> decode() {
 		if (manifestation == null) {
 			// TODO implement
 			return manifestation;

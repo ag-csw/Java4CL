@@ -69,7 +69,8 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
 	private final KRRLanguage defaultLanguage;
 	private final HashSet<KRRLanguage> focusLanguages;
-	// TODO replace HashSet+HashMap with a graph data structure from some library
+	// TODO replace HashSet+HashMap with a graph data structure from some
+	// library
 	private final HashSet<KRRLanguage> languages;
 	private final HashMap<Pair<KRRLanguage>, LanguageMapping> translations;
 
@@ -109,12 +110,15 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 						"Language of input expression to translate is not supported in the environment.");
 			}
 			// TODO implement using methods of LanguageMapping
-			// 1. Determine the shortest path from startLanguage to endLanguage in
+			// 1. Determine the shortest path from startLanguage to endLanguage
+			// in
 			// the graph, if it exists
-			// 2. If path exists, successively apply the translations of the path
+			// 2. If path exists, successively apply the translations of the
+			// path
 			// 3. Otherwise, return IllegalArgumentException
 		}
-		// TODO implement in case expression is not basic by translating all components
+		// TODO implement in case expression is not basic by translating all
+		// components
 		return null;
 	}
 

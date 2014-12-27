@@ -1,16 +1,17 @@
 package api4kbj;
 
+import java.util.Set;
+
 import elevation.Liftable;
 import elevation.Lowerable;
 
 public interface KnowledgeManifestation extends KnowledgeResource, Liftable,
-		Lowerable {
+		Lowerable, Decomposable<KnowledgeManifestation> {
+
 	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
 
-	// getter for dialect
-	KRRDialect dialect();
-
-	// getter for wrapped objects
-	<T> T value();
+	// getter for dialects
+	// TODO change type to immutable set
+	Set<KRRDialect> dialects();
 
 }

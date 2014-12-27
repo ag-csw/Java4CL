@@ -1,14 +1,8 @@
 package cl2;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import krhashmap.AbstractKnowledgeManifestationG;
+import krhashmap.AbstractBasicKnowledgeManifestationG;
 import krhashmap.KnowledgeAssetLI;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeExpression;
-
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 import org.w3c.dom.Element;
@@ -150,7 +144,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	@Override
 	public <T> CLCommentManifestationG<T> manifest(
 			AbstractKRRDialectType<T> dialectType) {
-		AbstractKnowledgeManifestationG<T> manifestation = super
+		AbstractBasicKnowledgeManifestationG<T> manifestation = super
 				.manifest(dialectType);
 		LOG.debug("Starting manifest of expression");
 		if (manifestation instanceof CLCommentManifestationG<?>) {
@@ -208,11 +202,10 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	@Override
-	protected <T> AbstractKnowledgeManifestationG<T> newManifestation(
+	protected <T> AbstractBasicKnowledgeManifestationG<T> newManifestation(
 			AbstractKRRDialectType<T> dialectType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }

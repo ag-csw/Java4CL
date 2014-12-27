@@ -32,7 +32,8 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	}
 
 	// lazy lifting constructor - argument is an Expression and environment
-	protected AbstractKnowledgeAsset(AbstractBasicKnowledgeExpression expression,
+	protected AbstractKnowledgeAsset(
+			AbstractBasicKnowledgeExpression expression,
 			GraphImmutableEnvironment env) {
 		this(env);
 		// TODO check that environment and language of expression are
@@ -43,7 +44,8 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		mapExpressionSafePut(expression);
 	}
 
-	private void mapExpressionSafePut(AbstractBasicKnowledgeExpression expression) {
+	private void mapExpressionSafePut(
+			AbstractBasicKnowledgeExpression expression) {
 		LOG.debug("Starting expression safeput", expression);
 		AbstractKRRLanguage lang = expression.language();
 		mapExpression.put(lang, expression);
@@ -101,7 +103,8 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		}
 		if (mapExpression.containsKey(lang)) {
 			LOG.debug("Found cached expression in this language");
-			AbstractBasicKnowledgeExpression expression = mapExpression.get(lang);
+			AbstractBasicKnowledgeExpression expression = mapExpression
+					.get(lang);
 			LOG.debug("Using cached expression: {}", expression);
 			return expression;
 		}

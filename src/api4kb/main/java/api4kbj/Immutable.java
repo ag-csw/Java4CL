@@ -10,5 +10,4 @@ public interface Immutable {
 	// result.
 	// Constructors must return a fully initialized object.
 
-
 }

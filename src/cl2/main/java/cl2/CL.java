@@ -49,17 +49,16 @@ public final class CL {
 		public AbstractKRRDialect defaultDialect() {
 			return xcl2;
 		}
-		
+
 		@Override
 		public ImmutableEnvironment defaultEnvironment() {
-			if(defaultEnvironment == null) {
-		      Builder builder = new GraphImmutableEnvironment.Builder();
-		      builder.addLanguages(this);
-		      defaultEnvironment = builder.build();
+			if (defaultEnvironment == null) {
+				Builder builder = new GraphImmutableEnvironment.Builder();
+				builder.addLanguages(this);
+				defaultEnvironment = builder.build();
 			}
 			return defaultEnvironment;
 		}
-		
 
 	};
 
@@ -86,28 +85,27 @@ public final class CL {
 		@Override
 		public byte[] code(Element node) {
 
-				TransformerFactory transFactory = TransformerFactory
-						.newInstance();
-				Transformer transformer;
-				try {
-					transformer = transFactory.newTransformer();
-				} catch (TransformerConfigurationException e) {
-					throw new RuntimeException(e);
-				}
-				StringWriter buffer = new StringWriter();
-				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
-						"yes");
-				try {
-					transformer.transform(new DOMSource(node), new StreamResult(
-							buffer));
-				} catch (TransformerException e) {
-					throw new RuntimeException(e);
-				}
-				try {
-					return buffer.toString().getBytes("UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					throw new RuntimeException(e);
-				}
+			TransformerFactory transFactory = TransformerFactory.newInstance();
+			Transformer transformer;
+			try {
+				transformer = transFactory.newTransformer();
+			} catch (TransformerConfigurationException e) {
+				throw new RuntimeException(e);
+			}
+			StringWriter buffer = new StringWriter();
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,
+					"yes");
+			try {
+				transformer.transform(new DOMSource(node), new StreamResult(
+						buffer));
+			} catch (TransformerException e) {
+				throw new RuntimeException(e);
+			}
+			try {
+				return buffer.toString().getBytes("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				throw new RuntimeException(e);
+			}
 		}
 
 		@Override

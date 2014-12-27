@@ -45,5 +45,4 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 		return defaultEnvironment;
 	}
 
-
 }

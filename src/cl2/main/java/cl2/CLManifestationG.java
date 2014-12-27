@@ -1,6 +1,6 @@
 package cl2;
 
-import krhashmap.AbstractKnowledgeManifestationG;
+import krhashmap.AbstractBasicKnowledgeManifestationG;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.CodecSystem;
 import api4kbj.ImmutableEnvironment;
@@ -9,7 +9,7 @@ import api4kbj.KRRDialectType;
 import api4kbj.KRRLanguage;
 
 public abstract class CLManifestationG<T> extends
-		AbstractKnowledgeManifestationG<T> implements CLKnowledgeResource {
+		AbstractBasicKnowledgeManifestationG<T> implements CLKnowledgeResource {
 
 	public CLManifestationG(T value, AbstractKRRDialectType<T> dialect) {
 		super(value, dialect);

@@ -3,7 +3,7 @@ package api4kbj;
 import elevation.Liftable;
 import elevation.Lowerable;
 
-public interface KnowledgeManifestationG<T> extends KnowledgeResource,
+public interface BasicKnowledgeManifestationG<T> extends KnowledgeResource,
 		Liftable, Lowerable {
 	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
 

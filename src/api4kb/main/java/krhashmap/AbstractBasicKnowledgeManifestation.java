@@ -8,20 +8,19 @@ import org.slf4j.LoggerFactory;
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialect;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.KRRDialect;
-import api4kbj.KnowledgeManifestation;
+import api4kbj.BasicKnowledgeManifestation;
 
-public abstract class AbstractKnowledgeManifestation extends
-		AbstractKnowledgeResource implements KnowledgeManifestation {
+public abstract class AbstractBasicKnowledgeManifestation extends
+		AbstractKnowledgeResource implements BasicKnowledgeManifestation {
 
 	// Initializing-only constructor
-	public AbstractKnowledgeManifestation(AbstractKRRDialect dialect) {
+	public AbstractBasicKnowledgeManifestation(AbstractKRRDialect dialect) {
 		LOG.debug("Starting initializing constructor for dialect: {}", dialect);
 		this.dialect = dialect;
 	}
 
 	// Wrapper-based constructor
-	public <T> AbstractKnowledgeManifestation(T value,
+	public <T> AbstractBasicKnowledgeManifestation(T value,
 			AbstractKRRDialectType<T> dialectType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
@@ -32,9 +31,9 @@ public abstract class AbstractKnowledgeManifestation extends
 	// protected fields
 	// final properties
 	protected final AbstractKRRDialect dialect;
-	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapValue = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
+	protected final HashMap<AbstractKRRDialectType<?>, AbstractBasicKnowledgeManifestationG<?>> mapValue = new HashMap<AbstractKRRDialectType<?>, AbstractBasicKnowledgeManifestationG<?>>();
 	// cache for lifting and lowering methods
-	protected final HashMap<AbstractCodecSystem<?, ?>, AbstractKnowledgeEncoding<?, ?>> mapEncoding = new HashMap<AbstractCodecSystem<?, ?>, AbstractKnowledgeEncoding<?, ?>>();
+	protected final HashMap<AbstractCodecSystem<?, ?>, AbstractBasicKnowledgeEncoding<?, ?>> mapEncoding = new HashMap<AbstractCodecSystem<?, ?>, AbstractBasicKnowledgeEncoding<?, ?>>();
 	protected AbstractBasicKnowledgeExpression expression;
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
@@ -49,13 +48,8 @@ public abstract class AbstractKnowledgeManifestation extends
 	 * }
 	 */
 
-	public void clear() {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
-	public KRRDialect dialect() {
+	public AbstractKRRDialect dialect() {
 		// TODO Auto-generated method stub
 		return null;
 	}

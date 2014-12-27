@@ -1,12 +1,10 @@
 import graphenvironment.GraphImmutableEnvironment;
-import graphenvironment.GraphImmutableEnvironment.Builder;
 import krhashmap.KnowledgeAssetLI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
-import api4kbj.ImmutableEnvironment;
 import cl2.CL;
 import cl2.CLCommentExpression;
 import cl2.CLCommentManifestationG;
@@ -18,7 +16,8 @@ public class Main {
 	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) {
-		GraphImmutableEnvironment env = (GraphImmutableEnvironment) CL.lang.defaultEnvironment();
+		GraphImmutableEnvironment env = (GraphImmutableEnvironment) CL.lang
+				.defaultEnvironment();
 		LOG.debug(
 				"Hello. This is the Java4CL package. The current time is {}.",
 				System.currentTimeMillis());

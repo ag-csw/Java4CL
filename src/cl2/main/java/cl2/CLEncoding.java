@@ -1,7 +1,7 @@
 package cl2;
 
-import krhashmap.AbstractKnowledgeEncoding;
-import krhashmap.AbstractKnowledgeItem;
+import krhashmap.AbstractBasicKnowledgeEncoding;
+import krhashmap.AbstractBasicKnowledgeItem;
 import api4kbj.AbstractCodecSystem;
 import api4kbj.CodecSystem;
 import api4kbj.ImmutableEnvironment;
@@ -9,8 +9,8 @@ import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRLanguage;
 
-public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
-		CLKnowledgeResource {
+public class CLEncoding<T, S> extends AbstractBasicKnowledgeEncoding<T, S>
+		implements CLKnowledgeResource {
 
 	public CLEncoding(S stream, CLDialectType<T> dialect,
 			AbstractCodecSystem<T, S> system) {
@@ -29,7 +29,7 @@ public class CLEncoding<T, S> extends AbstractKnowledgeEncoding<T, S> implements
 	}
 
 	@Override
-	public <R> AbstractKnowledgeItem<T, S, R> reproduce(R destination) {
+	public <R> AbstractBasicKnowledgeItem<T, S, R> reproduce(R destination) {
 		// TODO implement eager lowering to item
 		// Case 1. from encoding
 		// Case 2. from manifestation

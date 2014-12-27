@@ -3,14 +3,14 @@ package krhashmap;
 import functional.IO;
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.KnowledgeEncoding;
-import api4kbj.KnowledgeItem;
+import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeItem;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractKnowledgeItem<T, S, R> extends
-		AbstractKnowledgeResource implements KnowledgeItem<T, S, R> {
+public abstract class AbstractBasicKnowledgeItem<T, S, R> extends
+		AbstractKnowledgeResource implements BasicKnowledgeItem<T, S, R> {
 
-	private AbstractKnowledgeItem(AbstractKRRDialectType<T> dialectType,
+	private AbstractBasicKnowledgeItem(AbstractKRRDialectType<T> dialectType,
 			IO<S> value, AbstractCodecSystem<T, S> system) {
 		this.dialectType = dialectType;
 		this.value = value;
@@ -19,7 +19,7 @@ public abstract class AbstractKnowledgeItem<T, S, R> extends
 
 	private AbstractKRRDialectType<T> dialectType;
 	private IO<S> value;
-	private AbstractKnowledgeEncoding<T, S> encoding;
+	private AbstractBasicKnowledgeEncoding<T, S> encoding;
 	private R destination;
 	private AbstractCodecSystem<T, S> system;
 
@@ -34,7 +34,7 @@ public abstract class AbstractKnowledgeItem<T, S, R> extends
 	};
 
 	// lifting method
-	abstract KnowledgeEncoding<T, S> prototype();
+	abstract BasicKnowledgeEncoding<T, S> prototype();
 
 	// action
 	abstract void write();
