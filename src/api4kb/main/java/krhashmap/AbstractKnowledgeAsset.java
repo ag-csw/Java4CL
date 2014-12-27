@@ -20,7 +20,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		implements KnowledgeAsset, SelfLoweringAsset {
 
 	private final GraphImmutableEnvironment environment;
-	protected final HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractKnowledgeExpression>();
+	protected final HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpression>();
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// initializing only constructor
@@ -32,7 +32,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	}
 
 	// lazy lifting constructor - argument is an Expression and environment
-	protected AbstractKnowledgeAsset(AbstractKnowledgeExpression expression,
+	protected AbstractKnowledgeAsset(AbstractBasicKnowledgeExpression expression,
 			GraphImmutableEnvironment env) {
 		this(env);
 		// TODO check that environment and language of expression are
@@ -43,7 +43,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		mapExpressionSafePut(expression);
 	}
 
-	private void mapExpressionSafePut(AbstractKnowledgeExpression expression) {
+	private void mapExpressionSafePut(AbstractBasicKnowledgeExpression expression) {
 		LOG.debug("Starting expression safeput", expression);
 		AbstractKRRLanguage lang = expression.language();
 		mapExpression.put(lang, expression);
@@ -54,7 +54,6 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		return level;
 	}
 
-	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
 
@@ -76,13 +75,13 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	// default lowering method returns an expression in the default language
 	// for this environment
 	@Override
-	public AbstractKnowledgeExpression express() {
+	public AbstractBasicKnowledgeExpression express() {
 		return express(environment.defaultLanguage());
 	}
 
 	// lowering method with a parameter indicating the language
 	@Override
-	public AbstractKnowledgeExpression express(KRRLanguage lang) {
+	public AbstractBasicKnowledgeExpression express(KRRLanguage lang) {
 		LOG.debug("Starting express with language: {}", lang);
 		if (!environment.containsLanguage(lang)) {
 			throw new IllegalArgumentException(
@@ -92,7 +91,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
 				&& (initialValue.level() == KnowledgeSourceLevel.EXPRESSION)) {
-			AbstractKnowledgeExpression expression = (AbstractKnowledgeExpression) initialValue;
+			AbstractBasicKnowledgeExpression expression = (AbstractBasicKnowledgeExpression) initialValue;
 			LOG.debug("Found cached intial value for expression: {}",
 					expression);
 			if (expression.language() == lang) {
@@ -102,7 +101,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 		}
 		if (mapExpression.containsKey(lang)) {
 			LOG.debug("Found cached expression in this language");
-			AbstractKnowledgeExpression expression = mapExpression.get(lang);
+			AbstractBasicKnowledgeExpression expression = mapExpression.get(lang);
 			LOG.debug("Using cached expression: {}", expression);
 			return expression;
 		}
@@ -112,7 +111,7 @@ public abstract class AbstractKnowledgeAsset extends AbstractKnowledgeResource
 	}
 
 	// eager lowering
-	abstract AbstractKnowledgeExpression newExpression(KRRLanguage lang);
+	abstract AbstractBasicKnowledgeExpression newExpression(KRRLanguage lang);
 
 	// { return new AbstractKnowledgeExpression((AbstractKRRLanguage) lang){};
 

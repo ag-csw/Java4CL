@@ -42,7 +42,6 @@ public abstract class AbstractKnowledgeItem<T, S, R> extends
 	// action
 	abstract S read();
 
-	@Override
 	public abstract void clear();
 
 	@Override

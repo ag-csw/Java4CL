@@ -35,7 +35,7 @@ public abstract class AbstractKnowledgeManifestation extends
 	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapValue = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
 	// cache for lifting and lowering methods
 	protected final HashMap<AbstractCodecSystem<?, ?>, AbstractKnowledgeEncoding<?, ?>> mapEncoding = new HashMap<AbstractCodecSystem<?, ?>, AbstractKnowledgeEncoding<?, ?>>();
-	protected AbstractKnowledgeExpression expression;
+	protected AbstractBasicKnowledgeExpression expression;
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -49,7 +49,6 @@ public abstract class AbstractKnowledgeManifestation extends
 	 * }
 	 */
 
-	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
 

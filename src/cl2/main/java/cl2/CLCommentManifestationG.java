@@ -1,7 +1,7 @@
 package cl2;
 
 import krhashmap.AbstractKnowledgeEncoding;
-import krhashmap.AbstractKnowledgeExpression;
+import krhashmap.AbstractBasicKnowledgeExpression;
 
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
@@ -236,7 +236,7 @@ public final class CLCommentManifestationG<T> extends CLManifestationG<T>
 	}
 
 	@Override
-	protected AbstractKnowledgeExpression newExpression() {
+	protected AbstractBasicKnowledgeExpression newExpression() {
 		// TODO Auto-generated method stub
 		return null;
 	}

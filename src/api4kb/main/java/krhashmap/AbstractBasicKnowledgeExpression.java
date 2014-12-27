@@ -3,27 +3,33 @@ package krhashmap;
 import graphenvironment.GraphImmutableEnvironment;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cl2.CL;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
+import api4kbj.BasicKnowledgeExpression;
 import api4kbj.ImmutableEnvironment;
+import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractKnowledgeExpression extends
-		AbstractKnowledgeResource implements KnowledgeExpression {
+public abstract class AbstractBasicKnowledgeExpression extends
+		AbstractKnowledgeResource implements BasicKnowledgeExpression {
 
 	// initializing only constructor
-	protected <T> AbstractKnowledgeExpression(AbstractKRRLanguage lang) {
+	protected <T> AbstractBasicKnowledgeExpression(AbstractKRRLanguage lang) {
 		LOG.debug("Starting initializing constructor for language: {}", lang);
 		this.lang = lang;
+		langs.add(lang);
 	}
 
 	// Lazy lifting constructor - argument is a Manifestation
-	public <T> AbstractKnowledgeExpression(
+	public <T> AbstractBasicKnowledgeExpression(
 			AbstractKnowledgeManifestationG<T> manifestation) {
 		this(manifestation.dialectType().language());
 		LOG.debug(
@@ -34,7 +40,7 @@ public abstract class AbstractKnowledgeExpression extends
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractKnowledgeExpression(KnowledgeAssetLI asset,
+	public AbstractBasicKnowledgeExpression(KnowledgeAssetLI asset,
 			AbstractKRRLanguage lang) {
 		this(lang);
 		LOG.debug("Starting lazy lowering expression construtor");
@@ -50,13 +56,15 @@ public abstract class AbstractKnowledgeExpression extends
 	// protected fields
 	// final properties
 	protected final AbstractKRRLanguage lang;
+	protected final HashSet<AbstractKRRLanguage> langs = new HashSet<AbstractKRRLanguage>();
+	protected final HashSet<KnowledgeExpression> components = new HashSet<KnowledgeExpression>();
 	// cache for lifting and lowering methods
 	protected final HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>> mapManifest = new HashMap<AbstractKRRDialectType<?>, AbstractKnowledgeManifestationG<?>>();
 	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 	protected static final Logger SLOG = LoggerFactory
-			.getLogger(AbstractKnowledgeExpression.class);
+			.getLogger(AbstractBasicKnowledgeExpression.class);
 
 	@Override
 	public KnowledgeSourceLevel level() {
@@ -186,7 +194,6 @@ public abstract class AbstractKnowledgeExpression extends
 		}
 	}
 
-	@Override
 	public void clear() {
 		clearManifest();
 		clearAsset();
@@ -218,5 +225,25 @@ public abstract class AbstractKnowledgeExpression extends
 		// inconsistent state before removing
 		mapAsset.remove(environment);
 	}
+	
+	@Override
+	public Set<KRRLanguage> languages() {
+		HashSet<KRRLanguage> langs =  new HashSet<KRRLanguage>();
+		langs.add(CL.lang);
+		return langs;
+	}
+
+	@Override
+	public Set<KnowledgeExpression> components() {
+		// TODO Auto-generated method stub
+		return components;
+	}
+
+	@Override
+	public Boolean isBasic() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 
 }

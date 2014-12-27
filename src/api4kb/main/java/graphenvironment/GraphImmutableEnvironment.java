@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import functional.Pair;
+import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KnowledgeExpression;
@@ -48,8 +49,6 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 			for (LanguageMapping map : translations) {
 				this.translations.put(new Pair<KRRLanguage>(
 						map.startLanguage(), map.endLanguage()), map);
-				// TOD Also add start and end languages to languages array, if
-				// not already present.
 				this.languages.add(map.startLanguage());
 				this.languages.add(map.endLanguage());
 			}
@@ -68,10 +67,11 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 		this.translations = builder.translations;
 	}
 
-	private final HashSet<KRRLanguage> languages;
-	private final HashSet<KRRLanguage> focusLanguages;
-	private final HashMap<Pair<KRRLanguage>, LanguageMapping> translations;
 	private final KRRLanguage defaultLanguage;
+	private final HashSet<KRRLanguage> focusLanguages;
+	// TODO replace HashSet+HashMap with a graph data structure from some library
+	private final HashSet<KRRLanguage> languages;
+	private final HashMap<Pair<KRRLanguage>, LanguageMapping> translations;
 
 	// TODO modify to change return type to immutable collection
 	@Override
@@ -86,8 +86,6 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
 	@Override
 	public Boolean containsLanguage(KRRLanguage lang) {
-		// TODO change languages to a set because we never are interested in
-		// random access by index
 		return languages.contains(lang);
 	}
 
@@ -97,23 +95,26 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	}
 
 	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public KnowledgeExpression translate(KnowledgeExpression expression,
-			KRRLanguage endlanguage) {
-		KRRLanguage startLanguage = expression.language();
-		Pair<KRRLanguage> pair = new Pair<KRRLanguage>(startLanguage,
-				endlanguage);
-		if (!translations.containsKey(pair)) {
+			KRRLanguage endLanguage) {
+		if (!languages.contains(endLanguage)) {
 			throw new IllegalArgumentException(
-					"Environment does not contain a mapping from "
-							+ startLanguage + " to " + endlanguage);
+					"End language requested for translation is not supported in the environment.");
 		}
-		// TODO apply mapping
+		if (expression.isBasic()) {
+			KRRLanguage startLanguage = ((BasicKnowledgeExpression) expression)
+					.language();
+			if (!languages.contains(startLanguage)) {
+				throw new IllegalArgumentException(
+						"Language of input expression to translate is not supported in the environment.");
+			}
+			// TODO implement using methods of LanguageMapping
+			// 1. Determine the shortest path from startLanguage to endLanguage in
+			// the graph, if it exists
+			// 2. If path exists, successively apply the translations of the path
+			// 3. Otherwise, return IllegalArgumentException
+		}
+		// TODO implement in case expression is not basic by translating all components
 		return null;
 	}
 
@@ -133,16 +134,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 			KRRLanguage endLanguage) {
 		// check that the language of the expression is in the environment
 		// TODO all expressions to be in multiple languages
-		if (!languages.contains(expression.language())) {
-			throw new IllegalArgumentException(
-					"Language of input expression to apply is not supported in the environment.");
-		}
 		// check that the end language is in the environment
-		if (!languages.contains(endLanguage)) {
-			throw new IllegalArgumentException(
-					"Language requested for apply is not supported in the environment.");
-		}
-		// TODO implement using methods of LanguageMapping
 		return null;
 	}
 

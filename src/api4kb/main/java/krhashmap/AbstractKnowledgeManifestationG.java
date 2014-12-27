@@ -44,7 +44,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 
 	// Lazy lowering constructor - argument is expression and dialect
 	public AbstractKnowledgeManifestationG(
-			AbstractKnowledgeExpression expression,
+			AbstractBasicKnowledgeExpression expression,
 			AbstractKRRDialectType<T> dialectType) {
 		this(dialectType);
 		LOG.debug("Starting lazy lowering manifestation constructor");
@@ -66,7 +66,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 	protected Configuration<?> configuration;
 	// cache for lifting and lowering methods
 	protected final HashMap<AbstractCodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>> mapEncoding = new HashMap<AbstractCodecSystem<T, ?>, AbstractKnowledgeEncoding<T, ?>>();
-	protected AbstractKnowledgeExpression expression;
+	protected AbstractBasicKnowledgeExpression expression;
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -161,7 +161,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 	// return new AbstractKnowledgeEncoding<T, S>(dialectType, system){};
 
 	// lifting method
-	public AbstractKnowledgeExpression parse() {
+	public AbstractBasicKnowledgeExpression parse() {
 		LOG.debug("Starting parse");
 		if (expression != null) {
 			LOG.debug("Found cached value for expression: {}", expression);
@@ -173,7 +173,7 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 	}
 
 	// eager lifting
-	protected abstract AbstractKnowledgeExpression newExpression();
+	protected abstract AbstractBasicKnowledgeExpression newExpression();
 
 	// return new AbstractKnowledgeExpression(this){};
 
@@ -222,7 +222,6 @@ public abstract class AbstractKnowledgeManifestationG<T> extends
 		}
 	}
 
-	@Override
 	public void clear() {
 		synchronized (mapEncoding) {
 			for (CodecSystem<T, ?> system : mapEncoding.keySet()) {

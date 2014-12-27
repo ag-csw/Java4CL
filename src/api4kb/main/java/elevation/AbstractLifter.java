@@ -2,7 +2,7 @@ package elevation;
 
 import krhashmap.AbstractKnowledgeAsset;
 import krhashmap.AbstractKnowledgeEncoding;
-import krhashmap.AbstractKnowledgeExpression;
+import krhashmap.AbstractBasicKnowledgeExpression;
 import krhashmap.AbstractKnowledgeItem;
 import krhashmap.AbstractKnowledgeManifestationG;
 import api4kbj.ImmutableEnvironment;
@@ -27,15 +27,15 @@ public abstract class AbstractLifter implements Lifter {
 			AbstractKnowledgeItem<T, S, R> kr, ImmutableEnvironment e);
 
 	@Override
-	public abstract <T> AbstractKnowledgeExpression parse(
+	public abstract <T> AbstractBasicKnowledgeExpression parse(
 			AbstractKnowledgeManifestationG<T> kr);
 
 	@Override
-	public abstract <T, S> AbstractKnowledgeExpression parse(
+	public abstract <T, S> AbstractBasicKnowledgeExpression parse(
 			AbstractKnowledgeEncoding<T, S> kr);
 
 	@Override
-	public abstract <T, S, R> AbstractKnowledgeExpression parse(
+	public abstract <T, S, R> AbstractBasicKnowledgeExpression parse(
 			AbstractKnowledgeItem<T, S, R> kr);
 
 	@Override

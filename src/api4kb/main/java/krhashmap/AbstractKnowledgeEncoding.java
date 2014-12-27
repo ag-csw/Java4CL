@@ -129,7 +129,6 @@ public abstract class AbstractKnowledgeEncoding<T, S> extends
 		}
 	}
 
-	@Override
 	public void clear() {
 		clearDecode();
 	}

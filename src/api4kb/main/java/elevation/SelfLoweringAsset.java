@@ -1,13 +1,13 @@
 package elevation;
 
-import krhashmap.AbstractKnowledgeExpression;
+import krhashmap.AbstractBasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeAsset;
 
 public interface SelfLoweringAsset extends SelfLowering, KnowledgeAsset {
 
-	AbstractKnowledgeExpression express();
+	AbstractBasicKnowledgeExpression express();
 
-	AbstractKnowledgeExpression express(KRRLanguage lang);
+	AbstractBasicKnowledgeExpression express(KRRLanguage lang);
 
 }
