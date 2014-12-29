@@ -1,7 +1,6 @@
 package krhashmap;
 
 import java.util.HashMap;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +12,11 @@ import api4kbj.BasicKnowledgeManifestationG;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeManifestationG<T> extends
-		AbstractKnowledgeResource implements BasicKnowledgeManifestationG<T> {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeManifestationG<T> {
 	// Initializing-only constructor
 	public AbstractBasicKnowledgeManifestationG(
 			AbstractKRRDialectType<T> dialectType) {
+		super(true, KnowledgeSourceLevel.MANIFESTATION, dialectType.language());
 		LOG.debug("Starting initializing constructor for dialect type: {}",
 				dialectType);
 		this.dialectType = dialectType;
@@ -70,12 +70,6 @@ public abstract class AbstractBasicKnowledgeManifestationG<T> extends
 	protected AbstractBasicKnowledgeExpression expression;
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-
-	@Override
-	public KnowledgeSourceLevel level() {
-		LOG.debug("Getting level: {}", level);
-		return level;
-	}
 
 	@Override
 	public AbstractKRRDialectType<T> dialectType() {

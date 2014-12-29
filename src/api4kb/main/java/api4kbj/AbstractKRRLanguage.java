@@ -15,6 +15,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 	private AbstractKRRDialect defaultDialect;
 	private AbstractKRRDialectType<?> defaultDialectType;
+	private CodecSystem<?, ?> defaultSystem;
 	protected ImmutableEnvironment defaultEnvironment;
 
 	@Override
@@ -28,7 +29,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	}
 
 	// TODO
-	// public KRRLogic getLogic(){
+	// public KRRLogic logic(){
 	// return logic;
 	// }
 	@Override
@@ -41,6 +42,12 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 		return defaultDialectType;
 	}
 
+	@Override
+	public CodecSystem<?, ?> defaultSystem() {
+		return defaultDialectType().defaultSystem();
+	}
+
+	@Override
 	public ImmutableEnvironment defaultEnvironment() {
 		return defaultEnvironment;
 	}

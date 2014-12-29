@@ -9,12 +9,14 @@ import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialect;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.BasicKnowledgeManifestation;
+import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeManifestation extends
-		AbstractKnowledgeResource implements BasicKnowledgeManifestation {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeManifestation {
 
 	// Initializing-only constructor
 	public AbstractBasicKnowledgeManifestation(AbstractKRRDialect dialect) {
+		super(true, KnowledgeSourceLevel.MANIFESTATION, dialect.language());
 		LOG.debug("Starting initializing constructor for dialect: {}", dialect);
 		this.dialect = dialect;
 	}
@@ -34,7 +36,7 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	protected final HashMap<AbstractKRRDialectType<?>, AbstractBasicKnowledgeManifestationG<?>> mapValue = new HashMap<AbstractKRRDialectType<?>, AbstractBasicKnowledgeManifestationG<?>>();
 	// cache for lifting and lowering methods
 	protected final HashMap<AbstractCodecSystem<?, ?>, AbstractBasicKnowledgeEncoding<?, ?>> mapEncoding = new HashMap<AbstractCodecSystem<?, ?>, AbstractBasicKnowledgeEncoding<?, ?>>();
-	protected AbstractBasicKnowledgeExpression expression;
+	protected AbstractKnowledgeExpression expression;
 	//
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 

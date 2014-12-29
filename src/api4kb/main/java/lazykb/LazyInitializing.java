@@ -1,8 +1,9 @@
 package lazykb;
 
 public interface LazyInitializing<T> {
-	// public method to clear cache of initial value
-	public void clearInitialValue();
+	// optional public method to clear cache of initial value
+	// if not supported, throws an Exception
+	public void clearInitialValue() throws Exception;
 	// package private getter for cached initial value
 	// T initialValue();
 	// package private setter for cached initial value

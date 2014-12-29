@@ -11,11 +11,12 @@ import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeEncoding<T, S> extends
-		AbstractKnowledgeResource implements BasicKnowledgeEncoding<T, S> {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeEncoding<T, S> {
 	// Initializing-only constructor
 	public AbstractBasicKnowledgeEncoding(
 			AbstractKRRDialectType<T> dialectType,
 			AbstractCodecSystem<T, S> system) {
+		super(true, KnowledgeSourceLevel.ENCODING, dialectType.language());
 		this.dialectType = dialectType;
 		this.system = system;
 	}
@@ -50,11 +51,6 @@ public abstract class AbstractBasicKnowledgeEncoding<T, S> extends
 	protected final AbstractCodecSystem<T, S> system;
 	protected AbstractBasicKnowledgeManifestationG<T> manifestation;
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-
-	@Override
-	public KnowledgeSourceLevel level() {
-		return level;
-	}
 
 	@Override
 	public S value() {
@@ -144,5 +140,13 @@ public abstract class AbstractBasicKnowledgeEncoding<T, S> extends
 			super.unsafeClearInitialValue();
 		}
 	}
+	/**
+	 * protected final Set<CodecSystem<?, ?>> systems = new
+	 * HashSet<CodecSystem<?, ?>>();
+	 * 
+	 * @Override public Set<CodecSystem<?, ?>> codecSystems() {
+	 * 
+	 *           return systems; }
+	 **/
 
 }

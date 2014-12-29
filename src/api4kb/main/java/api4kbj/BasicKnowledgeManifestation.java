@@ -1,6 +1,7 @@
 package api4kbj;
 
-public interface BasicKnowledgeManifestation extends KnowledgeManifestation {
+public interface BasicKnowledgeManifestation extends KnowledgeManifestation,
+		BasicKnowledgeResource {
 
 	// getter for dialect
 	KRRDialect dialect();

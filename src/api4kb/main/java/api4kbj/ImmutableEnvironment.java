@@ -2,12 +2,12 @@ package api4kbj;
 
 import java.util.Set;
 
+import functional.Option;
+
 public interface ImmutableEnvironment extends Immutable {
 
 	// TODO change return type to Immutable Collection from FJ
 	Set<KRRLanguage> languages();
-
-	Set<KRRLanguage> focusLanguages();
 
 	//
 	Boolean containsLanguage(KRRLanguage lang);
@@ -22,7 +22,6 @@ public interface ImmutableEnvironment extends Immutable {
 	//
 	KRRLanguage defaultLanguage();
 
-	KnowledgeExpression apply(KnowledgeExpression expression,
-			KRRLanguage endLanguage);
+	Option<KRRLanguage> focusLanguage();
 
 }

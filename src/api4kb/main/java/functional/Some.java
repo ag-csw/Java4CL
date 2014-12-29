@@ -13,6 +13,7 @@ public class Some<T> implements Option<T> {
 		return false;
 	}
 
+	@Override
 	public T value() {
 		return value;
 	}

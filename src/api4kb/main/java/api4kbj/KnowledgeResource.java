@@ -5,6 +5,9 @@ public interface KnowledgeResource extends ImmutableSource, KnowledgeSource {
 	// returns the abstraction level
 	KnowledgeSourceLevel level();
 
+	// check if basic
+	Boolean isBasic();
+
 	// get the default environment
 	ImmutableEnvironment defaultEnvironment();
 

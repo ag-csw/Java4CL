@@ -1,11 +1,7 @@
 package api4kbj;
 
-import elevation.Liftable;
-import elevation.Lowerable;
-
-public interface BasicKnowledgeManifestationG<T> extends KnowledgeResource,
-		Liftable, Lowerable {
-	KnowledgeSourceLevel level = KnowledgeSourceLevel.MANIFESTATION;
+public interface BasicKnowledgeManifestationG<T> extends
+		KnowledgeManifestation, BasicKnowledgeResource {
 
 	// getter for wrapped object
 	T value();

@@ -2,14 +2,15 @@ package cl2;
 
 import functional.Option;
 import graphenvironment.GraphImmutableEnvironment;
-import krhashmap.KnowledgeAssetLI;
+import krhashmap.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.ImmutableEnvironment;
 
 public abstract class CLNameExpression extends CLExpression implements CLName {
 
-	public CLNameExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang) {
+	public CLNameExpression(BasicKnowledgeAssetLI asset,
+			AbstractKRRLanguage lang) {
 		super(asset, lang);
 		// TODO Auto-generated constructor stub
 	}
@@ -61,7 +62,7 @@ public abstract class CLNameExpression extends CLExpression implements CLName {
 	}
 
 	@Override
-	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
+	public BasicKnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
 		// TODO Auto-generated method stub
 		return null;
 	}

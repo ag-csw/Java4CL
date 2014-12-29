@@ -1,8 +1,9 @@
 package cl2;
 
 import krhashmap.AbstractBasicKnowledgeManifestationG;
-import krhashmap.KnowledgeAssetLI;
+import krhashmap.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRDialectType;
+import api4kbj.AbstractKRRLanguage;
 import org.dom4j.dom.DOMElement;
 import org.dom4j.dom.DOMText;
 import org.w3c.dom.Element;
@@ -24,7 +25,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	// Lazy lowering constructor
-	private <T> CLCommentExpression(KnowledgeAssetLI asset) {
+	private <T> CLCommentExpression(BasicKnowledgeAssetLI asset) {
 		super(asset, CL.lang);
 	}
 
@@ -54,7 +55,8 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	// lazy lowering
-	public static <T> CLCommentExpression lazyNewInstance(KnowledgeAssetLI asset) {
+	public static <T> CLCommentExpression lazyNewInstance(
+			BasicKnowledgeAssetLI asset) {
 		return new CLCommentExpression(asset);
 	}
 
@@ -88,7 +90,8 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			KnowledgeAssetLI asset = mapAsset.values().iterator().next();
+			BasicKnowledgeAssetLI asset = (BasicKnowledgeAssetLI) mapAsset
+					.values().iterator().next();
 			return ((CLCommentExpression) asset.express(CL.lang)).getSymbol();
 		}
 	}
@@ -129,7 +132,8 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			KnowledgeAssetLI asset = mapAsset.values().iterator().next();
+			BasicKnowledgeAssetLI asset = (BasicKnowledgeAssetLI) mapAsset
+					.values().iterator().next();
 			return ((CLCommentExpression) asset.express(CL.lang)).getComment();
 		}
 	}
@@ -197,7 +201,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	@Override
-	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
+	public BasicKnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
 		return super.conceptualize(e);
 	}
 
@@ -206,6 +210,11 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 			AbstractKRRDialectType<T> dialectType) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public AbstractKRRLanguage language() {
+		return super.language();
 	}
 
 }

@@ -1,31 +1,22 @@
 package krhashmap;
 
-import graphenvironment.GraphImmutableEnvironment;
-
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import cl2.CL;
+import graphenvironment.GraphImmutableEnvironment;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.ImmutableEnvironment;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeExpression extends
-		AbstractKnowledgeResource implements BasicKnowledgeExpression {
+		AbstractKnowledgeExpression implements BasicKnowledgeExpression {
 
 	// initializing only constructor
 	protected <T> AbstractBasicKnowledgeExpression(AbstractKRRLanguage lang) {
+		super(true, lang);
 		LOG.debug("Starting initializing constructor for language: {}", lang);
 		this.lang = lang;
-		langs.add(lang);
 	}
 
 	// Lazy lifting constructor - argument is a ManifestationG<T>
@@ -50,7 +41,7 @@ public abstract class AbstractBasicKnowledgeExpression extends
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractBasicKnowledgeExpression(KnowledgeAssetLI asset,
+	public AbstractBasicKnowledgeExpression(BasicKnowledgeAssetLI asset,
 			AbstractKRRLanguage lang) {
 		this(lang);
 		LOG.debug("Starting lazy lowering expression construtor");
@@ -63,36 +54,17 @@ public abstract class AbstractBasicKnowledgeExpression extends
 		assetSafePut(asset);
 	}
 
-	// protected fields
+	// protected and private fields
 	// final properties
-	protected final AbstractKRRLanguage lang;
-	protected final HashSet<AbstractKRRLanguage> langs = new HashSet<AbstractKRRLanguage>();
-	protected final HashSet<KnowledgeExpression> components = new HashSet<KnowledgeExpression>();
-	// cache for lifting and lowering methods
+	private final KRRLanguage lang;
 	protected final HashMap<AbstractKRRDialectType<?>, AbstractBasicKnowledgeManifestationG<?>> mapManifest = new HashMap<AbstractKRRDialectType<?>, AbstractBasicKnowledgeManifestationG<?>>();
-	protected final HashMap<ImmutableEnvironment, KnowledgeAssetLI> mapAsset = new HashMap<ImmutableEnvironment, KnowledgeAssetLI>();
-	//
-	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-	protected static final Logger SLOG = LoggerFactory
-			.getLogger(AbstractBasicKnowledgeExpression.class);
-
-	@Override
-	public KnowledgeSourceLevel level() {
-		LOG.debug("Getting level: {}", level);
-		return level;
-	}
-
-	@Override
-	public AbstractKRRLanguage language() {
-		LOG.debug("Getting language: {}", lang);
-		return lang;
-	}
 
 	// default lowering method returns a manifestation in the default dialect
 	// for that language
 	public AbstractBasicKnowledgeManifestationG<?> manifest() {
 		LOG.debug("Starting default manifest of expression");
-		return manifest(lang.defaultDialectType());
+		return manifest((AbstractKRRDialectType<?>) language()
+				.defaultDialectType());
 	}
 
 	// lowering method with a parameter indicating the dialect
@@ -101,6 +73,7 @@ public abstract class AbstractBasicKnowledgeExpression extends
 			AbstractKRRDialectType<T> dialectType) {
 		LOG.debug("Starting manifest of expression");
 		LOG.debug("  Dialect of the manifestation: {}", dialectType);
+		KRRLanguage lang = language();
 		LOG.debug("  Language of the expression: {}", lang);
 		if (dialectType.language() != lang) {
 			throw new IllegalArgumentException(
@@ -131,15 +104,13 @@ public abstract class AbstractBasicKnowledgeExpression extends
 		return newManifestation(dialectType);
 	}
 
-	// eager lowering
 	protected abstract <T> AbstractBasicKnowledgeManifestationG<T> newManifestation(
 			AbstractKRRDialectType<T> dialectType);
 
-	// return new AbstractKnowledgeManifestationG<T>(dialectType){}
-
 	// default lifting method returns a asset in the default environment
 	// for this language
-	public AbstractKnowledgeAsset conceptualize() {
+	public BasicKnowledgeAssetLI conceptualize() {
+		KRRLanguage lang = language();
 		if (lang.defaultEnvironment() != null) {
 			return conceptualize((GraphImmutableEnvironment) lang
 					.defaultEnvironment());
@@ -148,65 +119,60 @@ public abstract class AbstractBasicKnowledgeExpression extends
 		return null;
 	}
 
-	// lifting method with a parameter indicating the language
-	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment environment) {
+	public BasicKnowledgeAssetLI conceptualize(
+			GraphImmutableEnvironment environment) {
 		LOG.debug("Starting conceptualization relative to environment : {}",
 				environment);
 		if (!environment.containsLanguage(lang)) {
 			throw new IllegalArgumentException("Requested envionment"
 					+ environment.toString()
-					+ " does not contain the expression language:" + lang);
+					+ " does not contain the expression languages:" + lang);
 		}
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
 				&& (initialValue.level() == KnowledgeSourceLevel.ASSET)) {
-			KnowledgeAssetLI asset = (KnowledgeAssetLI) initialValue;
+			BasicKnowledgeAssetLI asset = (BasicKnowledgeAssetLI) initialValue;
 			LOG.debug("Found cached intial value for asset: {}", asset);
 			if (asset.environment().equals(environment)) {
 				LOG.debug("Using cached intial value");
 				return asset;
 			}
 		}
-		if (mapAsset.containsKey(lang)) {
-			LOG.debug("Found cached asset in this language");
-			KnowledgeAssetLI asset = mapAsset.get(environment);
-			LOG.debug("Using cached expression: {}", asset);
+		if (mapAsset.containsKey(environment)) {
+			LOG.debug("Found cached asset in this environment");
+			BasicKnowledgeAssetLI asset = (BasicKnowledgeAssetLI) mapAsset
+					.get(environment);
+			LOG.debug("Using cached asset: {}", asset);
 			return asset;
 		}
-		LOG.debug("Found no cached expression for: {}", environment);
+		LOG.debug("Found no cached asset for: {}", environment);
 		// Last resort: create a new asset
 		return newAsset(environment);
 	}
 
-	// eager lifting
-	protected KnowledgeAssetLI newAsset(GraphImmutableEnvironment environment) {
-		return new KnowledgeAssetLI(this, environment);
+	protected BasicKnowledgeAssetLI newAsset(
+			GraphImmutableEnvironment environment) {
+		return BasicKnowledgeAssetLI.lazyNewInstance(this, environment);
 
-	};
+	}
 
-	<T> void manifestSafePut(AbstractBasicKnowledgeManifestationG<T> manifest) {
+	@Override
+	public KRRLanguage language() {
+		return lang;
+	}
+
+	protected <T> void manifestSafePut(
+			AbstractBasicKnowledgeManifestationG<T> manifest) {
 		mapManifest.put(manifest.dialectType(), manifest);
 	}
 
-	void assetSafePut(KnowledgeAssetLI asset) {
-		mapAsset.put(asset.environment(), asset);
-	}
-
-	// verify that some other equivalent property has been set
-	// before forgetting initial value, to avoid leaving object
-	// in inconsistent "state".
 	@Override
 	public void clearInitialValue() {
 		LOG.debug("Starting clearInitialValue");
 		if ((!mapManifest.isEmpty()) | (!mapAsset.isEmpty())) {
 			LOG.debug("Safe to clear initial value");
-			super.unsafeClearInitialValue();
+			this.unsafeClearInitialValue();
 		}
-	}
-
-	public void clear() {
-		clearManifest();
-		clearAsset();
 	}
 
 	public void clearManifest() {
@@ -215,44 +181,16 @@ public abstract class AbstractBasicKnowledgeExpression extends
 		mapManifest.clear();
 	}
 
-	public void clearAsset() {
-		// TODO check that this removal will not put object into
-		// inconsistent state before removing
-		mapAsset.clear();
+	@Override
+	public void clear() {
+		super.clear();
+		clearManifest();
 	}
 
-	// clear memoization cache of the manifest method for the particular dialect
 	public void clearManifest(AbstractKRRDialectType<?> dialectType) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapManifest.remove(dialectType);
-	}
-
-	// clear memoization cache of the conceptualize method for the particular
-	// environment
-	public void clearConceptualize(ImmutableEnvironment environment) {
-		// TODO check that this removal will not put object into
-		// inconsistent state before removing
-		mapAsset.remove(environment);
-	}
-
-	@Override
-	public Set<KRRLanguage> languages() {
-		HashSet<KRRLanguage> langs = new HashSet<KRRLanguage>();
-		langs.add(CL.lang);
-		return langs;
-	}
-
-	@Override
-	public Set<KnowledgeExpression> components() {
-		// TODO Auto-generated method stub
-		return components;
-	}
-
-	@Override
-	public Boolean isBasic() {
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 }

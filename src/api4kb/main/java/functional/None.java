@@ -9,4 +9,9 @@ public class None<T> implements Option<T> {
 	public Boolean isEmpty() {
 		return true;
 	}
+
+	@Override
+	public T value() {
+		return null;
+	}
 }

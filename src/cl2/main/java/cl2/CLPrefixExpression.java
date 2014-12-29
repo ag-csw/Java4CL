@@ -1,7 +1,7 @@
 package cl2;
 
 import graphenvironment.GraphImmutableEnvironment;
-import krhashmap.KnowledgeAssetLI;
+import krhashmap.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.ImmutableEnvironment;
@@ -9,7 +9,8 @@ import api4kbj.ImmutableEnvironment;
 public abstract class CLPrefixExpression extends CLExpression implements
 		CLPrefix {
 
-	public CLPrefixExpression(KnowledgeAssetLI asset, AbstractKRRLanguage lang) {
+	public CLPrefixExpression(BasicKnowledgeAssetLI asset,
+			AbstractKRRLanguage lang) {
 		super(asset, lang);
 		// TODO Auto-generated constructor stub
 	}
@@ -55,7 +56,7 @@ public abstract class CLPrefixExpression extends CLExpression implements
 	}
 
 	@Override
-	public KnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
+	public BasicKnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -23,10 +23,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import api4kbj.API4KB;
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialect;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
+import api4kbj.CodecSystem;
 import api4kbj.ImmutableEnvironment;
 
 public final class CL {
@@ -55,9 +57,16 @@ public final class CL {
 			if (defaultEnvironment == null) {
 				Builder builder = new GraphImmutableEnvironment.Builder();
 				builder.addLanguages(this);
+				builder.addFocusLanguage(this);
+				builder.setDefaultLanguage(this);
 				defaultEnvironment = builder.build();
 			}
 			return defaultEnvironment;
+		}
+
+		@Override
+		public CodecSystem<?, ?> defaultSystem() {
+			return API4KB.CodecSystemXMLUTF8;
 		}
 
 	};

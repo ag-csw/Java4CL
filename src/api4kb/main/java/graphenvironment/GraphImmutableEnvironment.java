@@ -5,7 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import functional.None;
+import functional.Option;
 import functional.Pair;
+import functional.Some;
+import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.ImmutableEnvironment;
@@ -19,7 +23,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 		private KRRLanguage defaultLanguage;
 		private HashSet<KRRLanguage> languages = new HashSet<KRRLanguage>();
 		private HashMap<Pair<KRRLanguage>, LanguageMapping> translations = new HashMap<Pair<KRRLanguage>, LanguageMapping>();
-		private HashSet<KRRLanguage> focusLanguages;
+		private Option<KRRLanguage> focusLanguage = new None<KRRLanguage>();
 
 		//
 		public Builder() {
@@ -38,11 +42,9 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 			}
 		}
 
-		public void addFocusLanguages(KRRLanguage... languages) {
-			for (KRRLanguage lang : languages) {
-				this.focusLanguages.add(lang);
-				this.languages.add(lang);
-			}
+		public void addFocusLanguage(KRRLanguage language) {
+			this.focusLanguage = new Some<KRRLanguage>(language);
+			this.languages.add(language);
 		}
 
 		public void addTranslations(LanguageMapping... translations) {
@@ -62,13 +64,13 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
 	private GraphImmutableEnvironment(Builder builder) {
 		this.languages = builder.languages;
-		this.focusLanguages = builder.focusLanguages;
+		this.focusLanguage = builder.focusLanguage;
 		this.defaultLanguage = builder.defaultLanguage;
 		this.translations = builder.translations;
 	}
 
 	private final KRRLanguage defaultLanguage;
-	private final HashSet<KRRLanguage> focusLanguages;
+	private final Option<KRRLanguage> focusLanguage;
 	// TODO replace HashSet+HashMap with a graph data structure from some
 	// library
 	private final HashSet<KRRLanguage> languages;
@@ -92,7 +94,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 
 	@Override
 	public Boolean isFocused() {
-		return !focusLanguages.isEmpty();
+		return !focusLanguage.isEmpty();
 	}
 
 	@Override
@@ -127,19 +129,13 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 		return defaultLanguage;
 	}
 
-	// TODO modify to change return type from array to immutable collection
 	@Override
-	public Set<KRRLanguage> focusLanguages() {
-		return focusLanguages;
+	public Option<KRRLanguage> focusLanguage() {
+		return focusLanguage;
 	}
 
-	@Override
-	public KnowledgeExpression apply(KnowledgeExpression expression,
-			KRRLanguage endLanguage) {
-		// check that the language of the expression is in the environment
-		// TODO all expressions to be in multiple languages
-		// check that the end language is in the environment
-		return null;
+	public boolean containsLanguages(HashSet<AbstractKRRLanguage> langs) {
+		return this.languages.containsAll(langs);
 	}
 
 }

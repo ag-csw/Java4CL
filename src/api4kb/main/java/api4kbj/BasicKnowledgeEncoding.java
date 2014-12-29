@@ -1,11 +1,7 @@
 package api4kbj;
 
-import elevation.Liftable;
-import elevation.Lowerable;
-
-public interface BasicKnowledgeEncoding<T, S> extends KnowledgeResource,
-		Liftable, Lowerable {
-	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ENCODING;
+public interface BasicKnowledgeEncoding<T, S> extends KnowledgeEncoding,
+		BasicKnowledgeResource {
 
 	// getter for wrapped stream
 	// S should be some type of stream

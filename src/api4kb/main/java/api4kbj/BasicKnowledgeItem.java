@@ -1,11 +1,9 @@
 package api4kbj;
 
-import elevation.Liftable;
 import functional.IO;
 
-public interface BasicKnowledgeItem<T, S, R> extends KnowledgeResource,
-		Liftable {
-	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ITEM;
+public interface BasicKnowledgeItem<T, S, R> extends KnowledgeItem,
+		BasicKnowledgeResource {
 
 	// getter for wrapped IO object
 	IO<S> value();

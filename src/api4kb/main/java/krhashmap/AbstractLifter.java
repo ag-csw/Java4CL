@@ -14,10 +14,11 @@ import elevation.Lifter;
 public abstract class AbstractLifter implements Lifter {
 
 	@Override
-	public AbstractKnowledgeResource lift(KnowledgeResource kr,
+	public AbstractKnowledgeResourceLI lift(KnowledgeResource kr,
 			ImmutableEnvironment e, KnowledgeSourceLevel level) {
-		if (kr instanceof AbstractKnowledgeResource) {
-			return (AbstractKnowledgeResource) Lifter.super.lift(kr, e, level);
+		if (kr instanceof AbstractKnowledgeResourceLI) {
+			return (AbstractKnowledgeResourceLI) Lifter.super
+					.lift(kr, e, level);
 		}
 		throw new IllegalArgumentException("Input" + kr.toString()
 				+ " is not an AbstractKnowledgeResource");

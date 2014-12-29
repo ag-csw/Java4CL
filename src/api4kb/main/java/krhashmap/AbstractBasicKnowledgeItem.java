@@ -8,10 +8,11 @@ import api4kbj.BasicKnowledgeItem;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeItem<T, S, R> extends
-		AbstractKnowledgeResource implements BasicKnowledgeItem<T, S, R> {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeItem<T, S, R> {
 
 	private AbstractBasicKnowledgeItem(AbstractKRRDialectType<T> dialectType,
 			IO<S> value, AbstractCodecSystem<T, S> system) {
+		super(true, KnowledgeSourceLevel.ITEM, dialectType.language());
 		this.dialectType = dialectType;
 		this.value = value;
 		this.system = system;
