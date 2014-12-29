@@ -16,7 +16,7 @@ public abstract class AbstractBasicKnowledgeEncoding<T, S> extends
 	public AbstractBasicKnowledgeEncoding(
 			AbstractKRRDialectType<T> dialectType,
 			AbstractCodecSystem<T, S> system) {
-		super(true, KnowledgeSourceLevel.ENCODING, dialectType.language());
+		super(KnowledgeSourceLevel.ENCODING, dialectType.language());
 		this.dialectType = dialectType;
 		this.system = system;
 	}

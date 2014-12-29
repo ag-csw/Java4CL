@@ -22,13 +22,13 @@ public abstract class AbstractKnowledgeExpression extends
 
 	// partial constructors for non-lazy concrete constructors
 	public AbstractKnowledgeExpression(Boolean isBasic, KRRLanguage lang) {
-		super(isBasic, KnowledgeSourceLevel.EXPRESSION, lang);
+		super(KnowledgeSourceLevel.EXPRESSION, lang);
 		LOG.debug("Starting abstract constructor with isBasic: {}", isBasic);
 	}
 
 	public AbstractKnowledgeExpression(boolean isBasic,
 			GraphImmutableEnvironment env) {
-		super(isBasic, KnowledgeSourceLevel.EXPRESSION, env);
+		super(KnowledgeSourceLevel.EXPRESSION, env);
 	}
 
 	// lazy initializing constructor

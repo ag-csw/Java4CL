@@ -15,7 +15,6 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 	private AbstractKRRDialect defaultDialect;
 	private AbstractKRRDialectType<?> defaultDialectType;
-	private CodecSystem<?, ?> defaultSystem;
 	protected ImmutableEnvironment defaultEnvironment;
 
 	@Override

@@ -23,8 +23,8 @@ public abstract class AbstractKnowledgeAsset extends
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// initializing only constructor
-	AbstractKnowledgeAsset(GraphImmutableEnvironment env, Boolean isBasic) {
-		super(isBasic, KnowledgeSourceLevel.ASSET, env);
+	AbstractKnowledgeAsset(GraphImmutableEnvironment env) {
+		super(KnowledgeSourceLevel.ASSET, env);
 		LOG.debug(
 				"Starting initializing asset construtor with environment: {}",
 				env);

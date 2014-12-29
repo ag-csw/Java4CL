@@ -51,4 +51,77 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 		return defaultSystem;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((defaultSystem == null) ? 0 : defaultSystem.hashCode());
+		result = prime * result + ((dialect == null) ? 0 : dialect.hashCode());
+		result = prime * result + ((lang == null) ? 0 : lang.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof AbstractKRRDialectType)) {
+			return false;
+		}
+		AbstractKRRDialectType other = (AbstractKRRDialectType) obj;
+		if (defaultSystem == null) {
+			if (other.defaultSystem != null) {
+				return false;
+			}
+		} else if (!defaultSystem.equals(other.defaultSystem)) {
+			return false;
+		}
+		if (dialect == null) {
+			if (other.dialect != null) {
+				return false;
+			}
+		} else if (!dialect.equals(other.dialect)) {
+			return false;
+		}
+		if (lang == null) {
+			if (other.lang != null) {
+				return false;
+			}
+		} else if (!lang.equals(other.lang)) {
+			return false;
+		}
+		if (name == null) {
+			if (other.name != null) {
+				return false;
+			}
+		} else if (!name.equals(other.name)) {
+			return false;
+		}
+		if (type == null) {
+			if (other.type != null) {
+				return false;
+			}
+		} else if (!type.equals(other.type)) {
+			return false;
+		}
+		return true;
+	}
+
 }

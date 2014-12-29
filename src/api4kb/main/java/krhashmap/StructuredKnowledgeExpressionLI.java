@@ -5,8 +5,8 @@ import graphenvironment.GraphImmutableEnvironment;
 import java.util.HashSet;
 import java.util.Set;
 
-import api4kbj.AbstractKRRLanguage;
 import api4kbj.Decomposable;
+import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeSourceLevel;
 import api4kbj.StructuredKnowledgeResource;
@@ -35,7 +35,7 @@ public class StructuredKnowledgeExpressionLI extends
 	}
 
 	protected final HashSet<KnowledgeExpression> components = new HashSet<KnowledgeExpression>();
-	protected final HashSet<AbstractKRRLanguage> langs = new HashSet<AbstractKRRLanguage>();
+	protected final Set<KRRLanguage> langs = new HashSet<KRRLanguage>();
 
 	@Override
 	public Set<KnowledgeExpression> components() {

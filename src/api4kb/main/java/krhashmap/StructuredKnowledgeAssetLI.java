@@ -11,7 +11,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAsset
 		implements StructuredKnowledgeAsset {
 
 	public StructuredKnowledgeAssetLI(GraphImmutableEnvironment env) {
-		super(env, false);
+		super(env);
 	}
 
 	public StructuredKnowledgeAssetLI(AbstractKnowledgeExpression expression,

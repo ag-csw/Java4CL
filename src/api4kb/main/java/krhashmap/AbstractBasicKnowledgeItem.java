@@ -12,7 +12,7 @@ public abstract class AbstractBasicKnowledgeItem<T, S, R> extends
 
 	private AbstractBasicKnowledgeItem(AbstractKRRDialectType<T> dialectType,
 			IO<S> value, AbstractCodecSystem<T, S> system) {
-		super(true, KnowledgeSourceLevel.ITEM, dialectType.language());
+		super(KnowledgeSourceLevel.ITEM, dialectType.language());
 		this.dialectType = dialectType;
 		this.value = value;
 		this.system = system;

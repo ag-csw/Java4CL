@@ -32,8 +32,12 @@ public class Main {
 
 		GraphImmutableEnvironment env = (GraphImmutableEnvironment) CL.lang
 				.defaultEnvironment();
+		assert (env.containsLanguage(CL.lang)) : "Failed contains method";
 		assert CL.lang.equals(env.defaultLanguage()) : "Failed set of default language in environment construction";
 		assert CL.lang.equals(env.focusLanguage().value()) : "Failed set of default language in environment construction";
+		assert CL.lang.defaultEnvironment().equals(env) : "Failed equals method of GraphImmutableEnvironment";
+		GraphImmutableEnvironment env2 = new GraphImmutableEnvironment(CL.lang);
+		assert env2.equals(env) : "Failed equals method of GraphImmutableEnvironment";
 
 		// Direct construction of CLCommentExpression
 		String myCommentSymbol = "blah blah ...";
@@ -81,8 +85,6 @@ public class Main {
 		anotherCommentExpression.language();
 		assert anotherCommentExpression.getSymbol() == myCommentSymbol : "Symbol evalution incorrect.";
 		anotherCommentExpression.getComment();
-		LOG.debug("Checking addition of language: {}",
-				env.containsLanguage(CL.lang));
 		StructuredKnowledgeExpressionLI structuredExpression = new StructuredKnowledgeExpressionLI(
 				env, myCommentExpression, anotherCommentExpression);
 		assert !structuredExpression.isBasic() : "Failed isBasic method on structured expression.";

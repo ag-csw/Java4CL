@@ -24,12 +24,21 @@ public abstract class AbstractKnowledgeResourceLI extends
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,
 			ImmutableEnvironment defaultEnvironment, KRRLanguage defaultLanguage) {
 		// call the most general initializing constructor of the super class
-		super(initialValue.isBasic(), level, defaultSender, defaultReceiver,
-				defaultSystem, defaultDialectType, defaultDialect,
-				defaultEnvironment, defaultLanguage);
-		// TODO check that environment and language of expression are
+		super(defaultSender, defaultReceiver, defaultSystem,
+				defaultDialectType, defaultDialect, defaultEnvironment,
+				defaultLanguage);
+		// TODO check that defaults and the initial value are
 		// compatible. If not, throw a runtime exception.
-		// if (env.contains(initialValue.defaultEnvironment()))
+		// <li>defaultEnvironment.contains(initialValue.defaultEnvironment()))
+		if (!defaultEnvironment.contains(initialValue.defaultEnvironment())) {
+			throw new IllegalArgumentException(
+					"The specified default environment does not contain the default environment of the initial value.");
+		}
+		// <li>defaultEnvironment.contains(initialValue.defaultLanguage()))
+		// <li>if initialValue.defaultLanguage is not equal to defaultLanguage,
+		// then level must be ASSET
+		// <li>if initialValue.defaultDialect is not equal to defaultDialect,
+		// the level must be EXPRESSION or ASSET
 		// set the initial value field
 		this.initialValue = initialValue;
 	}
@@ -55,14 +64,14 @@ public abstract class AbstractKnowledgeResourceLI extends
 	}
 
 	// initializing only constructors for non-LI constructors
-	public AbstractKnowledgeResourceLI(Boolean isBasic,
-			KnowledgeSourceLevel level, KRRLanguage lang) {
-		super(isBasic, level, lang);
+	public AbstractKnowledgeResourceLI(KnowledgeSourceLevel level,
+			KRRLanguage lang) {
+		super(lang);
 	}
 
-	public AbstractKnowledgeResourceLI(Boolean isBasic,
-			KnowledgeSourceLevel level, GraphImmutableEnvironment env) {
-		super(isBasic, level, env);
+	public AbstractKnowledgeResourceLI(KnowledgeSourceLevel level,
+			GraphImmutableEnvironment env) {
+		super(env);
 	}
 
 	// cache for lazy initialization

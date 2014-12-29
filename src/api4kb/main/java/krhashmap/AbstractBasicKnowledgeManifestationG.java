@@ -16,7 +16,7 @@ public abstract class AbstractBasicKnowledgeManifestationG<T> extends
 	// Initializing-only constructor
 	public AbstractBasicKnowledgeManifestationG(
 			AbstractKRRDialectType<T> dialectType) {
-		super(true, KnowledgeSourceLevel.MANIFESTATION, dialectType.language());
+		super(KnowledgeSourceLevel.MANIFESTATION, dialectType.language());
 		LOG.debug("Starting initializing constructor for dialect type: {}",
 				dialectType);
 		this.dialectType = dialectType;
