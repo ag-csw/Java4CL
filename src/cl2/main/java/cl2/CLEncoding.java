@@ -78,10 +78,4 @@ public class CLEncoding<T, S> extends AbstractBasicKnowledgeEncoding<T, S>
 		return null;
 	}
 
-	@Override
-	public Object defaultSender() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

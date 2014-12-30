@@ -3,7 +3,7 @@ package krhashmap;
 import functional.IO;
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeEncodingG;
 import api4kbj.BasicKnowledgeItem;
 import api4kbj.KnowledgeSourceLevel;
 
@@ -35,7 +35,7 @@ public abstract class AbstractBasicKnowledgeItem<T, S, R> extends
 	};
 
 	// lifting method
-	abstract BasicKnowledgeEncoding<T, S> prototype();
+	abstract BasicKnowledgeEncodingG<T, S> prototype();
 
 	// action
 	abstract void write();

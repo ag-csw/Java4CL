@@ -1,16 +1,9 @@
 package api4kbj;
 
-public interface BasicKnowledgeEncoding<T, S> extends KnowledgeEncoding,
+public interface BasicKnowledgeEncoding extends KnowledgeEncoding,
 		BasicKnowledgeResource {
 
-	// getter for wrapped stream
-	// S should be some type of stream
-	S value();
-
-	// getter for encoding system
-	CodecSystem<T, S> codecSystem();
-
-	// getter for dialect type
-	KRRDialectType<T> dialectType();
+	<T, S> BasicKnowledgeEncodingG<T, S> build(KRRDialectType<T> dialectType,
+			CodecSystem<T, S> codecSystem);
 
 }

@@ -9,6 +9,7 @@ import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialect;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.BasicKnowledgeManifestation;
+import api4kbj.KRRDialect;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeManifestation extends
@@ -51,21 +52,8 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	 */
 
 	@Override
-	public AbstractKRRDialect dialect() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> T value() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void clearInitialValue() {
-		// TODO Auto-generated method stub
-
+	public KRRDialect dialect() {
+		return dialect;
 	}
 
 }

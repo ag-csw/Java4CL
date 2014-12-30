@@ -13,7 +13,7 @@ public abstract class AbstractBasicKnowledgeExpression extends
 		AbstractKnowledgeExpression implements BasicKnowledgeExpression {
 
 	// initializing only constructor
-	protected <T> AbstractBasicKnowledgeExpression(AbstractKRRLanguage lang) {
+	protected <T> AbstractBasicKnowledgeExpression(KRRLanguage lang) {
 		super(true, lang);
 		LOG.debug("Starting initializing constructor for language: {}", lang);
 		this.lang = lang;

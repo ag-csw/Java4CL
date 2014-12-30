@@ -1,14 +1,17 @@
 package krhashmap;
 
 import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.AbstractCodecSystem;
+import api4kbj.AbstractKRRDialect;
 import api4kbj.AbstractKRRDialectType;
 import api4kbj.CodecSystem;
 import api4kbj.Configuration;
 import api4kbj.BasicKnowledgeManifestationG;
+import api4kbj.KRRDialect;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeManifestationG<T> extends
@@ -19,6 +22,7 @@ public abstract class AbstractBasicKnowledgeManifestationG<T> extends
 		super(KnowledgeSourceLevel.MANIFESTATION, dialectType.language());
 		LOG.debug("Starting initializing constructor for dialect type: {}",
 				dialectType);
+		this.dialect = dialectType.dialect();
 		this.dialectType = dialectType;
 	}
 
@@ -240,5 +244,11 @@ public abstract class AbstractBasicKnowledgeManifestationG<T> extends
 	// }
 	// return configuration;
 	// }
+	protected final AbstractKRRDialect dialect;
+
+	@Override
+	public KRRDialect dialect() {
+		return dialect;
+	}
 
 }

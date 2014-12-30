@@ -1,6 +1,6 @@
 package krhashmap;
 
-import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeEncodingG;
 import api4kbj.BasicKnowledgeItem;
 import api4kbj.BasicKnowledgeManifestationG;
 import api4kbj.ImmutableEnvironment;
@@ -58,8 +58,8 @@ public abstract class AbstractLifter implements Lifter {
 	}
 
 	@Override
-	public <T, S> KnowledgeAsset conceptualize(BasicKnowledgeEncoding<T, S> kr,
-			ImmutableEnvironment e) {
+	public <T, S> KnowledgeAsset conceptualize(
+			BasicKnowledgeEncodingG<T, S> kr, ImmutableEnvironment e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -84,7 +84,7 @@ public abstract class AbstractLifter implements Lifter {
 	}
 
 	@Override
-	public <T, S> KnowledgeExpression parse(BasicKnowledgeEncoding<T, S> kr) {
+	public <T, S> KnowledgeExpression parse(BasicKnowledgeEncodingG<T, S> kr) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -96,7 +96,7 @@ public abstract class AbstractLifter implements Lifter {
 	}
 
 	@Override
-	public <T, S> KnowledgeManifestation decode(BasicKnowledgeEncoding<T, S> kr) {
+	public <T, S> KnowledgeManifestation decode(BasicKnowledgeEncodingG<T, S> kr) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -110,7 +110,7 @@ public abstract class AbstractLifter implements Lifter {
 
 	@Override
 	public <T, S> BasicKnowledgeManifestationG<T> decodeG(
-			BasicKnowledgeEncoding<T, S> kr) {
+			BasicKnowledgeEncodingG<T, S> kr) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -123,7 +123,7 @@ public abstract class AbstractLifter implements Lifter {
 	}
 
 	@Override
-	public <T, S, R> BasicKnowledgeEncoding<T, S> prototype(
+	public <T, S, R> BasicKnowledgeEncodingG<T, S> prototype(
 			BasicKnowledgeItem<T, S, R> kr) {
 		// TODO Auto-generated method stub
 		return null;

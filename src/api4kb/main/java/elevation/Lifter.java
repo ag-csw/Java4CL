@@ -2,7 +2,7 @@ package elevation;
 
 import api4kbj.KnowledgeManifestation;
 import api4kbj.KnowledgeAsset;
-import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeEncodingG;
 import api4kbj.KnowledgeExpression;
 import api4kbj.BasicKnowledgeItem;
 import api4kbj.BasicKnowledgeManifestationG;
@@ -60,8 +60,8 @@ public interface Lifter {
 	public <T> KnowledgeAsset conceptualize(BasicKnowledgeManifestationG<T> kr,
 			ImmutableEnvironment e);
 
-	public <T, S> KnowledgeAsset conceptualize(BasicKnowledgeEncoding<T, S> kr,
-			ImmutableEnvironment e);
+	public <T, S> KnowledgeAsset conceptualize(
+			BasicKnowledgeEncodingG<T, S> kr, ImmutableEnvironment e);
 
 	public <T, S, R> KnowledgeAsset conceptualize(
 			BasicKnowledgeItem<T, S, R> kr, ImmutableEnvironment e);
@@ -70,22 +70,22 @@ public interface Lifter {
 
 	public <T> KnowledgeExpression parse(BasicKnowledgeManifestationG<T> kr);
 
-	public <T, S> KnowledgeExpression parse(BasicKnowledgeEncoding<T, S> kr);
+	public <T, S> KnowledgeExpression parse(BasicKnowledgeEncodingG<T, S> kr);
 
 	public <T, S, R> KnowledgeExpression parse(BasicKnowledgeItem<T, S, R> kr);
 
-	public <T, S> KnowledgeManifestation decode(BasicKnowledgeEncoding<T, S> kr);
+	public <T, S> KnowledgeManifestation decode(BasicKnowledgeEncodingG<T, S> kr);
 
 	public <T, S, R> KnowledgeManifestation decode(
 			BasicKnowledgeItem<T, S, R> kr);
 
 	public <T, S> BasicKnowledgeManifestationG<T> decodeG(
-			BasicKnowledgeEncoding<T, S> kr);
+			BasicKnowledgeEncodingG<T, S> kr);
 
 	public <T, S, R> BasicKnowledgeManifestationG<T> decodeG(
 			BasicKnowledgeItem<T, S, R> kr);
 
-	public <T, S, R> BasicKnowledgeEncoding<T, S> prototype(
+	public <T, S, R> BasicKnowledgeEncodingG<T, S> prototype(
 			BasicKnowledgeItem<T, S, R> kr);
 
 }

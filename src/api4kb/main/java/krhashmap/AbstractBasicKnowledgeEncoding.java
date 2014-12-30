@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRDialectType;
-import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeEncodingG;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeEncoding<T, S> extends
-		AbstractKnowledgeResourceLI implements BasicKnowledgeEncoding<T, S> {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeEncodingG<T, S> {
 	// Initializing-only constructor
 	public AbstractBasicKnowledgeEncoding(
 			AbstractKRRDialectType<T> dialectType,
