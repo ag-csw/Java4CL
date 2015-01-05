@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +12,7 @@ import api4kbj.KnowledgeSourceLevel;
 import api4kbj.StructuredKnowledgeResource;
 
 public class StructuredKnowledgeExpressionLI extends
-		AbstractKnowledgeExpression implements
+		AbstractKnowledgeExpressionLI implements
 		Decomposable<KnowledgeExpression>, StructuredKnowledgeResource {
 
 	// lazy intialization constructor

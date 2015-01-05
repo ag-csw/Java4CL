@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import functional.IO;
 import api4kbj.BasicKnowledgeItem;
@@ -8,11 +8,11 @@ import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractBasicKnowledgeItem extends
+public abstract class AbstractBasicKnowledgeItemLI extends
 		AbstractKnowledgeResourceLI implements BasicKnowledgeItem {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeItem(KnowledgeResourceTemplate template,
+	public AbstractBasicKnowledgeItemLI(KnowledgeResourceTemplate template,
 			KRRFormat format, Object destination) {
 		super(template, KnowledgeSourceLevel.ITEM);
 		this.format = format;
@@ -21,7 +21,7 @@ public abstract class AbstractBasicKnowledgeItem extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T> AbstractBasicKnowledgeItem(KnowledgeResourceTemplate template,
+	public <T> AbstractBasicKnowledgeItemLI(KnowledgeResourceTemplate template,
 			IO<T> value, KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
@@ -31,7 +31,7 @@ public abstract class AbstractBasicKnowledgeItem extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeItem(BasicKnowledgeResource kr) {
+	public AbstractBasicKnowledgeItemLI(BasicKnowledgeResource kr) {
 		super(kr, KnowledgeSourceLevel.ITEM);
 		LOG.debug(
 				"Starting no-arg lazy initializing construtor with resource: {}",

@@ -1,7 +1,9 @@
-package krhashmap;
+package krhashmap.li.mse;
 
 import java.util.HashSet;
 
+import krhashmap.li.AbstractKnowledgeExpressionLI;
+import krhashmap.li.StructuredKnowledgeAssetLI;
 import api4kbj.EnvironmentConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
@@ -50,7 +52,7 @@ public class StructuredKnowledgeAssetLIMSE extends StructuredKnowledgeAssetLI
 
 	// no-argument lowering method returns the no-argument lowering of each
 	// component
-	public AbstractKnowledgeExpression express() {
+	public AbstractKnowledgeExpressionLI express() {
 		// TODO switch to Set Monad and apply map
 		HashSet<KnowledgeExpression> expressionComponents = new HashSet<KnowledgeExpression>();
 		for (KnowledgeAsset asset : components()) {

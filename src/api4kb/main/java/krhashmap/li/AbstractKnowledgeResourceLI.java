@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import api4kbj.AbstractKnowledgeResource;
 import api4kbj.CodecSystem;
@@ -83,7 +83,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	@Override
 	public abstract void clearInitialValue() throws Exception;
 
-	void unsafeClearInitialValue() {
+	protected void unsafeClearInitialValue() {
 		initialValue = null;
 	}
 

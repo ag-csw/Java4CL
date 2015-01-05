@@ -1,7 +1,9 @@
-package krhashmap;
+package krhashmap.li.mse;
 
 import java.util.HashMap;
 
+import krhashmap.AbstractBasicKnowledgeExpression;
+import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.BasicKnowledgeResource;

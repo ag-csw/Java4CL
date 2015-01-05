@@ -2,7 +2,7 @@ package cl2;
 
 import elevation.Lifter;
 import elevation.Lowerer;
-import krhashmap.AbstractBasicKnowledgeExpressionLIMSE;
+import krhashmap.li.mse.AbstractBasicKnowledgeExpressionLIMSE;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.KRRDialect;
 import api4kbj.KRRLanguage;

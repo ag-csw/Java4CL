@@ -2,6 +2,8 @@ package krhashmap;
 
 import java.util.HashMap;
 
+import krhashmap.li.AbstractKnowledgeEncodingLI;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

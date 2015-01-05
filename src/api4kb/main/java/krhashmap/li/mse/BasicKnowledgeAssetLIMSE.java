@@ -1,7 +1,10 @@
-package krhashmap;
+package krhashmap.li.mse;
 
 import java.util.HashMap;
 
+import krhashmap.AbstractBasicKnowledgeExpression;
+import krhashmap.li.AbstractKnowledgeExpressionLI;
+import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeResource;
 import api4kbj.EnvironmentConfigured;
@@ -20,12 +23,12 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		super(kr, environment);
 		// TODO need switch on level or a more generic cache
 		// because the initialValue might not be an expression
-		mapExpressionSafePut((AbstractKnowledgeExpression) initialValue);
+		mapExpressionSafePut((AbstractKnowledgeExpressionLI) initialValue);
 	}
 
 	protected final HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpression>();
 
-	private void mapExpressionSafePut(AbstractKnowledgeExpression expression) {
+	private void mapExpressionSafePut(AbstractKnowledgeExpressionLI expression) {
 		LOG.debug("Starting expression safeput", expression);
 		if (expression.isBasic()) {
 			LOG.debug("Verified expression is basic.");
@@ -52,7 +55,7 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 				expression, lang);
 	}
 
-	public AbstractKnowledgeExpression express() {
+	public AbstractKnowledgeExpressionLI express() {
 		return express(defaultLanguage());
 	}
 

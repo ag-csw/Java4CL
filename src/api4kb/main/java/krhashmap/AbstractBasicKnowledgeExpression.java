@@ -1,5 +1,6 @@
 package krhashmap;
 
+import krhashmap.li.AbstractKnowledgeExpressionLI;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeResource;
@@ -7,7 +8,7 @@ import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeExpression extends
-		AbstractKnowledgeExpression implements BasicKnowledgeExpression {
+		AbstractKnowledgeExpressionLI implements BasicKnowledgeExpression {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeExpression(KnowledgeResourceTemplate template,

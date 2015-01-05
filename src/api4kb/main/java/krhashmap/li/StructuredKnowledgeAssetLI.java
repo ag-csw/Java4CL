@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import java.util.HashSet;
 
@@ -9,7 +9,7 @@ import api4kbj.StructuredKnowledgeAsset;
 import api4kbj.StructuredKnowledgeExpression;
 import api4kbj.StructuredKnowledgeResource;
 
-public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAsset
+public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		implements StructuredKnowledgeAsset {
 
 	// lazy initializing constructor - lifting

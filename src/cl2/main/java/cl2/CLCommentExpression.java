@@ -1,11 +1,12 @@
 package cl2;
 
-import krhashmap.BasicKnowledgeAssetLI;
-import krhashmap.BasicKnowledgeAssetLIMSE;
+import krhashmap.li.BasicKnowledgeAssetLI;
+import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.KRRDialect;
 import api4kbj.KnowledgeResourceTemplate;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 

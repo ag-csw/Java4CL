@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +31,6 @@ public abstract class AbstractKnowledgeManifestationLI extends
 	}
 
 	// TODO move to LIMSE abstract class
-	protected AbstractKnowledgeExpression expression;
+	protected AbstractKnowledgeExpressionLI expression;
 
 }

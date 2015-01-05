@@ -1,7 +1,9 @@
 import graphenvironment.FocusedGraphImmutableEnvironment;
-import krhashmap.BasicKnowledgeAssetLIMSE;
+import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import api4kbj.CodecSystem;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;

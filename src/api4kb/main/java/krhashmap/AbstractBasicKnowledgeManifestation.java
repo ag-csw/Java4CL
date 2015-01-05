@@ -2,6 +2,7 @@ package krhashmap;
 
 import java.util.HashMap;
 
+import krhashmap.li.AbstractKnowledgeManifestationLI;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeResource;

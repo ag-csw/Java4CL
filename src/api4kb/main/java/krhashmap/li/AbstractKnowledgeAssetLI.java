@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,13 +8,13 @@ import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeResource;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractKnowledgeAsset extends
+public abstract class AbstractKnowledgeAssetLI extends
 		AbstractKnowledgeResourceLI implements KnowledgeAsset {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// lazy initializing constructor - lifting
-	protected AbstractKnowledgeAsset(KnowledgeResource initialValue,
+	protected AbstractKnowledgeAssetLI(KnowledgeResource initialValue,
 			FocusedImmutableEnvironment env) {
 		// call lazy intializing constructor of super class
 		super(initialValue, KnowledgeSourceLevel.ASSET, initialValue

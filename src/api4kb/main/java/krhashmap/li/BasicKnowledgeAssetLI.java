@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import api4kbj.BasicKnowledgeResource;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.FocusedImmutableEnvironment;
 
-public class BasicKnowledgeAssetLI extends AbstractKnowledgeAsset implements
+public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 		BasicKnowledgeAsset {
 
 	protected static final Logger SLOG = LoggerFactory

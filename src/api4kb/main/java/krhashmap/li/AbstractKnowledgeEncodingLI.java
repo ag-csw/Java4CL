@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
