@@ -1,59 +1,80 @@
 package krhashmap;
 
 import java.util.HashSet;
-import graphenvironment.GraphImmutableEnvironment;
-import api4kbj.KRRLanguage;
+
+import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
-import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.StructuredKnowledgeAsset;
+import api4kbj.StructuredKnowledgeExpression;
+import api4kbj.StructuredKnowledgeResource;
 
 public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAsset
 		implements StructuredKnowledgeAsset {
 
-	public StructuredKnowledgeAssetLI(GraphImmutableEnvironment env) {
-		super(env);
+	// lazy initializing constructor - lifting
+	public StructuredKnowledgeAssetLI(StructuredKnowledgeResource initialValue,
+			FocusedImmutableEnvironment env) {
+		super(initialValue, env);
 	}
 
-	public StructuredKnowledgeAssetLI(AbstractKnowledgeExpression expression,
-			GraphImmutableEnvironment env) {
-		super(expression, env);
-		// TODO Auto-generated constructor stub
+	public StructuredKnowledgeAssetLI(KnowledgeResourceTemplate template,
+			FocusedImmutableEnvironment env, KnowledgeAsset... krs) {
+		super(template, env);
+		for (KnowledgeAsset kr : krs) {
+			components.add(kr);
+		}
+		componentsInitialized = true;
+		clearInitialValue();
+
 	}
 
-	private Iterable<KnowledgeAsset> components;
+	private HashSet<KnowledgeAsset> components = new HashSet<KnowledgeAsset>();
+	private Boolean componentsInitialized = false;
+
+	@Override
+	public int numComponents() {
+		if (initialValue != null) {
+			return ((StructuredKnowledgeResource) initialValue).numComponents();
+		}
+		return components.size();
+	}
 
 	@Override
 	public Iterable<KnowledgeAsset> components() {
+		evalComponents();
 		return components;
 	}
 
-	@Override
-	AbstractBasicKnowledgeExpression newExpression(KRRLanguage lang) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static StructuredKnowledgeAssetLI lazyNewInstance(
-			StructuredKnowledgeExpressionLI structuredKnowledgeExpressionLI,
-			GraphImmutableEnvironment environment) {
-		// TODO Auto-generated method stub
-		return null;
+			StructuredKnowledgeResource kr,
+			FocusedImmutableEnvironment environment) {
+		return new StructuredKnowledgeAssetLI(kr, environment);
 	}
 
-	// default lowering method returns the default lowering of each component
-	// independent of the initial value
 	@Override
-	public AbstractKnowledgeExpression express() {
-		// TODO switch to Set Monad and apply map
-		HashSet<KnowledgeExpression> expressionComponents = new HashSet<KnowledgeExpression>();
-		for (KnowledgeAsset asset : components()) {
-			// TODO check if the asset is Self-Lowering
-			// if not, use the standard Lifter
-			expressionComponents
-					.add(((AbstractKnowledgeAsset) asset).express());
+	public void clearInitialValue() {
+		evalComponents();
+		unsafeClearInitialValue();
+	}
+
+	private void evalComponents() {
+		if (!componentsInitialized) {
+			// TODO initialize the components from the initial value
 		}
-		return new StructuredKnowledgeExpressionLI(this.environment,
-				expressionComponents);
+		componentsInitialized = true;
+
+	}
+
+	@Override
+	/**
+	 * Returns the canonical expression of the asset.
+	 * 
+	 * @return the canonical expression of the asset
+	 */
+	public StructuredKnowledgeExpression canonicalExpression() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

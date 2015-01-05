@@ -2,10 +2,8 @@ package api4kbj;
 
 public interface KRRDialect {
 
-	public String name();
+	String name();
 
-	public KRRLanguage language();
-
-	public KRRDialectType<?> defaultDialectType();
+	KRRLanguage language();
 
 }

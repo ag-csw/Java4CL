@@ -2,8 +2,10 @@ package api4kbj;
 
 public interface BasicKnowledgeResource extends KnowledgeResource {
 	@Override
-	default Boolean isBasic() {
+	default boolean isBasic() {
 		return true;
 	}
+
+	boolean isAtomic();
 
 }

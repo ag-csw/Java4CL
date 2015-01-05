@@ -2,19 +2,15 @@ package api4kbj;
 
 import functional.IO;
 
-public interface BasicKnowledgeItem<T, S, R> extends KnowledgeItem,
+public interface BasicKnowledgeItem extends KnowledgeItem,
 		BasicKnowledgeResource {
 
-	// getter for wrapped IO object
-	IO<S> value();
-
 	// getter for destination
-	R destination();
+	Object destination();
 
-	// getter for dialect type
-	KRRDialectType<T> dialectType();
+	// getter for format
+	KRRFormat format();
 
-	// getter for codec system
-	CodecSystem<T, S> codecSystem();
+	<S> IO<S> build(KRRFormatType<S> formatType);
 
 }

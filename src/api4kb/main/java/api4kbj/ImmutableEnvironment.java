@@ -25,7 +25,7 @@ public interface ImmutableEnvironment extends Immutable {
 	 *            a KRR language
 	 * @return true if <tt>lang</tt> is contained in the environment
 	 */
-	Boolean containsLanguage(KRRLanguage lang);
+	boolean containsLanguage(KRRLanguage lang);
 
 	/**
 	 * Return <tt>true</tt> if the environment has a focus. If <tt>true</tt>,
@@ -34,7 +34,7 @@ public interface ImmutableEnvironment extends Immutable {
 	 * 
 	 * @return <tt>true</tt> if the environment has a focus
 	 */
-	Boolean isFocused();
+	boolean isFocused();
 
 	/**
 	 * Return the translation of a knowledge expression <tt>expression</tt> into
@@ -72,6 +72,6 @@ public interface ImmutableEnvironment extends Immutable {
 	 *            an environment
 	 * @return <tt>true</tt> if this environment contains <tt>other</tt>
 	 */
-	Boolean contains(ImmutableEnvironment other);
+	boolean contains(ImmutableEnvironment other);
 
 }

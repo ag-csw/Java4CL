@@ -1,81 +1,34 @@
 package cl2;
 
 import krhashmap.AbstractBasicKnowledgeEncoding;
-import krhashmap.AbstractBasicKnowledgeItem;
-import api4kbj.AbstractCodecSystem;
-import api4kbj.CodecSystem;
-import api4kbj.ImmutableEnvironment;
-import api4kbj.KRRDialect;
-import api4kbj.KRRDialectType;
-import api4kbj.KRRLanguage;
+import api4kbj.KRRFormat;
+import api4kbj.KRRFormatType;
+import api4kbj.KnowledgeResourceTemplate;
 
-public class CLEncoding<T, S> extends AbstractBasicKnowledgeEncoding<T, S>
+public abstract class CLEncoding extends AbstractBasicKnowledgeEncoding
 		implements CLKnowledgeResource {
 
-	public CLEncoding(S stream, CLDialectType<T> dialect,
-			AbstractCodecSystem<T, S> system) {
-		super(stream, dialect, system);
+	CLEncoding(KnowledgeResourceTemplate template, KRRFormat format) {
+		super(template, format);
+		LOG.debug("Starting base nonlazy constructor for template: {}",
+				template);
 	}
 
-	public CLEncoding(CLManifestationG<T> manifestation,
-			AbstractCodecSystem<T, S> system) {
-		super(manifestation, system);
-	}
-
-	// static factory methods
-	public static <T, S> CLEncoding<T, S> lazyNewInstance(
-			CLManifestationG<T> manifestation, AbstractCodecSystem<T, S> system) {
-		return new CLEncoding<T, S>(manifestation, system);
+	// Wrapper-based constructor
+	public <T> CLEncoding(KnowledgeResourceTemplate template, T value,
+			KRRFormatType<T> formatType) {
+		super(template, value, formatType);
+		LOG.debug("Starting wrapper constructor for value: {}", value);
 	}
 
 	@Override
-	public <R> AbstractBasicKnowledgeItem<T, S, R> reproduce(R destination) {
-		// TODO implement eager lowering to item
-		// Case 1. from encoding
-		// Case 2. from manifestation
-		// Case 3. from expression
-		return null;
-	}
-
-	@Override
-	public CLManifestationG<T> decode() {
-		return (CLManifestationG<T>) super.decode();
-	}
-
-	@Override
-	public ImmutableEnvironment defaultEnvironment() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public KRRLanguage defaultLanguage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public KRRDialect defaultDialect() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public KRRDialectType<?> defaultDialectType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CodecSystem<?, ?> defaultCodecSystem() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object defaultReceiver() {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> T build(KRRFormatType<T> formatType) {
+		if (mapValue.containsKey(formatType)) {
+			return (T) mapValue.get(formatType);
+		}
+		// TODO implement conversion between dialectTypes
+		throw new IllegalArgumentException(
+				"Conversion between dialect types is not yet supported.");
 	}
 
 }

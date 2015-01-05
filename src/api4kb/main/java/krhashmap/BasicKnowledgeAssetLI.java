@@ -1,63 +1,50 @@
 package krhashmap;
 
-import graphenvironment.GraphImmutableEnvironment;
-import api4kbj.KnowledgeResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import api4kbj.BasicKnowledgeExpression;
+import api4kbj.BasicKnowledgeResource;
 import api4kbj.BasicKnowledgeAsset;
-import api4kbj.KRRLanguage;
+import api4kbj.FocusedImmutableEnvironment;
 
 public class BasicKnowledgeAssetLI extends AbstractKnowledgeAsset implements
 		BasicKnowledgeAsset {
 
-	// private lazy initializing constructor
-	private BasicKnowledgeAssetLI(KnowledgeResource initialValue,
-			GraphImmutableEnvironment env) {
+	protected static final Logger SLOG = LoggerFactory
+			.getLogger(BasicKnowledgeAssetLI.class);
+
+	// private lazy lifting constructor
+	protected BasicKnowledgeAssetLI(BasicKnowledgeResource initialValue,
+			FocusedImmutableEnvironment env) {
 		super(initialValue, env);
 	}
 
 	// lazy lifting static factory method
 	public static BasicKnowledgeAssetLI lazyNewInstance(
-			KnowledgeResource initialValue, GraphImmutableEnvironment env) {
+			BasicKnowledgeResource initialValue, FocusedImmutableEnvironment env) {
+		SLOG.debug("");
 		return new BasicKnowledgeAssetLI(initialValue, env);
 	}
 
+	// TODO this method is required, but it is not possible
+	// to clear the initial value for an ASSET unless another
+	// cache is implemented (see BasicKnowledgeAssetLISME
 	@Override
-	AbstractBasicKnowledgeExpression newExpression(KRRLanguage lang) {
-		// TODO check the initial value first
-		AbstractBasicKnowledgeExpression expression = super.mapExpression
-				.values().iterator().next();
-		return (AbstractBasicKnowledgeExpression) environment().translate(
-				expression, lang);
+	public void clearInitialValue() throws UnsupportedOperationException {
+		throw new UnsupportedOperationException(
+				"The initial value cache of a BasicKnowledgeAssetLI cannot be cleared.");
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof BasicKnowledgeAsset)) {
-			return false;
-		}
-		final BasicKnowledgeAsset other = (BasicKnowledgeAsset) obj;
-		if (!other.defaultCodecSystem().equals(this.defaultCodecSystem())
-				|| !other.defaultDialect().equals(this.defaultDialect())
-				|| !other.defaultDialectType()
-						.equals(this.defaultDialectType())
-				|| !other.defaultEnvironment()
-						.equals(this.defaultEnvironment())
-				|| !other.defaultLanguage().equals(this.defaultLanguage())
-				|| !other.defaultReceiver().equals(this.defaultReceiver())
-				|| !other.defaultSender().equals(this.defaultSender())
-				|| !other.environment().equals(this.environment())) {
-			return false;
-		}
-		// TODO implement evaluation against equivalence relation
-		return true;
-	}
-
-	@Override
-	public AbstractKnowledgeExpression express() {
+	public BasicKnowledgeExpression canonicalExpression() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isAtomic() {
+		return true;
 	}
 
 }

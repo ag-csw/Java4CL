@@ -1,73 +1,56 @@
 package krhashmap;
 
 import functional.IO;
-import api4kbj.AbstractCodecSystem;
-import api4kbj.AbstractKRRDialectType;
-import api4kbj.BasicKnowledgeEncodingG;
 import api4kbj.BasicKnowledgeItem;
+import api4kbj.BasicKnowledgeResource;
+import api4kbj.KRRFormat;
+import api4kbj.KRRFormatType;
+import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractBasicKnowledgeItem<T, S, R> extends
-		AbstractKnowledgeResourceLI implements BasicKnowledgeItem<T, S, R> {
+public abstract class AbstractBasicKnowledgeItem extends
+		AbstractKnowledgeResourceLI implements BasicKnowledgeItem {
 
-	private AbstractBasicKnowledgeItem(AbstractKRRDialectType<T> dialectType,
-			IO<S> value, AbstractCodecSystem<T, S> system) {
-		super(KnowledgeSourceLevel.ITEM, dialectType.language());
-		this.dialectType = dialectType;
-		this.value = value;
-		this.system = system;
+	// base non-lazy constructor
+	public AbstractBasicKnowledgeItem(KnowledgeResourceTemplate template,
+			KRRFormat format, Object destination) {
+		super(template, KnowledgeSourceLevel.ITEM);
+		this.format = format;
+		this.destination = destination;
 	}
 
-	private AbstractKRRDialectType<T> dialectType;
-	private IO<S> value;
-	private AbstractBasicKnowledgeEncoding<T, S> encoding;
-	private R destination;
-	private AbstractCodecSystem<T, S> system;
-
-	@Override
-	public KnowledgeSourceLevel level() {
-		return level;
+	// Wrapper-based constructor
+	// TODO move to Abstract class that is above LI
+	public <T> AbstractBasicKnowledgeItem(KnowledgeResourceTemplate template,
+			IO<T> value, KRRFormatType<T> formatType) {
+		// TODO add a validation flag to indicate that
+		// value should be checked for validity relative to dialect
+		this(template, formatType.format(), value.destination());
 	}
 
-	@Override
-	public AbstractCodecSystem<T, S> codecSystem() {
-		return system;
-	};
-
-	// lifting method
-	abstract BasicKnowledgeEncodingG<T, S> prototype();
-
-	// action
-	abstract void write();
-
-	// action
-	abstract S read();
-
-	public abstract void clear();
-
-	@Override
-	public IO<S> value() {
-		return value;
+	// No-parameter Lazy initializing constructor
+	// If kr is an asset or expression, then its default dialect becomes the
+	// target language
+	public AbstractBasicKnowledgeItem(BasicKnowledgeResource kr) {
+		super(kr, KnowledgeSourceLevel.ITEM);
+		LOG.debug(
+				"Starting no-arg lazy initializing construtor with resource: {}",
+				kr);
+		this.format = kr.defaultFormat();
+		this.destination = kr.defaultReceiver();
 	}
 
+	protected KRRFormat format;
+	private final Object destination;
+
 	@Override
-	public R destination() {
+	public Object destination() {
 		return destination;
 	}
 
 	@Override
-	public AbstractKRRDialectType<T> dialectType() {
-		return dialectType;
-	}
-
-	// verify that some other equivalent property has been set
-	// before forgetting initial value, to avoid leaving object
-	// in inconsistent "state".
-	@Override
-	public void clearInitialValue() {
-		if ((value != null) | (encoding != null)) {
-			super.unsafeClearInitialValue();
-		}
+	public KRRFormat format() {
+		return format;
 	}
 
 }

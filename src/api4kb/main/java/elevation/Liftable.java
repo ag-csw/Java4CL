@@ -1,5 +1,5 @@
 package elevation;
 
-public interface Liftable {
+public interface Liftable extends Elevatable {
 
 }

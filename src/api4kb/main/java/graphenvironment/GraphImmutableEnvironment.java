@@ -108,12 +108,12 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	}
 
 	@Override
-	public Boolean containsLanguage(KRRLanguage lang) {
+	public boolean containsLanguage(KRRLanguage lang) {
 		return languages.contains(lang);
 	}
 
 	@Override
-	public Boolean isFocused() {
+	public boolean isFocused() {
 		return !focusLanguage.isEmpty();
 	}
 
@@ -164,7 +164,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 	}
 
 	@Override
-	public Boolean contains(ImmutableEnvironment env) {
+	public boolean contains(ImmutableEnvironment env) {
 		if (env == null) {
 			return false;
 		}
@@ -175,74 +175,6 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 			return false;
 		}
 		// TODO implement check of mappings in case of non-focused
-		return true;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((defaultLanguage == null) ? 0 : defaultLanguage.hashCode());
-		result = prime * result
-				+ ((focusLanguage == null) ? 0 : focusLanguage.hashCode());
-		result = prime * result
-				+ ((languages == null) ? 0 : languages.hashCode());
-		result = prime * result
-				+ ((translations == null) ? 0 : translations.hashCode());
-		return result;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof GraphImmutableEnvironment)) {
-			return false;
-		}
-		GraphImmutableEnvironment other = (GraphImmutableEnvironment) obj;
-		if (defaultLanguage == null) {
-			if (other.defaultLanguage != null) {
-				return false;
-			}
-		} else if (!defaultLanguage.equals(other.defaultLanguage)) {
-			return false;
-		}
-		if (focusLanguage == null) {
-			if (other.focusLanguage != null) {
-				return false;
-			}
-		} else if (!focusLanguage.equals(other.focusLanguage)) {
-			return false;
-		}
-		if (languages == null) {
-			if (other.languages != null) {
-				return false;
-			}
-		} else if (!languages.equals(other.languages)) {
-			return false;
-		}
-		if (translations == null) {
-			if (other.translations != null) {
-				return false;
-			}
-		} else if (!translations.equals(other.translations)) {
-			return false;
-		}
 		return true;
 	}
 

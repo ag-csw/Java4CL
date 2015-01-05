@@ -1,7 +1,5 @@
 package api4kbj;
 
-import java.util.Set;
-
 import elevation.Liftable;
 import functional.IO;
 
@@ -14,9 +12,9 @@ public interface KnowledgeItem extends KnowledgeResource, Liftable {
 	}
 
 	// getter for wrapped IO objects
-	Set<IO<?>> values();
+	Iterable<IO<?>> values();
 
 	// getter for destinations
-	Set<?> destinations();
+	Iterable<?> destinations();
 
 }

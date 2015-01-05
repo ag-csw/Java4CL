@@ -1,13 +1,13 @@
 package krhashmap;
 
-import graphenvironment.GraphImmutableEnvironment;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import api4kbj.Decomposable;
+import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 import api4kbj.StructuredKnowledgeResource;
 
@@ -15,22 +15,24 @@ public class StructuredKnowledgeExpressionLI extends
 		AbstractKnowledgeExpression implements
 		Decomposable<KnowledgeExpression>, StructuredKnowledgeResource {
 
+	// lazy intialization constructor
 	public StructuredKnowledgeExpressionLI(
 			AbstractKnowledgeResourceLI initialValue) {
 		super(initialValue);
 	}
 
-	public StructuredKnowledgeExpressionLI(GraphImmutableEnvironment env,
+	// component-based structure constructor
+	public StructuredKnowledgeExpressionLI(KnowledgeResourceTemplate template,
 			KnowledgeExpression... components) {
-		super(false, env);
+		super(template);
 		for (KnowledgeExpression component : components) {
 			this.components.add(component);
 		}
 	}
 
-	public StructuredKnowledgeExpressionLI(GraphImmutableEnvironment env,
+	public StructuredKnowledgeExpressionLI(KnowledgeResourceTemplate template,
 			HashSet<KnowledgeExpression> components) {
-		super(false, env);
+		super(template);
 		this.components.addAll(components);
 	}
 
@@ -43,7 +45,7 @@ public class StructuredKnowledgeExpressionLI extends
 	}
 
 	public StructuredKnowledgeAssetLI conceptualize(
-			GraphImmutableEnvironment environment) {
+			FocusedImmutableEnvironment environment) {
 		LOG.debug("Starting conceptualization relative to environment : {}",
 				environment);
 		if (!environment.containsLanguages(langs)) {
@@ -62,20 +64,13 @@ public class StructuredKnowledgeExpressionLI extends
 				return asset;
 			}
 		}
-		if (mapAsset.containsKey(environment)) {
-			LOG.debug("Found cached asset in this environment");
-			StructuredKnowledgeAssetLI asset = (StructuredKnowledgeAssetLI) mapAsset
-					.get(environment);
-			LOG.debug("Using cached asset: {}", asset);
-			return asset;
-		}
 		LOG.debug("Found no cached asset for: {}", environment);
 		// Last resort: create a new asset
 		return newAsset(environment);
 	}
 
 	protected StructuredKnowledgeAssetLI newAsset(
-			GraphImmutableEnvironment environment) {
+			FocusedImmutableEnvironment environment) {
 		return StructuredKnowledgeAssetLI.lazyNewInstance(this, environment);
 
 	}
@@ -85,6 +80,12 @@ public class StructuredKnowledgeExpressionLI extends
 		// TODO implement this
 		throw new Exception(
 				"Clearing the lazy initialization cache is not supported yet.");
+	}
+
+	@Override
+	public int numComponents() {
+		// TODO Auto-generated method stub
+		return components.size();
 	}
 
 }

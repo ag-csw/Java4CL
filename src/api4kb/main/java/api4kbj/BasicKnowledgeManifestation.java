@@ -6,6 +6,6 @@ public interface BasicKnowledgeManifestation extends KnowledgeManifestation,
 	// getter for dialect
 	KRRDialect dialect();
 
-	<T> BasicKnowledgeManifestationG<T> build(KRRDialectType<T> dialectType);
+	<T> T build(KRRDialectType<T> dialectType);
 
 }

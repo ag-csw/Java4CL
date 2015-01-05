@@ -1,8 +1,8 @@
 package cl2;
 
-import graphenvironment.GraphImmutableEnvironment;
-import graphenvironment.GraphImmutableEnvironment.Builder;
-
+import elevation.Lifter;
+import elevation.Lowerer;
+import graphenvironment.FocusedGraphImmutableEnvironment;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -23,13 +23,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import api4kbj.API4KB;
 import api4kbj.AbstractCodecSystem;
-import api4kbj.AbstractKRRDialect;
-import api4kbj.AbstractKRRDialectType;
 import api4kbj.AbstractKRRLanguage;
-import api4kbj.CodecSystem;
-import api4kbj.ImmutableEnvironment;
 
 public final class CL {
 
@@ -41,42 +36,16 @@ public final class CL {
 	// instantiate anonymous subclass of AbstractKRRLanguage
 	public static AbstractKRRLanguage lang = new AbstractKRRLanguage(
 			"Common Logic") {
-
-		@Override
-		public AbstractKRRDialectType<Element> defaultDialectType() {
-			return xcl2dom;
-		}
-
-		@Override
-		public AbstractKRRDialect defaultDialect() {
-			return xcl2;
-		}
-
-		@Override
-		public ImmutableEnvironment defaultEnvironment() {
-			if (defaultEnvironment == null) {
-				Builder builder = new GraphImmutableEnvironment.Builder();
-				builder.addLanguages(this);
-				builder.addFocusLanguage(this);
-				builder.setDefaultLanguage(this);
-				defaultEnvironment = builder.build();
-			}
-			return defaultEnvironment;
-		}
-
-		@Override
-		public CodecSystem<?, ?> defaultSystem() {
-			return API4KB.CodecSystemXMLUTF8;
-		}
-
 	};
 
-	public static CLDialect xcl2 = new CLDialect("XCL2") {
-		@Override
-		public CLDialectType<Element> defaultDialectType() {
-			return xcl2dom;
-		}
+	public static FocusedGraphImmutableEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableEnvironment(
+			CL.lang);
 
+	// TODO Capitalize constants
+	public static CLDialect xcl2 = new CLDialect("XCL2") {
+	};
+
+	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", xcl2) {
 	};
 
 	public static final Namespace NS_XCL2 = Namespace
@@ -140,5 +109,15 @@ public final class CL {
 	public static CLDialectType<Element> xcl2dom = new CLDialectType<Element>(
 			"XCL2-dom4j", xcl2, Element.class, domUTF8bytearray) {
 	};
+
+	public static Lifter lifter() {
+		return null;
+
+	}
+
+	public static Lowerer lowerer() {
+		return null;
+
+	}
 
 }

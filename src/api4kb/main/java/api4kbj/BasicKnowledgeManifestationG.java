@@ -7,7 +7,9 @@ public interface BasicKnowledgeManifestationG<T> extends
 	T value();
 
 	// getter for dialect
-	KRRDialect dialect();
+	default KRRDialect dialect() {
+		return dialectType().dialect();
+	}
 
 	// getter for dialect type
 	KRRDialectType<T> dialectType();

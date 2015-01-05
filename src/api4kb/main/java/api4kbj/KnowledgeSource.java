@@ -6,6 +6,6 @@ package api4kbj;
  * @author taraathan
  *
  */
-public interface KnowledgeSource {
+public interface KnowledgeSource extends EnvironmentConfigured {
 
 }

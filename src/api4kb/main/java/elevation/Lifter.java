@@ -1,91 +1,119 @@
 package elevation;
 
-import api4kbj.KnowledgeManifestation;
-import api4kbj.KnowledgeAsset;
-import api4kbj.BasicKnowledgeEncodingG;
-import api4kbj.KnowledgeExpression;
+import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeItem;
-import api4kbj.BasicKnowledgeManifestationG;
-import api4kbj.ImmutableEnvironment;
-import api4kbj.KnowledgeResource;
+import api4kbj.BasicKnowledgeManifestation;
+import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.KnowledgeAsset;
+import api4kbj.KnowledgeEncoding;
+import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeItem;
+import api4kbj.KnowledgeManifestation;
 import api4kbj.KnowledgeSourceLevel;
+import api4kbj.StructuredKnowledgeEncoding;
+import api4kbj.StructuredKnowledgeExpression;
+import api4kbj.StructuredKnowledgeItem;
+import api4kbj.StructuredKnowledgeManifestation;
 
 public interface Lifter {
 
-	public default KnowledgeResource lift(KnowledgeResource kr,
-			ImmutableEnvironment e, KnowledgeSourceLevel level) {
+	default Lowerable lift(Liftable kr, FocusedImmutableEnvironment e,
+			KnowledgeSourceLevel level) {
 		switch (level) {
 		case ASSET:
-			return conceptualize(kr, e);
+			return conceptualizer(kr, e);
 		case EXPRESSION:
-			return parse(kr);
-			// case MANIFESTATION:
-			// return decode(kr);
-			// case ENCODING:
-			// return prototype(kr);
+			return parser(kr);
+		case MANIFESTATION:
+			return decoder(kr);
+		case ENCODING:
+			return prototyper(kr);
 		default:
-			break;
+			throw new IllegalArgumentException("Cannot lift to the ITEM level.");
 		}
-		return null;
 	}
 
-	public default KnowledgeAsset conceptualize(KnowledgeResource kr,
-			ImmutableEnvironment e) {
+	default KnowledgeAsset conceptualizer(Liftable kr,
+			FocusedImmutableEnvironment e) {
 		switch (kr.level()) {
 		case ASSET:
-			return (KnowledgeAsset) kr;
+			// TODO message
+			throw new IllegalArgumentException("");
 		default:
-			return conceptualize(kr, e);
+			return conceptualize(parser(kr), e);
 		}
 	}
 
-	public default KnowledgeExpression parse(KnowledgeResource kr) {
+	default KnowledgeExpression parser(Liftable kr) {
 		switch (kr.level()) {
 		case ASSET:
 			throw new IllegalArgumentException(
 					"The input of type asset cannot be parsed to obtain a KnowledgeExpression, it must be expressed.");
 		case EXPRESSION:
+			// TODO compare language and construct or throw as needed
 			return (KnowledgeExpression) kr;
 		default:
-			return parse(kr);
+			return parse(decoder(kr));
 		}
 	}
 
-	public KnowledgeAsset conceptualize(KnowledgeExpression kr,
-			ImmutableEnvironment e);
+	// TODO add default implementation
+	KnowledgeManifestation decoder(Liftable kr);
 
-	public KnowledgeAsset conceptualize(KnowledgeManifestation kr,
-			ImmutableEnvironment e);
+	// TODO add default implementation
+	KnowledgeEncoding prototyper(Liftable kr);
 
-	public <T> KnowledgeAsset conceptualize(BasicKnowledgeManifestationG<T> kr,
-			ImmutableEnvironment e);
+	default KnowledgeAsset conceptualize(KnowledgeExpression kr,
+			FocusedImmutableEnvironment e) {
+		if (!kr.isBasic()) {
+			return structuredConceptualize((StructuredKnowledgeExpression) kr,
+					e);
+		}
+		return basicConceptualize((BasicKnowledgeExpression) kr, e);
 
-	public <T, S> KnowledgeAsset conceptualize(
-			BasicKnowledgeEncodingG<T, S> kr, ImmutableEnvironment e);
+	}
 
-	public <T, S, R> KnowledgeAsset conceptualize(
-			BasicKnowledgeItem<T, S, R> kr, ImmutableEnvironment e);
+	default KnowledgeExpression parse(KnowledgeManifestation kr) {
+		if (!kr.isBasic()) {
+			return structuredParse((StructuredKnowledgeManifestation) kr);
+		}
+		return basicParse((BasicKnowledgeManifestation) kr);
 
-	public KnowledgeExpression parse(KnowledgeManifestation kr);
+	}
 
-	public <T> KnowledgeExpression parse(BasicKnowledgeManifestationG<T> kr);
+	default KnowledgeManifestation decode(KnowledgeEncoding kr) {
+		if (!kr.isBasic()) {
+			return structuredDecode((StructuredKnowledgeEncoding) kr);
+		}
+		return basicDecode((BasicKnowledgeEncoding) kr);
 
-	public <T, S> KnowledgeExpression parse(BasicKnowledgeEncodingG<T, S> kr);
+	}
 
-	public <T, S, R> KnowledgeExpression parse(BasicKnowledgeItem<T, S, R> kr);
+	default KnowledgeEncoding prototype(KnowledgeItem kr) {
+		if (!kr.isBasic()) {
+			return structuredPrototype((StructuredKnowledgeItem) kr);
+		}
+		return basicPrototype((BasicKnowledgeItem) kr);
 
-	public <T, S> KnowledgeManifestation decode(BasicKnowledgeEncodingG<T, S> kr);
+	}
 
-	public <T, S, R> KnowledgeManifestation decode(
-			BasicKnowledgeItem<T, S, R> kr);
+	KnowledgeAsset structuredConceptualize(StructuredKnowledgeExpression kr,
+			FocusedImmutableEnvironment e);
 
-	public <T, S> BasicKnowledgeManifestationG<T> decodeG(
-			BasicKnowledgeEncodingG<T, S> kr);
+	KnowledgeAsset basicConceptualize(BasicKnowledgeExpression kr,
+			FocusedImmutableEnvironment e);
 
-	public <T, S, R> BasicKnowledgeManifestationG<T> decodeG(
-			BasicKnowledgeItem<T, S, R> kr);
+	KnowledgeExpression structuredParse(StructuredKnowledgeManifestation kr);
 
-	public <T, S, R> BasicKnowledgeEncodingG<T, S> prototype(
-			BasicKnowledgeItem<T, S, R> kr);
+	KnowledgeExpression basicParse(BasicKnowledgeManifestation kr);
+
+	KnowledgeManifestation structuredDecode(StructuredKnowledgeEncoding kr);
+
+	KnowledgeManifestation basicDecode(BasicKnowledgeEncoding kr);
+
+	KnowledgeEncoding basicPrototype(BasicKnowledgeItem kr);
+
+	KnowledgeEncoding structuredPrototype(StructuredKnowledgeItem kr);
 
 }

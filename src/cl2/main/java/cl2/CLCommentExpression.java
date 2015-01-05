@@ -1,36 +1,35 @@
 package cl2;
 
-import krhashmap.AbstractBasicKnowledgeManifestationG;
 import krhashmap.BasicKnowledgeAssetLI;
-import api4kbj.AbstractKRRDialectType;
-import api4kbj.AbstractKRRLanguage;
-import org.dom4j.dom.DOMElement;
-import org.dom4j.dom.DOMText;
+import krhashmap.BasicKnowledgeAssetLIMSE;
+import api4kbj.BasicKnowledgeAsset;
+import api4kbj.BasicKnowledgeManifestation;
+import api4kbj.KRRDialect;
+import api4kbj.KnowledgeResourceTemplate;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import functional.None;
 import functional.Option;
-import functional.Some;
-import graphenvironment.GraphImmutableEnvironment;
 
 public class CLCommentExpression extends CLExpression implements CLComment {
 
 	// Private Constructors
 	// Component-based constructor
-	private CLCommentExpression(String symbol,
-			Option<CLCommentExpression> comment) {
-		super(CL.lang);
+	private CLCommentExpression(KnowledgeResourceTemplate template,
+			String symbol, Option<CLCommentExpression> comment) {
+		super(template, CL.lang);
 		this.symbol = symbol;
 		this.comment = comment;
 	}
 
 	// Lazy lowering constructor
-	private <T> CLCommentExpression(BasicKnowledgeAssetLI asset) {
+	private <T> CLCommentExpression(BasicKnowledgeAsset asset) {
 		super(asset, CL.lang);
 	}
 
 	// Lazy lifting constructor
-	private <T> CLCommentExpression(CLCommentManifestationG<T> manifestation) {
+	private CLCommentExpression(CLManifestation manifestation) {
 		super(manifestation);
 	}
 
@@ -39,19 +38,23 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	private Option<CLCommentExpression> comment;
 
 	// Static Factory Methods
-	public static CLCommentExpression eagerNewInstance(String symbol,
+	public static CLCommentExpression eagerNewInstance(
+			KnowledgeResourceTemplate template, String symbol,
 			Option<CLCommentExpression> comment) {
 		// TODO do we want a static logger for this concrete class
 		SLOG.debug("Starting eagerNewInstance");
-		return new CLCommentExpression(symbol, comment);
+		return new CLCommentExpression(template, symbol, comment);
 	}
 
-	public static CLCommentExpression eagerNewInstance(String symbol) {
-		return eagerNewInstance(symbol, new None<CLCommentExpression>());
+	public static CLCommentExpression eagerNewInstance(
+			KnowledgeResourceTemplate template, String symbol) {
+		return eagerNewInstance(template, symbol,
+				new None<CLCommentExpression>());
 	}
 
-	public static CLCommentExpression eagerNewInstance() {
-		return eagerNewInstance("");
+	public static CLCommentExpression eagerNewInstance(
+			KnowledgeResourceTemplate template) {
+		return eagerNewInstance(template, "");
 	}
 
 	// lazy lowering
@@ -62,7 +65,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 
 	// lazy lifting
 	public static <T> CLCommentExpression lazyNewInstance(
-			CLCommentManifestationG<T> manifestation) {
+			CLManifestation manifestation) {
 		return new CLCommentExpression(manifestation) {
 		};
 	}
@@ -84,13 +87,28 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!mapManifest.isEmpty()) {
-			return ((CLCommentManifestationG<?>) mapManifest.values()
-					.iterator().next()).getSymbol();
+			BasicKnowledgeManifestation manifest = mapManifest.values()
+					.iterator().next();
+			// TODO extract symbol from manifest by building the DOM element
+			Element value = manifest.build(CL.xcl2dom);
+			NodeList symbolList = value.getElementsByTagName("symbol");
+			NodeList symbolContent;
+			if (symbolList.getLength() > 0) {
+				Element symbol = (Element) value.getElementsByTagName("symbol")
+						.item(0);
+				symbolContent = symbol.getChildNodes();
+			} else {
+				symbolContent = value.getChildNodes();
+			}
+			// TODO implement proper output
+			String symbolValue = symbolContent.toString();
+
+			return symbolValue;
 		}
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			BasicKnowledgeAssetLI asset = (BasicKnowledgeAssetLI) mapAsset
+			BasicKnowledgeAssetLIMSE asset = (BasicKnowledgeAssetLIMSE) mapAsset
 					.values().iterator().next();
 			return ((CLCommentExpression) asset.express(CL.lang)).getSymbol();
 		}
@@ -112,109 +130,32 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!(mapManifest.isEmpty())) {
-			CLCommentManifestationG<?> manifest = (CLCommentManifestationG<?>) mapManifest
-					.values().iterator().next();
+			BasicKnowledgeManifestation manifest = mapManifest.values()
+					.iterator().next();
 			LOG.debug("manifest: {}", manifest);
-			Option<?> maybeComment = manifest.getComment();
-			LOG.debug("maybeComment: {}", maybeComment);
-			if (maybeComment.isEmpty()) {
+			// TODO move this to a helper function in xcl2.dom package
+			Element value = manifest.build(CL.xcl2dom);
+			NodeList commentList = value.getElementsByTagName("Comment");
+			if (commentList.getLength() == 0) {
 				return new None<CLCommentExpression>();
 			} else {
-				// TODO cleanup - use FJ Option and map over parse()
-				@SuppressWarnings("unchecked")
-				CLCommentManifestationG<?> commentM = ((Some<CLCommentManifestationG<?>>) maybeComment)
-						.value();
-				CLCommentExpression commentE = (CLCommentExpression) commentM
-						.parse();
-				return new Some<CLCommentExpression>(commentE);
+				// TODO implement with lazy initialization
+				return null;
 			}
 		}
 		// B. if A fails, check the asset cache and apply a language
 		// translation from the environment
 		else {
-			BasicKnowledgeAssetLI asset = (BasicKnowledgeAssetLI) mapAsset
+			BasicKnowledgeAssetLIMSE asset = (BasicKnowledgeAssetLIMSE) mapAsset
 					.values().iterator().next();
 			return ((CLCommentExpression) asset.express(CL.lang)).getComment();
 		}
 	}
 
 	@Override
-	public CLCommentManifestationG<Element> manifest() {
-		LOG.debug("Starting default manifest of expression");
-		return (CLCommentManifestationG<Element>) manifest(CL.lang
-				.defaultDialectType());
-	}
-
-	@Override
-	public <T> CLCommentManifestationG<T> manifest(
-			AbstractKRRDialectType<T> dialectType) {
-		AbstractBasicKnowledgeManifestationG<T> manifestation = super
-				.manifest(dialectType);
-		LOG.debug("Starting manifest of expression");
-		if (manifestation instanceof CLCommentManifestationG<?>) {
-			return (CLCommentManifestationG<T>) manifestation;
-		}
-		// last resort create a new manifestation with lazy lowering
-		// this means discarding the manifestation created in the superclass
-		return CLCommentManifestationG.lazyNewInstance(this,
-				(CLDialectType<T>) dialectType);
-	}
-
-	// TODO this needs to be implemented through other methods
-	protected <T> CLCommentManifestationG<T> evalManifest(
-			AbstractKRRDialectType<T> dialect) {
-		if (dialect.language() != CL.lang) {
-			throw new IllegalArgumentException(
-					"Requested dialect is not a CL dialect");
-		}
-		if (dialect != CL.xcl2dom) {
-			// TODO implement other CL dialects
-			throw new IllegalArgumentException(
-					"This CL dialect is not yet supported.");
-		}
-		// TODO this really belongs in the XCL2 package
-		LOG.debug("Symbol cache: {}", symbol);
-		LOG.debug("comment cache: {}", comment);
-		if ((symbol != null) && (comment != null)) {
-			DOMElement element = new DOMElement("Comment", CL.NS_XCL2);
-			if (!(comment.isEmpty())) {
-				element.appendChild(((Some<CLCommentExpression>) comment)
-						.value().manifest(CL.xcl2dom).value());
-				DOMElement symbolElement = new DOMElement("symbol", CL.NS_XCL2);
-				symbolElement.add(new DOMText(symbol));
-				element.appendChild(symbolElement);
-			} else {
-				element.add(new DOMText(symbol));
-			}
-			// If this point is reached, then T is Element, and the factory
-			// method will produce a result of the correct type already
-			// so the case is only necessary for the compiler.
-			@SuppressWarnings("unchecked")
-			CLCommentManifestationG<T> manifestation = (CLCommentManifestationG<T>) CLCommentManifestationG
-					.getNewWrapperInstance(element, CL.xcl2dom);
-			return manifestation;
-		} else {
-			assert false : "Call to evalManifest when uninitialized.";
-		}
-		assert false : "Should throw or return before reaching here";
-		return null;
-	}
-
-	@Override
-	public BasicKnowledgeAssetLI conceptualize(GraphImmutableEnvironment e) {
-		return super.conceptualize(e);
-	}
-
-	@Override
-	protected <T> AbstractBasicKnowledgeManifestationG<T> newManifestation(
-			AbstractKRRDialectType<T> dialectType) {
+	protected BasicKnowledgeManifestation newManifestation(KRRDialect dialect) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public AbstractKRRLanguage language() {
-		return super.language();
 	}
 
 }
