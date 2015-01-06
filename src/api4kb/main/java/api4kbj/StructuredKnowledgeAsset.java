@@ -1,7 +1,9 @@
 package api4kbj;
 
+import krconfigured.StructuredKnowledgeResourceConfigured;
+
 public interface StructuredKnowledgeAsset extends KnowledgeAsset,
-		StructuredKnowledgeResource, Decomposable<KnowledgeAsset> {
+		StructuredKnowledgeResourceConfigured, Decomposable<KnowledgeAsset> {
 
 	@Override
 	StructuredKnowledgeExpression canonicalExpression();

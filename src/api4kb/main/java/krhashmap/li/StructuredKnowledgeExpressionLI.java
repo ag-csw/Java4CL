@@ -3,17 +3,17 @@ package krhashmap.li;
 import java.util.HashSet;
 import java.util.Set;
 
+import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.Decomposable;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
-import api4kbj.StructuredKnowledgeResource;
 
 public class StructuredKnowledgeExpressionLI extends
 		AbstractKnowledgeExpressionLI implements
-		Decomposable<KnowledgeExpression>, StructuredKnowledgeResource {
+		Decomposable<KnowledgeExpression>, StructuredKnowledgeResourceConfigured {
 
 	// lazy intialization constructor
 	public StructuredKnowledgeExpressionLI(

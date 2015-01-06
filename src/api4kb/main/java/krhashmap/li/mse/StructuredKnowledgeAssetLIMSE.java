@@ -3,13 +3,13 @@ package krhashmap.li.mse;
 import java.util.HashSet;
 
 import krconfigured.EnvironmentConfigured;
+import krconfigured.StructuredKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.StructuredKnowledgeAssetLI;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeSourceLevel;
-import api4kbj.StructuredKnowledgeResource;
 import elevation.Liftable;
 import elevation.Lowerer;
 import elevation.SelfLowering;
@@ -23,7 +23,7 @@ public class StructuredKnowledgeAssetLIMSE extends StructuredKnowledgeAssetLI
 	// }
 
 	// lazy initializing constructor
-	public StructuredKnowledgeAssetLIMSE(StructuredKnowledgeResource kr,
+	public StructuredKnowledgeAssetLIMSE(StructuredKnowledgeResourceConfigured kr,
 			FocusedImmutableEnvironment env) {
 		super(kr, env);
 	}

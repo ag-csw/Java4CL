@@ -2,18 +2,18 @@ package krhashmap.li;
 
 import java.util.HashSet;
 
+import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.StructuredKnowledgeAsset;
 import api4kbj.StructuredKnowledgeExpression;
-import api4kbj.StructuredKnowledgeResource;
 
 public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		implements StructuredKnowledgeAsset {
 
 	// lazy initializing constructor - lifting
-	public StructuredKnowledgeAssetLI(StructuredKnowledgeResource initialValue,
+	public StructuredKnowledgeAssetLI(StructuredKnowledgeResourceConfigured initialValue,
 			FocusedImmutableEnvironment env) {
 		super(initialValue, env);
 	}
@@ -35,7 +35,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 	@Override
 	public int numComponents() {
 		if (initialValue != null) {
-			return ((StructuredKnowledgeResource) initialValue).numComponents();
+			return ((StructuredKnowledgeResourceConfigured) initialValue).numComponents();
 		}
 		return components.size();
 	}
@@ -47,7 +47,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 	}
 
 	public static StructuredKnowledgeAssetLI lazyNewInstance(
-			StructuredKnowledgeResource kr,
+			StructuredKnowledgeResourceConfigured kr,
 			FocusedImmutableEnvironment environment) {
 		return new StructuredKnowledgeAssetLI(kr, environment);
 	}
