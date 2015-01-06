@@ -2,10 +2,10 @@ package cl2;
 
 import api4kbj.KRRDialectType;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
-import krhashmap.AbstractBasicKnowledgeManifestation;
+import krhashmap.li.mse.AbstractBasicKnowledgeManifestationLIMSE;
 
 public abstract class CLManifestation extends
-		AbstractBasicKnowledgeManifestation implements CLKnowledgeResource {
+		AbstractBasicKnowledgeManifestationLIMSE implements CLKnowledgeResource {
 
 	CLManifestation(KnowledgeResourceConfiguredTemplate template) {
 		super(template);

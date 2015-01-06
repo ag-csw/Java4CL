@@ -5,7 +5,6 @@ import java.util.HashMap;
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
-import krhashmap.AbstractBasicKnowledgeManifestation;
 import krhashmap.li.AbstractKnowledgeEncodingLI;
 
 import org.slf4j.Logger;
@@ -53,7 +52,7 @@ public abstract class AbstractBasicKnowledgeEncodingLIMSE extends
 	protected KRRFormat format;
 	protected final HashMap<KRRFormatType<?>, Object> mapValue = new HashMap<KRRFormatType<?>, Object>();
 	// TODO implement cache for IO
-	protected AbstractBasicKnowledgeManifestation manifestation;
+	protected AbstractBasicKnowledgeManifestationLIMSE manifestation;
 
 	protected <T> void mapValueSafePut(T value, KRRFormatType<T> formatType) {
 		mapValue.put(formatType, value);

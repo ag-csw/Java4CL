@@ -1,4 +1,4 @@
-package krhashmap;
+package krhashmap.li.mse;
 
 import java.util.HashMap;
 
@@ -12,12 +12,12 @@ import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
 
-public abstract class AbstractBasicKnowledgeManifestation extends
+public abstract class AbstractBasicKnowledgeManifestationLIMSE extends
 		AbstractKnowledgeManifestationLI implements
 		BasicKnowledgeManifestationConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeManifestation(
+	public AbstractBasicKnowledgeManifestationLIMSE(
 			KnowledgeResourceConfiguredTemplate template) {
 		super(template);
 		LOG.debug("Starting base nonlazy constructor for template: {}",
@@ -26,7 +26,7 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T> AbstractBasicKnowledgeManifestation(
+	public <T> AbstractBasicKnowledgeManifestationLIMSE(
 			KnowledgeResourceConfiguredTemplate template, T value,
 			KRRDialectType<T> dialectType) {
 		// TODO add a validation flag to indicate that
@@ -38,7 +38,7 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeManifestation(
+	public AbstractBasicKnowledgeManifestationLIMSE(
 			BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.dialect = kr.defaultDialect();
@@ -51,7 +51,6 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	// final properties
 	protected KRRDialect dialect;
 	protected final HashMap<KRRDialectType<?>, Object> mapValue = new HashMap<KRRDialectType<?>, Object>();
-	// TODO move caches for lifting and lowering methods to LISME
 	protected final HashMap<KRRFormat, BasicKnowledgeEncodingConfigured> mapEncoding = new HashMap<KRRFormat, BasicKnowledgeEncodingConfigured>();
 	protected BasicKnowledgeExpression expression;
 
