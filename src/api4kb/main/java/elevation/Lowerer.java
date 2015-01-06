@@ -5,13 +5,13 @@ import java.util.Arrays;
 import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
-import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.EnvironmentConfigured;
 import krconfigured.KnowledgeResourceConfigured;
 import krconfigured.StructuredKnowledgeAssetConfigured;
 import krconfigured.StructuredKnowledgeEncodingConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeManifestationConfigured;
+import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
@@ -116,7 +116,7 @@ public interface Lowerer {
 		if (!kr.isBasic()) {
 			return structuredEncode((StructuredKnowledgeManifestationConfigured) kr, args);
 		}
-		return basicEncode((BasicKnowledgeManifestationConfigured) kr, args);
+		return basicEncode((BasicKnowledgeManifestation) kr, args);
 
 	}
 
@@ -132,7 +132,7 @@ public interface Lowerer {
 	public KnowledgeManifestation structuredManifest(
 			StructuredKnowledgeExpressionConfigured kr, Object... args);
 
-	public KnowledgeEncoding basicEncode(BasicKnowledgeManifestationConfigured kr,
+	public KnowledgeEncoding basicEncode(BasicKnowledgeManifestation kr,
 			Object... args);
 
 	public KnowledgeEncoding structuredEncode(

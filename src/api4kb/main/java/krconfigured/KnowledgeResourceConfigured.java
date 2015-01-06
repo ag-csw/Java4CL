@@ -1,6 +1,6 @@
 package krconfigured;
 
-import api4kbj.ImmutableSource;
+import api4kbj.KnowledgeResource;
 
 /**
  * Interface for API4KB knowledge resources, which are immutable knowledge
@@ -9,6 +9,6 @@ import api4kbj.ImmutableSource;
  * @author taraathan
  *
  */
-public interface KnowledgeResourceConfigured extends ImmutableSource, KnowledgeSourceConfigured {
+public interface KnowledgeResourceConfigured extends KnowledgeResource, KnowledgeSourceConfigured {
 
 }
