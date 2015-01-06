@@ -69,6 +69,7 @@ public interface EnvironmentConfigured {
 	 */
 	CodecSystem<?, ?> defaultCodecSystem();
 
+	// TODO it appears that we can drop this property
 	/**
 	 * Return the default receiver.
 	 * 
@@ -77,9 +78,9 @@ public interface EnvironmentConfigured {
 	Object defaultReceiver();
 
 	/**
-	 * Return the default sender.
+	 * Return the default input.
 	 * 
-	 * @return the default sender
+	 * @return the default input
 	 */
 	InputStream defaultInput();
 

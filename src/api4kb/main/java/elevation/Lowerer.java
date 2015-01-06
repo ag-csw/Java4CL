@@ -2,7 +2,6 @@ package elevation;
 
 import java.util.Arrays;
 
-import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.EnvironmentConfigured;
@@ -11,6 +10,7 @@ import krconfigured.StructuredKnowledgeAssetConfigured;
 import krconfigured.StructuredKnowledgeEncodingConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeManifestationConfigured;
+import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
@@ -98,7 +98,7 @@ public interface Lowerer {
 		if (!kr.isBasic()) {
 			return structuredExpress((StructuredKnowledgeAssetConfigured) kr, args);
 		}
-		return basicExpress((BasicKnowledgeAssetConfigured) kr, args);
+		return basicExpress((BasicKnowledgeAsset) kr, args);
 
 	}
 
@@ -120,7 +120,7 @@ public interface Lowerer {
 
 	}
 
-	public KnowledgeExpression basicExpress(BasicKnowledgeAssetConfigured kr,
+	public KnowledgeExpression basicExpress(BasicKnowledgeAsset kr,
 			Object... args);
 
 	public KnowledgeExpression structuredExpress(StructuredKnowledgeAssetConfigured kr,
