@@ -3,12 +3,12 @@ package api4kbj;
 import elevation.Liftable;
 import functional.IO;
 
-public interface KnowledgeItem extends KnowledgeResource, Liftable {
-	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ITEM;
+public interface KnowledgeIO extends KnowledgeResource, Liftable {
+	public KnowledgeSourceLevel level = KnowledgeSourceLevel.IO;
 
 	@Override
 	public default KnowledgeSourceLevel level() {
-		return KnowledgeSourceLevel.ITEM;
+		return KnowledgeSourceLevel.IO;
 	}
 
 	// getter for wrapped IO objects

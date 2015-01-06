@@ -47,11 +47,11 @@ public final class API4KB {
 		return lifts(krup, krdown);
 	}
 
-	public static Boolean reproduces(KnowledgeItem i, KnowledgeEncoding e) {
+	public static Boolean reproduces(KnowledgeIO i, KnowledgeEncoding e) {
 		return lowers(i, e);
 	}
 
-	public static Boolean prototypes(KnowledgeEncoding e, KnowledgeItem i) {
+	public static Boolean prototypes(KnowledgeEncoding e, KnowledgeIO i) {
 		return lifts(e, i);
 	}
 

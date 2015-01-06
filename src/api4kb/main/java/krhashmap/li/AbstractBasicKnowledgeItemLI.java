@@ -1,6 +1,6 @@
 package krhashmap.li;
 
-import krconfigured.BasicKnowledgeItemConfigured;
+import krconfigured.BasicKnowledgeIOConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import functional.IO;
@@ -9,12 +9,12 @@ import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeItemLI extends
-		AbstractKnowledgeResourceLI implements BasicKnowledgeItemConfigured {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeIOConfigured {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
 			KRRFormat format, Object destination) {
-		super(template, KnowledgeSourceLevel.ITEM);
+		super(template, KnowledgeSourceLevel.IO);
 		this.format = format;
 		this.destination = destination;
 	}
@@ -32,7 +32,7 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
 	public AbstractBasicKnowledgeItemLI(BasicKnowledgeResourceConfigured kr) {
-		super(kr, KnowledgeSourceLevel.ITEM);
+		super(kr, KnowledgeSourceLevel.IO);
 		LOG.debug(
 				"Starting no-arg lazy initializing construtor with resource: {}",
 				kr);

@@ -2,10 +2,10 @@ package krconfigured;
 
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
-import api4kbj.KnowledgeItem;
+import api4kbj.KnowledgeIO;
 import functional.IO;
 
-public interface BasicKnowledgeItemConfigured extends KnowledgeItem,
+public interface BasicKnowledgeIOConfigured extends KnowledgeIO,
 		BasicKnowledgeResourceConfigured {
 
 	// getter for destination

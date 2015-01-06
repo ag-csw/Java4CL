@@ -2,17 +2,17 @@ package elevation;
 
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
-import krconfigured.BasicKnowledgeItemConfigured;
+import krconfigured.BasicKnowledgeIOConfigured;
 import krconfigured.StructuredKnowledgeEncodingConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
-import krconfigured.StructuredKnowledgeItemConfigured;
+import krconfigured.StructuredKnowledgeIOConfigured;
 import krconfigured.StructuredKnowledgeManifestationConfigured;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
-import api4kbj.KnowledgeItem;
+import api4kbj.KnowledgeIO;
 import api4kbj.KnowledgeManifestation;
 import api4kbj.KnowledgeSourceLevel;
 
@@ -30,7 +30,7 @@ public interface Lifter {
 		case ENCODING:
 			return prototyper(kr);
 		default:
-			throw new IllegalArgumentException("Cannot lift to the ITEM level.");
+			throw new IllegalArgumentException("Cannot lift to the IO level.");
 		}
 	}
 
@@ -90,11 +90,11 @@ public interface Lifter {
 
 	}
 
-	default KnowledgeEncoding prototype(KnowledgeItem kr) {
+	default KnowledgeEncoding prototype(KnowledgeIO kr) {
 		if (!kr.isBasic()) {
-			return structuredPrototype((StructuredKnowledgeItemConfigured) kr);
+			return structuredPrototype((StructuredKnowledgeIOConfigured) kr);
 		}
-		return basicPrototype((BasicKnowledgeItemConfigured) kr);
+		return basicPrototype((BasicKnowledgeIOConfigured) kr);
 
 	}
 
@@ -112,8 +112,8 @@ public interface Lifter {
 
 	KnowledgeManifestation basicDecode(BasicKnowledgeEncodingConfigured kr);
 
-	KnowledgeEncoding basicPrototype(BasicKnowledgeItemConfigured kr);
+	KnowledgeEncoding basicPrototype(BasicKnowledgeIOConfigured kr);
 
-	KnowledgeEncoding structuredPrototype(StructuredKnowledgeItemConfigured kr);
+	KnowledgeEncoding structuredPrototype(StructuredKnowledgeIOConfigured kr);
 
 }

@@ -16,7 +16,7 @@ import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
-import api4kbj.KnowledgeItem;
+import api4kbj.KnowledgeIO;
 import api4kbj.KnowledgeManifestation;
 import api4kbj.KnowledgeSourceLevel;
 
@@ -35,7 +35,7 @@ public interface Lowerer {
 		case ENCODING:
 			// TODO check arguments
 			return encoder(kr, args);
-		case ITEM:
+		case IO:
 			// TODO check arguments
 			return reproducer(kr, args);
 		default:
@@ -47,7 +47,7 @@ public interface Lowerer {
 	public default KnowledgeExpression expresser(KnowledgeResourceConfigured kr,
 			Object... args) {
 		switch (kr.level()) {
-		case ITEM:
+		case IO:
 			throw new IllegalArgumentException(
 					"The input of type item cannot be expressed to obtain a KnowledgeExpression, it must be expressed.");
 		case ENCODING:
@@ -70,7 +70,7 @@ public interface Lowerer {
 	public default KnowledgeManifestation manifester(KnowledgeResourceConfigured kr,
 			Object... args) {
 		switch (kr.level()) {
-		case ITEM:
+		case IO:
 			throw new IllegalArgumentException(
 					"The input of type item cannot be expressed to obtain a KnowledgeExpression, it must be expressed.");
 		case ENCODING:
@@ -91,7 +91,7 @@ public interface Lowerer {
 	public KnowledgeEncoding encoder(EnvironmentConfigured kr, Object... args);
 
 	// TODO add default implementation
-	public KnowledgeItem reproducer(EnvironmentConfigured kr, Object... args);
+	public KnowledgeIO reproducer(EnvironmentConfigured kr, Object... args);
 
 	public default KnowledgeExpression express(KnowledgeAsset kr,
 			Object... args) {
@@ -138,10 +138,10 @@ public interface Lowerer {
 	public KnowledgeEncoding structuredEncode(
 			StructuredKnowledgeManifestationConfigured kr, Object... args);
 
-	public KnowledgeItem basicReproduce(BasicKnowledgeEncodingConfigured kr,
+	public KnowledgeIO basicReproduce(BasicKnowledgeEncodingConfigured kr,
 			Object... args);
 
-	public KnowledgeItem structuredReproduce(StructuredKnowledgeEncodingConfigured kr,
+	public KnowledgeIO structuredReproduce(StructuredKnowledgeEncodingConfigured kr,
 			Object... args);
 
 }

@@ -6,7 +6,7 @@ public interface KnowledgeSource extends Source {
 	 * 
 	 * @return the abstraction level
 	 * @see KnowledgeAsset, KnowledgeExpression, KnowledgeManifestation,
-	 *      KnowledgeEncoding, KnowledgeItem
+	 *      KnowledgeEncoding, KnowledgeIO
 	 */
 	KnowledgeSourceLevel level();
 
