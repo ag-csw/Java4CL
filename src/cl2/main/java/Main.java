@@ -33,6 +33,7 @@ public class Main {
 		assert (env.containsLanguage(CL.lang)) : "Failed contains method";
 		assert CL.lang.equals(env.defaultLanguage()) : "Failed set of default language in environment construction";
 		assert CL.lang.equals(env.focusLanguage().value()) : "Failed set of default language in environment construction";
+		assert env.equals(CL.CL_DEFAULT_ENVIRONMENT) : "Failed test of environment equality";
 
 		// Direct construction of CLCommentExpression
 		String myCommentSymbol = "blah blah ...";
