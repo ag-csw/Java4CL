@@ -1,11 +1,11 @@
 package elevation;
 
-import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeEncodingConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeIOConfigured;
 import krconfigured.StructuredKnowledgeManifestationConfigured;
 import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeIO;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
@@ -70,7 +70,7 @@ public interface Lifter {
 			return structuredConceptualize((StructuredKnowledgeExpressionConfigured) kr,
 					e);
 		}
-		return basicConceptualize((BasicKnowledgeExpressionConfigured) kr, e);
+		return basicConceptualize((BasicKnowledgeExpression) kr, e);
 
 	}
 
@@ -101,7 +101,7 @@ public interface Lifter {
 	KnowledgeAsset structuredConceptualize(StructuredKnowledgeExpressionConfigured kr,
 			FocusedImmutableEnvironment e);
 
-	KnowledgeAsset basicConceptualize(BasicKnowledgeExpressionConfigured kr,
+	KnowledgeAsset basicConceptualize(BasicKnowledgeExpression kr,
 			FocusedImmutableEnvironment e);
 
 	KnowledgeExpression structuredParse(StructuredKnowledgeManifestationConfigured kr);

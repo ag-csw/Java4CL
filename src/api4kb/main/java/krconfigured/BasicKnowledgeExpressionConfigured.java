@@ -1,6 +1,6 @@
 package krconfigured;
 
-import api4kbj.KRRLanguage;
+import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KnowledgeExpression;
 
 /**
@@ -12,13 +12,6 @@ import api4kbj.KnowledgeExpression;
  *
  */
 public interface BasicKnowledgeExpressionConfigured extends KnowledgeExpression,
-		BasicKnowledgeResourceConfigured {
-
-	/**
-	 * Returns the unique language of the basic knowledge expression.
-	 * 
-	 * @return the language of the basic knowledge expression.
-	 */
-	KRRLanguage language();
+		BasicKnowledgeResourceConfigured, BasicKnowledgeExpression {
 
 }
