@@ -2,13 +2,13 @@ package krhashmap;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeEncodingLI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.BasicKnowledgeEncoding;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeResourceTemplate;
@@ -40,7 +40,7 @@ public abstract class AbstractBasicKnowledgeEncoding extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeEncoding(BasicKnowledgeResource kr) {
+	public AbstractBasicKnowledgeEncoding(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.format = kr.defaultFormat();
 		LOG.debug(

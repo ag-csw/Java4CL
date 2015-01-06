@@ -7,7 +7,7 @@ public interface Source {
 	 * 
 	 * @return <tt>true</tt> if this knowledge resource is basic (not
 	 *         structured)
-	 * @see BasicKnowledgeResource, StructuredKnowledgeResource
+	 * @see BasicKnowledgeResourceConfigured, StructuredKnowledgeResource
 	 */
 	boolean isBasic();
 

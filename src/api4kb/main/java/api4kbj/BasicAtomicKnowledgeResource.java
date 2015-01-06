@@ -1,6 +1,8 @@
 package api4kbj;
 
-public interface BasicAtomicKnowledgeResource extends BasicKnowledgeResource {
+import krconfigured.BasicKnowledgeResourceConfigured;
+
+public interface BasicAtomicKnowledgeResource extends BasicKnowledgeResourceConfigured {
 
 	@Override
 	default boolean isAtomic() {

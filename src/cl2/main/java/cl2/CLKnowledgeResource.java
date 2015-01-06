@@ -1,9 +1,9 @@
 package cl2;
 
-import api4kbj.BasicKnowledgeResource;
+import krconfigured.BasicKnowledgeResourceConfigured;
 import api4kbj.KRRLanguage;
 
-public interface CLKnowledgeResource extends BasicKnowledgeResource {
+public interface CLKnowledgeResource extends BasicKnowledgeResourceConfigured {
 
 	@Override
 	public default KRRLanguage defaultLanguage() {

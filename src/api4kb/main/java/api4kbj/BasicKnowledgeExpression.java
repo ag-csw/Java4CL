@@ -1,5 +1,7 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 /**
  * A BasicKnowledgeExpression is a knowledge resource at the expression
  * abstraction level that is not structured. As a consequence, it has a unique
@@ -9,7 +11,7 @@ package api4kbj;
  *
  */
 public interface BasicKnowledgeExpression extends KnowledgeExpression,
-		BasicKnowledgeResource {
+		BasicKnowledgeResourceConfigured {
 
 	/**
 	 * Returns the unique language of the basic knowledge expression.

@@ -1,7 +1,9 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 public interface BasicKnowledgeEncodingG<T, S> extends KnowledgeEncoding,
-		BasicKnowledgeResource {
+		BasicKnowledgeResourceConfigured {
 
 	// getter for wrapped stream
 	// S should be some type of stream

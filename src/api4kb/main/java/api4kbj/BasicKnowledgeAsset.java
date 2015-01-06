@@ -1,5 +1,7 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 /**
  * Interface for basic knowledge assets: knowledge resources at the asset
  * abstraction level that are not structured. As a consequence, a basic
@@ -10,7 +12,7 @@ package api4kbj;
  *
  */
 public interface BasicKnowledgeAsset extends KnowledgeAsset,
-		BasicKnowledgeResource {
+		BasicKnowledgeResourceConfigured {
 
 	@Override
 	/**

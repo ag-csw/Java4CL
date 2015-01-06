@@ -1,9 +1,9 @@
 package krhashmap;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeResourceTemplate;
 
@@ -22,7 +22,7 @@ public abstract class AbstractBasicKnowledgeExpression extends
 
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset, then its default language becomes the target language
-	public AbstractBasicKnowledgeExpression(BasicKnowledgeResource kr) {
+	public AbstractBasicKnowledgeExpression(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.lang = kr.defaultLanguage();
 		LOG.debug(

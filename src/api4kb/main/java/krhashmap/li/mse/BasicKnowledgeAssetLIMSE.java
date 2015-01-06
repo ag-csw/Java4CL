@@ -2,12 +2,12 @@ package krhashmap.li.mse;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.EnvironmentConfigured;
 import krhashmap.AbstractBasicKnowledgeExpression;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRLanguage;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;
@@ -18,7 +18,7 @@ import elevation.SelfLowering;
 public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		SelfLowering {
 
-	public BasicKnowledgeAssetLIMSE(BasicKnowledgeResource kr,
+	public BasicKnowledgeAssetLIMSE(BasicKnowledgeResourceConfigured kr,
 			FocusedImmutableEnvironment environment) {
 		super(kr, environment);
 		// TODO need switch on level or a more generic cache

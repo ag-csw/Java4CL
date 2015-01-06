@@ -2,10 +2,10 @@ package krhashmap;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeManifestationLI;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.BasicKnowledgeManifestation;
@@ -37,7 +37,7 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeManifestation(BasicKnowledgeResource kr) {
+	public AbstractBasicKnowledgeManifestation(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.dialect = kr.defaultDialect();
 		LOG.debug(

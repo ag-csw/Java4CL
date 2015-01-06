@@ -1,9 +1,10 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import functional.IO;
 
 public interface BasicKnowledgeItem extends KnowledgeItem,
-		BasicKnowledgeResource {
+		BasicKnowledgeResourceConfigured {
 
 	// getter for destination
 	Object destination();

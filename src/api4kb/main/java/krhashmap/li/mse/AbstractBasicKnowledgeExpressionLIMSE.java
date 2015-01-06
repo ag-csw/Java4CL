@@ -2,11 +2,11 @@ package krhashmap.li.mse;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.AbstractBasicKnowledgeExpression;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeManifestation;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
@@ -28,7 +28,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	}
 
 	// No-parameter Lazy initializing constructor
-	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeResource kr) {
+	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		// TODO level generalization needed
 		manifestSafePut((BasicKnowledgeManifestation) kr);

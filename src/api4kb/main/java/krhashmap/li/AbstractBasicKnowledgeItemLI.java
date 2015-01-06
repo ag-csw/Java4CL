@@ -1,8 +1,8 @@
 package krhashmap.li;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
 import functional.IO;
 import api4kbj.BasicKnowledgeItem;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeResourceTemplate;
@@ -31,7 +31,7 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeItemLI(BasicKnowledgeResource kr) {
+	public AbstractBasicKnowledgeItemLI(BasicKnowledgeResourceConfigured kr) {
 		super(kr, KnowledgeSourceLevel.ITEM);
 		LOG.debug(
 				"Starting no-arg lazy initializing construtor with resource: {}",

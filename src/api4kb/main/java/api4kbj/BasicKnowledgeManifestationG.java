@@ -1,7 +1,9 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 public interface BasicKnowledgeManifestationG<T> extends
-		KnowledgeManifestation, BasicKnowledgeResource {
+		KnowledgeManifestation, BasicKnowledgeResourceConfigured {
 
 	// getter for wrapped object
 	T value();

@@ -1,7 +1,9 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 public interface BasicKnowledgeManifestation extends KnowledgeManifestation,
-		BasicKnowledgeResource {
+		BasicKnowledgeResourceConfigured {
 
 	// getter for dialect
 	KRRDialect dialect();

@@ -1,10 +1,11 @@
 package krhashmap.li;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeResource;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.FocusedImmutableEnvironment;
 
@@ -15,14 +16,14 @@ public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 			.getLogger(BasicKnowledgeAssetLI.class);
 
 	// private lazy lifting constructor
-	protected BasicKnowledgeAssetLI(BasicKnowledgeResource initialValue,
+	protected BasicKnowledgeAssetLI(BasicKnowledgeResourceConfigured initialValue,
 			FocusedImmutableEnvironment env) {
 		super(initialValue, env);
 	}
 
 	// lazy lifting static factory method
 	public static BasicKnowledgeAssetLI lazyNewInstance(
-			BasicKnowledgeResource initialValue, FocusedImmutableEnvironment env) {
+			BasicKnowledgeResourceConfigured initialValue, FocusedImmutableEnvironment env) {
 		SLOG.debug("");
 		return new BasicKnowledgeAssetLI(initialValue, env);
 	}

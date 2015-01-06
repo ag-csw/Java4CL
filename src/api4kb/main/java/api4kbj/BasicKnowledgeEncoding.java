@@ -1,7 +1,9 @@
 package api4kbj;
 
+import krconfigured.BasicKnowledgeResourceConfigured;
+
 public interface BasicKnowledgeEncoding extends KnowledgeEncoding,
-		BasicKnowledgeResource {
+		BasicKnowledgeResourceConfigured {
 
 	KRRFormat format();
 
