@@ -1,6 +1,5 @@
-package api4kbj;
+package krconfigured;
 
-import krconfigured.EnvironmentConfigured;
 
 /**
  * Interface for API4KB knowledge sources.

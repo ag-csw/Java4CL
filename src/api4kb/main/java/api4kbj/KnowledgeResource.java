@@ -1,5 +1,7 @@
 package api4kbj;
 
+import krconfigured.KnowledgeSource;
+
 /**
  * Interface for API4KB knowledge resources, which are immutable knowledge
  * sources.
