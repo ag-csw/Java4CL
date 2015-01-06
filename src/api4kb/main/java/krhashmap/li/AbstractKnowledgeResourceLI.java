@@ -1,5 +1,7 @@
 package krhashmap.li;
 
+import java.io.InputStream;
+
 import krconfigured.AbstractKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
@@ -46,7 +48,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	// Arguments are the initialValue, the target level and additional
 	// parameters
 	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
-			KnowledgeSourceLevel level, Object defaultSender,
+			KnowledgeSourceLevel level, InputStream defaultSender,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,

@@ -1,13 +1,15 @@
 package functional;
 
+import java.io.InputStream;
+
 /**
  * This type represents an action, yielding type R
  */
-public interface IO<R> {
+public interface IO<R extends InputStream> {
 	/**
 	 * Warning! May have arbitrary side-effects!
 	 */
-	R unsafePerformIO();
+	void unsafePerformIO();
 
-	Object destination();
+	InputStream input();
 }

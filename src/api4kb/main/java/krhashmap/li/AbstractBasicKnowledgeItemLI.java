@@ -1,5 +1,7 @@
 package krhashmap.li;
 
+import java.io.InputStream;
+
 import krconfigured.BasicKnowledgeIOConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
@@ -13,19 +15,19 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
-			KRRFormat format, Object destination) {
+			KRRFormat format, InputStream input) {
 		super(template, KnowledgeSourceLevel.IO);
 		this.format = format;
-		this.destination = destination;
+		this.input = input;
 	}
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T> AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
-			IO<T> value, KRRFormatType<T> formatType) {
+	public <T, R extends InputStream> AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
+			IO<R> value, KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
-		this(template, formatType.format(), value.destination());
+		this(template, formatType.format(), value.input());
 	}
 
 	// No-parameter Lazy initializing constructor
@@ -37,15 +39,15 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 				"Starting no-arg lazy initializing construtor with resource: {}",
 				kr);
 		this.format = kr.defaultFormat();
-		this.destination = kr.defaultReceiver();
+		this.input = kr.defaultSender();
 	}
 
 	protected KRRFormat format;
-	private final Object destination;
+	private final InputStream input;
 
 	@Override
-	public Object item() {
-		return destination;
+	public InputStream input() {
+		return input;
 	}
 
 	@Override

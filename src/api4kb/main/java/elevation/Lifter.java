@@ -2,11 +2,11 @@ package elevation;
 
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
-import krconfigured.BasicKnowledgeIOConfigured;
 import krconfigured.StructuredKnowledgeEncodingConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeIOConfigured;
 import krconfigured.StructuredKnowledgeManifestationConfigured;
+import api4kbj.BasicKnowledgeIO;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
@@ -94,7 +94,7 @@ public interface Lifter {
 		if (!kr.isBasic()) {
 			return structuredPrototype((StructuredKnowledgeIOConfigured) kr);
 		}
-		return basicPrototype((BasicKnowledgeIOConfigured) kr);
+		return basicPrototype((BasicKnowledgeIO) kr);
 
 	}
 
@@ -112,7 +112,7 @@ public interface Lifter {
 
 	KnowledgeManifestation basicDecode(BasicKnowledgeEncodingConfigured kr);
 
-	KnowledgeEncoding basicPrototype(BasicKnowledgeIOConfigured kr);
+	KnowledgeEncoding basicPrototype(BasicKnowledgeIO kr);
 
 	KnowledgeEncoding structuredPrototype(StructuredKnowledgeIOConfigured kr);
 

@@ -1,3 +1,5 @@
+import java.io.InputStream;
+
 import graphenvironment.FocusedGraphImmutableEnvironment;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
@@ -92,7 +94,7 @@ public class Main {
 			}
 
 			@Override
-			public Object defaultSender() {
+			public InputStream defaultSender() {
 				return System.in;
 			}
 

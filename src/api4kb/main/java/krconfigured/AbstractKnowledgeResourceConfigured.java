@@ -1,5 +1,7 @@
 package krconfigured;
 
+import java.io.InputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +17,7 @@ public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeRe
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKnowledgeResourceConfigured(Object defaultSender,
+	public AbstractKnowledgeResourceConfigured(InputStream defaultSender,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,
@@ -32,7 +34,7 @@ public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeRe
 		this.defaultLanguage = defaultLanguage;
 	}
 
-	private Object defaultSender;
+	private InputStream defaultSender;
 	private Object defaultReceiver;
 	private CodecSystem<?, ?> defaultSystem;
 	private KRRFormatType<?> defaultFormatType;
@@ -83,7 +85,7 @@ public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeRe
 	}
 
 	@Override
-	public Object defaultSender() {
+	public InputStream defaultSender() {
 		return defaultSender;
 	}
 

@@ -1,5 +1,7 @@
 package krconfigured;
 
+import java.io.InputStream;
+
 import api4kbj.CodecSystem;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;
@@ -79,6 +81,6 @@ public interface EnvironmentConfigured {
 	 * 
 	 * @return the default sender
 	 */
-	Object defaultSender();
+	InputStream defaultSender();
 
 }
