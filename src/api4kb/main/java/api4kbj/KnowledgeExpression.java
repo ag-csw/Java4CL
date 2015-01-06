@@ -1,6 +1,5 @@
 package api4kbj;
 
-import krconfigured.KnowledgeResource;
 import elevation.Liftable;
 import elevation.Lowerable;
 

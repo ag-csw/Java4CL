@@ -1,6 +1,6 @@
 package elevation;
 
-import krconfigured.KnowledgeResource;
+import api4kbj.KnowledgeResource;
 
 public interface Elevatable extends KnowledgeResource {
 
