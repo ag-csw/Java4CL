@@ -1,6 +1,8 @@
 package api4kbj;
 
-public interface StructuredKnowledgeResource extends KnowledgeResource {
+import krconfigured.KnowledgeResourceConfigured;
+
+public interface StructuredKnowledgeResource extends KnowledgeResourceConfigured {
 	@Override
 	default boolean isBasic() {
 		return false;

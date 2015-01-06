@@ -1,5 +1,6 @@
 package krhashmap.li;
 
+import krconfigured.KnowledgeResourceConfigured;
 import api4kbj.AbstractKnowledgeResource;
 import api4kbj.CodecSystem;
 import api4kbj.FocusedImmutableEnvironment;
@@ -8,14 +9,13 @@ import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeResource;
 import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 import lazykb.LazyInitializing;
 
 public abstract class AbstractKnowledgeResourceLI extends
 		AbstractKnowledgeResource implements
-		LazyInitializing<KnowledgeResource> {
+		LazyInitializing<KnowledgeResourceConfigured> {
 
 	// template constructor uses properties of template but does not set it as
 	// initial value
@@ -30,7 +30,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	}
 
 	// Specialized lazy initialization constructors
-	public AbstractKnowledgeResourceLI(KnowledgeResource initialValue,
+	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
 			KnowledgeSourceLevel level) {
 		// select default values from passed initialValue
 		// TODO improve defaultSender, Receiver handling
@@ -45,7 +45,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	// package-private constructors for lazy initialization
 	// Arguments are the initialValue, the target level and additional
 	// parameters
-	public AbstractKnowledgeResourceLI(KnowledgeResource initialValue,
+	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
 			KnowledgeSourceLevel level, Object defaultSender,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
@@ -73,7 +73,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	}
 
 	// cache for lazy initialization
-	protected KnowledgeResource initialValue;
+	protected KnowledgeResourceConfigured initialValue;
 
 	// optional public clear cache method for forgetting initializing value
 	// which can be called after some eager evaluation has been performed.
@@ -88,7 +88,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	}
 
 	// package-private getter for direct access to cache
-	KnowledgeResource getInitialValue() {
+	KnowledgeResourceConfigured getInitialValue() {
 		return initialValue;
 	}
 

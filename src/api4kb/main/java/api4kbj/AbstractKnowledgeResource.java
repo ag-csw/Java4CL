@@ -1,9 +1,11 @@
 package api4kbj;
 
+import krconfigured.KnowledgeResourceConfigured;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKnowledgeResource implements KnowledgeResource {
+public abstract class AbstractKnowledgeResource implements KnowledgeResourceConfigured {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 

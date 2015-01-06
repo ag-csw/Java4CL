@@ -1,10 +1,11 @@
 package krhashmap.li;
 
+import krconfigured.KnowledgeResourceConfigured;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.KnowledgeExpression;
-import api4kbj.KnowledgeResource;
 import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
@@ -23,7 +24,7 @@ public abstract class AbstractKnowledgeExpressionLI extends
 	}
 
 	// lazy initializing constructor
-	public AbstractKnowledgeExpressionLI(KnowledgeResource initialValue) {
+	public AbstractKnowledgeExpressionLI(KnowledgeResourceConfigured initialValue) {
 		super(initialValue, KnowledgeSourceLevel.EXPRESSION);
 		LOG.debug(
 				"Starting lazy-initializing constructor with initialValue: {}",

@@ -3,6 +3,7 @@ package elevation;
 import java.util.Arrays;
 
 import krconfigured.EnvironmentConfigured;
+import krconfigured.KnowledgeResourceConfigured;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
@@ -13,7 +14,6 @@ import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeItem;
 import api4kbj.KnowledgeManifestation;
-import api4kbj.KnowledgeResource;
 import api4kbj.KnowledgeSourceLevel;
 import api4kbj.StructuredKnowledgeAsset;
 import api4kbj.StructuredKnowledgeEncoding;
@@ -22,7 +22,7 @@ import api4kbj.StructuredKnowledgeManifestation;
 
 public interface Lowerer {
 
-	public default Liftable lower(KnowledgeResource kr,
+	public default Liftable lower(KnowledgeResourceConfigured kr,
 			FocusedImmutableEnvironment e, KnowledgeSourceLevel level,
 			Object... args) {
 		switch (level) {
@@ -44,7 +44,7 @@ public interface Lowerer {
 		}
 	}
 
-	public default KnowledgeExpression expresser(KnowledgeResource kr,
+	public default KnowledgeExpression expresser(KnowledgeResourceConfigured kr,
 			Object... args) {
 		switch (kr.level()) {
 		case ITEM:
@@ -67,7 +67,7 @@ public interface Lowerer {
 		}
 	}
 
-	public default KnowledgeManifestation manifester(KnowledgeResource kr,
+	public default KnowledgeManifestation manifester(KnowledgeResourceConfigured kr,
 			Object... args) {
 		switch (kr.level()) {
 		case ITEM:
