@@ -2,8 +2,8 @@ package cl2;
 
 import elevation.Lifter;
 import elevation.Lowerer;
+import krconfigured.BasicKnowledgeAssetConfigured;
 import krhashmap.li.mse.AbstractBasicKnowledgeExpressionLIMSE;
-import api4kbj.BasicKnowledgeAsset;
 import api4kbj.KRRDialect;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeResourceTemplate;
@@ -18,7 +18,7 @@ public abstract class CLExpression extends
 	}
 
 	// lazy lowering constructor - language must be specificed
-	public CLExpression(BasicKnowledgeAsset kr, KRRLanguage lang) {
+	public CLExpression(BasicKnowledgeAssetConfigured kr, KRRLanguage lang) {
 		super(kr, CL.lang);
 	}
 

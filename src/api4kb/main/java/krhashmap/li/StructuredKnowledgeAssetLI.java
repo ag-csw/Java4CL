@@ -2,15 +2,15 @@ package krhashmap.li;
 
 import java.util.HashSet;
 
+import krconfigured.StructuredKnowledgeAssetConfigured;
+import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeResourceTemplate;
-import api4kbj.StructuredKnowledgeAsset;
-import api4kbj.StructuredKnowledgeExpression;
 
 public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
-		implements StructuredKnowledgeAsset {
+		implements StructuredKnowledgeAssetConfigured {
 
 	// lazy initializing constructor - lifting
 	public StructuredKnowledgeAssetLI(StructuredKnowledgeResourceConfigured initialValue,
@@ -72,7 +72,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 	 * 
 	 * @return the canonical expression of the asset
 	 */
-	public StructuredKnowledgeExpression canonicalExpression() {
+	public StructuredKnowledgeExpressionConfigured canonicalExpression() {
 		// TODO Auto-generated method stub
 		return null;
 	}

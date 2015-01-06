@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import krconfigured.BasicKnowledgeExpressionConfigured;
 import functional.None;
 import functional.Option;
 import functional.Pair;
 import functional.Some;
-import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KnowledgeExpression;
@@ -125,7 +125,7 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 					"End language requested for translation is not supported in the environment.");
 		}
 		if (expression.isBasic()) {
-			KRRLanguage startLanguage = ((BasicKnowledgeExpression) expression)
+			KRRLanguage startLanguage = ((BasicKnowledgeExpressionConfigured) expression)
 					.language();
 			if (!languages.contains(startLanguage)) {
 				throw new IllegalArgumentException(

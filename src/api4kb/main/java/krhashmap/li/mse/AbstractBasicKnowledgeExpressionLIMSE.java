@@ -2,11 +2,11 @@ package krhashmap.li.mse;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeAssetConfigured;
+import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.AbstractBasicKnowledgeExpression;
 import krhashmap.li.BasicKnowledgeAssetLI;
-import api4kbj.BasicKnowledgeAsset;
-import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
@@ -31,11 +31,11 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		// TODO level generalization needed
-		manifestSafePut((BasicKnowledgeManifestation) kr);
+		manifestSafePut((BasicKnowledgeManifestationConfigured) kr);
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeAsset kr,
+	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeAssetConfigured kr,
 			KRRLanguage lang) {
 		super(kr, lang);
 		assetSafePut(kr);
@@ -43,11 +43,11 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 
 	// Asset cache for lifting
 	protected final HashMap<FocusedImmutableEnvironment, KnowledgeAsset> mapAsset = new HashMap<FocusedImmutableEnvironment, KnowledgeAsset>();
-	protected final HashMap<KRRDialect, BasicKnowledgeManifestation> mapManifest = new HashMap<KRRDialect, BasicKnowledgeManifestation>();
+	protected final HashMap<KRRDialect, BasicKnowledgeManifestationConfigured> mapManifest = new HashMap<KRRDialect, BasicKnowledgeManifestationConfigured>();
 
 	// default lowering method returns a manifestation in the default dialect
 	// for that language
-	public BasicKnowledgeManifestation manifest() {
+	public BasicKnowledgeManifestationConfigured manifest() {
 		LOG.debug("Starting default manifest of expression");
 		return manifest(defaultDialect());
 	}
@@ -95,7 +95,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	}
 
 	// lowering method with a parameter indicating the dialect
-	public BasicKnowledgeManifestation manifest(KRRDialect dialect) {
+	public BasicKnowledgeManifestationConfigured manifest(KRRDialect dialect) {
 		LOG.debug("Starting manifest of expression");
 		LOG.debug("  Dialect of the manifestation: {}", dialect);
 		KRRLanguage lang = language();
@@ -108,7 +108,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
 				&& (initialValue.level() == KnowledgeSourceLevel.MANIFESTATION)) {
-			BasicKnowledgeManifestation manifestation = (BasicKnowledgeManifestation) initialValue;
+			BasicKnowledgeManifestationConfigured manifestation = (BasicKnowledgeManifestationConfigured) initialValue;
 			LOG.debug("Found cached intial value for manifestation: {}",
 					manifestation);
 			if (manifestation.dialect() == dialect) {
@@ -119,7 +119,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 		if (mapManifest.containsKey(dialect)) {
 			LOG.debug("Found cached manifestation for requested dialect Type");
 			@SuppressWarnings("unchecked")
-			BasicKnowledgeManifestation manifestation = mapManifest
+			BasicKnowledgeManifestationConfigured manifestation = mapManifest
 					.get(dialect);
 			LOG.debug("Using cached manifestation: {}", manifestation);
 			return manifestation;
@@ -135,14 +135,14 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 
 	}
 
-	protected abstract BasicKnowledgeManifestation newManifestation(
+	protected abstract BasicKnowledgeManifestationConfigured newManifestation(
 			KRRDialect dialect);
 
-	protected void assetSafePut(BasicKnowledgeAsset kr) {
+	protected void assetSafePut(BasicKnowledgeAssetConfigured kr) {
 		mapAsset.put(kr.environment(), kr);
 	}
 
-	protected <T> void manifestSafePut(BasicKnowledgeManifestation manifest) {
+	protected <T> void manifestSafePut(BasicKnowledgeManifestationConfigured manifest) {
 		mapManifest.put(manifest.dialect(), manifest);
 	}
 

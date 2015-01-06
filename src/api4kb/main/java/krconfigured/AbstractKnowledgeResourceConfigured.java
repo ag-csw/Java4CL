@@ -1,15 +1,21 @@
-package api4kbj;
-
-import krconfigured.KnowledgeResourceConfigured;
+package krconfigured;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKnowledgeResource implements KnowledgeResourceConfigured {
+import api4kbj.CodecSystem;
+import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.KRRDialect;
+import api4kbj.KRRDialectType;
+import api4kbj.KRRFormat;
+import api4kbj.KRRFormatType;
+import api4kbj.KRRLanguage;
+
+public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeResourceConfigured {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKnowledgeResource(Object defaultSender,
+	public AbstractKnowledgeResourceConfigured(Object defaultSender,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,

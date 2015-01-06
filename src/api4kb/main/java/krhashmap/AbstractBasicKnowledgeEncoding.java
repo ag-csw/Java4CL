@@ -2,19 +2,19 @@ package krhashmap;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeEncodingLI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeEncoding extends
-		AbstractKnowledgeEncodingLI implements BasicKnowledgeEncoding {
+		AbstractKnowledgeEncodingLI implements BasicKnowledgeEncodingConfigured {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// base non-lazy constructor

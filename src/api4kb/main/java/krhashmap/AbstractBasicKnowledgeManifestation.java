@@ -2,18 +2,18 @@ package krhashmap;
 
 import java.util.HashMap;
 
+import krconfigured.BasicKnowledgeEncodingConfigured;
+import krconfigured.BasicKnowledgeExpressionConfigured;
+import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeManifestationLI;
-import api4kbj.BasicKnowledgeEncoding;
-import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
-import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.KRRFormat;
 import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeManifestation extends
-		AbstractKnowledgeManifestationLI implements BasicKnowledgeManifestation {
+		AbstractKnowledgeManifestationLI implements BasicKnowledgeManifestationConfigured {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeManifestation(
@@ -50,8 +50,8 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	protected KRRDialect dialect;
 	protected final HashMap<KRRDialectType<?>, Object> mapValue = new HashMap<KRRDialectType<?>, Object>();
 	// TODO move caches for lifting and lowering methods to LISME
-	protected final HashMap<KRRFormat, BasicKnowledgeEncoding> mapEncoding = new HashMap<KRRFormat, BasicKnowledgeEncoding>();
-	protected BasicKnowledgeExpression expression;
+	protected final HashMap<KRRFormat, BasicKnowledgeEncodingConfigured> mapEncoding = new HashMap<KRRFormat, BasicKnowledgeEncodingConfigured>();
+	protected BasicKnowledgeExpressionConfigured expression;
 
 	//
 

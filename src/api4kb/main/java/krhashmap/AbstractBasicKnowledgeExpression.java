@@ -1,14 +1,14 @@
 package krhashmap;
 
+import krconfigured.BasicKnowledgeAssetConfigured;
+import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
-import api4kbj.BasicKnowledgeAsset;
-import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeExpression extends
-		AbstractKnowledgeExpressionLI implements BasicKnowledgeExpression {
+		AbstractKnowledgeExpressionLI implements BasicKnowledgeExpressionConfigured {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeExpression(KnowledgeResourceTemplate template,
@@ -31,7 +31,7 @@ public abstract class AbstractBasicKnowledgeExpression extends
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractBasicKnowledgeExpression(BasicKnowledgeAsset kr,
+	public AbstractBasicKnowledgeExpression(BasicKnowledgeAssetConfigured kr,
 			KRRLanguage lang) {
 		super(kr);
 		LOG.debug("Starting lazy lowering expression construtor");

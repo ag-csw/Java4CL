@@ -1,10 +1,10 @@
 package api4kbj;
 
-import krconfigured.KnowledgeResourceConfigured;
+import krconfigured.KnowledgeResource;
 import elevation.Liftable;
 import elevation.Lowerable;
 
-public interface KnowledgeExpression extends KnowledgeResourceConfigured, Liftable,
+public interface KnowledgeExpression extends KnowledgeResource, Liftable,
 		Lowerable {
 
 	@Override

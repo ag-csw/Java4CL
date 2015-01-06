@@ -1,15 +1,15 @@
 package krhashmap.li;
 
+import krconfigured.BasicKnowledgeItemConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import functional.IO;
-import api4kbj.BasicKnowledgeItem;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeItemLI extends
-		AbstractKnowledgeResourceLI implements BasicKnowledgeItem {
+		AbstractKnowledgeResourceLI implements BasicKnowledgeItemConfigured {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeItemLI(KnowledgeResourceTemplate template,

@@ -1,5 +1,6 @@
 package elevation;
 
+import krconfigured.KnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeSourceLevel;
 

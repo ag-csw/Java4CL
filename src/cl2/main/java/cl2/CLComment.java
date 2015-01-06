@@ -1,10 +1,10 @@
 package cl2;
 
-import api4kbj.BasicAtomicKnowledgeResource;
+import krconfigured.BasicAtomicKnowledgeResourceConfigured;
 import functional.Option;
 
 public interface CLComment extends CLKnowledgeResource,
-		BasicAtomicKnowledgeResource {
+		BasicAtomicKnowledgeResourceConfigured {
 	// getter for symbol
 	String getSymbol();
 

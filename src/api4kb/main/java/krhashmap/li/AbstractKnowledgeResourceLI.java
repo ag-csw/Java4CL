@@ -1,7 +1,7 @@
 package krhashmap.li;
 
+import krconfigured.AbstractKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfigured;
-import api4kbj.AbstractKnowledgeResource;
 import api4kbj.CodecSystem;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;
@@ -14,7 +14,7 @@ import api4kbj.KnowledgeSourceLevel;
 import lazykb.LazyInitializing;
 
 public abstract class AbstractKnowledgeResourceLI extends
-		AbstractKnowledgeResource implements
+		AbstractKnowledgeResourceConfigured implements
 		LazyInitializing<KnowledgeResourceConfigured> {
 
 	// template constructor uses properties of template but does not set it as

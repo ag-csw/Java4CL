@@ -1,16 +1,16 @@
 package krhashmap.li;
 
+import krconfigured.BasicKnowledgeAssetConfigured;
+import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbj.BasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeAsset;
 import api4kbj.FocusedImmutableEnvironment;
 
 public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
-		BasicKnowledgeAsset {
+		BasicKnowledgeAssetConfigured {
 
 	protected static final Logger SLOG = LoggerFactory
 			.getLogger(BasicKnowledgeAssetLI.class);
@@ -38,7 +38,7 @@ public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 	}
 
 	@Override
-	public BasicKnowledgeExpression canonicalExpression() {
+	public BasicKnowledgeExpressionConfigured canonicalExpression() {
 		// TODO Auto-generated method stub
 		return null;
 	}

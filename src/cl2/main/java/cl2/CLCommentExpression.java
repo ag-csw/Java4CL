@@ -1,9 +1,9 @@
 package cl2;
 
+import krconfigured.BasicKnowledgeAssetConfigured;
+import krconfigured.BasicKnowledgeManifestationConfigured;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
-import api4kbj.BasicKnowledgeAsset;
-import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.KRRDialect;
 import api4kbj.KnowledgeResourceTemplate;
 
@@ -25,7 +25,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	// Lazy lowering constructor
-	private <T> CLCommentExpression(BasicKnowledgeAsset asset) {
+	private <T> CLCommentExpression(BasicKnowledgeAssetConfigured asset) {
 		super(asset, CL.lang);
 	}
 
@@ -88,7 +88,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!mapManifest.isEmpty()) {
-			BasicKnowledgeManifestation manifest = mapManifest.values()
+			BasicKnowledgeManifestationConfigured manifest = mapManifest.values()
 					.iterator().next();
 			// TODO extract symbol from manifest by building the DOM element
 			Element value = manifest.build(CL.xcl2dom);
@@ -131,7 +131,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!(mapManifest.isEmpty())) {
-			BasicKnowledgeManifestation manifest = mapManifest.values()
+			BasicKnowledgeManifestationConfigured manifest = mapManifest.values()
 					.iterator().next();
 			LOG.debug("manifest: {}", manifest);
 			// TODO move this to a helper function in xcl2.dom package
@@ -154,7 +154,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	@Override
-	protected BasicKnowledgeManifestation newManifestation(KRRDialect dialect) {
+	protected BasicKnowledgeManifestationConfigured newManifestation(KRRDialect dialect) {
 		// TODO Auto-generated method stub
 		return null;
 	}
