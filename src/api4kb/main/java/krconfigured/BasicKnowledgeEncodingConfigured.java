@@ -1,14 +1,8 @@
 package krconfigured;
 
-import api4kbj.KRRFormat;
-import api4kbj.KRRFormatType;
-import api4kbj.KnowledgeEncoding;
+import api4kbj.BasicKnowledgeEncoding;
 
-public interface BasicKnowledgeEncodingConfigured extends KnowledgeEncoding,
-		BasicKnowledgeResourceConfigured {
-
-	KRRFormat format();
-
-	<S> S build(KRRFormatType<S> formatType);
+public interface BasicKnowledgeEncodingConfigured extends
+		BasicKnowledgeResourceConfigured, BasicKnowledgeEncoding {
 
 }

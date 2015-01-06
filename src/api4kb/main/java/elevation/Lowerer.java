@@ -2,7 +2,6 @@ package elevation;
 
 import java.util.Arrays;
 
-import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.EnvironmentConfigured;
 import krconfigured.KnowledgeResourceConfigured;
@@ -11,6 +10,7 @@ import krconfigured.StructuredKnowledgeEncodingConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeManifestationConfigured;
 import api4kbj.BasicKnowledgeAsset;
+import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
@@ -138,7 +138,7 @@ public interface Lowerer {
 	public KnowledgeEncoding structuredEncode(
 			StructuredKnowledgeManifestationConfigured kr, Object... args);
 
-	public KnowledgeIO basicReproduce(BasicKnowledgeEncodingConfigured kr,
+	public KnowledgeIO basicReproduce(BasicKnowledgeEncoding kr,
 			Object... args);
 
 	public KnowledgeIO structuredReproduce(StructuredKnowledgeEncodingConfigured kr,
