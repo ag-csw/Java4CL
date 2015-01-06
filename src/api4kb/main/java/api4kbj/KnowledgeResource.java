@@ -1,6 +1,6 @@
 package api4kbj;
 
-import krconfigured.KnowledgeSource;
+import krconfigured.KnowledgeSourceConfigured;
 
 /**
  * Interface for API4KB knowledge resources, which are immutable knowledge
@@ -9,25 +9,6 @@ import krconfigured.KnowledgeSource;
  * @author taraathan
  *
  */
-public interface KnowledgeResource extends ImmutableSource, KnowledgeSource {
-
-	/**
-	 * Returns the abstraction level.
-	 * 
-	 * @return the abstraction level
-	 * @see KnowledgeAsset, KnowledgeExpression, KnowledgeManifestation,
-	 *      KnowledgeEncoding, KnowledgeItem
-	 */
-	KnowledgeSourceLevel level();
-
-	/**
-	 * Returns <tt>true</tt> if this knowledge resource is basic (not
-	 * structured).
-	 * 
-	 * @return <tt>true</tt> if this knowledge resource is basic (not
-	 *         structured)
-	 * @see BasicKnowledgeResource, StructuredKnowledgeResource
-	 */
-	boolean isBasic();
+public interface KnowledgeResource extends ImmutableSource, KnowledgeSourceConfigured {
 
 }
