@@ -3,15 +3,15 @@ package krhashmap;
 import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeExpression extends
 		AbstractKnowledgeExpressionLI implements BasicKnowledgeExpressionConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeExpression(KnowledgeResourceTemplate template,
+	public AbstractBasicKnowledgeExpression(KnowledgeResourceConfiguredTemplate template,
 			KRRLanguage lang) {
 		super(template);
 		LOG.debug(

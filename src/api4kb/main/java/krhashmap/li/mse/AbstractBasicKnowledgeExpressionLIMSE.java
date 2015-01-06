@@ -5,6 +5,7 @@ import java.util.HashMap;
 import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.AbstractBasicKnowledgeExpression;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.FocusedImmutableEnvironment;
@@ -12,7 +13,6 @@ import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeAsset;
-import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 import elevation.SelfLiftingExpression;
 import elevation.SelfLoweringExpression;
@@ -23,7 +23,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeExpressionLIMSE(
-			KnowledgeResourceTemplate template, KRRLanguage lang) {
+			KnowledgeResourceConfiguredTemplate template, KRRLanguage lang) {
 		super(template, lang);
 	}
 

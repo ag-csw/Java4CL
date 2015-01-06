@@ -3,12 +3,12 @@ package krhashmap.li;
 import java.util.HashSet;
 import java.util.Set;
 
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.Decomposable;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
-import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
 public class StructuredKnowledgeExpressionLI extends
@@ -22,7 +22,7 @@ public class StructuredKnowledgeExpressionLI extends
 	}
 
 	// component-based structure constructor
-	public StructuredKnowledgeExpressionLI(KnowledgeResourceTemplate template,
+	public StructuredKnowledgeExpressionLI(KnowledgeResourceConfiguredTemplate template,
 			KnowledgeExpression... components) {
 		super(template);
 		for (KnowledgeExpression component : components) {
@@ -30,7 +30,7 @@ public class StructuredKnowledgeExpressionLI extends
 		}
 	}
 
-	public StructuredKnowledgeExpressionLI(KnowledgeResourceTemplate template,
+	public StructuredKnowledgeExpressionLI(KnowledgeResourceConfiguredTemplate template,
 			HashSet<KnowledgeExpression> components) {
 		super(template);
 		this.components.addAll(components);

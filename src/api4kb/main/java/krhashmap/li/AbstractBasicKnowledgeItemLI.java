@@ -2,17 +2,17 @@ package krhashmap.li;
 
 import krconfigured.BasicKnowledgeItemConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import functional.IO;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
-import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractBasicKnowledgeItemLI extends
 		AbstractKnowledgeResourceLI implements BasicKnowledgeItemConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeItemLI(KnowledgeResourceTemplate template,
+	public AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
 			KRRFormat format, Object destination) {
 		super(template, KnowledgeSourceLevel.ITEM);
 		this.format = format;
@@ -21,7 +21,7 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T> AbstractBasicKnowledgeItemLI(KnowledgeResourceTemplate template,
+	public <T> AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
 			IO<T> value, KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect

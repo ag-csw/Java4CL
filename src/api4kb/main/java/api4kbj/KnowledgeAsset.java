@@ -1,6 +1,5 @@
 package api4kbj;
 
-import krconfigured.KnowledgeResourceConfigured;
 import elevation.Lowerable;
 
 /**
@@ -11,7 +10,7 @@ import elevation.Lowerable;
  * @author taraathan
  *
  */
-public interface KnowledgeAsset extends KnowledgeResourceConfigured, Lowerable {
+public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 
 	@Override
 	public default KnowledgeSourceLevel level() {

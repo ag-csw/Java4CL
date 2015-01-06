@@ -1,4 +1,5 @@
 import graphenvironment.FocusedGraphImmutableEnvironment;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
 
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 import cl2.CL;
 import cl2.CLCommentExpression;
@@ -38,7 +38,7 @@ public class Main {
 		// Direct construction of CLCommentExpression
 		String myCommentSymbol = "blah blah ...";
 		LOG.debug("Eager expression instantiation starting");
-		KnowledgeResourceTemplate basicExpressionTemplate = new KnowledgeResourceTemplate() {
+		KnowledgeResourceConfiguredTemplate basicExpressionTemplate = new KnowledgeResourceConfiguredTemplate() {
 
 			@Override
 			public KnowledgeSourceLevel level() {

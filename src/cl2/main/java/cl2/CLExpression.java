@@ -3,17 +3,17 @@ package cl2;
 import elevation.Lifter;
 import elevation.Lowerer;
 import krconfigured.BasicKnowledgeAssetConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.mse.AbstractBasicKnowledgeExpressionLIMSE;
 import api4kbj.KRRDialect;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class CLExpression extends
 		AbstractBasicKnowledgeExpressionLIMSE implements CLKnowledgeResource {
 
 	// base non-lazy constructor
 	// used by structure-based constructors
-	public CLExpression(KnowledgeResourceTemplate template, KRRLanguage lang) {
+	public CLExpression(KnowledgeResourceConfiguredTemplate template, KRRLanguage lang) {
 		super(template, CL.lang);
 	}
 

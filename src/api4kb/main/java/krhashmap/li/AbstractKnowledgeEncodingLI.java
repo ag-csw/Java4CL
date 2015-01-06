@@ -1,12 +1,12 @@
 package krhashmap.li;
 
 import krconfigured.KnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.KnowledgeEncoding;
-import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 
 public abstract class AbstractKnowledgeEncodingLI extends
@@ -17,7 +17,7 @@ public abstract class AbstractKnowledgeEncodingLI extends
 			.getLogger(AbstractKnowledgeEncodingLI.class);
 
 	// base non-lazy constructor
-	public AbstractKnowledgeEncodingLI(KnowledgeResourceTemplate template) {
+	public AbstractKnowledgeEncodingLI(KnowledgeResourceConfiguredTemplate template) {
 		super(template, KnowledgeSourceLevel.ENCODING);
 		LOG.debug("Starting base non-lazy constructor for template: {}",
 				template);

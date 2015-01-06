@@ -2,6 +2,7 @@ package krhashmap.li;
 
 import krconfigured.AbstractKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import api4kbj.CodecSystem;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;
@@ -9,7 +10,6 @@ import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeResourceTemplate;
 import api4kbj.KnowledgeSourceLevel;
 import lazykb.LazyInitializing;
 
@@ -19,7 +19,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 
 	// template constructor uses properties of template but does not set it as
 	// initial value
-	public AbstractKnowledgeResourceLI(KnowledgeResourceTemplate template,
+	public AbstractKnowledgeResourceLI(KnowledgeResourceConfiguredTemplate template,
 			KnowledgeSourceLevel level) {
 		// call the most general initializing constructor of the super class
 		super(template.defaultSender(), template.defaultReceiver(), template

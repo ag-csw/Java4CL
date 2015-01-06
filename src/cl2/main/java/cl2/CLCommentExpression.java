@@ -2,10 +2,10 @@ package cl2;
 
 import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeManifestationConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
 import api4kbj.KRRDialect;
-import api4kbj.KnowledgeResourceTemplate;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -17,7 +17,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 
 	// Private Constructors
 	// Component-based constructor
-	private CLCommentExpression(KnowledgeResourceTemplate template,
+	private CLCommentExpression(KnowledgeResourceConfiguredTemplate template,
 			String symbol, Option<CLCommentExpression> comment) {
 		super(template, CL.lang);
 		this.symbol = symbol;
@@ -40,7 +40,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 
 	// Static Factory Methods
 	public static CLCommentExpression eagerNewInstance(
-			KnowledgeResourceTemplate template, String symbol,
+			KnowledgeResourceConfiguredTemplate template, String symbol,
 			Option<CLCommentExpression> comment) {
 		// TODO do we want a static logger for this concrete class
 		SLOG.debug("Starting eagerNewInstance");
@@ -48,13 +48,13 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	public static CLCommentExpression eagerNewInstance(
-			KnowledgeResourceTemplate template, String symbol) {
+			KnowledgeResourceConfiguredTemplate template, String symbol) {
 		return eagerNewInstance(template, symbol,
 				new None<CLCommentExpression>());
 	}
 
 	public static CLCommentExpression eagerNewInstance(
-			KnowledgeResourceTemplate template) {
+			KnowledgeResourceConfiguredTemplate template) {
 		return eagerNewInstance(template, "");
 	}
 

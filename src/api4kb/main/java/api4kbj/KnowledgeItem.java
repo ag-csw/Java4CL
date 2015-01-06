@@ -1,10 +1,9 @@
 package api4kbj;
 
-import krconfigured.KnowledgeResourceConfigured;
 import elevation.Liftable;
 import functional.IO;
 
-public interface KnowledgeItem extends KnowledgeResourceConfigured, Liftable {
+public interface KnowledgeItem extends KnowledgeResource, Liftable {
 	public KnowledgeSourceLevel level = KnowledgeSourceLevel.ITEM;
 
 	@Override

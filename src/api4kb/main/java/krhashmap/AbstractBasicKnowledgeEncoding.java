@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.AbstractKnowledgeEncodingLI;
 
 import org.slf4j.Logger;
@@ -11,14 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
-import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeEncoding extends
 		AbstractKnowledgeEncodingLI implements BasicKnowledgeEncodingConfigured {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeEncoding(KnowledgeResourceTemplate template,
+	public AbstractBasicKnowledgeEncoding(KnowledgeResourceConfiguredTemplate template,
 			KRRFormat format) {
 		super(template);
 		this.format = format;
@@ -29,7 +29,7 @@ public abstract class AbstractBasicKnowledgeEncoding extends
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
 	public <T> AbstractBasicKnowledgeEncoding(
-			KnowledgeResourceTemplate template, T value,
+			KnowledgeResourceConfiguredTemplate template, T value,
 			KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect

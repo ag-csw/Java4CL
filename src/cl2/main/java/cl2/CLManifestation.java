@@ -1,20 +1,20 @@
 package cl2;
 
 import api4kbj.KRRDialectType;
-import api4kbj.KnowledgeResourceTemplate;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.AbstractBasicKnowledgeManifestation;
 
 public abstract class CLManifestation extends
 		AbstractBasicKnowledgeManifestation implements CLKnowledgeResource {
 
-	CLManifestation(KnowledgeResourceTemplate template) {
+	CLManifestation(KnowledgeResourceConfiguredTemplate template) {
 		super(template);
 		LOG.debug("Starting base nonlazy constructor for template: {}",
 				template);
 	}
 
 	// Wrapper-based constructor
-	public <T> CLManifestation(KnowledgeResourceTemplate template, T value,
+	public <T> CLManifestation(KnowledgeResourceConfiguredTemplate template, T value,
 			KRRDialectType<T> dialectType) {
 		super(template, value, dialectType);
 		LOG.debug("Starting wrapper constructor for value: {}", value);

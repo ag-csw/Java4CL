@@ -6,18 +6,18 @@ import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.AbstractKnowledgeManifestationLI;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
-import api4kbj.KnowledgeResourceTemplate;
 
 public abstract class AbstractBasicKnowledgeManifestation extends
 		AbstractKnowledgeManifestationLI implements BasicKnowledgeManifestationConfigured {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeManifestation(
-			KnowledgeResourceTemplate template) {
+			KnowledgeResourceConfiguredTemplate template) {
 		super(template);
 		LOG.debug("Starting base nonlazy constructor for template: {}",
 				template);
@@ -26,7 +26,7 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
 	public <T> AbstractBasicKnowledgeManifestation(
-			KnowledgeResourceTemplate template, T value,
+			KnowledgeResourceConfiguredTemplate template, T value,
 			KRRDialectType<T> dialectType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect

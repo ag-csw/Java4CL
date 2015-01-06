@@ -2,12 +2,12 @@ package krhashmap.li;
 
 import java.util.HashSet;
 
+import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krconfigured.StructuredKnowledgeAssetConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
-import api4kbj.KnowledgeResourceTemplate;
 
 public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		implements StructuredKnowledgeAssetConfigured {
@@ -18,7 +18,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		super(initialValue, env);
 	}
 
-	public StructuredKnowledgeAssetLI(KnowledgeResourceTemplate template,
+	public StructuredKnowledgeAssetLI(KnowledgeResourceConfiguredTemplate template,
 			FocusedImmutableEnvironment env, KnowledgeAsset... krs) {
 		super(template, env);
 		for (KnowledgeAsset kr : krs) {
