@@ -1,29 +1,28 @@
-package krhashmap;
+package krhashmap.li;
 
 import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeExpressionConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
-import krhashmap.li.AbstractKnowledgeExpressionLI;
 import api4kbj.KRRLanguage;
 
-public abstract class AbstractBasicKnowledgeExpression extends
+public abstract class AbstractBasicKnowledgeExpressionLI extends
 		AbstractKnowledgeExpressionLI implements
 		BasicKnowledgeExpressionConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeExpression(
+	public AbstractBasicKnowledgeExpressionLI(
 			KnowledgeResourceConfiguredTemplate template, KRRLanguage lang) {
 		super(template);
 		LOG.debug(
-				"Starting initializing-only AbstractBasicKnowledgeExpression constructor for language: {}",
+				"Starting initializing-only AbstractBasicKnowledgeExpressionLI constructor for language: {}",
 				lang);
 		this.lang = lang;
 	}
 
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset, then its default language becomes the target language
-	public AbstractBasicKnowledgeExpression(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeExpressionLI(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.lang = kr.defaultLanguage();
 		LOG.debug(
@@ -32,7 +31,7 @@ public abstract class AbstractBasicKnowledgeExpression extends
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractBasicKnowledgeExpression(BasicKnowledgeAssetConfigured kr,
+	public AbstractBasicKnowledgeExpressionLI(BasicKnowledgeAssetConfigured kr,
 			KRRLanguage lang) {
 		super(kr);
 		LOG.debug("Starting lazy lowering expression construtor");

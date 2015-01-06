@@ -6,7 +6,7 @@ import krconfigured.BasicKnowledgeAssetConfigured;
 import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
-import krhashmap.AbstractBasicKnowledgeExpression;
+import krhashmap.li.AbstractBasicKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRDialect;
@@ -18,7 +18,7 @@ import elevation.SelfLiftingExpression;
 import elevation.SelfLoweringExpression;
 
 public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
-		AbstractBasicKnowledgeExpression implements SelfLoweringExpression,
+		AbstractBasicKnowledgeExpressionLI implements SelfLoweringExpression,
 		SelfLiftingExpression {
 
 	// base non-lazy constructor

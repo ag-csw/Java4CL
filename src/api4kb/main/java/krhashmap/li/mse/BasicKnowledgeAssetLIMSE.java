@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.EnvironmentConfigured;
-import krhashmap.AbstractBasicKnowledgeExpression;
+import krhashmap.li.AbstractBasicKnowledgeExpressionLI;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRLanguage;
@@ -26,13 +26,13 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		mapExpressionSafePut((AbstractKnowledgeExpressionLI) initialValue);
 	}
 
-	protected final HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpression> mapExpression = new HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpression>();
+	protected final HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpressionLI> mapExpression = new HashMap<AbstractKRRLanguage, AbstractBasicKnowledgeExpressionLI>();
 
 	private void mapExpressionSafePut(AbstractKnowledgeExpressionLI expression) {
 		LOG.debug("Starting expression safeput", expression);
 		if (expression.isBasic()) {
 			LOG.debug("Verified expression is basic.");
-			AbstractBasicKnowledgeExpression bexpression = (AbstractBasicKnowledgeExpression) expression;
+			AbstractBasicKnowledgeExpressionLI bexpression = (AbstractBasicKnowledgeExpressionLI) expression;
 			mapExpression.put((AbstractKRRLanguage) bexpression.language(),
 					bexpression);
 		}
@@ -46,12 +46,12 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 
 	}
 
-	AbstractBasicKnowledgeExpression newExpression(KRRLanguage lang) {
+	AbstractBasicKnowledgeExpressionLI newExpression(KRRLanguage lang) {
 		// TODO LOG
 		// TODO check that expression is not null
-		AbstractBasicKnowledgeExpression expression = mapExpression.values()
+		AbstractBasicKnowledgeExpressionLI expression = mapExpression.values()
 				.iterator().next();
-		return (AbstractBasicKnowledgeExpression) environment().translate(
+		return (AbstractBasicKnowledgeExpressionLI) environment().translate(
 				expression, lang);
 	}
 
@@ -75,7 +75,7 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 	}
 
 	// lowering method with a parameter indicating the language
-	public AbstractBasicKnowledgeExpression express(KRRLanguage lang) {
+	public AbstractBasicKnowledgeExpressionLI express(KRRLanguage lang) {
 		LOG.debug("Starting express with language: {}", lang);
 		if (!environment.containsLanguage(lang)) {
 			throw new IllegalArgumentException(
@@ -84,8 +84,8 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		}
 		// TODO consider replacing level check with instanceof
 		if ((initialValue != null)
-				&& (initialValue instanceof AbstractBasicKnowledgeExpression)) {
-			AbstractBasicKnowledgeExpression expression = (AbstractBasicKnowledgeExpression) initialValue;
+				&& (initialValue instanceof AbstractBasicKnowledgeExpressionLI)) {
+			AbstractBasicKnowledgeExpressionLI expression = (AbstractBasicKnowledgeExpressionLI) initialValue;
 			LOG.debug("Found cached intial value for expression: {}",
 					expression);
 			if (expression.language() == lang) {
@@ -95,7 +95,7 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		}
 		if (mapExpression.containsKey(lang)) {
 			LOG.debug("Found cached expression in this language");
-			AbstractBasicKnowledgeExpression expression = mapExpression
+			AbstractBasicKnowledgeExpressionLI expression = mapExpression
 					.get(lang);
 			LOG.debug("Using cached expression: {}", expression);
 			return expression;
