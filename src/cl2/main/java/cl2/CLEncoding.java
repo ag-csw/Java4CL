@@ -1,11 +1,11 @@
 package cl2;
 
 import krconfigured.KnowledgeResourceConfiguredTemplate;
-import krhashmap.AbstractBasicKnowledgeEncodingLI;
+import krhashmap.li.mse.AbstractBasicKnowledgeEncodingLIMSE;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 
-public abstract class CLEncoding extends AbstractBasicKnowledgeEncodingLI
+public abstract class CLEncoding extends AbstractBasicKnowledgeEncodingLIMSE
 		implements CLKnowledgeResource {
 
 	CLEncoding(KnowledgeResourceConfiguredTemplate template, KRRFormat format) {

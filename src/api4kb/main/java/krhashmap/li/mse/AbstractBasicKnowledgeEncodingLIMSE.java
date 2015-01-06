@@ -1,10 +1,11 @@
-package krhashmap;
+package krhashmap.li.mse;
 
 import java.util.HashMap;
 
 import krconfigured.BasicKnowledgeEncodingConfigured;
 import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
+import krhashmap.AbstractBasicKnowledgeManifestation;
 import krhashmap.li.AbstractKnowledgeEncodingLI;
 
 import org.slf4j.Logger;
@@ -13,12 +14,12 @@ import org.slf4j.LoggerFactory;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 
-public abstract class AbstractBasicKnowledgeEncodingLI extends
+public abstract class AbstractBasicKnowledgeEncodingLIMSE extends
 		AbstractKnowledgeEncodingLI implements BasicKnowledgeEncodingConfigured {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeEncodingLI(
+	public AbstractBasicKnowledgeEncodingLIMSE(
 			KnowledgeResourceConfiguredTemplate template, KRRFormat format) {
 		super(template);
 		this.format = format;
@@ -28,7 +29,7 @@ public abstract class AbstractBasicKnowledgeEncodingLI extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T> AbstractBasicKnowledgeEncodingLI(
+	public <T> AbstractBasicKnowledgeEncodingLIMSE(
 			KnowledgeResourceConfiguredTemplate template, T value,
 			KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
@@ -40,7 +41,7 @@ public abstract class AbstractBasicKnowledgeEncodingLI extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeEncodingLI(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeEncodingLIMSE(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.format = kr.defaultFormat();
 		LOG.debug(
@@ -51,7 +52,7 @@ public abstract class AbstractBasicKnowledgeEncodingLI extends
 	// protected fields
 	protected KRRFormat format;
 	protected final HashMap<KRRFormatType<?>, Object> mapValue = new HashMap<KRRFormatType<?>, Object>();
-	// TODO move caches for lifting and lowering methods to LISME
+	// TODO implement cache for IO
 	protected AbstractBasicKnowledgeManifestation manifestation;
 
 	protected <T> void mapValueSafePut(T value, KRRFormatType<T> formatType) {
