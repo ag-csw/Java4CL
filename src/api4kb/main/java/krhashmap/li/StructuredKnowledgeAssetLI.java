@@ -5,10 +5,10 @@ import java.util.HashSet;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krconfigured.StructuredKnowledgeAssetConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
-import krconfigured.StructuredKnowledgeResource;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
+import api4kbj.StructuredKnowledgeResource;
 
 public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		implements StructuredKnowledgeAssetConfigured {

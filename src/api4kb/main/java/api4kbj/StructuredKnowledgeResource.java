@@ -1,6 +1,5 @@
-package krconfigured;
+package api4kbj;
 
-import api4kbj.KnowledgeResource;
 
 public interface StructuredKnowledgeResource extends KnowledgeResource {
 

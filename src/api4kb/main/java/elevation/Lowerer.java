@@ -4,10 +4,6 @@ import java.util.Arrays;
 
 import krconfigured.EnvironmentConfigured;
 import krconfigured.KnowledgeResourceConfigured;
-import krconfigured.StructuredKnowledgeAsset;
-import krconfigured.StructuredKnowledgeEncoding;
-import krconfigured.StructuredKnowledgeExpression;
-import krconfigured.StructuredKnowledgeManifestation;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
@@ -19,6 +15,10 @@ import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeIO;
 import api4kbj.KnowledgeManifestation;
 import api4kbj.KnowledgeSourceLevel;
+import api4kbj.StructuredKnowledgeAsset;
+import api4kbj.StructuredKnowledgeEncoding;
+import api4kbj.StructuredKnowledgeExpression;
+import api4kbj.StructuredKnowledgeManifestation;
 
 public interface Lowerer {
 

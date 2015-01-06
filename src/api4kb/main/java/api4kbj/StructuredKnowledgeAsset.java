@@ -1,8 +1,5 @@
-package krconfigured;
+package api4kbj;
 
-import api4kbj.Decomposable;
-import api4kbj.KnowledgeAsset;
-import api4kbj.KnowledgeExpression;
 
 public interface StructuredKnowledgeAsset extends KnowledgeAsset,
 		StructuredKnowledgeResource, Decomposable<KnowledgeAsset> {
