@@ -1,11 +1,8 @@
 package krconfigured;
 
-public interface BasicAtomicKnowledgeResourceConfigured extends
-		BasicKnowledgeResourceConfigured {
+import api4kbj.BasicAtomicKnowledgeResource;
 
-	@Override
-	default boolean isAtomic() {
-		return true;
-	}
+public interface BasicAtomicKnowledgeResourceConfigured extends
+		BasicKnowledgeResourceConfigured, BasicAtomicKnowledgeResource {
 
 }

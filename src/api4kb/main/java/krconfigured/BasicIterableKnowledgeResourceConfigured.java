@@ -1,5 +1,7 @@
 package krconfigured;
 
+import api4kbj.BasicIterableKnowledgeResource;
+
 /**
  * A BasicKnowledgeResourceConfigured which is composed of an iterable of
  * BasicKnowledgeResources.
@@ -8,12 +10,6 @@ package krconfigured;
  *
  */
 public interface BasicIterableKnowledgeResourceConfigured extends
-		BasicKnowledgeResourceConfigured {
+		BasicKnowledgeResourceConfigured, BasicIterableKnowledgeResource {
 
-	@Override
-	default boolean isAtomic() {
-		return false;
-	}
-
-	Iterable<BasicKnowledgeResourceConfigured> iterable();
 }
