@@ -44,7 +44,7 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 	private final Object destination;
 
 	@Override
-	public Object destination() {
+	public Object item() {
 		return destination;
 	}
 

@@ -8,8 +8,8 @@ import functional.IO;
 public interface BasicKnowledgeIOConfigured extends KnowledgeIO,
 		BasicKnowledgeResourceConfigured {
 
-	// getter for destination
-	Object destination();
+	// getter for item
+	Object item();
 
 	// getter for format
 	KRRFormat format();
