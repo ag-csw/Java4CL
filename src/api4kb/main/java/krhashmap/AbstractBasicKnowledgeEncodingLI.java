@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 
-public abstract class AbstractBasicKnowledgeEncoding extends
+public abstract class AbstractBasicKnowledgeEncodingLI extends
 		AbstractKnowledgeEncodingLI implements BasicKnowledgeEncodingConfigured {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeEncoding(
+	public AbstractBasicKnowledgeEncodingLI(
 			KnowledgeResourceConfiguredTemplate template, KRRFormat format) {
 		super(template);
 		this.format = format;
@@ -28,7 +28,7 @@ public abstract class AbstractBasicKnowledgeEncoding extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T> AbstractBasicKnowledgeEncoding(
+	public <T> AbstractBasicKnowledgeEncodingLI(
 			KnowledgeResourceConfiguredTemplate template, T value,
 			KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
@@ -40,7 +40,7 @@ public abstract class AbstractBasicKnowledgeEncoding extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeEncoding(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeEncodingLI(BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.format = kr.defaultFormat();
 		LOG.debug(
