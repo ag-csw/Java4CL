@@ -5,6 +5,7 @@ import java.util.HashSet;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krconfigured.StructuredKnowledgeAssetConfigured;
 import krconfigured.StructuredKnowledgeExpressionConfigured;
+import krconfigured.StructuredKnowledgeResource;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
@@ -35,7 +36,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 	@Override
 	public int numComponents() {
 		if (initialValue != null) {
-			return ((StructuredKnowledgeResourceConfigured) initialValue).numComponents();
+			return ((StructuredKnowledgeResource) initialValue).numComponents();
 		}
 		return components.size();
 	}

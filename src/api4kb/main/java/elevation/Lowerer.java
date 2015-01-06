@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 import krconfigured.EnvironmentConfigured;
 import krconfigured.KnowledgeResourceConfigured;
-import krconfigured.StructuredKnowledgeAssetConfigured;
-import krconfigured.StructuredKnowledgeEncodingConfigured;
-import krconfigured.StructuredKnowledgeExpressionConfigured;
-import krconfigured.StructuredKnowledgeManifestationConfigured;
+import krconfigured.StructuredKnowledgeAsset;
+import krconfigured.StructuredKnowledgeEncoding;
+import krconfigured.StructuredKnowledgeExpression;
+import krconfigured.StructuredKnowledgeManifestation;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
@@ -96,7 +96,7 @@ public interface Lowerer {
 	public default KnowledgeExpression express(KnowledgeAsset kr,
 			Object... args) {
 		if (!kr.isBasic()) {
-			return structuredExpress((StructuredKnowledgeAssetConfigured) kr, args);
+			return structuredExpress((StructuredKnowledgeAsset) kr, args);
 		}
 		return basicExpress((BasicKnowledgeAsset) kr, args);
 
@@ -105,7 +105,7 @@ public interface Lowerer {
 	public default KnowledgeManifestation manifest(KnowledgeExpression kr,
 			Object... args) {
 		if (!kr.isBasic()) {
-			return structuredManifest((StructuredKnowledgeExpressionConfigured) kr, args);
+			return structuredManifest((StructuredKnowledgeExpression) kr, args);
 		}
 		return basicManifest((BasicKnowledgeExpression) kr, args);
 
@@ -114,7 +114,7 @@ public interface Lowerer {
 	public default KnowledgeEncoding encode(KnowledgeManifestation kr,
 			Object... args) {
 		if (!kr.isBasic()) {
-			return structuredEncode((StructuredKnowledgeManifestationConfigured) kr, args);
+			return structuredEncode((StructuredKnowledgeManifestation) kr, args);
 		}
 		return basicEncode((BasicKnowledgeManifestation) kr, args);
 
@@ -123,25 +123,25 @@ public interface Lowerer {
 	public KnowledgeExpression basicExpress(BasicKnowledgeAsset kr,
 			Object... args);
 
-	public KnowledgeExpression structuredExpress(StructuredKnowledgeAssetConfigured kr,
+	public KnowledgeExpression structuredExpress(StructuredKnowledgeAsset kr,
 			Object... args);
 
 	public KnowledgeManifestation basicManifest(BasicKnowledgeExpression kr,
 			Object... args);
 
 	public KnowledgeManifestation structuredManifest(
-			StructuredKnowledgeExpressionConfigured kr, Object... args);
+			StructuredKnowledgeExpression kr, Object... args);
 
 	public KnowledgeEncoding basicEncode(BasicKnowledgeManifestation kr,
 			Object... args);
 
 	public KnowledgeEncoding structuredEncode(
-			StructuredKnowledgeManifestationConfigured kr, Object... args);
+			StructuredKnowledgeManifestation kr, Object... args);
 
 	public KnowledgeIO basicReproduce(BasicKnowledgeEncoding kr,
 			Object... args);
 
-	public KnowledgeIO structuredReproduce(StructuredKnowledgeEncodingConfigured kr,
+	public KnowledgeIO structuredReproduce(StructuredKnowledgeEncoding kr,
 			Object... args);
 
 }

@@ -1,9 +1,9 @@
 package elevation;
 
-import krconfigured.StructuredKnowledgeEncodingConfigured;
-import krconfigured.StructuredKnowledgeExpressionConfigured;
-import krconfigured.StructuredKnowledgeIOConfigured;
-import krconfigured.StructuredKnowledgeManifestationConfigured;
+import krconfigured.StructuredKnowledgeEncoding;
+import krconfigured.StructuredKnowledgeExpression;
+import krconfigured.StructuredKnowledgeIO;
+import krconfigured.StructuredKnowledgeManifestation;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeIO;
@@ -67,7 +67,7 @@ public interface Lifter {
 	default KnowledgeAsset conceptualize(KnowledgeExpression kr,
 			FocusedImmutableEnvironment e) {
 		if (!kr.isBasic()) {
-			return structuredConceptualize((StructuredKnowledgeExpressionConfigured) kr,
+			return structuredConceptualize((StructuredKnowledgeExpression) kr,
 					e);
 		}
 		return basicConceptualize((BasicKnowledgeExpression) kr, e);
@@ -76,7 +76,7 @@ public interface Lifter {
 
 	default KnowledgeExpression parse(KnowledgeManifestation kr) {
 		if (!kr.isBasic()) {
-			return structuredParse((StructuredKnowledgeManifestationConfigured) kr);
+			return structuredParse((StructuredKnowledgeManifestation) kr);
 		}
 		return basicParse((BasicKnowledgeManifestation) kr);
 
@@ -84,7 +84,7 @@ public interface Lifter {
 
 	default KnowledgeManifestation decode(KnowledgeEncoding kr) {
 		if (!kr.isBasic()) {
-			return structuredDecode((StructuredKnowledgeEncodingConfigured) kr);
+			return structuredDecode((StructuredKnowledgeEncoding) kr);
 		}
 		return basicDecode((BasicKnowledgeEncoding) kr);
 
@@ -92,28 +92,28 @@ public interface Lifter {
 
 	default KnowledgeEncoding prototype(KnowledgeIO kr) {
 		if (!kr.isBasic()) {
-			return structuredPrototype((StructuredKnowledgeIOConfigured) kr);
+			return structuredPrototype((StructuredKnowledgeIO) kr);
 		}
 		return basicPrototype((BasicKnowledgeIO) kr);
 
 	}
 
-	KnowledgeAsset structuredConceptualize(StructuredKnowledgeExpressionConfigured kr,
+	KnowledgeAsset structuredConceptualize(StructuredKnowledgeExpression kr,
 			FocusedImmutableEnvironment e);
 
 	KnowledgeAsset basicConceptualize(BasicKnowledgeExpression kr,
 			FocusedImmutableEnvironment e);
 
-	KnowledgeExpression structuredParse(StructuredKnowledgeManifestationConfigured kr);
+	KnowledgeExpression structuredParse(StructuredKnowledgeManifestation kr);
 
 	KnowledgeExpression basicParse(BasicKnowledgeManifestation kr);
 
-	KnowledgeManifestation structuredDecode(StructuredKnowledgeEncodingConfigured kr);
+	KnowledgeManifestation structuredDecode(StructuredKnowledgeEncoding kr);
 
 	KnowledgeManifestation basicDecode(BasicKnowledgeEncoding kr);
 
 	KnowledgeEncoding basicPrototype(BasicKnowledgeIO kr);
 
-	KnowledgeEncoding structuredPrototype(StructuredKnowledgeIOConfigured kr);
+	KnowledgeEncoding structuredPrototype(StructuredKnowledgeIO kr);
 
 }
