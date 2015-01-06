@@ -81,6 +81,6 @@ public interface EnvironmentConfigured {
 	 * 
 	 * @return the default sender
 	 */
-	InputStream defaultSender();
+	InputStream defaultInput();
 
 }

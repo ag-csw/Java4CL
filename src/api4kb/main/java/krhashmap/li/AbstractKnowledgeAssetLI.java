@@ -19,7 +19,7 @@ public abstract class AbstractKnowledgeAssetLI extends
 			FocusedImmutableEnvironment env) {
 		// call lazy intializing constructor of super class
 		super(initialValue, KnowledgeSourceLevel.ASSET, initialValue
-				.defaultSender(), initialValue.defaultReceiver(), initialValue
+				.defaultInput(), initialValue.defaultReceiver(), initialValue
 				.defaultCodecSystem(), initialValue.defaultFormatType(),
 				initialValue.defaultFormat(),
 				initialValue.defaultDialectType(), initialValue

@@ -17,13 +17,13 @@ public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeRe
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKnowledgeResourceConfigured(InputStream defaultSender,
+	public AbstractKnowledgeResourceConfigured(InputStream defaultInput,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,
 			FocusedImmutableEnvironment defaultEnvironment,
 			KRRLanguage defaultLanguage) {
-		this.defaultSender = defaultSender;
+		this.defaultInput = defaultInput;
 		this.defaultReceiver = defaultReceiver;
 		this.defaultSystem = defaultSystem;
 		this.defaultFormatType = defaultFormatType;
@@ -34,7 +34,7 @@ public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeRe
 		this.defaultLanguage = defaultLanguage;
 	}
 
-	private InputStream defaultSender;
+	private InputStream defaultInput;
 	private Object defaultReceiver;
 	private CodecSystem<?, ?> defaultSystem;
 	private KRRFormatType<?> defaultFormatType;
@@ -85,8 +85,8 @@ public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeRe
 	}
 
 	@Override
-	public InputStream defaultSender() {
-		return defaultSender;
+	public InputStream defaultInput() {
+		return defaultInput;
 	}
 
 }

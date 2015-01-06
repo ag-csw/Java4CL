@@ -10,11 +10,11 @@ import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KnowledgeSourceLevel;
 
-public abstract class AbstractBasicKnowledgeItemLI extends
+public abstract class AbstractBasicKnowledgeIOLI extends
 		AbstractKnowledgeResourceLI implements BasicKnowledgeIOConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
+	public AbstractBasicKnowledgeIOLI(KnowledgeResourceConfiguredTemplate template,
 			KRRFormat format, InputStream input) {
 		super(template, KnowledgeSourceLevel.IO);
 		this.format = format;
@@ -23,7 +23,7 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T, R extends InputStream> AbstractBasicKnowledgeItemLI(KnowledgeResourceConfiguredTemplate template,
+	public <T, R extends InputStream> AbstractBasicKnowledgeIOLI(KnowledgeResourceConfiguredTemplate template,
 			IO<R> value, KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
@@ -33,13 +33,13 @@ public abstract class AbstractBasicKnowledgeItemLI extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeItemLI(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeIOLI(BasicKnowledgeResourceConfigured kr) {
 		super(kr, KnowledgeSourceLevel.IO);
 		LOG.debug(
 				"Starting no-arg lazy initializing construtor with resource: {}",
 				kr);
 		this.format = kr.defaultFormat();
-		this.input = kr.defaultSender();
+		this.input = kr.defaultInput();
 	}
 
 	protected KRRFormat format;

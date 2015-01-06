@@ -94,7 +94,7 @@ public class Main {
 			}
 
 			@Override
-			public InputStream defaultSender() {
+			public InputStream defaultInput() {
 				return System.in;
 			}
 

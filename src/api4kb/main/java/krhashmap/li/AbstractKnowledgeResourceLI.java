@@ -24,7 +24,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 	public AbstractKnowledgeResourceLI(KnowledgeResourceConfiguredTemplate template,
 			KnowledgeSourceLevel level) {
 		// call the most general initializing constructor of the super class
-		super(template.defaultSender(), template.defaultReceiver(), template
+		super(template.defaultInput(), template.defaultReceiver(), template
 				.defaultCodecSystem(), template.defaultFormatType(), template
 				.defaultFormat(), template.defaultDialectType(), template
 				.defaultDialect(), template.defaultEnvironment(), template
@@ -35,8 +35,8 @@ public abstract class AbstractKnowledgeResourceLI extends
 	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
 			KnowledgeSourceLevel level) {
 		// select default values from passed initialValue
-		// TODO improve defaultSender, Receiver handling
-		this(initialValue, level, initialValue.defaultSender(), initialValue
+		// TODO improve defaultInput, Receiver handling
+		this(initialValue, level, initialValue.defaultInput(), initialValue
 				.defaultReceiver(), initialValue.defaultCodecSystem(),
 				initialValue.defaultFormatType(), initialValue.defaultFormat(),
 				initialValue.defaultDialectType(), initialValue
@@ -48,14 +48,14 @@ public abstract class AbstractKnowledgeResourceLI extends
 	// Arguments are the initialValue, the target level and additional
 	// parameters
 	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
-			KnowledgeSourceLevel level, InputStream defaultSender,
+			KnowledgeSourceLevel level, InputStream defaultInput,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,
 			FocusedImmutableEnvironment defaultEnvironment,
 			KRRLanguage defaultLanguage) {
 		// call the most general initializing constructor of the super class
-		super(defaultSender, defaultReceiver, defaultSystem, defaultFormatType,
+		super(defaultInput, defaultReceiver, defaultSystem, defaultFormatType,
 				defaultFormat, defaultDialectType, defaultDialect,
 				defaultEnvironment, defaultLanguage);
 		// TODO check that defaults and the initial value are
