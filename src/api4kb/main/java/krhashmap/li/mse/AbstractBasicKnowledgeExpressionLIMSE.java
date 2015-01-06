@@ -28,15 +28,16 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	}
 
 	// No-parameter Lazy initializing constructor
-	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeExpressionLIMSE(
+			BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		// TODO level generalization needed
 		manifestSafePut((BasicKnowledgeManifestationConfigured) kr);
 	}
 
 	// Lazy lowering constructor - argument is an Asset
-	public AbstractBasicKnowledgeExpressionLIMSE(BasicKnowledgeAssetConfigured kr,
-			KRRLanguage lang) {
+	public AbstractBasicKnowledgeExpressionLIMSE(
+			BasicKnowledgeAssetConfigured kr, KRRLanguage lang) {
 		super(kr, lang);
 		assetSafePut(kr);
 	}
@@ -142,7 +143,8 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 		mapAsset.put(kr.environment(), kr);
 	}
 
-	protected <T> void manifestSafePut(BasicKnowledgeManifestationConfigured manifest) {
+	protected <T> void manifestSafePut(
+			BasicKnowledgeManifestationConfigured manifest) {
 		mapManifest.put(manifest.dialect(), manifest);
 	}
 

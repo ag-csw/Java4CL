@@ -14,12 +14,14 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		implements StructuredKnowledgeAssetConfigured {
 
 	// lazy initializing constructor - lifting
-	public StructuredKnowledgeAssetLI(StructuredKnowledgeResourceConfigured initialValue,
+	public StructuredKnowledgeAssetLI(
+			StructuredKnowledgeResourceConfigured initialValue,
 			FocusedImmutableEnvironment env) {
 		super(initialValue, env);
 	}
 
-	public StructuredKnowledgeAssetLI(KnowledgeResourceConfiguredTemplate template,
+	public StructuredKnowledgeAssetLI(
+			KnowledgeResourceConfiguredTemplate template,
 			FocusedImmutableEnvironment env, KnowledgeAsset... krs) {
 		super(template, env);
 		for (KnowledgeAsset kr : krs) {

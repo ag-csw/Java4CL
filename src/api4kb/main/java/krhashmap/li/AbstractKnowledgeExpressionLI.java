@@ -17,14 +17,16 @@ public abstract class AbstractKnowledgeExpressionLI extends
 			.getLogger(AbstractKnowledgeExpressionLI.class);
 
 	// base non-lazy constructor
-	public AbstractKnowledgeExpressionLI(KnowledgeResourceConfiguredTemplate template) {
+	public AbstractKnowledgeExpressionLI(
+			KnowledgeResourceConfiguredTemplate template) {
 		super(template, KnowledgeSourceLevel.EXPRESSION);
 		LOG.debug("Starting base non-lazy constructor for template: {}",
 				template);
 	}
 
 	// lazy initializing constructor
-	public AbstractKnowledgeExpressionLI(KnowledgeResourceConfigured initialValue) {
+	public AbstractKnowledgeExpressionLI(
+			KnowledgeResourceConfigured initialValue) {
 		super(initialValue, KnowledgeSourceLevel.EXPRESSION);
 		LOG.debug(
 				"Starting lazy-initializing constructor with initialValue: {}",

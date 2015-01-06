@@ -13,7 +13,8 @@ public abstract class CLExpression extends
 
 	// base non-lazy constructor
 	// used by structure-based constructors
-	public CLExpression(KnowledgeResourceConfiguredTemplate template, KRRLanguage lang) {
+	public CLExpression(KnowledgeResourceConfiguredTemplate template,
+			KRRLanguage lang) {
 		super(template, CL.lang);
 	}
 

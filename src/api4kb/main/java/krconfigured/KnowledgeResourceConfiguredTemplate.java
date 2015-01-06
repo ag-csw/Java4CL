@@ -1,6 +1,6 @@
 package krconfigured;
 
-
-public interface KnowledgeResourceConfiguredTemplate extends KnowledgeResourceConfigured, EnvironmentConfigured {
+public interface KnowledgeResourceConfiguredTemplate extends
+		KnowledgeResourceConfigured, EnvironmentConfigured {
 
 }

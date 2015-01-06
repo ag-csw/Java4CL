@@ -18,8 +18,8 @@ public abstract class AbstractBasicKnowledgeEncoding extends
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeEncoding(KnowledgeResourceConfiguredTemplate template,
-			KRRFormat format) {
+	public AbstractBasicKnowledgeEncoding(
+			KnowledgeResourceConfiguredTemplate template, KRRFormat format) {
 		super(template);
 		this.format = format;
 		LOG.debug("Starting base nonlazy constructor for template: {}",

@@ -9,6 +9,7 @@ import api4kbj.KnowledgeResource;
  * @author taraathan
  *
  */
-public interface KnowledgeResourceConfigured extends KnowledgeResource, KnowledgeSourceConfigured {
+public interface KnowledgeResourceConfigured extends KnowledgeResource,
+		KnowledgeSourceConfigured {
 
 }

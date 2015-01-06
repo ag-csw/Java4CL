@@ -1,7 +1,7 @@
 package api4kbj;
 
-
-public interface BasicKnowledgeEncoding extends KnowledgeEncoding, BasicKnowledgeResource {
+public interface BasicKnowledgeEncoding extends KnowledgeEncoding,
+		BasicKnowledgeResource {
 
 	KRRFormat format();
 

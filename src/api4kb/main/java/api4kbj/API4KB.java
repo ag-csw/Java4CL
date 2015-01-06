@@ -33,8 +33,7 @@ public final class API4KB {
 		return m.getSnapshot().equals(i);
 	}
 
-	public static Boolean lifts(KnowledgeResource krup,
-			KnowledgeResource krdown) {
+	public static Boolean lifts(KnowledgeResource krup, KnowledgeResource krdown) {
 		// TODO implement using an Operation
 		// In the case that krup is an Asset, then refer to the environment of
 		// krup

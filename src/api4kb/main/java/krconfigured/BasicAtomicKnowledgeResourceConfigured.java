@@ -1,7 +1,7 @@
 package krconfigured;
 
-
-public interface BasicAtomicKnowledgeResourceConfigured extends BasicKnowledgeResourceConfigured {
+public interface BasicAtomicKnowledgeResourceConfigured extends
+		BasicKnowledgeResourceConfigured {
 
 	@Override
 	default boolean isAtomic() {

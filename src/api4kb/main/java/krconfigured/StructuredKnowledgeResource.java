@@ -4,7 +4,8 @@ import api4kbj.KnowledgeResource;
 
 public interface StructuredKnowledgeResource extends KnowledgeResource {
 
-	default boolean isBasic(){
+	@Override
+	default boolean isBasic() {
 		return false;
 	}
 

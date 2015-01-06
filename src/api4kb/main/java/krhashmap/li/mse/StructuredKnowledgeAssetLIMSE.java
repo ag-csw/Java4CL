@@ -23,7 +23,8 @@ public class StructuredKnowledgeAssetLIMSE extends StructuredKnowledgeAssetLI
 	// }
 
 	// lazy initializing constructor
-	public StructuredKnowledgeAssetLIMSE(StructuredKnowledgeResourceConfigured kr,
+	public StructuredKnowledgeAssetLIMSE(
+			StructuredKnowledgeResourceConfigured kr,
 			FocusedImmutableEnvironment env) {
 		super(kr, env);
 	}

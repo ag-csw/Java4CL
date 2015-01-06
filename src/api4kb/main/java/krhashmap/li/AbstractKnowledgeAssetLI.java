@@ -15,7 +15,8 @@ public abstract class AbstractKnowledgeAssetLI extends
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	// lazy initializing constructor - lifting
-	protected AbstractKnowledgeAssetLI(KnowledgeResourceConfigured initialValue,
+	protected AbstractKnowledgeAssetLI(
+			KnowledgeResourceConfigured initialValue,
 			FocusedImmutableEnvironment env) {
 		// call lazy intializing constructor of super class
 		super(initialValue, KnowledgeSourceLevel.ASSET, initialValue

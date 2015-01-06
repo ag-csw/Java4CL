@@ -178,7 +178,9 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 		return true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -196,7 +198,9 @@ public class GraphImmutableEnvironment implements ImmutableEnvironment {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

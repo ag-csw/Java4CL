@@ -17,14 +17,16 @@ public abstract class AbstractKnowledgeManifestationLI extends
 			.getLogger(AbstractKnowledgeManifestationLI.class);
 
 	// base non-lazy constructor
-	public AbstractKnowledgeManifestationLI(KnowledgeResourceConfiguredTemplate template) {
+	public AbstractKnowledgeManifestationLI(
+			KnowledgeResourceConfiguredTemplate template) {
 		super(template, KnowledgeSourceLevel.MANIFESTATION);
 		LOG.debug("Starting base non-lazy constructor for template: {}",
 				template);
 	}
 
 	// lazy initializing constructor
-	public AbstractKnowledgeManifestationLI(KnowledgeResourceConfigured initialValue) {
+	public AbstractKnowledgeManifestationLI(
+			KnowledgeResourceConfigured initialValue) {
 		super(initialValue, KnowledgeSourceLevel.MANIFESTATION);
 		LOG.debug(
 				"Starting lazy-initializing constructor with initialValue: {}",

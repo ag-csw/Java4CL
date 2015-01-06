@@ -21,7 +21,8 @@ public abstract class AbstractKnowledgeResourceLI extends
 
 	// template constructor uses properties of template but does not set it as
 	// initial value
-	public AbstractKnowledgeResourceLI(KnowledgeResourceConfiguredTemplate template,
+	public AbstractKnowledgeResourceLI(
+			KnowledgeResourceConfiguredTemplate template,
 			KnowledgeSourceLevel level) {
 		// call the most general initializing constructor of the super class
 		super(template.defaultInput(), template.defaultReceiver(), template
@@ -32,8 +33,8 @@ public abstract class AbstractKnowledgeResourceLI extends
 	}
 
 	// Specialized lazy initialization constructors
-	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
-			KnowledgeSourceLevel level) {
+	public AbstractKnowledgeResourceLI(
+			KnowledgeResourceConfigured initialValue, KnowledgeSourceLevel level) {
 		// select default values from passed initialValue
 		// TODO improve defaultInput, Receiver handling
 		this(initialValue, level, initialValue.defaultInput(), initialValue
@@ -47,7 +48,8 @@ public abstract class AbstractKnowledgeResourceLI extends
 	// package-private constructors for lazy initialization
 	// Arguments are the initialValue, the target level and additional
 	// parameters
-	public AbstractKnowledgeResourceLI(KnowledgeResourceConfigured initialValue,
+	public AbstractKnowledgeResourceLI(
+			KnowledgeResourceConfigured initialValue,
 			KnowledgeSourceLevel level, InputStream defaultInput,
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,

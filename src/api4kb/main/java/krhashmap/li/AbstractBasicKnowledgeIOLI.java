@@ -14,8 +14,9 @@ public abstract class AbstractBasicKnowledgeIOLI extends
 		AbstractKnowledgeResourceLI implements BasicKnowledgeIOConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeIOLI(KnowledgeResourceConfiguredTemplate template,
-			KRRFormat format, InputStream input) {
+	public AbstractBasicKnowledgeIOLI(
+			KnowledgeResourceConfiguredTemplate template, KRRFormat format,
+			InputStream input) {
 		super(template, KnowledgeSourceLevel.IO);
 		this.format = format;
 		this.input = input;
@@ -23,8 +24,9 @@ public abstract class AbstractBasicKnowledgeIOLI extends
 
 	// Wrapper-based constructor
 	// TODO move to Abstract class that is above LI
-	public <T, R extends InputStream> AbstractBasicKnowledgeIOLI(KnowledgeResourceConfiguredTemplate template,
-			IO<R> value, KRRFormatType<T> formatType) {
+	public <T, R extends InputStream> AbstractBasicKnowledgeIOLI(
+			KnowledgeResourceConfiguredTemplate template, IO<R> value,
+			KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
 		this(template, formatType.format(), value.input());

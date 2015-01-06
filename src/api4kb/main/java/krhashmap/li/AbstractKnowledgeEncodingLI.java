@@ -17,7 +17,8 @@ public abstract class AbstractKnowledgeEncodingLI extends
 			.getLogger(AbstractKnowledgeEncodingLI.class);
 
 	// base non-lazy constructor
-	public AbstractKnowledgeEncodingLI(KnowledgeResourceConfiguredTemplate template) {
+	public AbstractKnowledgeEncodingLI(
+			KnowledgeResourceConfiguredTemplate template) {
 		super(template, KnowledgeSourceLevel.ENCODING);
 		LOG.debug("Starting base non-lazy constructor for template: {}",
 				template);

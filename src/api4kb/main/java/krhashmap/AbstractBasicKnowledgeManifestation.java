@@ -13,7 +13,8 @@ import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
 
 public abstract class AbstractBasicKnowledgeManifestation extends
-		AbstractKnowledgeManifestationLI implements BasicKnowledgeManifestationConfigured {
+		AbstractKnowledgeManifestationLI implements
+		BasicKnowledgeManifestationConfigured {
 
 	// base non-lazy constructor
 	public AbstractBasicKnowledgeManifestation(
@@ -37,7 +38,8 @@ public abstract class AbstractBasicKnowledgeManifestation extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeManifestation(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeManifestation(
+			BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.dialect = kr.defaultDialect();
 		LOG.debug(

@@ -1,6 +1,5 @@
 package krconfigured;
 
-
 /**
  * A BasicKnowledgeResourceConfigured which is composed of an iterable of
  * BasicKnowledgeResources.
@@ -8,7 +7,8 @@ package krconfigured;
  * @author taraathan
  *
  */
-public interface BasicIterableKnowledgeResourceConfigured extends BasicKnowledgeResourceConfigured {
+public interface BasicIterableKnowledgeResourceConfigured extends
+		BasicKnowledgeResourceConfigured {
 
 	@Override
 	default boolean isAtomic() {

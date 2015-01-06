@@ -14,8 +14,8 @@ public abstract class CLManifestation extends
 	}
 
 	// Wrapper-based constructor
-	public <T> CLManifestation(KnowledgeResourceConfiguredTemplate template, T value,
-			KRRDialectType<T> dialectType) {
+	public <T> CLManifestation(KnowledgeResourceConfiguredTemplate template,
+			T value, KRRDialectType<T> dialectType) {
 		super(template, value, dialectType);
 		LOG.debug("Starting wrapper constructor for value: {}", value);
 	}

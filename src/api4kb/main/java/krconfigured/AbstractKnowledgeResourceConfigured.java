@@ -13,7 +13,8 @@ import api4kbj.KRRFormat;
 import api4kbj.KRRFormatType;
 import api4kbj.KRRLanguage;
 
-public abstract class AbstractKnowledgeResourceConfigured implements KnowledgeResourceConfigured {
+public abstract class AbstractKnowledgeResourceConfigured implements
+		KnowledgeResourceConfigured {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 

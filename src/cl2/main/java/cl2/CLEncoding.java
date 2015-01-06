@@ -15,8 +15,8 @@ public abstract class CLEncoding extends AbstractBasicKnowledgeEncoding
 	}
 
 	// Wrapper-based constructor
-	public <T> CLEncoding(KnowledgeResourceConfiguredTemplate template, T value,
-			KRRFormatType<T> formatType) {
+	public <T> CLEncoding(KnowledgeResourceConfiguredTemplate template,
+			T value, KRRFormatType<T> formatType) {
 		super(template, value, formatType);
 		LOG.debug("Starting wrapper constructor for value: {}", value);
 	}

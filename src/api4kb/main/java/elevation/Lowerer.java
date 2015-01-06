@@ -44,8 +44,8 @@ public interface Lowerer {
 		}
 	}
 
-	public default KnowledgeExpression expresser(KnowledgeResourceConfigured kr,
-			Object... args) {
+	public default KnowledgeExpression expresser(
+			KnowledgeResourceConfigured kr, Object... args) {
 		switch (kr.level()) {
 		case IO:
 			throw new IllegalArgumentException(
@@ -67,8 +67,8 @@ public interface Lowerer {
 		}
 	}
 
-	public default KnowledgeManifestation manifester(KnowledgeResourceConfigured kr,
-			Object... args) {
+	public default KnowledgeManifestation manifester(
+			KnowledgeResourceConfigured kr, Object... args) {
 		switch (kr.level()) {
 		case IO:
 			throw new IllegalArgumentException(
@@ -138,8 +138,7 @@ public interface Lowerer {
 	public KnowledgeEncoding structuredEncode(
 			StructuredKnowledgeManifestation kr, Object... args);
 
-	public KnowledgeIO basicReproduce(BasicKnowledgeEncoding kr,
-			Object... args);
+	public KnowledgeIO basicReproduce(BasicKnowledgeEncoding kr, Object... args);
 
 	public KnowledgeIO structuredReproduce(StructuredKnowledgeEncoding kr,
 			Object... args);

@@ -88,8 +88,8 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!mapManifest.isEmpty()) {
-			BasicKnowledgeManifestationConfigured manifest = mapManifest.values()
-					.iterator().next();
+			BasicKnowledgeManifestationConfigured manifest = mapManifest
+					.values().iterator().next();
 			// TODO extract symbol from manifest by building the DOM element
 			Element value = manifest.build(CL.xcl2dom);
 			NodeList symbolList = value.getElementsByTagName("symbol");
@@ -131,8 +131,8 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		// A. check the manifestation cache
 		LOG.debug("Manifest cache: {}", mapManifest);
 		if (!(mapManifest.isEmpty())) {
-			BasicKnowledgeManifestationConfigured manifest = mapManifest.values()
-					.iterator().next();
+			BasicKnowledgeManifestationConfigured manifest = mapManifest
+					.values().iterator().next();
 			LOG.debug("manifest: {}", manifest);
 			// TODO move this to a helper function in xcl2.dom package
 			Element value = manifest.build(CL.xcl2dom);
@@ -154,7 +154,8 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	}
 
 	@Override
-	protected BasicKnowledgeManifestationConfigured newManifestation(KRRDialect dialect) {
+	protected BasicKnowledgeManifestationConfigured newManifestation(
+			KRRDialect dialect) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -13,7 +13,8 @@ import api4kbj.KnowledgeSourceLevel;
 
 public class StructuredKnowledgeExpressionLI extends
 		AbstractKnowledgeExpressionLI implements
-		Decomposable<KnowledgeExpression>, StructuredKnowledgeResourceConfigured {
+		Decomposable<KnowledgeExpression>,
+		StructuredKnowledgeResourceConfigured {
 
 	// lazy intialization constructor
 	public StructuredKnowledgeExpressionLI(
@@ -22,7 +23,8 @@ public class StructuredKnowledgeExpressionLI extends
 	}
 
 	// component-based structure constructor
-	public StructuredKnowledgeExpressionLI(KnowledgeResourceConfiguredTemplate template,
+	public StructuredKnowledgeExpressionLI(
+			KnowledgeResourceConfiguredTemplate template,
 			KnowledgeExpression... components) {
 		super(template);
 		for (KnowledgeExpression component : components) {
@@ -30,7 +32,8 @@ public class StructuredKnowledgeExpressionLI extends
 		}
 	}
 
-	public StructuredKnowledgeExpressionLI(KnowledgeResourceConfiguredTemplate template,
+	public StructuredKnowledgeExpressionLI(
+			KnowledgeResourceConfiguredTemplate template,
 			HashSet<KnowledgeExpression> components) {
 		super(template);
 		this.components.addAll(components);

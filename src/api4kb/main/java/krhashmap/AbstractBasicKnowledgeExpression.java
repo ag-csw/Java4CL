@@ -8,11 +8,12 @@ import krhashmap.li.AbstractKnowledgeExpressionLI;
 import api4kbj.KRRLanguage;
 
 public abstract class AbstractBasicKnowledgeExpression extends
-		AbstractKnowledgeExpressionLI implements BasicKnowledgeExpressionConfigured {
+		AbstractKnowledgeExpressionLI implements
+		BasicKnowledgeExpressionConfigured {
 
 	// base non-lazy constructor
-	public AbstractBasicKnowledgeExpression(KnowledgeResourceConfiguredTemplate template,
-			KRRLanguage lang) {
+	public AbstractBasicKnowledgeExpression(
+			KnowledgeResourceConfiguredTemplate template, KRRLanguage lang) {
 		super(template);
 		LOG.debug(
 				"Starting initializing-only AbstractBasicKnowledgeExpression constructor for language: {}",

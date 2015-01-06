@@ -16,14 +16,16 @@ public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 			.getLogger(BasicKnowledgeAssetLI.class);
 
 	// private lazy lifting constructor
-	protected BasicKnowledgeAssetLI(BasicKnowledgeResourceConfigured initialValue,
+	protected BasicKnowledgeAssetLI(
+			BasicKnowledgeResourceConfigured initialValue,
 			FocusedImmutableEnvironment env) {
 		super(initialValue, env);
 	}
 
 	// lazy lifting static factory method
 	public static BasicKnowledgeAssetLI lazyNewInstance(
-			BasicKnowledgeResourceConfigured initialValue, FocusedImmutableEnvironment env) {
+			BasicKnowledgeResourceConfigured initialValue,
+			FocusedImmutableEnvironment env) {
 		SLOG.debug("");
 		return new BasicKnowledgeAssetLI(initialValue, env);
 	}
