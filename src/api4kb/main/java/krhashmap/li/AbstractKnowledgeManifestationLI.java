@@ -33,7 +33,5 @@ public abstract class AbstractKnowledgeManifestationLI extends
 				initialValue);
 	}
 
-	// TODO move to LIMSE abstract class
-	protected AbstractKnowledgeExpressionLI expression;
 
 }
