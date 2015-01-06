@@ -1,4 +1,12 @@
-package api4kbj;
+package krconfigured;
+
+import api4kbj.CodecSystem;
+import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.KRRDialect;
+import api4kbj.KRRDialectType;
+import api4kbj.KRRFormat;
+import api4kbj.KRRFormatType;
+import api4kbj.KRRLanguage;
 
 public interface EnvironmentConfigured {
 

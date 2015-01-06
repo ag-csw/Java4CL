@@ -2,12 +2,12 @@ package krhashmap.li.mse;
 
 import java.util.HashMap;
 
+import krconfigured.EnvironmentConfigured;
 import krhashmap.AbstractBasicKnowledgeExpression;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeResource;
-import api4kbj.EnvironmentConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;

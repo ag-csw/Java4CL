@@ -2,9 +2,9 @@ package krhashmap.li.mse;
 
 import java.util.HashSet;
 
+import krconfigured.EnvironmentConfigured;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.StructuredKnowledgeAssetLI;
-import api4kbj.EnvironmentConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeExpression;

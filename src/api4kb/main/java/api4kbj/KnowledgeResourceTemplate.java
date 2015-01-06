@@ -1,5 +1,7 @@
 package api4kbj;
 
-public interface KnowledgeResourceTemplate extends KnowledgeResource {
+import krconfigured.EnvironmentConfigured;
+
+public interface KnowledgeResourceTemplate extends KnowledgeResource, EnvironmentConfigured {
 
 }

@@ -2,11 +2,11 @@ package elevation;
 
 import java.util.Arrays;
 
+import krconfigured.EnvironmentConfigured;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeManifestation;
-import api4kbj.EnvironmentConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
