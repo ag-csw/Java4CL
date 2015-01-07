@@ -12,7 +12,7 @@ import api4kbj.KnowledgeExpression;
  *
  */
 public interface BasicKnowledgeExpressionConfigured extends
-		KnowledgeExpression, BasicKnowledgeResourceConfigured,
+		BasicKnowledgeResourceConfigured,
 		BasicKnowledgeExpression {
 
 }

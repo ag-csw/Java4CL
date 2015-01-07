@@ -45,9 +45,4 @@ public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 		return null;
 	}
 
-	@Override
-	public boolean isAtomic() {
-		return true;
-	}
-
 }

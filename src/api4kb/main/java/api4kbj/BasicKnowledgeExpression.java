@@ -1,6 +1,6 @@
 package api4kbj;
 
-public interface BasicKnowledgeExpression {
+public interface BasicKnowledgeExpression extends KnowledgeExpression, BasicKnowledgeResource {
 
 	/**
 	 * Returns the unique language of the basic knowledge expression.

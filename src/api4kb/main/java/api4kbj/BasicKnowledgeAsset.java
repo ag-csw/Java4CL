@@ -1,7 +1,5 @@
 package api4kbj;
 
-import krconfigured.BasicKnowledgeExpressionConfigured;
-
 public interface BasicKnowledgeAsset extends KnowledgeAsset,
 		BasicKnowledgeResource {
 
@@ -11,6 +9,6 @@ public interface BasicKnowledgeAsset extends KnowledgeAsset,
 	 * 
 	 * @return the canonical expression of the asset
 	 */
-	BasicKnowledgeExpressionConfigured canonicalExpression();
+	KnowledgeExpression canonicalExpression();
 
 }

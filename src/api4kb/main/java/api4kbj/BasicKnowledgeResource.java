@@ -7,6 +7,4 @@ public interface BasicKnowledgeResource extends KnowledgeResource {
 		return true;
 	}
 
-	boolean isAtomic();
-
 }
