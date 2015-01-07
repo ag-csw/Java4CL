@@ -2,9 +2,8 @@ package api4kbj;
 
 public interface KRRLanguage {
 
-	public String name();
+	String name();
 
-	// TODO
-	// KRRLogic logic();
+	KRRLogic logic();
 
 }

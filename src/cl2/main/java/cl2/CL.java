@@ -3,6 +3,7 @@ package cl2;
 import elevation.Lifter;
 import elevation.Lowerer;
 import graphenvironment.FocusedGraphImmutableEnvironment;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -25,6 +26,7 @@ import org.xml.sax.SAXException;
 
 import api4kbj.AbstractCodecSystem;
 import api4kbj.AbstractKRRLanguage;
+import api4kbj.KRRLogic;
 
 public final class CL {
 
@@ -32,10 +34,17 @@ public final class CL {
 	private CL() {
 	}
 
-	// public fields
+	// constants
+	public static KRRLogic COMPLETE_CL_LOGIC = new KRRLogic() {
+
+		@Override
+		public String name() {
+			return "Complete Common Logic Language";
+		}
+	};
 	// instantiate anonymous subclass of AbstractKRRLanguage
 	public static AbstractKRRLanguage LANG = new AbstractKRRLanguage(
-			"Common Logic") {
+			"Common Logic", COMPLETE_CL_LOGIC) {
 	};
 
 	public static FocusedGraphImmutableEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableEnvironment(
@@ -49,9 +58,8 @@ public final class CL {
 	};
 
 	public static final String URI_XCL2 = "http://purl.org/xcl/2.0/";
-	
-	public static final Namespace NS_XCL2 = Namespace
-			.get(URI_XCL2);
+
+	public static final Namespace NS_XCL2 = Namespace.get(URI_XCL2);
 
 	// tests for syntactic categories
 	public static Boolean isComment(Object x, CLDialectType<?> dialect) {

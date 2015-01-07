@@ -1,6 +1,5 @@
 import java.io.InputStream;
 
-import graphenvironment.FocusedGraphImmutableEnvironment;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
 
@@ -26,7 +25,6 @@ public class Main {
 		LOG.debug(
 				"Hello. This is the Java4CL package. The current time is {}.",
 				System.currentTimeMillis());
-
 
 		// Direct construction of CLCommentExpression
 		String myCommentSymbol = "blah blah ...";
