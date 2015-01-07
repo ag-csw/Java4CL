@@ -18,12 +18,12 @@ public interface ImmutableEnvironment extends Immutable {
 	Iterable<KRRLanguage> languages();
 
 	/**
-	 * Return true if the KRR language <tt>lang</tt> is contained in the
+	 * Return true if the KRR language <tt>LANG</tt> is contained in the
 	 * environment.
 	 * 
-	 * @param lang
+	 * @param LANG
 	 *            a KRR language
-	 * @return true if <tt>lang</tt> is contained in the environment
+	 * @return true if <tt>LANG</tt> is contained in the environment
 	 */
 	boolean containsLanguage(KRRLanguage lang);
 

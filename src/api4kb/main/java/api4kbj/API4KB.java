@@ -12,7 +12,7 @@ public final class API4KB {
 	}
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-
+	
 	public static CodecSystem<Element, InputStream> CodecSystemXMLUTF8 = new CodecSystem<Element, InputStream>() {
 
 		@Override

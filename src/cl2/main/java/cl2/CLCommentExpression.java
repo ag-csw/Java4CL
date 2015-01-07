@@ -19,14 +19,14 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 	// Component-based constructor
 	private CLCommentExpression(KnowledgeResourceConfiguredTemplate template,
 			String symbol, Option<CLCommentExpression> comment) {
-		super(template, CL.lang);
+		super(template, CL.LANG);
 		this.symbol = symbol;
 		this.comment = comment;
 	}
 
 	// Lazy lowering constructor
 	private <T> CLCommentExpression(BasicKnowledgeAssetConfigured asset) {
-		super(asset, CL.lang);
+		super(asset, CL.LANG);
 	}
 
 	// Lazy lifting constructor
@@ -111,7 +111,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		else {
 			BasicKnowledgeAssetLIMSE asset = (BasicKnowledgeAssetLIMSE) mapAsset
 					.values().iterator().next();
-			return ((CLCommentExpression) asset.express(CL.lang)).getSymbol();
+			return ((CLCommentExpression) asset.express(CL.LANG)).getSymbol();
 		}
 	}
 
@@ -149,7 +149,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 		else {
 			BasicKnowledgeAssetLIMSE asset = (BasicKnowledgeAssetLIMSE) mapAsset
 					.values().iterator().next();
-			return ((CLCommentExpression) asset.express(CL.lang)).getComment();
+			return ((CLCommentExpression) asset.express(CL.LANG)).getComment();
 		}
 	}
 

@@ -7,7 +7,7 @@ public interface CLKnowledgeResource extends BasicKnowledgeResourceConfigured {
 
 	@Override
 	public default KRRLanguage defaultLanguage() {
-		return CL.lang;
+		return CL.LANG;
 	}
 
 	@Override

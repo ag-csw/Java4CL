@@ -34,12 +34,12 @@ public final class CL {
 
 	// public fields
 	// instantiate anonymous subclass of AbstractKRRLanguage
-	public static AbstractKRRLanguage lang = new AbstractKRRLanguage(
+	public static AbstractKRRLanguage LANG = new AbstractKRRLanguage(
 			"Common Logic") {
 	};
 
 	public static FocusedGraphImmutableEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableEnvironment(
-			CL.lang);
+			CL.LANG);
 
 	// TODO Capitalize constants
 	public static CLDialect xcl2 = new CLDialect("XCL2") {

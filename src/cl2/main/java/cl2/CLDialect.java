@@ -5,7 +5,7 @@ import api4kbj.AbstractKRRDialect;
 public abstract class CLDialect extends AbstractKRRDialect {
 
 	public CLDialect(String name) {
-		super(name, CL.lang);
+		super(name, CL.LANG);
 	}
 
 }

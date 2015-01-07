@@ -15,12 +15,12 @@ public abstract class CLExpression extends
 	// used by structure-based constructors
 	public CLExpression(KnowledgeResourceConfiguredTemplate template,
 			KRRLanguage lang) {
-		super(template, CL.lang);
+		super(template, CL.LANG);
 	}
 
 	// lazy lowering constructor - language must be specificed
 	public CLExpression(BasicKnowledgeAssetConfigured kr, KRRLanguage lang) {
-		super(kr, CL.lang);
+		super(kr, CL.LANG);
 	}
 
 	// lazy lifting constructor

@@ -27,14 +27,14 @@ public class Main {
 				"Hello. This is the Java4CL package. The current time is {}.",
 				System.currentTimeMillis());
 
-		// Testing CL.lang
-		assert CL.lang.name().equals("Common Logic") : "Failed set of name for CL.lang.";
+		// Testing CL.LANG
+		assert CL.LANG.name().equals("Common Logic") : "Failed set of name for CL.LANG.";
 
 		FocusedGraphImmutableEnvironment env = new FocusedGraphImmutableEnvironment(
-				CL.lang);
-		assert (env.containsLanguage(CL.lang)) : "Failed contains method";
-		assert CL.lang.equals(env.defaultLanguage()) : "Failed set of default language in environment construction";
-		assert CL.lang.equals(env.focusLanguage().value()) : "Failed set of default language in environment construction";
+				CL.LANG);
+		assert (env.containsLanguage(CL.LANG)) : "Failed contains method";
+		assert CL.LANG.equals(env.defaultLanguage()) : "Failed set of default language in environment construction";
+		assert CL.LANG.equals(env.focusLanguage().value()) : "Failed set of default language in environment construction";
 		assert env.equals(CL.CL_DEFAULT_ENVIRONMENT) : "Failed test of environment equality";
 
 		// Direct construction of CLCommentExpression
@@ -59,7 +59,7 @@ public class Main {
 
 			@Override
 			public KRRLanguage defaultLanguage() {
-				return CL.lang;
+				return CL.LANG;
 			}
 
 			@Override
@@ -105,7 +105,7 @@ public class Main {
 		// Testing the methods of CLCommentExpression
 		assert myCommentExpression.isBasic() : "Failed check for basic expression";
 		assert myCommentExpression.level() == KnowledgeSourceLevel.EXPRESSION : "Failed check for expression level";
-		assert myCommentExpression.language() == CL.lang : "Failed language check";
+		assert myCommentExpression.language() == CL.LANG : "Failed language check";
 		// Skipping the clears
 		// myCommentExpression.clearInitialValue();
 		assert myCommentExpression.getSymbol() == myCommentSymbol : "Symbol evalution incorrect.";
@@ -117,13 +117,13 @@ public class Main {
 				myCommentExpression, env);
 		// BasicKnowledgeAssetLIMSE myCommentAsset =
 		// myCommentExpression.conceptualize(env);
-		assert myCommentAsset.express(CL.lang) == myCommentExpression : "Failed lazy express method on asset";
+		assert myCommentAsset.express(CL.LANG) == myCommentExpression : "Failed lazy express method on asset";
 
 		// Construction a CLCommentAsset lazily for the default environment
 		LOG.debug("Lazy asset instantiation starting");
 		BasicKnowledgeAssetLIMSE myCommentAsset2 = new BasicKnowledgeAssetLIMSE(
 				myCommentExpression, env);
-		assert myCommentAsset2.express(CL.lang) == myCommentExpression : "Failed lazy express method on asset";
+		assert myCommentAsset2.express(CL.LANG) == myCommentExpression : "Failed lazy express method on asset";
 		assert myCommentAsset2.equals(myCommentAsset) : "Failed equality check on assets.";
 
 		// Construction a CLManifestation lazily
