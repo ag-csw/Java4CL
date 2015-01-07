@@ -42,10 +42,10 @@ public final class CL {
 			CL.LANG);
 
 	// TODO Capitalize constants
-	public static CLDialect xcl2 = new CLDialect("XCL2") {
+	public static CLDialect XCL2 = new CLDialect("XCL2") {
 	};
 
-	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", xcl2) {
+	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", XCL2) {
 	};
 
 	public static final String URI_XCL2 = "http://purl.org/xcl/2.0/";
@@ -109,7 +109,7 @@ public final class CL {
 		}
 	};
 	public static CLDialectType<Element> xcl2dom = new CLDialectType<Element>(
-			"XCL2-dom4j", xcl2, Element.class, domUTF8bytearray) {
+			"XCL2-dom4j", XCL2, Element.class, domUTF8bytearray) {
 	};
 
 	public static Lifter lifter() {

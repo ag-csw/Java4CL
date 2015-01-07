@@ -134,7 +134,7 @@ public class CLCommentExpression extends CLExpression implements CLComment {
 			BasicKnowledgeManifestationConfigured manifest = mapManifest
 					.values().iterator().next();
 			LOG.debug("manifest: {}", manifest);
-			// TODO move this to a helper function in xcl2.dom package
+			// TODO move this to a helper function in XCL2.dom package
 			Element value = manifest.build(CL.xcl2dom);
 			NodeList commentList = value.getElementsByTagName("Comment");
 			if (commentList.getLength() == 0) {

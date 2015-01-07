@@ -55,7 +55,7 @@ public class Main {
 
 			@Override
 			public KRRDialect defaultDialect() {
-				return CL.xcl2;
+				return CL.XCL2;
 			}
 
 			@Override
