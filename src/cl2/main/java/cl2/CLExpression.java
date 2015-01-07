@@ -1,12 +1,19 @@
 package cl2;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import elevation.Liftable;
 import elevation.Lifter;
+import elevation.Lowerable;
 import elevation.Lowerer;
 import krconfigured.BasicKnowledgeAssetConfigured;
+import krconfigured.BasicKnowledgeManifestationConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.mse.AbstractBasicKnowledgeExpressionLIMSE;
 import api4kbj.KRRDialect;
 import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 
 public abstract class CLExpression extends
 		AbstractBasicKnowledgeExpressionLIMSE implements CLKnowledgeResource {
@@ -53,5 +60,7 @@ public abstract class CLExpression extends
 	public Lowerer lowerer() {
 		return CL.lowerer();
 	}
+
+
 
 }

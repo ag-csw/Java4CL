@@ -8,5 +8,5 @@ public interface BasicKnowledgeExpression extends KnowledgeExpression, BasicKnow
 	 * @return the language of the basic knowledge expression.
 	 */
 	KRRLanguage language();
-
+	
 }

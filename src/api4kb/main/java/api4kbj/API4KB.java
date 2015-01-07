@@ -79,4 +79,9 @@ public final class API4KB {
 		return lowers(e, a);
 	}
 
+	public static boolean usesLanguage(KnowledgeExpression expression,
+			KRRLanguage language) {
+		return expression.languages().contains(language);
+	}
+
 }

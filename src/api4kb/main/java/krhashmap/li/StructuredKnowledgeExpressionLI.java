@@ -11,7 +11,7 @@ import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeSourceLevel;
 
-public class StructuredKnowledgeExpressionLI extends
+public abstract class StructuredKnowledgeExpressionLI extends
 		AbstractKnowledgeExpressionLI implements
 		Decomposable<KnowledgeExpression>,
 		StructuredKnowledgeResourceConfigured {
