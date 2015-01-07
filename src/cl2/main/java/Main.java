@@ -27,15 +27,6 @@ public class Main {
 				"Hello. This is the Java4CL package. The current time is {}.",
 				System.currentTimeMillis());
 
-		// Testing CL.LANG
-		assert CL.LANG.name().equals("Common Logic") : "Failed set of name for CL.LANG.";
-
-		FocusedGraphImmutableEnvironment env = new FocusedGraphImmutableEnvironment(
-				CL.LANG);
-		assert (env.containsLanguage(CL.LANG)) : "Failed contains method";
-		assert CL.LANG.equals(env.defaultLanguage()) : "Failed set of default language in environment construction";
-		assert CL.LANG.equals(env.focusLanguage().value()) : "Failed set of default language in environment construction";
-		assert env.equals(CL.CL_DEFAULT_ENVIRONMENT) : "Failed test of environment equality";
 
 		// Direct construction of CLCommentExpression
 		String myCommentSymbol = "blah blah ...";
@@ -114,7 +105,7 @@ public class Main {
 		// Construction of a CLCommentAsset lazily for a specific environment
 		LOG.debug("Lazy asset instantiation starting");
 		BasicKnowledgeAssetLIMSE myCommentAsset = new BasicKnowledgeAssetLIMSE(
-				myCommentExpression, env);
+				myCommentExpression, CL.CL_DEFAULT_ENVIRONMENT);
 		// BasicKnowledgeAssetLIMSE myCommentAsset =
 		// myCommentExpression.conceptualize(env);
 		assert myCommentAsset.express(CL.LANG) == myCommentExpression : "Failed lazy express method on asset";
@@ -122,7 +113,7 @@ public class Main {
 		// Construction a CLCommentAsset lazily for the default environment
 		LOG.debug("Lazy asset instantiation starting");
 		BasicKnowledgeAssetLIMSE myCommentAsset2 = new BasicKnowledgeAssetLIMSE(
-				myCommentExpression, env);
+				myCommentExpression, CL.CL_DEFAULT_ENVIRONMENT);
 		assert myCommentAsset2.express(CL.LANG) == myCommentExpression : "Failed lazy express method on asset";
 		assert myCommentAsset2.equals(myCommentAsset) : "Failed equality check on assets.";
 

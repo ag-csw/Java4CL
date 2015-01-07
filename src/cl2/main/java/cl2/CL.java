@@ -48,8 +48,10 @@ public final class CL {
 	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", xcl2) {
 	};
 
+	public static final String URI_XCL2 = "http://purl.org/xcl/2.0/";
+	
 	public static final Namespace NS_XCL2 = Namespace
-			.get("http://purl.org/xcl/2.0/");
+			.get(URI_XCL2);
 
 	// tests for syntactic categories
 	public static Boolean isComment(Object x, CLDialectType<?> dialect) {
