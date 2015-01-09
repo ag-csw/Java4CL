@@ -8,14 +8,17 @@ import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.FocusedImmutableEnvironment;
 import api4kbj.KnowledgeAsset;
+import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeResource;
+import api4kbj.StructuredKnowledgeExpression;
 import api4kbj.StructuredKnowledgeResource;
 
 public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
-		implements StructuredKnowledgeAssetConfigured {
+		implements StructuredKnowledgeAssetConfigured<KnowledgeAsset, KnowledgeExpression> {
 
 	// lazy initializing constructor - lifting
-	public StructuredKnowledgeAssetLI(
-			StructuredKnowledgeResourceConfigured initialValue,
+	public <R extends KnowledgeResource> StructuredKnowledgeAssetLI(
+			StructuredKnowledgeResourceConfigured<R> initialValue,
 			FocusedImmutableEnvironment env) {
 		super(initialValue, env);
 	}
@@ -38,7 +41,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 	@Override
 	public int numComponents() {
 		if (initialValue != null) {
-			return ((StructuredKnowledgeResource) initialValue).numComponents();
+			return ((StructuredKnowledgeResource<?>) initialValue).numComponents();
 		}
 		return components.size();
 	}
@@ -49,8 +52,8 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 		return components;
 	}
 
-	public static StructuredKnowledgeAssetLI lazyNewInstance(
-			StructuredKnowledgeResourceConfigured kr,
+	public static <R extends KnowledgeResource> StructuredKnowledgeAssetLI lazyNewInstance(
+			StructuredKnowledgeResourceConfigured<R> kr,
 			FocusedImmutableEnvironment environment) {
 		return new StructuredKnowledgeAssetLI(kr, environment);
 	}
@@ -75,7 +78,7 @@ public class StructuredKnowledgeAssetLI extends AbstractKnowledgeAssetLI
 	 * 
 	 * @return the canonical expression of the asset
 	 */
-	public StructuredKnowledgeExpressionConfigured canonicalExpression() {
+	public StructuredKnowledgeExpression<KnowledgeExpression> canonicalExpression() {
 		// TODO Auto-generated method stub
 		return null;
 	}

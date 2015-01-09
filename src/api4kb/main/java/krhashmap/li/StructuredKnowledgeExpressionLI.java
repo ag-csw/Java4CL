@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import krconfigured.KnowledgeResourceConfiguredTemplate;
+import krconfigured.StructuredKnowledgeExpressionConfigured;
 import krconfigured.StructuredKnowledgeResourceConfigured;
 import api4kbj.Decomposable;
 import api4kbj.FocusedImmutableEnvironment;
@@ -13,8 +14,7 @@ import api4kbj.KnowledgeSourceLevel;
 
 public abstract class StructuredKnowledgeExpressionLI extends
 		AbstractKnowledgeExpressionLI implements
-		Decomposable<KnowledgeExpression>,
-		StructuredKnowledgeResourceConfigured {
+		StructuredKnowledgeExpressionConfigured<KnowledgeExpression> {
 
 	// lazy intialization constructor
 	public StructuredKnowledgeExpressionLI(

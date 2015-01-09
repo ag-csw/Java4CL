@@ -1,7 +1,5 @@
 package api4kbj;
 
-import java.util.Set;
-
 import elevation.Liftable;
 import elevation.Lowerable;
 
@@ -13,6 +11,7 @@ public interface KnowledgeExpression extends KnowledgeResource, Liftable,
 		return KnowledgeSourceLevel.EXPRESSION;
 	}
 
-	Set<KRRLanguage> languages();
+	boolean usesLanguage(KRRLanguage language);
+
 
 }

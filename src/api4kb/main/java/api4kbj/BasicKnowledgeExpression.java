@@ -9,4 +9,9 @@ public interface BasicKnowledgeExpression extends KnowledgeExpression, BasicKnow
 	 */
 	KRRLanguage language();
 	
+	@Override
+	default boolean usesLanguage(KRRLanguage language){
+		return language().equals(language);
+	}
+
 }

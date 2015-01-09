@@ -2,7 +2,7 @@ package api4kbj;
 
 
 public interface StructuredKnowledgeEncoding extends KnowledgeEncoding,
-		StructuredKnowledgeResource, Decomposable<KnowledgeEncoding> {
+		StructuredKnowledgeResource<KnowledgeEncoding> {
 
 	// getter for formats
 	Iterable<KRRFormat> formats();

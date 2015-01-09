@@ -81,7 +81,7 @@ public final class API4KB {
 
 	public static boolean usesLanguage(KnowledgeExpression expression,
 			KRRLanguage language) {
-		return expression.languages().contains(language);
+		return expression.usesLanguage(language);
 	}
 
 }

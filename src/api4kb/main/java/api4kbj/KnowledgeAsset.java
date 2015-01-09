@@ -32,4 +32,8 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 	 */
 	KnowledgeExpression canonicalExpression();
 
+	public default boolean accordingTo(FocusedImmutableEnvironment environment){
+		return environment.contains(environment());
+	}
+
 }
