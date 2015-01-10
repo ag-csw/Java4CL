@@ -8,6 +8,5 @@ public interface StructuredKnowledgeResource<T extends KnowledgeResource> extend
 		return false;
 	}
 
-	int numComponents();
 
 }

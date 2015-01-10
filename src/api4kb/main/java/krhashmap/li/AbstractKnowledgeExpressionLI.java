@@ -39,12 +39,5 @@ public abstract class AbstractKnowledgeExpressionLI extends
 
 	private Set<KRRLanguage> languages = new HashSet<KRRLanguage>();
 
-	@Override
-	public Set<KRRLanguage> languages() {
-		// TODO need to extract languages from initial value
-		// and add to the set
-		return languages;
-	}
-
 
 }

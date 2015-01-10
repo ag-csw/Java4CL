@@ -19,9 +19,4 @@ public abstract class AbstractBasicKnowledgeExpression implements
 		return language;
 	}
 
-	@Override
-	public Set<KRRLanguage> languages() {
-		return languages;
-	}
-
 }

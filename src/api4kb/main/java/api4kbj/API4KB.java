@@ -6,28 +6,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
+import api4kbjev.PublicEvent;
+import api4kbjpro.Proficiency;
+
 public final class API4KB {
 
 	API4KB() {
 	}
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
-	
-	public static CodecSystem<Element, InputStream> CodecSystemXMLUTF8 = new CodecSystem<Element, InputStream>() {
 
-		@Override
-		public InputStream code(Element t) {
-			// TODO
-			return null;
-		}
+	public static boolean accordingTo(KnowledgeAsset asset,
+			FocusedImmutableEnvironment environment) {
+		return asset.accordingTo(environment);
+	}
 
-		@Override
-		public Element decode(InputStream s) {
-			// TODO
-			return null;
-		}
+	public static boolean actualizes(PublicEvent event,
+			Proficiency proficiency) {
+		return event.actualizes(proficiency);
+	}
 
-	};
+
+
+	public static boolean usesLanguage(KnowledgeExpression expression,
+			KRRLanguage language) {
+		return expression.usesLanguage(language);
+	}
+
+	// TODO configure below
 
 	public static Boolean hasSnapshot(MutableSource m, ImmutableSource i) {
 		return m.getSnapshot().equals(i);
@@ -79,9 +85,22 @@ public final class API4KB {
 		return lowers(e, a);
 	}
 
-	public static boolean usesLanguage(KnowledgeExpression expression,
-			KRRLanguage language) {
-		return expression.usesLanguage(language);
-	}
+
+	public static CodecSystem<Element, InputStream> CodecSystemXMLUTF8 = new CodecSystem<Element, InputStream>() {
+
+		@Override
+		public InputStream code(Element t) {
+			// TODO
+			return null;
+		}
+
+		@Override
+		public Element decode(InputStream s) {
+			// TODO
+			return null;
+		}
+
+	};
+	
 
 }
