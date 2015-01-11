@@ -5,7 +5,7 @@ import krconfigured.KnowledgeResourceConfigured;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeSourceLevel;
 
@@ -17,7 +17,7 @@ public abstract class AbstractKnowledgeAssetLI extends
 	// lazy initializing constructor - lifting
 	protected AbstractKnowledgeAssetLI(
 			KnowledgeResourceConfigured initialValue,
-			FocusedImmutableEnvironment env) {
+			FocusedImmutableLanguageEnvironment env) {
 		// call lazy intializing constructor of super class
 		super(initialValue, KnowledgeSourceLevel.ASSET, initialValue
 				.defaultInput(), initialValue.defaultReceiver(), initialValue
@@ -32,10 +32,10 @@ public abstract class AbstractKnowledgeAssetLI extends
 		this.environment = env;
 	}
 
-	protected final FocusedImmutableEnvironment environment;
+	protected final FocusedImmutableLanguageEnvironment environment;
 
 	@Override
-	public FocusedImmutableEnvironment environment() {
+	public FocusedImmutableLanguageEnvironment environment() {
 		return environment;
 	}
 

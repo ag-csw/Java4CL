@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.CodecSystem;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
@@ -22,7 +22,7 @@ public abstract class AbstractKnowledgeResourceConfigured implements
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,
-			FocusedImmutableEnvironment defaultEnvironment,
+			FocusedImmutableLanguageEnvironment defaultEnvironment,
 			KRRLanguage defaultLanguage) {
 		this.defaultInput = defaultInput;
 		this.defaultReceiver = defaultReceiver;
@@ -42,11 +42,11 @@ public abstract class AbstractKnowledgeResourceConfigured implements
 	private KRRFormat defaultFormat;
 	private KRRDialectType<?> defaultDialectType;
 	private KRRDialect defaultDialect;
-	private FocusedImmutableEnvironment defaultEnvironment;
+	private FocusedImmutableLanguageEnvironment defaultEnvironment;
 	private KRRLanguage defaultLanguage;
 
 	@Override
-	public FocusedImmutableEnvironment defaultEnvironment() {
+	public FocusedImmutableLanguageEnvironment defaultEnvironment() {
 		return defaultEnvironment;
 	}
 

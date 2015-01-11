@@ -1,5 +1,5 @@
 import static org.junit.Assert.*;
-import graphenvironment.FocusedGraphImmutableEnvironment;
+import graphenvironment.FocusedGraphImmutableLanguageEnvironment;
 
 import org.junit.Test;
 
@@ -19,9 +19,9 @@ public class CLTest {
 
 	@Test
 	public void testEnv() {
-		assertTrue("The Common Logic default (singleton) environment does not contain the CL language.", CL.CL_DEFAULT_ENVIRONMENT.containsLanguage(CL.LANG));
-		assertEquals("The Common Logic language is not the focus language of the default CL environment.", CL.LANG, CL.CL_DEFAULT_ENVIRONMENT.focusLanguage().value());
-		assertEquals("Equality of environments is not based on fields", CL.CL_DEFAULT_ENVIRONMENT, new FocusedGraphImmutableEnvironment(
+		assertTrue("The Common Logic default (singleton) environment does not contain the CL language.", CL.CL_DEFAULT_ENVIRONMENT.containsMember(CL.LANG));
+		assertEquals("The Common Logic language is not the focus language of the default CL environment.", CL.LANG, CL.CL_DEFAULT_ENVIRONMENT.focusMember().value());
+		assertEquals("Equality of environments is not based on fields", CL.CL_DEFAULT_ENVIRONMENT, new FocusedGraphImmutableLanguageEnvironment(
 				CL.LANG));
 
 	}

@@ -4,7 +4,7 @@ import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeIO;
 import api4kbj.BasicKnowledgeManifestation;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
@@ -18,7 +18,7 @@ import api4kbj.StructuredKnowledgeManifestation;
 
 public interface Lifter {
 
-	default Lowerable lift(Liftable kr, FocusedImmutableEnvironment e,
+	default Lowerable lift(Liftable kr, FocusedImmutableLanguageEnvironment e,
 			KnowledgeSourceLevel level) {
 		switch (level) {
 		case ASSET:
@@ -35,7 +35,7 @@ public interface Lifter {
 	}
 
 	default KnowledgeAsset conceptualizer(Liftable kr,
-			FocusedImmutableEnvironment e) {
+			FocusedImmutableLanguageEnvironment e) {
 		switch (kr.level()) {
 		case ASSET:
 			// TODO message
@@ -65,7 +65,7 @@ public interface Lifter {
 	KnowledgeEncoding prototyper(Liftable kr);
 
 	default KnowledgeAsset conceptualize(KnowledgeExpression kr,
-			FocusedImmutableEnvironment e) {
+			FocusedImmutableLanguageEnvironment e) {
 		if (!kr.isBasic()) {
 			return structuredConceptualize((StructuredKnowledgeExpression) kr,
 					e);
@@ -99,10 +99,10 @@ public interface Lifter {
 	}
 
 	KnowledgeAsset structuredConceptualize(StructuredKnowledgeExpression kr,
-			FocusedImmutableEnvironment e);
+			FocusedImmutableLanguageEnvironment e);
 
 	KnowledgeAsset basicConceptualize(BasicKnowledgeExpression kr,
-			FocusedImmutableEnvironment e);
+			FocusedImmutableLanguageEnvironment e);
 
 	KnowledgeExpression structuredParse(StructuredKnowledgeManifestation kr);
 

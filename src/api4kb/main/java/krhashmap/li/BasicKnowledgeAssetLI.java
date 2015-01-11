@@ -7,7 +7,7 @@ import krconfigured.BasicKnowledgeResourceConfigured;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 
 public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 		BasicKnowledgeAssetConfigured {
@@ -18,14 +18,14 @@ public class BasicKnowledgeAssetLI extends AbstractKnowledgeAssetLI implements
 	// private lazy lifting constructor
 	protected BasicKnowledgeAssetLI(
 			BasicKnowledgeResourceConfigured initialValue,
-			FocusedImmutableEnvironment env) {
+			FocusedImmutableLanguageEnvironment env) {
 		super(initialValue, env);
 	}
 
 	// lazy lifting static factory method
 	public static BasicKnowledgeAssetLI lazyNewInstance(
 			BasicKnowledgeResourceConfigured initialValue,
-			FocusedImmutableEnvironment env) {
+			FocusedImmutableLanguageEnvironment env) {
 		SLOG.debug("");
 		return new BasicKnowledgeAssetLI(initialValue, env);
 	}

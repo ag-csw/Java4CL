@@ -36,7 +36,7 @@ public abstract class AbstractBasicKnowledgeExpressionLI extends
 		super(kr);
 		LOG.debug("Starting lazy lowering expression construtor");
 		this.lang = lang;
-		if (!kr.environment().containsLanguage(lang)) {
+		if (!kr.environment().containsMember(lang)) {
 			throw new IllegalArgumentException(
 					"Requested language is not in the environment.");
 		}

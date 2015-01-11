@@ -12,6 +12,7 @@ import api4kbj.AbstractBasicKnowledgeExpression;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLogic;
+import api4kbj.KnowledgeExpression;
 
 @RunWith(Parameterized.class)
 public class BasicKnowledgeExpressionTest {
@@ -46,10 +47,19 @@ public class BasicKnowledgeExpressionTest {
 				new Object[] { new AbstractBasicKnowledgeExpression(
 						new AbstractKRRLanguage("Language One", logicA) {
 
+							@Override
+							public Class<? extends KnowledgeExpression> asClass() {
+								return KnowledgeExpression.class;
+							}
+
 						}) {
 
 				} }, new Object[] { new AbstractBasicKnowledgeExpression(
 						new AbstractKRRLanguage("Language Two", logicB) {
+							@Override
+							public Class<? extends KnowledgeExpression> asClass() {
+								return KnowledgeExpression.class;
+							}
 						}) {
 				} });
 	}

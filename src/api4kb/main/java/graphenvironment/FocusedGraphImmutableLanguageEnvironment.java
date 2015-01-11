@@ -1,20 +1,21 @@
 package graphenvironment;
 
 import functional.Some;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.AbstractKRRLanguage;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRLanguage;
 
-public class FocusedGraphImmutableEnvironment extends GraphImmutableEnvironment
-		implements FocusedImmutableEnvironment {
+public class FocusedGraphImmutableLanguageEnvironment extends GraphImmutableLanguageEnvironment
+		implements FocusedImmutableLanguageEnvironment {
 
-	public FocusedGraphImmutableEnvironment(KRRLanguage lang) {
-		super(lang);
+	public FocusedGraphImmutableLanguageEnvironment(AbstractKRRLanguage lang) {
+	  super(lang);
+    
 	}
 
 	@Override
-	public Some<KRRLanguage> focusLanguage() {
-		// TODO Auto-generated method stub
-		return (Some<KRRLanguage>) super.focusLanguage();
+	public Some<KRRLanguage> focusMember() {
+		return (Some<KRRLanguage>) super.focusMember();
 	}
 
 }

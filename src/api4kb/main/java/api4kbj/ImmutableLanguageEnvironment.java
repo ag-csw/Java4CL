@@ -1,6 +1,10 @@
 package api4kbj;
 
-import functional.Option;
+import krhashmap.li.BasicKnowledgeAssetLI;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Interface for immutable environments of KRR languages.
@@ -8,70 +12,35 @@ import functional.Option;
  * @author taraathan
  *
  */
-public interface ImmutableEnvironment extends Immutable {
+public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLanguage, KnowledgeExpression> {
 
-	/**
-	 * Return the collection of KRR languages contained in the environment.
-	 * 
-	 * @return the collection of KRR languages contained in the environment
-	 */
-	Iterable<KRRLanguage> languages();
+	static final Logger SLOG = LoggerFactory
+			.getLogger(BasicKnowledgeAssetLI.class);
 
-	/**
-	 * Return true if the KRR language <tt>LANG</tt> is contained in the
-	 * environment.
-	 * 
-	 * @param LANG
-	 *            a KRR language
-	 * @return true if <tt>LANG</tt> is contained in the environment
-	 */
-	boolean containsLanguage(KRRLanguage lang);
+	@Override
+	Iterable<LanguageMapping<? extends KnowledgeExpression,? extends KnowledgeExpression>> mappings();
 
-	/**
-	 * Return <tt>true</tt> if the environment has a focus. If <tt>true</tt>,
-	 * the method {@link #focusLanguage()} must return a Some, otherwise it must
-	 * return a None.
-	 * 
-	 * @return <tt>true</tt> if the environment has a focus
-	 */
-	boolean isFocused();
+	@Override
+	 default <T extends KnowledgeExpression> KnowledgeExpression apply(T arg, KRRLanguage member) {
+		 // TODO this default simply takes the first mapping from the iterable where the
+		 // domain and range match what is requested.
+		 // There is no allowance for composition, so the iterable must range over the compositions as well.
+		 // This is a brute force approach.
+		for (LanguageMapping<? extends KnowledgeExpression,? extends KnowledgeExpression> mp: mappings()){
+			 Class<? extends KnowledgeExpression> clazz = mp.startClass();
+  			 SLOG.debug("Start class of the mapping: {}", clazz);
+  			 SLOG.debug("Class of the argument: {}", arg.getClass());
+  			 SLOG.debug("Conditional Comparison: {}", clazz.isAssignableFrom(arg.getClass()));
+			 if(clazz.isAssignableFrom(arg.getClass())){
+	  			 SLOG.debug("isAssignableFrom: {}", arg.getClass());
+				 LanguageMapping<T, ? extends KnowledgeExpression> mp2 = (LanguageMapping<T, ? extends KnowledgeExpression>) mp;
+				 if (member.asClass().isAssignableFrom(mp2.endClass())){
+					 return mp2.f(arg);
+				 }
+			 }
+		 }
+		throw new IllegalArgumentException("A mapping is not registered to requested target member from the member associated with the input argument");
+	 }
 
-	/**
-	 * Return the translation of a knowledge expression <tt>expression</tt> into
-	 * the target KRR language <tt>language</tt>.
-	 * 
-	 * @param expression
-	 *            is the input expression
-	 * @param language
-	 *            is the target language
-	 * @return the translation of <tt>expression</tt> into <tt>language</tt>
-	 */
-	KnowledgeExpression translate(KnowledgeExpression expression,
-			KRRLanguage language);
-
-	/**
-	 * Return the default KRR language of the environment.
-	 * 
-	 * @return the default KRR language of the environment
-	 */
-	KRRLanguage defaultLanguage();
-
-	/**
-	 * Return the optional focus language of the environment.
-	 * 
-	 * @return the optional focus language of the environment
-	 * @see #isFocused()
-	 */
-	Option<KRRLanguage> focusLanguage();
-
-	/**
-	 * Return <tt>true</tt> if this environment contains the environment
-	 * <tt>other</tt>.
-	 * 
-	 * @param other
-	 *            an environment
-	 * @return <tt>true</tt> if this environment contains <tt>other</tt>
-	 */
-	boolean contains(ImmutableEnvironment other);
 
 }

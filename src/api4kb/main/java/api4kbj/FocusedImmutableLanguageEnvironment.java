@@ -2,7 +2,7 @@ package api4kbj;
 
 import functional.Some;
 
-public interface FocusedImmutableEnvironment extends ImmutableEnvironment {
+public interface FocusedImmutableLanguageEnvironment extends ImmutableLanguageEnvironment {
 
 	@Override
 	default boolean isFocused() {
@@ -16,7 +16,6 @@ public interface FocusedImmutableEnvironment extends ImmutableEnvironment {
 	 * @see #isFocused()
 	 */
 	@Override
-	Some<KRRLanguage> focusLanguage();
+	Some<KRRLanguage> focusMember();
 
-	boolean containsLanguages(Iterable<KRRLanguage> langs);
 }

@@ -17,7 +17,7 @@ public final class API4KB {
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	public static boolean accordingTo(KnowledgeAsset asset,
-			FocusedImmutableEnvironment environment) {
+			FocusedImmutableLanguageEnvironment environment) {
 		return asset.accordingTo(environment);
 	}
 
@@ -25,6 +25,11 @@ public final class API4KB {
 			Proficiency proficiency) {
 		return event.actualizes(proficiency);
 	}
+
+	public static Boolean conceptualizes(KnowledgeAsset a, KnowledgeExpression e) {
+		return a.conceptualizes(e);
+	}
+
 
 
 
@@ -75,10 +80,6 @@ public final class API4KB {
 	public static Boolean manifests(KnowledgeManifestation m,
 			KnowledgeExpression e) {
 		return lowers(m, e);
-	}
-
-	public static Boolean conceptualizes(KnowledgeAsset a, KnowledgeExpression e) {
-		return lifts(a, e);
 	}
 
 	public static Boolean expresses(KnowledgeExpression e, KnowledgeAsset a) {

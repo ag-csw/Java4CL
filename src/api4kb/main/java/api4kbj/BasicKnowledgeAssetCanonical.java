@@ -4,7 +4,7 @@ public class BasicKnowledgeAssetCanonical extends KnowledgeAssetCanonical
 		implements BasicKnowledgeAsset {
 
 	public BasicKnowledgeAssetCanonical(
-			FocusedImmutableEnvironment environment,
+			FocusedImmutableLanguageEnvironment environment,
 			KnowledgeExpression canonicalExpression) {
 		super(environment, canonicalExpression);
 	}

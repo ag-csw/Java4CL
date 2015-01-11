@@ -6,7 +6,7 @@ import krconfigured.AbstractKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import api4kbj.CodecSystem;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
@@ -54,7 +54,7 @@ public abstract class AbstractKnowledgeResourceLI extends
 			Object defaultReceiver, CodecSystem<?, ?> defaultSystem,
 			KRRFormatType<?> defaultFormatType, KRRFormat defaultFormat,
 			KRRDialectType<?> defaultDialectType, KRRDialect defaultDialect,
-			FocusedImmutableEnvironment defaultEnvironment,
+			FocusedImmutableLanguageEnvironment defaultEnvironment,
 			KRRLanguage defaultLanguage) {
 		// call the most general initializing constructor of the super class
 		super(defaultInput, defaultReceiver, defaultSystem, defaultFormatType,

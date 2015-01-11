@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractKnowledgeAsset implements
 		KnowledgeAsset {
 
-	public AbstractKnowledgeAsset(FocusedImmutableEnvironment environment) {
+	public AbstractKnowledgeAsset(FocusedImmutableLanguageEnvironment environment) {
 		this.environment = environment;
 	}
 
@@ -14,12 +14,12 @@ public abstract class AbstractKnowledgeAsset implements
 
 	
 	
-	protected final FocusedImmutableEnvironment environment;
+	protected final FocusedImmutableLanguageEnvironment environment;
 
 
 
 	@Override
-	public FocusedImmutableEnvironment environment() {
+	public FocusedImmutableLanguageEnvironment environment() {
 		return environment;
 	}
 

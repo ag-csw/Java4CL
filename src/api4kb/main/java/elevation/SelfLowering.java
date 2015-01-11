@@ -1,6 +1,6 @@
 package elevation;
 
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KnowledgeSourceLevel;
 
 public interface SelfLowering extends SelfElevating, Lowerable {
@@ -13,7 +13,7 @@ public interface SelfLowering extends SelfElevating, Lowerable {
 		return lower(this.defaultEnvironment(), level, args);
 	}
 
-	default Liftable lower(FocusedImmutableEnvironment e,
+	default Liftable lower(FocusedImmutableLanguageEnvironment e,
 			KnowledgeSourceLevel level, Object... args) {
 		return lowerer().lower(this, e, level, args);
 	}

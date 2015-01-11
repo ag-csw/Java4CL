@@ -8,7 +8,7 @@ import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeManifestation;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
@@ -23,7 +23,7 @@ import api4kbj.StructuredKnowledgeManifestation;
 public interface Lowerer {
 
 	public default Liftable lower(KnowledgeResourceConfigured kr,
-			FocusedImmutableEnvironment e, KnowledgeSourceLevel level,
+			FocusedImmutableLanguageEnvironment e, KnowledgeSourceLevel level,
 			Object... args) {
 		switch (level) {
 		case EXPRESSION:

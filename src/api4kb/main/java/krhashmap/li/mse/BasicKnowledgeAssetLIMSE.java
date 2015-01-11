@@ -8,7 +8,7 @@ import krhashmap.li.AbstractBasicKnowledgeExpressionLI;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
 import api4kbj.AbstractKRRLanguage;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;
 import elevation.Liftable;
@@ -19,7 +19,7 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		SelfLowering {
 
 	public BasicKnowledgeAssetLIMSE(BasicKnowledgeResourceConfigured kr,
-			FocusedImmutableEnvironment environment) {
+			FocusedImmutableLanguageEnvironment environment) {
 		super(kr, environment);
 		// TODO need switch on level or a more generic cache
 		// because the initialValue might not be an expression
@@ -51,7 +51,7 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 		// TODO check that expression is not null
 		AbstractBasicKnowledgeExpressionLI expression = mapExpression.values()
 				.iterator().next();
-		return (AbstractBasicKnowledgeExpressionLI) environment().translate(
+		return (AbstractBasicKnowledgeExpressionLI) environment().apply(
 				expression, lang);
 	}
 
@@ -77,7 +77,7 @@ public class BasicKnowledgeAssetLIMSE extends BasicKnowledgeAssetLI implements
 	// lowering method with a parameter indicating the language
 	public AbstractBasicKnowledgeExpressionLI express(KRRLanguage lang) {
 		LOG.debug("Starting express with language: {}", lang);
-		if (!environment.containsLanguage(lang)) {
+		if (!environment.containsMember(lang)) {
 			throw new IllegalArgumentException(
 					"Requested language is not contained in environment:"
 							+ lang);

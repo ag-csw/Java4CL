@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import api4kbj.AbstractKRRLanguage;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLogic;
+import api4kbj.KnowledgeExpression;
 
 @RunWith(Parameterized.class)
 public class KRRLanguageTest {
@@ -33,7 +34,11 @@ public class KRRLanguageTest {
 	public final void equalsShouldBeBasedOnFields() {
 		KRRLanguage otherLanguage = new AbstractKRRLanguage(language.name(),
 				language.logic()) {
-		};
+			@Override
+			public Class<? extends KnowledgeExpression> asClass() {
+				return KnowledgeExpression.class;
+			}
+	};
 		assertEquals(otherLanguage, language);
 	}
 
@@ -47,6 +52,11 @@ public class KRRLanguageTest {
 						return "Logic A";
 					}
 				}) {
+
+					@Override
+					public Class<? extends KnowledgeExpression> asClass() {
+						return KnowledgeExpression.class;
+					}
 		} }, new Object[] { new AbstractKRRLanguage("Language Two",
 				new KRRLogic() {
 
@@ -55,6 +65,11 @@ public class KRRLanguageTest {
 						return "Logic B";
 					}
 				}) {
+
+					@Override
+					public Class<? extends KnowledgeExpression> asClass() {
+						return KnowledgeExpression.class;
+					}
 		} }
 
 		);

@@ -6,7 +6,7 @@ import cl2.CL;
 import api4kbj.API4KB;
 import api4kbj.AbstractBasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeAssetCanonical;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KnowledgeExpression;
 
 

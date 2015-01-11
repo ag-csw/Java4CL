@@ -3,7 +3,7 @@ package krconfigured;
 import java.io.InputStream;
 
 import api4kbj.CodecSystem;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
@@ -18,7 +18,7 @@ public interface EnvironmentConfigured {
 	 * 
 	 * @return the default environment
 	 */
-	FocusedImmutableEnvironment defaultEnvironment();
+	FocusedImmutableLanguageEnvironment defaultEnvironment();
 
 	/**
 	 * Returns the default language, which must be contained in the default

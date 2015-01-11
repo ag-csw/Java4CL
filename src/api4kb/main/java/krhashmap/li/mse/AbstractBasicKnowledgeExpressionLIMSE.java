@@ -8,7 +8,7 @@ import krconfigured.BasicKnowledgeResourceConfigured;
 import krconfigured.KnowledgeResourceConfiguredTemplate;
 import krhashmap.li.AbstractBasicKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRLanguage;
@@ -43,7 +43,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	}
 
 	// Asset cache for lifting
-	protected final HashMap<FocusedImmutableEnvironment, KnowledgeAsset> mapAsset = new HashMap<FocusedImmutableEnvironment, KnowledgeAsset>();
+	protected final HashMap<FocusedImmutableLanguageEnvironment, KnowledgeAsset> mapAsset = new HashMap<FocusedImmutableLanguageEnvironment, KnowledgeAsset>();
 	protected final HashMap<KRRDialect, BasicKnowledgeManifestationConfigured> mapManifest = new HashMap<KRRDialect, BasicKnowledgeManifestationConfigured>();
 
 	// default lowering method returns a manifestation in the default dialect
@@ -64,10 +64,10 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	}
 
 	public BasicKnowledgeAssetLI conceptualize(
-			FocusedImmutableEnvironment environment) {
+			FocusedImmutableLanguageEnvironment environment) {
 		LOG.debug("Starting conceptualization relative to environment : {}",
 				environment);
-		if (!environment.containsLanguage(language())) {
+		if (!environment.containsMember(language())) {
 			throw new IllegalArgumentException("Requested envionment"
 					+ environment.toString()
 					+ " does not contain the expression languages:"
@@ -131,7 +131,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 	}
 
 	protected BasicKnowledgeAssetLI newAsset(
-			FocusedImmutableEnvironment environment) {
+			FocusedImmutableLanguageEnvironment environment) {
 		return BasicKnowledgeAssetLI.lazyNewInstance(this, environment);
 
 	}
@@ -159,7 +159,7 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 		mapAsset.clear();
 	}
 
-	public void clearConceptualize(FocusedImmutableEnvironment environment) {
+	public void clearConceptualize(FocusedImmutableLanguageEnvironment environment) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapAsset.remove(environment);

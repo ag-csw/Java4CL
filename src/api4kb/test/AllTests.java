@@ -3,7 +3,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ KnowledgeSourceLevelTest.class, KRRLanguageTest.class })
+@SuiteClasses({ BasicKnowledgeAssetTest.class, BasicKnowledgeExpressionTest.class, 
+	KnowledgeSourceLevelTest.class, KRRLanguageTest.class,
+	GraphImmutableLanguageEnvironmentTest.class})
 public class AllTests {
 
 }

@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.CodecSystem;
-import api4kbj.FocusedImmutableEnvironment;
+import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
 import api4kbj.KRRFormat;
@@ -42,7 +42,7 @@ public class Main {
 			}
 
 			@Override
-			public FocusedImmutableEnvironment defaultEnvironment() {
+			public FocusedImmutableLanguageEnvironment defaultEnvironment() {
 				return CL.CL_DEFAULT_ENVIRONMENT;
 			}
 

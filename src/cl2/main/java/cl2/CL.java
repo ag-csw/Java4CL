@@ -2,7 +2,7 @@ package cl2;
 
 import elevation.Lifter;
 import elevation.Lowerer;
-import graphenvironment.FocusedGraphImmutableEnvironment;
+import graphenvironment.FocusedGraphImmutableLanguageEnvironment;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -47,7 +47,7 @@ public final class CL {
 			"Common Logic", COMPLETE_CL_LOGIC) {
 	};
 
-	public static FocusedGraphImmutableEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableEnvironment(
+	public static FocusedGraphImmutableLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableLanguageEnvironment(
 			CL.LANG);
 
 	// TODO Capitalize constants
