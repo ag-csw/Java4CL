@@ -20,8 +20,9 @@ public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLa
 	@Override
 	Iterable<LanguageMapping<? extends KnowledgeExpression,? extends KnowledgeExpression>> mappings();
 
+	
 	@Override
-	 default <T extends KnowledgeExpression> KnowledgeExpression apply(T arg, KRRLanguage member) {
+	 default <S extends KnowledgeExpression> KnowledgeExpression apply(S arg, KRRLanguage member) {
 		 // TODO this default simply takes the first mapping from the iterable where the
 		 // domain and range match what is requested.
 		 // There is no allowance for composition, so the iterable must range over the compositions as well.
@@ -33,7 +34,8 @@ public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLa
   			 SLOG.debug("Conditional Comparison: {}", clazz.isAssignableFrom(arg.getClass()));
 			 if(clazz.isAssignableFrom(arg.getClass())){
 	  			 SLOG.debug("isAssignableFrom: {}", arg.getClass());
-				 LanguageMapping<T, ? extends KnowledgeExpression> mp2 = (LanguageMapping<T, ? extends KnowledgeExpression>) mp;
+				 @SuppressWarnings("unchecked")
+				LanguageMapping<S, ? extends KnowledgeExpression> mp2 = (LanguageMapping<S, ? extends KnowledgeExpression>) mp;
 				 if (member.asClass().isAssignableFrom(mp2.endClass())){
 					 return mp2.f(arg);
 				 }
@@ -41,6 +43,7 @@ public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLa
 		 }
 		throw new IllegalArgumentException("A mapping is not registered to requested target member from the member associated with the input argument");
 	 }
+	 
 
 
 }

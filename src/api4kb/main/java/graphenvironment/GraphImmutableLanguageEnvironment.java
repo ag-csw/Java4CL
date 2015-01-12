@@ -5,6 +5,7 @@ import java.util.HashSet;
 import functional.None;
 import functional.Option;
 import functional.Some;
+import api4kbj.ClassWrapper;
 import api4kbj.ImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.ImmutableLanguageEnvironment;
@@ -147,15 +148,6 @@ public class GraphImmutableLanguageEnvironment implements
 		return translations;
 	}
 
-	@Override
-	public boolean containsMembers(Iterable<? extends KRRLanguage> t) {
-		for (KRRLanguage lang : t) {
-			if (!this.containsMember(lang)) {
-				return false;
-			}
-		}
-		return true;
-	}
 
 	@Override
 	public boolean containsMapping(
@@ -168,31 +160,6 @@ public class GraphImmutableLanguageEnvironment implements
 		return false;
 	}
 
-	@Override
-	public boolean containsMappings(
-			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression, KnowledgeExpression>> t) {
-		for (Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression, KnowledgeExpression> map : t) {
-			if (this.containsMapping(map)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
-	@Override
-	public <T1 extends KRRLanguage, S1 extends KnowledgeExpression, R extends ImmutableEnvironment<T1, S1>> boolean contains(
-			R other) {
-		if (other == null) {
-			return false;
-		}
-		if (!this.containsMembers(other.members())) {
-			return false;
-		}
-		Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression, KnowledgeExpression>> otherMappings = (Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression, KnowledgeExpression>>) other.mappings();
-		if (!this.containsMappings(otherMappings)) {
-			return false;
-		}
-		return true;
-	}
 	
 }
