@@ -1,10 +1,5 @@
 package api4kbj;
 
-import krhashmap.li.BasicKnowledgeAssetLI;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Interface for immutable environments of KRR languages.
@@ -14,13 +9,26 @@ import org.slf4j.LoggerFactory;
  */
 public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLanguage, KnowledgeExpression> {
 
-	static final Logger SLOG = LoggerFactory
-			.getLogger(BasicKnowledgeAssetLI.class);
 
+	/*
 	@Override
 	Iterable<LanguageMapping<? extends KnowledgeExpression,? extends KnowledgeExpression>> mappings();
-
+  */
 	
+	/*
+	@Override
+	default boolean containsMapping(
+			Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> t) {
+		for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : mappings()) {
+			if (map.equals(t)) {
+				return true;
+			}
+		}
+		return false;
+	}
+*/
+	
+	/*
 	@Override
 	 default <S extends KnowledgeExpression> KnowledgeExpression apply(S arg, KRRLanguage member) {
 		 // TODO this default simply takes the first mapping from the iterable where the
@@ -35,7 +43,7 @@ public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLa
 			 if(clazz.isAssignableFrom(arg.getClass())){
 	  			 SLOG.debug("isAssignableFrom: {}", arg.getClass());
 				 @SuppressWarnings("unchecked")
-				LanguageMapping<S, ? extends KnowledgeExpression> mp2 = (LanguageMapping<S, ? extends KnowledgeExpression>) mp;
+				Mapping<S, ? extends KnowledgeExpression> mp2 = (LanguageMapping<S, ? extends KnowledgeExpression>) mp;
 				 if (member.asClass().isAssignableFrom(mp2.endClass())){
 					 return mp2.f(arg);
 				 }
@@ -44,6 +52,6 @@ public interface ImmutableLanguageEnvironment extends ImmutableEnvironment<KRRLa
 		throw new IllegalArgumentException("A mapping is not registered to requested target member from the member associated with the input argument");
 	 }
 	 
-
+ */
 
 }

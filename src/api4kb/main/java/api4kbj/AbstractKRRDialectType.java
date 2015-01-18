@@ -7,15 +7,15 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRDialectType(String name, KRRDialect dialect, Class<T> type) {
+	public AbstractKRRDialectType(String name, KRRDialect dialect, Class<T> clazz) {
 		this.name = name;
 		this.dialect = dialect;
-		this.type = type;
+		this.clazz = clazz;
 	}
 
 	private final String name;
 	private final KRRDialect dialect;
-	private final Class<T> type;
+	private final Class<T> clazz;
 
 	@Override
 	public String name() {
@@ -28,13 +28,13 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 	}
 
 	@Override
-	public Class<T> type() {
-		return type;
+	public Class<T> asClass() {
+		return clazz;
 	}
 
 	@Override
 	public String toString() {
-		return language().name() + "." + dialect().name() + "." + type() + "."
+		return language().name() + "." + dialect().name() + "." + asClass() + "."
 				+ name();
 	}
 

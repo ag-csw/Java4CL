@@ -10,14 +10,14 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 	 * 
 	 * @return all members (which are of type T) contained in the environment
 	 */
-	Iterable<T> members();
+	Iterable<? extends T> members();
 
 	/**
 	 * Return all mappings contained in the environment as an Iterable.
 	 * 
 	 * @return all mappings contained in the environment
 	 */
-	Iterable<? extends Mapping<? extends S,? extends S, S>> mappings();
+	Iterable<? extends Mapping<? extends S,? extends S>> mappings();
 
 	/**
 	 * Return <tt>true</tt> if the argument is a member contained in the
@@ -42,10 +42,20 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 		return true;
 	}
 
-	boolean containsMapping(Mapping<? extends S,? extends S, S> t);
+	//boolean containsMapping(Mapping<? extends S,? extends S> t);
+	default boolean containsMapping(
+			Mapping<? extends S, ? extends S> t) {
+		for (Mapping<? extends S, ? extends S> map : mappings()) {
+			if (map.equals(t)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
-	default boolean containsMappings(Iterable<? extends Mapping<? extends S,? extends S, S>> t){
-		for (Mapping<? extends S,? extends S, S> s:t){
+
+	default boolean containsMappings(Iterable<? extends Mapping<? extends S,? extends S>> t){
+		for (Mapping<? extends S,? extends S> s:t){
 			if(!containsMapping(s)){ return false; }			
 		}
 		return true;
@@ -62,11 +72,11 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 
 	
 	default <S1 extends S> S apply(S1 arg, T member){
-		 for (Mapping<? extends S, ? extends S, S> mp: mappings()){
+		 for (Mapping<? extends S, ? extends S> mp: mappings()){
 			 Class<? extends S> clazz = mp.startClass();
 			 if(clazz.isAssignableFrom(arg.getClass())){
 				 @SuppressWarnings("unchecked")
-				Mapping<S1, ? extends S, S> mp2 = (Mapping<S1, ? extends S, S>) mp;
+				Mapping<S1, ? extends S> mp2 = (Mapping<S1, ? extends S>) mp;
 				 if (member.asClass().isAssignableFrom(mp2.endClass())){
 					 return mp2.f(arg);
 				 }
@@ -103,13 +113,7 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 		@SuppressWarnings("unchecked")
 		Iterable<? extends T> otherMembers = (Iterable<? extends T>) other.members();
 		if (!containsMembers(otherMembers)) return false;
-		@SuppressWarnings("unchecked")
-		final Iterable<? extends Mapping<? extends S, ? extends S, S>> otherMappings = (Iterable<? extends Mapping<? extends S, ? extends S, S>>) other.mappings();
-		try{
-		  if (!containsMappings(otherMappings)) return false;
-		} catch (Exception e){
-		  return false;	
-		}
+        if (!containsMappings( other.mappings())) return false;
 		return true;
 	}
 	

@@ -3,7 +3,7 @@ package api4kbj;
 import fj.F;
 
 
-public interface Mapping<T extends S, R extends S, S> extends F<T, R> {
+public interface Mapping<T, R> extends F<T, R> {
 	
 	Class<T> startClass();
 	

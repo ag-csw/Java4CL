@@ -5,16 +5,71 @@ import java.util.HashSet;
 import functional.None;
 import functional.Option;
 import functional.Some;
-import api4kbj.ClassWrapper;
-import api4kbj.ImmutableEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.ImmutableLanguageEnvironment;
 import api4kbj.KnowledgeExpression;
 import api4kbj.LanguageMapping;
-import api4kbj.Mapping;
 
 public class GraphImmutableLanguageEnvironment implements
 		ImmutableLanguageEnvironment {
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((defaultLanguage == null) ? 0 : defaultLanguage.hashCode());
+		result = prime * result
+				+ ((focusLanguage == null) ? 0 : focusLanguage.hashCode());
+		result = prime * result
+				+ ((languages == null) ? 0 : languages.hashCode());
+		result = prime * result
+				+ ((translations == null) ? 0 : translations.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof GraphImmutableLanguageEnvironment)) {
+			return false;
+		}
+		GraphImmutableLanguageEnvironment other = (GraphImmutableLanguageEnvironment) obj;
+		if (defaultLanguage == null) {
+			if (other.defaultLanguage != null) {
+				return false;
+			}
+		} else if (!defaultLanguage.equals(other.defaultLanguage)) {
+			return false;
+		}
+		if (focusLanguage == null) {
+			if (other.focusLanguage != null) {
+				return false;
+			}
+		} else if (!focusLanguage.equals(other.focusLanguage)) {
+			return false;
+		}
+		if (languages == null) {
+			if (other.languages != null) {
+				return false;
+			}
+		} else if (!languages.equals(other.languages)) {
+			return false;
+		}
+		if (translations == null) {
+			if (other.translations != null) {
+				return false;
+			}
+		} else if (!translations.equals(other.translations)) {
+			return false;
+		}
+		return true;
+	}
 
 	public GraphImmutableLanguageEnvironment(KRRLanguage lang) {
 		this(init(lang));
@@ -148,17 +203,17 @@ public class GraphImmutableLanguageEnvironment implements
 		return translations;
 	}
 
-
+   /*
 	@Override
 	public boolean containsMapping(
-			Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression, KnowledgeExpression> t) {
-		for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : translations) {
+			Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> t) {
+		for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : mappings()) {
 			if (map.equals(t)) {
 				return true;
 			}
 		}
 		return false;
-	}
+	}*/
 
 
 	
