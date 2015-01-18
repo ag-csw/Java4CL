@@ -2,7 +2,8 @@ package cl2;
 
 import functional.Option;
 
-public abstract class CLNameExpression extends CLExpression implements CLName {
+public abstract class CLNameExpression extends CLExpressionLIMSE implements
+		CLName {
 
 	// TODO make private and create static factory method
 	public <T> CLNameExpression(CLManifestation manifestation) {

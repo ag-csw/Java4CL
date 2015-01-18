@@ -45,6 +45,10 @@ public final class CL {
 	// instantiate anonymous subclass of AbstractKRRLanguage
 	public static AbstractKRRLanguage LANG = new AbstractKRRLanguage(
 			"Common Logic", COMPLETE_CL_LOGIC) {
+		@Override
+		public Class<CLExpression> asClass() {
+			return CLExpression.class;
+		}
 	};
 
 	public static FocusedGraphImmutableLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableLanguageEnvironment(

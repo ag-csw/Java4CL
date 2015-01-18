@@ -13,5 +13,4 @@ public interface KnowledgeExpression extends KnowledgeResource, Liftable,
 
 	boolean usesLanguage(KRRLanguage language);
 
-
 }

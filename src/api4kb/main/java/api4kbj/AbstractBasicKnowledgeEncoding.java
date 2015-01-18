@@ -1,8 +1,8 @@
 package api4kbj;
 
-public abstract class AbstractBasicKnowledgeEncoding implements BasicKnowledgeEncoding {
+public abstract class AbstractBasicKnowledgeEncoding implements
+		BasicKnowledgeEncoding {
 
-	
 	// Wrapper-based constructor
 	public <T> AbstractBasicKnowledgeEncoding(T value,
 			KRRFormatType<T> formatType) {
@@ -13,7 +13,6 @@ public abstract class AbstractBasicKnowledgeEncoding implements BasicKnowledgeEn
 		this.wrappedValue = value;
 	}
 
-
 	private final KRRFormat format;
 	private final KRRFormatType<?> wrappedFormatType;
 	protected final Object wrappedValue;
@@ -22,13 +21,14 @@ public abstract class AbstractBasicKnowledgeEncoding implements BasicKnowledgeEn
 	public KRRFormat format() {
 		return format;
 	}
-	
+
 	@Override
-	public <T> T build(KRRFormatType<T> formatType){
+	public <T> T build(KRRFormatType<T> formatType) {
 		if (formatType.equals(wrappedFormatType)) {
 			return (T) wrappedValue;
 		}
-		throw new IllegalArgumentException("Requested format type" + formatType + " is not supported");
+		throw new IllegalArgumentException("Requested format type" + formatType
+				+ " is not supported");
 	}
 
 }

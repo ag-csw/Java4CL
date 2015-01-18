@@ -7,7 +7,8 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRDialectType(String name, KRRDialect dialect, Class<T> clazz) {
+	public AbstractKRRDialectType(String name, KRRDialect dialect,
+			Class<T> clazz) {
 		this.name = name;
 		this.dialect = dialect;
 		this.clazz = clazz;
@@ -34,8 +35,8 @@ public abstract class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 
 	@Override
 	public String toString() {
-		return language().name() + "." + dialect().name() + "." + asClass() + "."
-				+ name();
+		return language().name() + "." + dialect().name() + "." + asClass()
+				+ "." + name();
 	}
 
 }

@@ -2,6 +2,7 @@ package api4kbj;
 
 public interface KRRDialectType<T> extends ClassWrapper<Object> {
 
+	@Override
 	String name();
 
 	@Override
@@ -12,6 +13,5 @@ public interface KRRDialectType<T> extends ClassWrapper<Object> {
 	default KRRLanguage language() {
 		return dialect().language();
 	}
-
 
 }

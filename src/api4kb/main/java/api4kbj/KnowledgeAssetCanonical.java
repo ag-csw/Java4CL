@@ -2,7 +2,8 @@ package api4kbj;
 
 public abstract class KnowledgeAssetCanonical extends AbstractKnowledgeAsset {
 
-	public KnowledgeAssetCanonical(FocusedImmutableLanguageEnvironment environment,
+	public KnowledgeAssetCanonical(
+			FocusedImmutableLanguageEnvironment environment,
 			KnowledgeExpression canonicalExpression) {
 		super(environment);
 		this.canonicalExpression = canonicalExpression;
@@ -14,6 +15,5 @@ public abstract class KnowledgeAssetCanonical extends AbstractKnowledgeAsset {
 	public KnowledgeExpression canonicalExpression() {
 		return canonicalExpression;
 	}
-
 
 }

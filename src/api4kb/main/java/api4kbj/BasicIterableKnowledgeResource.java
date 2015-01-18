@@ -1,6 +1,5 @@
 package api4kbj;
 
-
 public interface BasicIterableKnowledgeResource extends BasicKnowledgeResource {
 
 	default boolean isAtomic() {

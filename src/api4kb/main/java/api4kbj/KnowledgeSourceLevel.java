@@ -33,6 +33,7 @@ public enum KnowledgeSourceLevel {
 	public boolean hasSucc() {
 		return !equals(ASSET);
 	}
+
 	public boolean hasPred() {
 		return !equals(IO);
 	}

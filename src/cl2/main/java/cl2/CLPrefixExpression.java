@@ -1,6 +1,6 @@
 package cl2;
 
-public abstract class CLPrefixExpression extends CLExpression implements
+public abstract class CLPrefixExpression extends CLExpressionLIMSE implements
 		CLPrefix {
 
 	// TODO make private and create static factory method

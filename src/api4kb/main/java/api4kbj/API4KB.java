@@ -21,17 +21,13 @@ public final class API4KB {
 		return asset.accordingTo(environment);
 	}
 
-	public static boolean actualizes(PublicEvent event,
-			Proficiency proficiency) {
+	public static boolean actualizes(PublicEvent event, Proficiency proficiency) {
 		return event.actualizes(proficiency);
 	}
 
 	public static Boolean conceptualizes(KnowledgeAsset a, KnowledgeExpression e) {
 		return a.conceptualizes(e);
 	}
-
-
-
 
 	public static boolean usesLanguage(KnowledgeExpression expression,
 			KRRLanguage language) {
@@ -86,7 +82,6 @@ public final class API4KB {
 		return lowers(e, a);
 	}
 
-
 	public static CodecSystem<Element, InputStream> CodecSystemXMLUTF8 = new CodecSystem<Element, InputStream>() {
 
 		@Override
@@ -102,6 +97,5 @@ public final class API4KB {
 		}
 
 	};
-	
 
 }

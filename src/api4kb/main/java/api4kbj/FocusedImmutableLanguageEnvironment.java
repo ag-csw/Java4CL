@@ -2,7 +2,8 @@ package api4kbj;
 
 import functional.Some;
 
-public interface FocusedImmutableLanguageEnvironment extends ImmutableLanguageEnvironment {
+public interface FocusedImmutableLanguageEnvironment extends
+		ImmutableLanguageEnvironment {
 
 	@Override
 	default boolean isFocused() {

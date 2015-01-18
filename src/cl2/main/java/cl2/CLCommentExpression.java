@@ -13,11 +13,11 @@ import org.w3c.dom.NodeList;
 import functional.None;
 import functional.Option;
 
-public class CLCommentExpression extends CLExpression implements CLComment {
+public class CLCommentExpression extends CLExpressionLIMSE implements CLComment {
 
 	// Private Constructors
 	// Component-based constructor
-	private CLCommentExpression(KnowledgeResourceConfiguredTemplate template,
+	public CLCommentExpression(KnowledgeResourceConfiguredTemplate template,
 			String symbol, Option<CLCommentExpression> comment) {
 		super(template, CL.LANG);
 		this.symbol = symbol;

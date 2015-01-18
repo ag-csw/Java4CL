@@ -1,9 +1,14 @@
 package api4kbj;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import functional.Option;
 
-public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immutable {
+public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends
+		Immutable {
 
+	static final Logger SLOG = LoggerFactory.getLogger("ImmutableEnvironment");
 
 	/**
 	 * Return all members contained in the environment as an Iterable.
@@ -17,7 +22,7 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 	 * 
 	 * @return all mappings contained in the environment
 	 */
-	Iterable<? extends Mapping<? extends S,? extends S>> mappings();
+	Iterable<? extends Mapping<? extends S, ? extends S>> mappings();
 
 	/**
 	 * Return <tt>true</tt> if the argument is a member contained in the
@@ -26,25 +31,26 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 	 * @param t
 	 * @return <tt>true</tt> if <tt>t</tt> is contained in the environment
 	 */
-	default boolean containsMember(T t){
-		for (T member:members()){
-			if(member.equals(t)){
+	default boolean containsMember(T t) {
+		for (T member : members()) {
+			if (member.equals(t)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	default boolean containsMembers(Iterable<? extends T> t){
-		for (T s:t){
-			if(!containsMember(s)){ return false; }
+	default boolean containsMembers(Iterable<? extends T> t) {
+		for (T s : t) {
+			if (!containsMember(s)) {
+				return false;
+			}
 		}
 		return true;
 	}
 
-	//boolean containsMapping(Mapping<? extends S,? extends S> t);
-	default boolean containsMapping(
-			Mapping<? extends S, ? extends S> t) {
+	// boolean containsMapping(Mapping<? extends S,? extends S> t);
+	default boolean containsMapping(Mapping<? extends S, ? extends S> t) {
 		for (Mapping<? extends S, ? extends S> map : mappings()) {
 			if (map.equals(t)) {
 				return true;
@@ -53,10 +59,12 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 		return false;
 	}
 
-
-	default boolean containsMappings(Iterable<? extends Mapping<? extends S,? extends S>> t){
-		for (Mapping<? extends S,? extends S> s:t){
-			if(!containsMapping(s)){ return false; }			
+	default boolean containsMappings(
+			Iterable<? extends Mapping<? extends S, ? extends S>> t) {
+		for (Mapping<? extends S, ? extends S> s : t) {
+			if (!containsMapping(s)) {
+				return false;
+			}
 		}
 		return true;
 	}
@@ -70,20 +78,29 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 	 */
 	boolean isFocused();
 
-	
-	default <S1 extends S> S apply(S1 arg, T member){
-		 for (Mapping<? extends S, ? extends S> mp: mappings()){
-			 Class<? extends S> clazz = mp.startClass();
-			 if(clazz.isAssignableFrom(arg.getClass())){
-				 @SuppressWarnings("unchecked")
+	default boolean isCompatibleWith(S arg) {
+		for (T member : members()) {
+			if (member.asClass().isAssignableFrom(arg.getClass())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	default <S1 extends S> S apply(S1 arg, T member) {
+		for (Mapping<? extends S, ? extends S> mp : mappings()) {
+			Class<? extends S> clazz = mp.startClass();
+			if (clazz.isAssignableFrom(arg.getClass())) {
+				@SuppressWarnings("unchecked")
 				Mapping<S1, ? extends S> mp2 = (Mapping<S1, ? extends S>) mp;
-				 if (member.asClass().isAssignableFrom(mp2.endClass())){
-					 return mp2.f(arg);
-				 }
-			 }
-		 }
-		throw new IllegalArgumentException("A mapping is not registered to requested target member from the member associated with the input argument");
-	 }
+				if (member.asClass().isAssignableFrom(mp2.endClass())) {
+					return mp2.f(arg);
+				}
+			}
+		}
+		throw new IllegalArgumentException(
+				"A mapping is not registered to requested target member from the member associated with the input argument");
+	}
 
 	/**
 	 * Return the default member of the environment.
@@ -108,13 +125,18 @@ public interface ImmutableEnvironment<T extends ClassWrapper<S>, S> extends Immu
 	 *            an environment
 	 * @return <tt>true</tt> if this environment contains <tt>other</tt>
 	 */
-	default <T1 extends ClassWrapper<S1>, S1 extends S> boolean contains(ImmutableEnvironment<T1, S1> other){
-		if (other == null) return false;
+	default <T1 extends ClassWrapper<S1>, S1 extends S> boolean contains(
+			ImmutableEnvironment<T1, S1> other) {
+		if (other == null)
+			return false;
 		@SuppressWarnings("unchecked")
-		Iterable<? extends T> otherMembers = (Iterable<? extends T>) other.members();
-		if (!containsMembers(otherMembers)) return false;
-        if (!containsMappings( other.mappings())) return false;
+		Iterable<? extends T> otherMembers = (Iterable<? extends T>) other
+				.members();
+		if (!containsMembers(otherMembers))
+			return false;
+		if (!containsMappings(other.mappings()))
+			return false;
 		return true;
 	}
-	
+
 }

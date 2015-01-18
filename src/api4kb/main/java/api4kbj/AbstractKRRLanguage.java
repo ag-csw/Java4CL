@@ -21,8 +21,9 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 		return name;
 	}
 
-	public KRRLogic logic(){
-	 return logic;
+	@Override
+	public KRRLogic logic() {
+		return logic;
 	}
 
 	@Override

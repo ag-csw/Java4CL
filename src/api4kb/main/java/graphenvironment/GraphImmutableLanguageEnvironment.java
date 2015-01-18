@@ -2,6 +2,9 @@ package graphenvironment;
 
 import java.util.HashSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import functional.None;
 import functional.Option;
 import functional.Some;
@@ -12,6 +15,8 @@ import api4kbj.LanguageMapping;
 
 public class GraphImmutableLanguageEnvironment implements
 		ImmutableLanguageEnvironment {
+
+	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public int hashCode() {
@@ -169,24 +174,6 @@ public class GraphImmutableLanguageEnvironment implements
 		return !focusLanguage.isEmpty();
 	}
 
-	/*
-	 * @Override public KnowledgeExpression applyMapping(KnowledgeExpression
-	 * expression, KRRLanguage endLanguage) { if
-	 * (!languages.contains(endLanguage)) { throw new IllegalArgumentException(
-	 * "End language requested for translation is not supported in the environment."
-	 * ); } if (expression.isBasic()) { KRRLanguage startLanguage =
-	 * ((BasicKnowledgeExpression) expression) .language(); if
-	 * (!languages.contains(startLanguage)) { throw new
-	 * IllegalArgumentException(
-	 * "Language of input expression to translate is not supported in the environment."
-	 * ); } // TODO implement using methods of LanguageMapping // 1. Determine
-	 * the shortest path from startLanguage to endLanguage // in // the graph,
-	 * if it exists // 2. If path exists, successively apply the translations of
-	 * the // path // 3. Otherwise, return IllegalArgumentException } // TODO
-	 * implement in case expression is not basic by translating all //
-	 * components return null; }
-	 */
-
 	@Override
 	public KRRLanguage defaultMember() {
 		return defaultLanguage;
@@ -201,19 +188,28 @@ public class GraphImmutableLanguageEnvironment implements
 	@Override
 	public Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mappings() {
 		return translations;
-	}
+	}	
+
 
    /*
-	@Override
-	public boolean containsMapping(
-			Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> t) {
-		for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : mappings()) {
-			if (map.equals(t)) {
-				return true;
-			}
-		}
-		return false;
-	}*/
+	@Override boolean containsMapping(
+	* TODO implement using graph structure
+	* 1. Determine if there is a path between startLanguage and endLanguage
+	* 2. if so, return true
+	*/
+
+	/*
+	 * @Override public KnowledgeExpression apply(KnowledgeExpression...
+     * TODO implement using graph structure
+     *  1. Determine the shortest path from startLanguage to endLanguage in the graph,
+	 * if it exists 
+	 * 2. If path exists, successively apply the translations of
+	 * the path 
+	 * 3. Otherwise, return IllegalArgumentException } 
+	 * TODO
+	 * implement in case expression is not basic by translating all
+	 * components
+	 */
 
 
 	

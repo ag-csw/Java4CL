@@ -17,7 +17,6 @@ public abstract class AbstractBasicKnowledgeManifestation implements
 	private final KRRDialectType<?> wrappedDialectType;
 	protected final Object wrappedValue;
 
-
 	@Override
 	public KRRDialect dialect() {
 		return dialect;
@@ -28,7 +27,8 @@ public abstract class AbstractBasicKnowledgeManifestation implements
 		if (dialectType.equals(wrappedDialectType)) {
 			return (T) wrappedValue;
 		}
-		throw new IllegalArgumentException("Requested dialect type" + dialectType + " is not supporte");
+		throw new IllegalArgumentException("Requested dialect type"
+				+ dialectType + " is not supporte");
 	}
 
 }
