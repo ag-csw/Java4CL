@@ -7,7 +7,4 @@ public interface LanguageMapping<T extends KnowledgeExpression, R extends Knowle
 
 	KRRLanguage endLanguage();
 
-	@Override
-	R f(T arg);
-
 }

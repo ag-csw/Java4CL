@@ -1,12 +1,6 @@
 package api4kbj;
 
-public interface KRRDialectType<T> extends ClassWrapper<Object> {
-
-	@Override
-	String name();
-
-	@Override
-	Class<? extends T> asClass();
+public interface KRRDialectType<T> extends ClassWrapper<T> {
 
 	KRRDialect dialect();
 

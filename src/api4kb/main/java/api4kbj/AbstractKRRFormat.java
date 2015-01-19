@@ -27,7 +27,7 @@ public class AbstractKRRFormat implements KRRFormat {
 
 	@Override
 	public String toString() {
-		return language().name() + "." + dialect().name() + "." + name;
+		return dialect().toString() + "." + name();
 	}
 
 }

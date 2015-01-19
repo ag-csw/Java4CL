@@ -27,7 +27,7 @@ public abstract class AbstractKRRDialect implements KRRDialect {
 
 	@Override
 	public String toString() {
-		return language().name() + "." + name;
+		return language().toString() + "." + name();
 	}
 
 }

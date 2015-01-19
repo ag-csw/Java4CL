@@ -1,8 +1,8 @@
 package functional;
 
-public interface EquivalenceRelation<T> {
-	
-	default boolean apply(T x, T y){
+public interface EquivalenceRelation {
+		
+	default boolean apply(Object x, Object y){
 		if (x.equals(y)){
 			return true;
 		}

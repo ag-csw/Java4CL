@@ -5,6 +5,8 @@ import java.util.HashSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import functional.EquivalenceRelation;
+import functional.Functional;
 import functional.None;
 import functional.Option;
 import functional.Some;
@@ -85,6 +87,7 @@ public class GraphImmutableLanguageEnvironment implements
 		builder.addLanguages(lang);
 		builder.setDefaultLanguage(lang);
 		builder.addFocusLanguage(lang);
+		builder.addPreserves(Functional.ID);
 		return builder;
 	}
 
@@ -94,6 +97,7 @@ public class GraphImmutableLanguageEnvironment implements
 		private HashSet<KRRLanguage> languages = new HashSet<KRRLanguage>();
 		private HashSet<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations = new HashSet<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>>();
 		private Option<KRRLanguage> focusLanguage = new None<KRRLanguage>();
+		private Option<EquivalenceRelation> preserves = new None<EquivalenceRelation>();
 
 		//
 		public Builder() {
@@ -121,6 +125,10 @@ public class GraphImmutableLanguageEnvironment implements
 			this.focusLanguage = new Some<KRRLanguage>(language);
 		}
 
+		public void addPreserves(EquivalenceRelation preserves) {
+			this.preserves  = new Some<EquivalenceRelation>(preserves);
+		}
+
 		public <T extends KnowledgeExpression, S extends KnowledgeExpression> void addMappings(
 				Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations) {
 			for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : translations) {
@@ -136,7 +144,7 @@ public class GraphImmutableLanguageEnvironment implements
 		}
 
 		public void addMapping(
-				LanguageMapping<KnowledgeExpression, KnowledgeExpression> map) {
+				LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map) {
 			this.translations.add(map);
 			this.languages.add(map.startLanguage());
 			this.languages.add(map.endLanguage());
@@ -145,10 +153,11 @@ public class GraphImmutableLanguageEnvironment implements
 	}
 
 	private GraphImmutableLanguageEnvironment(Builder builder) {
-		this.languages = builder.languages;
-		this.focusLanguage = builder.focusLanguage;
+		this.languages = (HashSet<KRRLanguage>) builder.languages.clone();
+		this.focusLanguage = builder.focusLanguage.clone();
 		this.defaultLanguage = builder.defaultLanguage;
-		this.translations = builder.translations;
+		this.translations = (Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>>) builder.translations.clone();
+		this.preserves = builder.preserves.clone();
 	}
 
 	private final KRRLanguage defaultLanguage;
@@ -157,6 +166,7 @@ public class GraphImmutableLanguageEnvironment implements
 	// library
 	private final HashSet<KRRLanguage> languages;
 	private final Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations;
+	private Option<EquivalenceRelation> preserves;
 
 	// TODO modify to change return type to immutable collection
 	@Override
@@ -184,12 +194,33 @@ public class GraphImmutableLanguageEnvironment implements
 		return focusLanguage;
 	}
 
+	@Override
+	public Option<EquivalenceRelation> preserves() {
+		return preserves;
+	}
+
 
 	@Override
 	public Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mappings() {
 		return translations;
-	}	
+	}
 
+
+	@Override
+	public boolean isPreserving() {
+		return !preserves.isEmpty();
+	}
+
+	/*
+	@Override
+	public boolean isCompatibleWith(Class<?> clazz) {
+		if (clazz == null) return false;
+		for (KRRLanguage member: members()){
+			if (member.asClass().isAssignableFrom(clazz)) return true;
+		}
+		return false;
+	}	
+*/
 
    /*
 	@Override boolean containsMapping(

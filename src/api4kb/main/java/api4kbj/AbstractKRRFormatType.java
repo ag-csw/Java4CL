@@ -7,15 +7,15 @@ public abstract class AbstractKRRFormatType<S> implements KRRFormatType<S> {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRFormatType(String name, KRRFormat format, Class<S> type) {
+	public AbstractKRRFormatType(String name, KRRFormat format, Class<? extends S> clazz) {
 		this.name = name;
 		this.format = format;
-		this.type = type;
+		this.clazz = clazz;
 	}
 
 	private final String name;
 	private final KRRFormat format;
-	private final Class<S> type;
+	private final Class<? extends S> clazz;
 
 	@Override
 	public String name() {
@@ -28,19 +28,14 @@ public abstract class AbstractKRRFormatType<S> implements KRRFormatType<S> {
 	}
 
 	@Override
-	public Class<S> type() {
-		return type;
+	public Class<? extends S> asClass() {
+		return clazz;
 	}
 
 	@Override
 	public String toString() {
-		return language().name() + "." + dialect().name() + "."
-				+ format().name() + "." + name;
+		return format().toString() + "." + asClass().getName() + "." + name();
 	}
 
-	@Override
-	public KRRLanguage language() {
-		return dialect().language();
-	}
 
 }

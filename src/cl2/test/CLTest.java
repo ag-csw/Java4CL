@@ -34,15 +34,17 @@ public class CLTest {
 		assertEquals("Equality of environments should be based on fields",
 				CL.CL_DEFAULT_ENVIRONMENT,
 				new FocusedGraphImmutableLanguageEnvironment(CL.LANG));
-		assertFalse(
-				"null should not be compatible with the Common Logic default environment",
-				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWith(null));
 		CLExpression expression = new CLExpression();
-		assertEquals("The class of a CLExpression should be CLEXpression", CLExpression.class, expression.getClass());
 		assertTrue(
 				"A Common Logic expression should be compatible with the Common Logic default environment",
 				CL.CL_DEFAULT_ENVIRONMENT
 						.isCompatibleWith(expression));
+		assertFalse(
+				"null should not be compatible with the Common Logic default environment",
+				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWith(null));
+		assertFalse(
+				"null should not be compatible with the Common Logic default environment",
+				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWithClass(null));
 
 	}
 }

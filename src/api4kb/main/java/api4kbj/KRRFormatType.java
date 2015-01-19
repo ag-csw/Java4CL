@@ -1,10 +1,6 @@
 package api4kbj;
 
-public interface KRRFormatType<S> {
-
-	String name();
-
-	Class<S> type();
+public interface KRRFormatType<S> extends ClassWrapper<S> {
 
 	KRRFormat format();
 
@@ -15,5 +11,6 @@ public interface KRRFormatType<S> {
 	default KRRLanguage language() {
 		return format().language();
 	}
+	
 
 }

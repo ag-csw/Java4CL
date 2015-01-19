@@ -14,11 +14,17 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	private final String name;
 
+	private Class<? extends KnowledgeExpression> clazz;
+
 	private final KRRLogic logic;
 
 	@Override
 	public String name() {
 		return name;
+	}
+	@Override
+	public Class<? extends KnowledgeExpression> asClass() {
+		return clazz;
 	}
 
 	@Override
@@ -28,7 +34,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	@Override
 	public String toString() {
-		return name + ":" + logic.name();
+		return name() + "." + asClass().getName() + ":" + logic.name();
 	}
 
 	@Override
@@ -68,5 +74,12 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 		}
 		return true;
 	}
+
+	// TODO make this package protected?
+	public void setClass(Class<? extends KnowledgeExpression> clazz) {
+		this.clazz = clazz;
+		
+	}
+	
 
 }

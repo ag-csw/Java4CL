@@ -46,7 +46,7 @@ public final class CL {
 	public static AbstractKRRLanguage LANG = new AbstractKRRLanguage(
 			"Common Logic", COMPLETE_CL_LOGIC) {
 		@Override
-		public Class<CLExpression> asClass() {
+		public Class<? extends CLExpression> asClass() {
 			return CLExpression.class;
 		}
 	};
