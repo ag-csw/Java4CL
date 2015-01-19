@@ -10,7 +10,8 @@ public class IOWrapper<R extends InputStream> implements IO<R> {
 
 	private InputStream wrappedInput;
 
-	public void unsafePerformIO() {		
+	@Override
+	public void unsafePerformIO() {
 	}
 
 	@Override

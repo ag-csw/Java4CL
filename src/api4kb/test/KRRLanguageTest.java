@@ -38,7 +38,7 @@ public class KRRLanguageTest {
 			public Class<? extends KnowledgeExpression> asClass() {
 				return KnowledgeExpression.class;
 			}
-	};
+		};
 		assertEquals(otherLanguage, language);
 	}
 
@@ -53,10 +53,10 @@ public class KRRLanguageTest {
 					}
 				}) {
 
-					@Override
-					public Class<? extends KnowledgeExpression> asClass() {
-						return KnowledgeExpression.class;
-					}
+			@Override
+			public Class<? extends KnowledgeExpression> asClass() {
+				return KnowledgeExpression.class;
+			}
 		} }, new Object[] { new AbstractKRRLanguage("Language Two",
 				new KRRLogic() {
 
@@ -66,10 +66,10 @@ public class KRRLanguageTest {
 					}
 				}) {
 
-					@Override
-					public Class<? extends KnowledgeExpression> asClass() {
-						return KnowledgeExpression.class;
-					}
+			@Override
+			public Class<? extends KnowledgeExpression> asClass() {
+				return KnowledgeExpression.class;
+			}
 		} }
 
 		);

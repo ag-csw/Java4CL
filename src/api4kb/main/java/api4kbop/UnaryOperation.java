@@ -1,7 +1,7 @@
 package api4kbop;
 
-import java.util.function.Function;
+import api4kbj.Mapping;
 
-public interface UnaryOperation<T, R> extends Operation, Function<T, R> {
+public interface UnaryOperation<T, R> extends Operation, Mapping<T, R> {
 
 }

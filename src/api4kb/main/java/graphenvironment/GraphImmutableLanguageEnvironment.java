@@ -81,7 +81,7 @@ public class GraphImmutableLanguageEnvironment implements
 	public GraphImmutableLanguageEnvironment(KRRLanguage lang) {
 		this(init(lang));
 	}
-	
+
 	public static Builder init(KRRLanguage lang) {
 		Builder builder = new Builder();
 		builder.addLanguages(lang);
@@ -126,7 +126,7 @@ public class GraphImmutableLanguageEnvironment implements
 		}
 
 		public void addPreserves(EquivalenceRelation preserves) {
-			this.preserves  = new Some<EquivalenceRelation>(preserves);
+			this.preserves = new Some<EquivalenceRelation>(preserves);
 		}
 
 		public <T extends KnowledgeExpression, S extends KnowledgeExpression> void addMappings(
@@ -148,7 +148,7 @@ public class GraphImmutableLanguageEnvironment implements
 			this.translations.add(map);
 			this.languages.add(map.startLanguage());
 			this.languages.add(map.endLanguage());
-			
+
 		}
 	}
 
@@ -156,7 +156,8 @@ public class GraphImmutableLanguageEnvironment implements
 		this.languages = (HashSet<KRRLanguage>) builder.languages.clone();
 		this.focusLanguage = builder.focusLanguage.clone();
 		this.defaultLanguage = builder.defaultLanguage;
-		this.translations = (Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>>) builder.translations.clone();
+		this.translations = (Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>>) builder.translations
+				.clone();
 		this.preserves = builder.preserves.clone();
 	}
 
@@ -199,12 +200,10 @@ public class GraphImmutableLanguageEnvironment implements
 		return preserves;
 	}
 
-
 	@Override
 	public Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mappings() {
 		return translations;
 	}
-
 
 	@Override
 	public boolean isPreserving() {
@@ -212,36 +211,24 @@ public class GraphImmutableLanguageEnvironment implements
 	}
 
 	/*
-	@Override
-	public boolean isCompatibleWith(Class<?> clazz) {
-		if (clazz == null) return false;
-		for (KRRLanguage member: members()){
-			if (member.asClass().isAssignableFrom(clazz)) return true;
-		}
-		return false;
-	}	
-*/
-
-   /*
-	@Override boolean containsMapping(
-	* TODO implement using graph structure
-	* 1. Determine if there is a path between startLanguage and endLanguage
-	* 2. if so, return true
-	*/
-
-	/*
-	 * @Override public KnowledgeExpression apply(KnowledgeExpression...
-     * TODO implement using graph structure
-     *  1. Determine the shortest path from startLanguage to endLanguage in the graph,
-	 * if it exists 
-	 * 2. If path exists, successively apply the translations of
-	 * the path 
-	 * 3. Otherwise, return IllegalArgumentException } 
-	 * TODO
-	 * implement in case expression is not basic by translating all
-	 * components
+	 * @Override public boolean isCompatibleWith(Class<?> clazz) { if (clazz ==
+	 * null) return false; for (KRRLanguage member: members()){ if
+	 * (member.asClass().isAssignableFrom(clazz)) return true; } return false; }
 	 */
 
+	/*
+	 * @Override boolean containsMapping( TODO implement using graph structure
+	 * 1. Determine if there is a path between startLanguage and endLanguage 2.
+	 * if so, return true
+	 */
 
-	
+	/*
+	 * @Override public KnowledgeExpression apply(KnowledgeExpression... TODO
+	 * implement using graph structure 1. Determine the shortest path from
+	 * startLanguage to endLanguage in the graph, if it exists 2. If path
+	 * exists, successively apply the translations of the path 3. Otherwise,
+	 * return IllegalArgumentException } TODO implement in case expression is
+	 * not basic by translating all components
+	 */
+
 }

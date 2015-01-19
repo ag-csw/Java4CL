@@ -40,7 +40,8 @@ public abstract class AbstractBasicKnowledgeEncodingLIMSE extends
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset or expression, then its default dialect becomes the
 	// target language
-	public AbstractBasicKnowledgeEncodingLIMSE(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeEncodingLIMSE(
+			BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.format = kr.defaultFormat();
 		LOG.debug(

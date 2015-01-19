@@ -22,7 +22,8 @@ public abstract class AbstractBasicKnowledgeExpressionLI extends
 
 	// No-parameter Lazy initializing constructor
 	// If kr is an asset, then its default language becomes the target language
-	public AbstractBasicKnowledgeExpressionLI(BasicKnowledgeResourceConfigured kr) {
+	public AbstractBasicKnowledgeExpressionLI(
+			BasicKnowledgeResourceConfigured kr) {
 		super(kr);
 		this.lang = kr.defaultLanguage();
 		LOG.debug(

@@ -57,10 +57,10 @@ public class Some<T> implements Option<T> {
 		}
 		return true;
 	}
-	
-	public Some<T> clone(){
+
+	@Override
+	public Some<T> clone() {
 		return new Some<T>(this.value);
 	}
-
 
 }

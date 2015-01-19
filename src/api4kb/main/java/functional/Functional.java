@@ -1,6 +1,7 @@
 package functional;
 
 public class Functional {
-	public static EquivalenceRelation ID = new EquivalenceRelation(){};
+	public static EquivalenceRelation ID = new EquivalenceRelation() {
+	};
 
 }

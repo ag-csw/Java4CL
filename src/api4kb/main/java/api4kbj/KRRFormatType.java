@@ -11,6 +11,5 @@ public interface KRRFormatType<S> extends ClassWrapper<S> {
 	default KRRLanguage language() {
 		return format().language();
 	}
-	
 
 }

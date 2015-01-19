@@ -22,6 +22,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	public String name() {
 		return name;
 	}
+
 	@Override
 	public Class<? extends KnowledgeExpression> asClass() {
 		return clazz;
@@ -76,10 +77,10 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	}
 
 	// TODO make this package protected?
+	@Override
 	public void setClass(Class<? extends KnowledgeExpression> clazz) {
 		this.clazz = clazz;
-		
+
 	}
-	
 
 }

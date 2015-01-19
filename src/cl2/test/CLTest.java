@@ -1,11 +1,9 @@
 import static org.junit.Assert.*;
-import functional.None;
 import graphenvironment.FocusedGraphImmutableLanguageEnvironment;
 
 import org.junit.Test;
 
 import cl2.CL;
-import cl2.CLCommentExpression;
 import cl2.CLExpression;
 
 public class CLTest {
@@ -37,8 +35,7 @@ public class CLTest {
 		CLExpression expression = new CLExpression();
 		assertTrue(
 				"A Common Logic expression should be compatible with the Common Logic default environment",
-				CL.CL_DEFAULT_ENVIRONMENT
-						.isCompatibleWith(expression));
+				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWith(expression));
 		assertFalse(
 				"null should not be compatible with the Common Logic default environment",
 				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWith(null));

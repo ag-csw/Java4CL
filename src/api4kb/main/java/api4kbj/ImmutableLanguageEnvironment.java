@@ -10,22 +10,13 @@ public interface ImmutableLanguageEnvironment extends
 		ImmutableEnvironment<KRRLanguage, KnowledgeExpression> {
 
 	/*
-	@Override
-	default boolean isCompatibleWith(KnowledgeExpression arg) {
-	   if (arg == null){
-	   return false;
-	   }
-		if (arg instanceof BasicKnowledgeExpression) {
-			final BasicKnowledgeExpression barg = (BasicKnowledgeExpression) arg;
-			return containsMember(barg.language());
-		}
-		if (arg instanceof StructuredKnowledgeExpression) {
-			final StructuredKnowledgeExpression sarg = (StructuredKnowledgeExpression) arg;
-			return containsMembers(sarg.languages());
-		}
-		return false;
-	}
-*/
-
+	 * @Override default boolean isCompatibleWith(KnowledgeExpression arg) { if
+	 * (arg == null){ return false; } if (arg instanceof
+	 * BasicKnowledgeExpression) { final BasicKnowledgeExpression barg =
+	 * (BasicKnowledgeExpression) arg; return containsMember(barg.language()); }
+	 * if (arg instanceof StructuredKnowledgeExpression) { final
+	 * StructuredKnowledgeExpression sarg = (StructuredKnowledgeExpression) arg;
+	 * return containsMembers(sarg.languages()); } return false; }
+	 */
 
 }

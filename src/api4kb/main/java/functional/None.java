@@ -32,8 +32,9 @@ public class None<T> implements Option<T> {
 		}
 		return true;
 	}
-	
-	public None<T> clone(){
+
+	@Override
+	public None<T> clone() {
 		return new None<T>();
 	}
 

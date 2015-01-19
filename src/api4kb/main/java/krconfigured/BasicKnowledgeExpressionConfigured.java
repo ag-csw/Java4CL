@@ -1,7 +1,6 @@
 package krconfigured;
 
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.KnowledgeExpression;
 
 /**
  * A BasicKnowledgeExpressionConfigured is a knowledge resource at the
@@ -12,7 +11,6 @@ import api4kbj.KnowledgeExpression;
  *
  */
 public interface BasicKnowledgeExpressionConfigured extends
-		BasicKnowledgeResourceConfigured,
-		BasicKnowledgeExpression {
+		BasicKnowledgeResourceConfigured, BasicKnowledgeExpression {
 
 }

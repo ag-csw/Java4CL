@@ -159,7 +159,8 @@ public abstract class AbstractBasicKnowledgeExpressionLIMSE extends
 		mapAsset.clear();
 	}
 
-	public void clearConceptualize(FocusedImmutableLanguageEnvironment environment) {
+	public void clearConceptualize(
+			FocusedImmutableLanguageEnvironment environment) {
 		// TODO check that this removal will not put object into
 		// inconsistent state before removing
 		mapAsset.remove(environment);

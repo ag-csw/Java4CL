@@ -8,6 +8,5 @@ public interface KRRLanguage extends ClassWrapper<KnowledgeExpression> {
 	default Class<? extends KnowledgeExpression> asClass() {
 		return KnowledgeExpression.class;
 	}
-	
 
 }

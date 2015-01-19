@@ -43,24 +43,25 @@ public class BasicKnowledgeExpressionTest {
 				return "Logic B";
 			}
 		};
-		return Arrays.asList(
-				new Object[] { new AbstractBasicKnowledgeExpression(
-						new AbstractKRRLanguage("Language One", logicA) {
+		BasicKnowledgeExpression expression0 = new AbstractBasicKnowledgeExpression(
+				new AbstractKRRLanguage("Language One", logicA) {
 
-							@Override
-							public Class<? extends KnowledgeExpression> asClass() {
-								return KnowledgeExpression.class;
-							}
+					@Override
+					public Class<? extends KnowledgeExpression> asClass() {
+						return KnowledgeExpression.class;
+					}
+				}) {
+		};
+		BasicKnowledgeExpression expression1 = new AbstractBasicKnowledgeExpression(
+				new AbstractKRRLanguage("Language Two", logicA) {
 
-						}) {
-
-				} }, new Object[] { new AbstractBasicKnowledgeExpression(
-						new AbstractKRRLanguage("Language Two", logicB) {
-							@Override
-							public Class<? extends KnowledgeExpression> asClass() {
-								return KnowledgeExpression.class;
-							}
-						}) {
-				} });
+					@Override
+					public Class<? extends KnowledgeExpression> asClass() {
+						return KnowledgeExpression.class;
+					}
+				}) {
+		};
+		return Arrays
+				.asList(new Object[][] { { expression0 }, { expression1 } });
 	}
 }

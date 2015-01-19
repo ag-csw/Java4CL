@@ -39,5 +39,4 @@ public abstract class AbstractKnowledgeExpressionLI extends
 
 	private Set<KRRLanguage> languages = new HashSet<KRRLanguage>();
 
-
 }
