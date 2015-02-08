@@ -1,5 +1,6 @@
 package api4kbj;
 
+import api4kbj7.IKnowledgeExpression;
 import elevation.Lowerable;
 
 /**
@@ -37,7 +38,7 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 		return environment.contains(environment());
 	}
 
-	public default boolean conceptualizes(KnowledgeExpression e) {
+	public default boolean conceptualizes(IKnowledgeExpression e) {
 		if (e.equals(canonicalExpression())) {
 			return true;
 		}

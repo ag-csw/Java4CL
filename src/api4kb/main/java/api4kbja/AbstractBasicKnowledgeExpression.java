@@ -1,7 +1,10 @@
-package api4kbj;
+package api4kbja;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import api4kbj.BasicKnowledgeExpression;
+import api4kbj.KRRLanguage;
 
 public abstract class AbstractBasicKnowledgeExpression implements
 		BasicKnowledgeExpression {

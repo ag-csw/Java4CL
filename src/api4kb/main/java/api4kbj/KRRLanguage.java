@@ -1,8 +1,8 @@
 package api4kbj;
 
-public interface KRRLanguage extends ClassWrapper<KnowledgeExpression> {
+import api4kbj7.IKRRLanguage;
 
-	KRRLogic logic();
+public interface KRRLanguage extends ClassWrapper<KnowledgeExpression>, IKRRLanguage {
 
 	@Override
 	default Class<? extends KnowledgeExpression> asClass() {

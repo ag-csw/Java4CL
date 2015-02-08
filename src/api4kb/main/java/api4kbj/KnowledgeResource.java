@@ -1,5 +1,7 @@
 package api4kbj;
 
-public interface KnowledgeResource extends ImmutableSource, KnowledgeSource {
+import api4kbj7.IKnowledgeResource;
+
+public interface KnowledgeResource extends IKnowledgeResource, KnowledgeSource {
 
 }

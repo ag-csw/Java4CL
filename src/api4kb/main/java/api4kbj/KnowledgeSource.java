@@ -1,6 +1,8 @@
 package api4kbj;
 
-public interface KnowledgeSource extends Source {
+import api4kbj7.IKnowledgeSource;
+
+public interface KnowledgeSource extends Source, IKnowledgeSource {
 	/**
 	 * Returns the abstraction level.
 	 * 

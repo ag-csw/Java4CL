@@ -1,13 +1,17 @@
-package api4kbj;
+package api4kbja;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeExpression;
+import api4kbj7.IKRRLogic;
 
 public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRLanguage(String name, KRRLogic logic) {
+	public AbstractKRRLanguage(String name, IKRRLogic logic) {
 		this.name = name;
 		this.logic = logic;
 	}
@@ -16,7 +20,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	private Class<? extends KnowledgeExpression> clazz;
 
-	private final KRRLogic logic;
+	private final IKRRLogic logic;
 
 	@Override
 	public String name() {
@@ -29,7 +33,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	}
 
 	@Override
-	public KRRLogic logic() {
+	public IKRRLogic logic() {
 		return logic;
 	}
 

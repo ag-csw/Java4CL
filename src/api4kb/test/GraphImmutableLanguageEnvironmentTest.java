@@ -12,13 +12,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
 import api4kbj.LanguageMapping;
 import api4kbj.Mapping;
+//import api4kbj7.IKRRLanguage;
+import api4kbj7.IKRRLogic;
+//import api4kbj7.IKnowledgeExpression;
+//import api4kbj7.IMapping;
+import api4kbja.AbstractKRRLanguage;
 
 @RunWith(Parameterized.class)
 public class GraphImmutableLanguageEnvironmentTest {
@@ -216,7 +219,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
 
-		KRRLogic logic = new KRRLogic() {
+		IKRRLogic logic = new IKRRLogic() {
 
 			@Override
 			public String name() {

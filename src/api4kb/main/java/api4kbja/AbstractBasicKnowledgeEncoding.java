@@ -1,4 +1,8 @@
-package api4kbj;
+package api4kbja;
+
+import api4kbj.BasicKnowledgeEncoding;
+import api4kbj.KRRFormat;
+import api4kbj.KRRFormatType;
 
 public abstract class AbstractBasicKnowledgeEncoding implements
 		BasicKnowledgeEncoding {

@@ -1,6 +1,6 @@
-package api4kbj;
+package api4kbj7;
 
-public interface Immutable {
+public interface IImmutable {
 	// An interface for immutable classes.
 	// All public fields must be final.
 	// Private and protected fields need not be final, but should not have

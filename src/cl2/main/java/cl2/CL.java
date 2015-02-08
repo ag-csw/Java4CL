@@ -24,9 +24,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import api4kbj.AbstractCodecSystem;
-import api4kbj.AbstractKRRLanguage;
-import api4kbj.KRRLogic;
+import api4kbj7.IKRRLogic;
+import api4kbja.AbstractCodecSystem;
+import api4kbja.AbstractKRRLanguage;
 
 public final class CL {
 
@@ -35,7 +35,7 @@ public final class CL {
 	}
 
 	// constants
-	public static KRRLogic COMPLETE_CL_LOGIC = new KRRLogic() {
+	public static IKRRLogic COMPLETE_CL_LOGIC = new IKRRLogic() {
 
 		@Override
 		public String name() {

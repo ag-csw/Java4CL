@@ -1,5 +1,9 @@
 package api4kbj;
 
+import api4kbj7.IKRRLanguage;
+
+
+
 public interface BasicKnowledgeExpression extends KnowledgeExpression,
 		BasicKnowledgeResource {
 
@@ -11,7 +15,7 @@ public interface BasicKnowledgeExpression extends KnowledgeExpression,
 	KRRLanguage language();
 
 	@Override
-	default boolean usesLanguage(KRRLanguage language) {
+	default boolean usesLanguage(IKRRLanguage language) {
 		return language().equals(language);
 	}
 

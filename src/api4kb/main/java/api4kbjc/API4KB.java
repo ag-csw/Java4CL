@@ -1,4 +1,4 @@
-package api4kbj;
+package api4kbjc;
 
 import java.io.InputStream;
 
@@ -6,7 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
-import api4kbjev.PublicEvent;
+import api4kbj.CodecSystem;
+import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeAsset;
+import api4kbj.KnowledgeEncoding;
+import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeIO;
+import api4kbj.KnowledgeManifestation;
+import api4kbj.KnowledgeResource;
+import api4kbj7.IImmutableSource;
+import api4kbj7.IKnowledgeExpression;
+import api4kbj7.IMutableSource;
+import api4kbj7.ev.IPublicEvent;
 import api4kbjpro.Proficiency;
 
 public final class API4KB {
@@ -21,22 +33,22 @@ public final class API4KB {
 		return asset.accordingTo(environment);
 	}
 
-	public static boolean actualizes(PublicEvent event, Proficiency proficiency) {
+	public static boolean actualizes(IPublicEvent event, Proficiency proficiency) {
 		return event.actualizes(proficiency);
 	}
 
-	public static Boolean conceptualizes(KnowledgeAsset a, KnowledgeExpression e) {
+	public static Boolean conceptualizes(KnowledgeAsset a, IKnowledgeExpression e) {
 		return a.conceptualizes(e);
 	}
 
-	public static boolean usesLanguage(KnowledgeExpression expression,
+	public static boolean usesLanguage(IKnowledgeExpression expression,
 			KRRLanguage language) {
 		return expression.usesLanguage(language);
 	}
 
 	// TODO configure below
 
-	public static Boolean hasSnapshot(MutableSource m, ImmutableSource i) {
+	public static Boolean hasSnapshot(IMutableSource m, IImmutableSource i) {
 		return m.getSnapshot().equals(i);
 	}
 

@@ -1,6 +1,8 @@
 package api4kbj;
 
-public interface BasicKnowledgeResource extends KnowledgeResource {
+import api4kbj7.IBasicKnowledgeResource;
+
+public interface BasicKnowledgeResource extends KnowledgeResource, IBasicKnowledgeResource {
 
 	@Override
 	default boolean isBasic() {

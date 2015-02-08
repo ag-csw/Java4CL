@@ -1,6 +1,8 @@
 package api4kbj;
 
-public interface Source {
+import api4kbj7.ISource;
+
+public interface Source extends ISource {
 	/**
 	 * Returns <tt>true</tt> if this knowledge resource is basic (not
 	 * structured).

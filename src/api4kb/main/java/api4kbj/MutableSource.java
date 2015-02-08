@@ -1,5 +1,9 @@
 package api4kbj;
 
-public interface MutableSource extends Mutable<ImmutableSource>, Source {
+import api4kbj7.IImmutableSource;
+import api4kbj7.IMutable;
+import api4kbj7.IMutableSource;
+
+public interface MutableSource extends IMutable<IImmutableSource>, Source, IMutableSource {
 
 }

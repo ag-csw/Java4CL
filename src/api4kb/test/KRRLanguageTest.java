@@ -7,10 +7,10 @@ import org.junit.runners.Parameterized;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import api4kbj.AbstractKRRLanguage;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
+import api4kbj7.IKRRLogic;
+import api4kbja.AbstractKRRLanguage;
 
 @RunWith(Parameterized.class)
 public class KRRLanguageTest {
@@ -45,7 +45,7 @@ public class KRRLanguageTest {
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
 		return Arrays.asList(new Object[] { new AbstractKRRLanguage(
-				"Language One", new KRRLogic() {
+				"Language One", new IKRRLogic() {
 
 					@Override
 					public String name() {
@@ -58,7 +58,7 @@ public class KRRLanguageTest {
 				return KnowledgeExpression.class;
 			}
 		} }, new Object[] { new AbstractKRRLanguage("Language Two",
-				new KRRLogic() {
+				new IKRRLogic() {
 
 					@Override
 					public String name() {

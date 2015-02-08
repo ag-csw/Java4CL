@@ -1,14 +1,9 @@
 package api4kbj;
 
-import fj.F;
+import api4kbj7.IMapping;
 
-public interface Mapping<T, R> {
 
-	Class<? extends T> startClass();
-
-	Class<? extends R> endClass();
-
-	F<T, R> function();
+public interface Mapping<T, R> extends IMapping<T, R> {
 
 	default R f(T arg) {
 		if (startClass().isAssignableFrom(arg.getClass())) {

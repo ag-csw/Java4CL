@@ -1,6 +1,8 @@
 package api4kbj;
 
-import functional.EquivalenceRelation;
+import api4kbj7.IImmutable;
+import api4kbj7.IImutableEnvironment;
+import api4kbj7.IMapping;
 import functional.None;
 import functional.Option;
 import functional.Some;
@@ -72,44 +74,22 @@ import functional.Some;
  *            LanguageEnvironemnt, S is KnowledgeExpression
  */
 public interface ImmutableEnvironment<T extends ClassWrapper<? extends S>, S>
-		extends Immutable {
+		extends IImmutable, IImutableEnvironment<T, S> {
 
-	/**
-	 * Return all members contained in the environment as an Iterable.
-	 * 
-	 * @return all members (which are of type T) contained in the environment
-	 */
-	Iterable<? extends T> members();
-
+    @Override
 	/**
 	 * Return all mappings contained in the environment as an Iterable.
 	 * 
 	 * @return all mappings contained in the environment
 	 */
 	Iterable<? extends Mapping<? extends S, ? extends S>> mappings();
-
+	
 	/**
 	 * Return the default member of the environment.
 	 * 
 	 * @return the default member of the environment
 	 */
 	T defaultMember();
-
-	/**
-	 * Return the optional focus member of the environment.
-	 * 
-	 * @return the optional focus member of the environment
-	 * @see #isFocused()
-	 */
-	Option<T> focusMember();
-
-	/**
-	 * Return the equivalence relation that is preserved by all mappings.
-	 * 
-	 * @return the equivalence relation that is preserved by all mappings
-	 * @see #isPreserving()
-	 */
-	Option<EquivalenceRelation> preserves();
 
 	/**
 	 * Return <tt>true</tt> if and only if the class wrapper is a member
@@ -154,8 +134,8 @@ public interface ImmutableEnvironment<T extends ClassWrapper<? extends S>, S>
 	 *            the mapping to be tested
 	 * @return <tt>true</tt> if <tt>t</tt> is contained in the environment
 	 */
-	default boolean containsMapping(Mapping<? extends S, ? extends S> t) {
-		for (Mapping<? extends S, ? extends S> map : mappings()) {
+	default boolean containsMapping(IMapping<? extends S, ? extends S> t) {
+		for (IMapping<? extends S, ? extends S> map : mappings()) {
 			if (map.equals(t)) {
 				return true;
 			}
@@ -177,7 +157,7 @@ public interface ImmutableEnvironment<T extends ClassWrapper<? extends S>, S>
 	 */
 	default boolean containsMappings(
 			Iterable<? extends Mapping<? extends S, ? extends S>> t) {
-		for (Mapping<? extends S, ? extends S> s : t) {
+		for (IMapping<? extends S, ? extends S> s : t) {
 			if (!containsMapping(s)) {
 				return false;
 			}
@@ -192,7 +172,9 @@ public interface ImmutableEnvironment<T extends ClassWrapper<? extends S>, S>
 	 * 
 	 * @return <tt>true</tt> if the environment has a focus
 	 */
-	boolean isFocused();
+	default boolean isFocused(){
+		return !focusMember().isEmpty();
+	}
 
 	/**
 	 * Return <tt>true</tt> if the environment has a property that is preserved
@@ -201,7 +183,9 @@ public interface ImmutableEnvironment<T extends ClassWrapper<? extends S>, S>
 	 * 
 	 * @return <tt>true</tt> if the environment has a focus
 	 */
-	boolean isPreserving();
+	default boolean isPreserving(){
+		return !preserves().isEmpty();
+	}
 
 	/**
 	 * 
@@ -233,7 +217,7 @@ public interface ImmutableEnvironment<T extends ClassWrapper<? extends S>, S>
 		if (memberClass.isAssignableFrom(argClass)) {
 			return arg;
 		}
-		for (Mapping<? extends S, ? extends S> mp : mappings()) {
+		for (IMapping<? extends S, ? extends S> mp : mappings()) {
 			Class<? extends S> clazzIn = mp.startClass();
 			Class<? extends S> clazzOut = mp.endClass();
 			if (clazzIn.isAssignableFrom(argClass)) {

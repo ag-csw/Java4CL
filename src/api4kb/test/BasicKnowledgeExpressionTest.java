@@ -7,12 +7,12 @@ import org.junit.runners.Parameterized;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import api4kbj.API4KB;
-import api4kbj.AbstractBasicKnowledgeExpression;
-import api4kbj.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
+import api4kbj7.IKRRLogic;
+import api4kbja.AbstractBasicKnowledgeExpression;
+import api4kbja.AbstractKRRLanguage;
+import api4kbjc.API4KB;
 
 @RunWith(Parameterized.class)
 public class BasicKnowledgeExpressionTest {
@@ -29,14 +29,14 @@ public class BasicKnowledgeExpressionTest {
 
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
-		KRRLogic logicA = new KRRLogic() {
+		IKRRLogic logicA = new IKRRLogic() {
 
 			@Override
 			public String name() {
 				return "Logic A";
 			}
 		};
-		KRRLogic logicB = new KRRLogic() {
+		IKRRLogic logicB = new IKRRLogic() {
 
 			@Override
 			public String name() {

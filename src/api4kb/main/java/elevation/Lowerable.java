@@ -1,5 +1,7 @@
 package elevation;
 
-public interface Lowerable extends Elevatable {
+import api4kbj7.ILowerable;
+
+public interface Lowerable extends Elevatable, ILowerable {
 
 }

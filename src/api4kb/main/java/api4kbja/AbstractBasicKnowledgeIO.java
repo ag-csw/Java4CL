@@ -1,10 +1,12 @@
 /**
  * 
  */
-package api4kbj;
+package api4kbja;
 
 import java.io.InputStream;
 
+import api4kbj.BasicKnowledgeIO;
+import api4kbj.KRRFormat;
 import functional.IO;
 import functional.IOWrapper;
 

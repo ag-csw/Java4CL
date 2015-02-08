@@ -1,7 +1,10 @@
-package api4kbj;
+package api4kbja;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.KRRFormat;
+import api4kbj.KRRFormatType;
 
 public abstract class AbstractKRRFormatType<S> implements KRRFormatType<S> {
 

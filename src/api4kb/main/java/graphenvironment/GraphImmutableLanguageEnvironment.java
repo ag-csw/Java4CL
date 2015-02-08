@@ -14,6 +14,7 @@ import api4kbj.KRRLanguage;
 import api4kbj.ImmutableLanguageEnvironment;
 import api4kbj.KnowledgeExpression;
 import api4kbj.LanguageMapping;
+import api4kbj7.IKnowledgeExpression;
 
 public class GraphImmutableLanguageEnvironment implements
 		ImmutableLanguageEnvironment {
@@ -129,7 +130,7 @@ public class GraphImmutableLanguageEnvironment implements
 			this.preserves = new Some<EquivalenceRelation>(preserves);
 		}
 
-		public <T extends KnowledgeExpression, S extends KnowledgeExpression> void addMappings(
+		public <T extends IKnowledgeExpression, S extends IKnowledgeExpression> void addMappings(
 				Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations) {
 			for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : translations) {
 				this.translations.add(map);

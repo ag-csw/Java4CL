@@ -1,7 +1,10 @@
-package api4kbj;
+package api4kbja;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.KRRDialect;
+import api4kbj.KRRLanguage;
 
 public abstract class AbstractKRRDialect implements KRRDialect {
 
