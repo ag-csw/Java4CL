@@ -1,7 +1,7 @@
 package graphenvironment;
 
 import functional.Some;
-import api4kbj.AbstractKRRLanguage;
+import api4kba.AbstractKRRLanguage;
 import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRLanguage;
 

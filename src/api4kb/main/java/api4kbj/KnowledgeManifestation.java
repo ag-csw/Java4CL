@@ -11,4 +11,6 @@ public interface KnowledgeManifestation extends KnowledgeResource, Liftable,
 		return KnowledgeSourceLevel.MANIFESTATION;
 	}
 
+	boolean usesDialect(KRRDialect dialect);
+
 }

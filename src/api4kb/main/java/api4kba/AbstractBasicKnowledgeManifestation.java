@@ -1,4 +1,8 @@
-package api4kbj;
+package api4kba;
+
+import api4kbj.BasicKnowledgeManifestation;
+import api4kbj.KRRDialect;
+import api4kbj.KRRDialectType;
 
 public abstract class AbstractBasicKnowledgeManifestation implements
 		BasicKnowledgeManifestation {

@@ -1,6 +1,6 @@
 package cl2;
 
-import api4kbj.AbstractKRRFormat;
+import api4kba.AbstractKRRFormat;
 
 public abstract class CLFormat extends AbstractKRRFormat {
 

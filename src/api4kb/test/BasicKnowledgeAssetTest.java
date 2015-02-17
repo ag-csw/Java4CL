@@ -3,9 +3,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import cl2.CL;
-import api4kbj.API4KB;
-import api4kbj.AbstractBasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeAssetCanonical;
+import api4kba.AbstractBasicKnowledgeExpression;
+import api4kbc.API4KB;
+import api4kbc.BasicKnowledgeAssetCanonical;
 import api4kbj.KnowledgeExpression;
 
 public class BasicKnowledgeAssetTest {

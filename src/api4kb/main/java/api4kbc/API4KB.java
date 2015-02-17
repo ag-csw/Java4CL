@@ -1,4 +1,4 @@
-package api4kbj;
+package api4kbc;
 
 import java.io.InputStream;
 
@@ -6,6 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
+import api4kbj.CodecSystem;
+import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.ImmutableSource;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeAsset;
+import api4kbj.KnowledgeEncoding;
+import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeIO;
+import api4kbj.KnowledgeManifestation;
+import api4kbj.KnowledgeResource;
+import api4kbj.MutableSource;
 import api4kbjev.PublicEvent;
 import api4kbjpro.Proficiency;
 

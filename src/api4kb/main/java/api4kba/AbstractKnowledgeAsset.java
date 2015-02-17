@@ -1,7 +1,10 @@
-package api4kbj;
+package api4kba;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.KnowledgeAsset;
 
 public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 

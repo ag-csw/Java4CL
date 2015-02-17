@@ -7,7 +7,7 @@ import krconfigured.EnvironmentConfigured;
 import krhashmap.li.AbstractBasicKnowledgeExpressionLI;
 import krhashmap.li.AbstractKnowledgeExpressionLI;
 import krhashmap.li.BasicKnowledgeAssetLI;
-import api4kbj.AbstractKRRLanguage;
+import api4kba.AbstractKRRLanguage;
 import api4kbj.FocusedImmutableLanguageEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;

@@ -1,4 +1,4 @@
-package api4kbj;
+package api4kbjev;
 
 public interface Event {
 

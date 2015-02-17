@@ -7,7 +7,7 @@ import org.junit.runners.Parameterized;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import api4kbj.AbstractKRRLanguage;
+import api4kba.AbstractKRRLanguage;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;

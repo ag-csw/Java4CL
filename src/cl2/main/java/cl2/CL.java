@@ -24,8 +24,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import api4kbj.AbstractCodecSystem;
-import api4kbj.AbstractKRRLanguage;
+import api4kba.AbstractCodecSystem;
+import api4kba.AbstractKRRLanguage;
 import api4kbj.KRRLogic;
 
 public final class CL {
