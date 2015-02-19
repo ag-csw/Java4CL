@@ -62,6 +62,17 @@
   		<artifactId>functionaljava</artifactId>
   		<version>4.1</version>
   	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  		<version>4.12</version>
+  	</dependency>
   </dependencies>
   <groupId>de.fuberlin.csw.cl</groupId>
+  <packaging>pom</packaging>
+  <modules>
+  	
+  	<module>api4kb</module>
+  	<module>cl2</module>
+  </modules>
 </project>

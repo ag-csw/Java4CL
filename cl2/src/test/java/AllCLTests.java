@@ -3,7 +3,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ CLTest.class })
+@SuiteClasses({ CLTest.class,
+	BasicKnowledgeAssetTest.class })
 public class AllCLTests {
 
 }
