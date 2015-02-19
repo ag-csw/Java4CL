@@ -32,7 +32,8 @@
   </build>
   <scm>
   	<url>https://github.com/ag-csw/Java4CL</url>
-  	<developerConnection>Tara Athan, Ralph Schaefermeier</developerConnection>
+  	<developerConnection>scm:git:git://github.com/ag-csw/Java4CL</developerConnection>
+  	<connection>scm:git:git://github.com/ag-csw/Java4CL</connection>
   </scm>
   <issueManagement>
   	<url>https://github.com/ag-csw/Java4CL/issues</url>
