@@ -47,7 +47,7 @@ public class Some<T> implements Option<T> {
 		if (!(obj instanceof Some)) {
 			return false;
 		}
-		Some other = (Some) obj;
+		Some<?> other = (Some<?>) obj;
 		if (value == null) {
 			if (other.value != null) {
 				return false;

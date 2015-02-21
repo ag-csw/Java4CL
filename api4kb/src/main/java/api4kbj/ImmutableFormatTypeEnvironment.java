@@ -1,5 +1,4 @@
-import api4kbj.ImmutableEnvironment;
-import api4kbj.KRRFormatType;
+package api4kbj;
 
 public interface ImmutableFormatTypeEnvironment extends
 		ImmutableEnvironment<KRRFormatType<?>, Object> {
