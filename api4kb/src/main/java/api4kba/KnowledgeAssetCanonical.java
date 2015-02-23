@@ -1,13 +1,13 @@
 package api4kba;
 
 
-import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.FocusedLanguageEnvironment;
 import api4kbj.KnowledgeExpression;
 
 public abstract class KnowledgeAssetCanonical extends AbstractKnowledgeAsset {
 
 	public KnowledgeAssetCanonical(
-			FocusedImmutableLanguageEnvironment environment,
+			FocusedLanguageEnvironment environment,
 			KnowledgeExpression canonicalExpression) {
 		super(environment);
 		this.canonicalExpression = canonicalExpression;

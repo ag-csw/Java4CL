@@ -1,6 +1,6 @@
 package api4kbop;
 
-import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.FocusedLanguageEnvironment;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeExpression;
@@ -20,7 +20,7 @@ public interface ExpressingAction<T extends KnowledgeAsset> extends
 
 	@Override
 	default KnowledgeExpression f(T t) {
-		FocusedImmutableLanguageEnvironment env = t.environment();
+		FocusedLanguageEnvironment env = t.environment();
 		if (!env.containsMember(lang())) {
 			throw new IllegalArgumentException("The environment of the asset "
 					+ t + " is not capable of mapping to the language" + lang()

@@ -12,4 +12,7 @@ public interface BasicKnowledgeEncoding extends KnowledgeEncoding,
 
 	<S> S build(KRRFormatType<S> formatType);
 
+
+	byte[] toByteArray();
+
 }

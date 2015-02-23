@@ -19,7 +19,7 @@ public abstract class AbstractKRRFormatType<S> implements KRRFormatType<S> {
 
 	private final String name;
 	private final KRRFormat format;
-	private final Class<? extends S> clazz;
+	protected Class<? extends S> clazz;
 
 	@Override
 	public String name() {

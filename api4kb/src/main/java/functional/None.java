@@ -4,10 +4,12 @@ public class None<T> implements Option<T> {
 
 	public None() {
 	}
+	
+	private boolean isEmpty = true;
 
 	@Override
 	public Boolean isEmpty() {
-		return true;
+		return isEmpty;
 	}
 
 	@Override
@@ -16,26 +18,27 @@ public class None<T> implements Option<T> {
 	}
 
 	@Override
-	public int hashCode() {
-		return 1;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
 	public None<T> clone() {
 		return new None<T>();
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (isEmpty ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
 	}
 
 }

@@ -22,7 +22,7 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 	 * 
 	 * @return the environment of the asset
 	 */
-	FocusedImmutableLanguageEnvironment environment();
+	FocusedLanguageEnvironment environment();
 
 	/**
 	 * Returns the canonical expression (i.e. expression in the focus language
@@ -33,7 +33,7 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 	KnowledgeExpression canonicalExpression();
 
 	public default boolean accordingTo(
-			FocusedImmutableLanguageEnvironment environment) {
+			FocusedLanguageEnvironment environment) {
 		return environment.contains(environment());
 	}
 

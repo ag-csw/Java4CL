@@ -2,13 +2,12 @@ package api4kbj;
 
 import elevation.Liftable;
 import elevation.Lowerable;
-import functional.EquivalenceRelation;
+//import functional.EquivalenceRelation;
 
 public interface KnowledgeExpression extends KnowledgeResource, Liftable,
 		Lowerable {
 
-	EquivalenceRelation ID = new EquivalenceRelation() {
-	};
+	//EquivalenceRelation ID = new EquivalenceRelation();
 
 	@Override
 	default KnowledgeSourceLevel level() {

@@ -2,9 +2,9 @@ package elevation;
 
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeIO;
+import api4kbj.BasicKnowledgeIOWriter;
 import api4kbj.BasicKnowledgeManifestation;
-import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.FocusedLanguageEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
@@ -18,7 +18,7 @@ import api4kbj.StructuredKnowledgeManifestation;
 
 public interface Lifter {
 
-	default Lowerable lift(Liftable kr, FocusedImmutableLanguageEnvironment e,
+	default Lowerable lift(Liftable kr, FocusedLanguageEnvironment e,
 			KnowledgeSourceLevel level) {
 		switch (level) {
 		case ASSET:
@@ -35,7 +35,7 @@ public interface Lifter {
 	}
 
 	default KnowledgeAsset conceptualizer(Liftable kr,
-			FocusedImmutableLanguageEnvironment e) {
+			FocusedLanguageEnvironment e) {
 		switch (kr.level()) {
 		case ASSET:
 			// TODO message
@@ -65,7 +65,7 @@ public interface Lifter {
 	KnowledgeEncoding prototyper(Liftable kr);
 
 	default KnowledgeAsset conceptualize(KnowledgeExpression kr,
-			FocusedImmutableLanguageEnvironment e) {
+			FocusedLanguageEnvironment e) {
 		if (!kr.isBasic()) {
 			return structuredConceptualize((StructuredKnowledgeExpression) kr,
 					e);
@@ -94,15 +94,15 @@ public interface Lifter {
 		if (!kr.isBasic()) {
 			return structuredPrototype((StructuredKnowledgeIO) kr);
 		}
-		return basicPrototype((BasicKnowledgeIO) kr);
+		return basicPrototype((BasicKnowledgeIOWriter) kr);
 
 	}
 
 	KnowledgeAsset structuredConceptualize(StructuredKnowledgeExpression kr,
-			FocusedImmutableLanguageEnvironment e);
+			FocusedLanguageEnvironment e);
 
 	KnowledgeAsset basicConceptualize(BasicKnowledgeExpression kr,
-			FocusedImmutableLanguageEnvironment e);
+			FocusedLanguageEnvironment e);
 
 	KnowledgeExpression structuredParse(StructuredKnowledgeManifestation kr);
 
@@ -112,7 +112,7 @@ public interface Lifter {
 
 	KnowledgeManifestation basicDecode(BasicKnowledgeEncoding kr);
 
-	KnowledgeEncoding basicPrototype(BasicKnowledgeIO kr);
+	KnowledgeEncoding basicPrototype(BasicKnowledgeIOWriter kr);
 
 	KnowledgeEncoding structuredPrototype(StructuredKnowledgeIO kr);
 

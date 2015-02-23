@@ -1,31 +1,22 @@
 package cl2;
 
-import functional.Option;
+public class CLNameExpression extends CLExpression {
 
-public abstract class CLNameExpression extends CLExpressionLIMSE implements
-		CLName {
-
-	// TODO make private and create static factory method
-	public <T> CLNameExpression(CLManifestation manifestation) {
-		super(manifestation);
+	public CLNameExpression(CLPrefixExpression[] prefixes, String symbol) {
+		super();
+		this.prefixes = prefixes;
+		this.symbol = symbol;
 	}
 
-	@Override
-	public Option<CLComment> comment() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private CLPrefixExpression[] prefixes;
+	private String symbol;
 
-	@Override
 	public CLPrefixExpression[] prefixes() {
-		// TODO Auto-generated method stub
-		return null;
+		return prefixes;
 	}
 
-	@Override
 	public String symbol() {
-		// TODO Auto-generated method stub
-		return null;
+		return symbol;
 	}
 
 }

@@ -1,9 +1,10 @@
 import static org.junit.Assert.*;
-import graphenvironment.FocusedGraphImmutableLanguageEnvironment;
+import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import org.junit.Test;
 
 import cl2.CL;
+import cl2.CLCommentExpression;
 import cl2.CLExpression;
 
 public class CLTest {
@@ -31,8 +32,8 @@ public class CLTest {
 				CL.LANG, CL.CL_DEFAULT_ENVIRONMENT.focusMember().value());
 		assertEquals("Equality of environments should be based on fields",
 				CL.CL_DEFAULT_ENVIRONMENT,
-				new FocusedGraphImmutableLanguageEnvironment(CL.LANG));
-		CLExpression expression = new CLExpression();
+				new HashFocusedKRRLanguageEnvironment(CL.LANG));
+		CLCommentExpression expression = new CLCommentExpression("");
 		assertTrue(
 				"A Common Logic expression should be compatible with the Common Logic default environment",
 				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWith(expression));

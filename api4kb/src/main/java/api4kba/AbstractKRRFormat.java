@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import api4kbj.KRRDialect;
 import api4kbj.KRRFormat;
 
-public class AbstractKRRFormat implements KRRFormat {
+public abstract class AbstractKRRFormat implements KRRFormat {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 

@@ -1,18 +1,8 @@
-import java.io.InputStream;
-
-import krconfigured.KnowledgeResourceConfiguredTemplate;
-import krhashmap.li.mse.BasicKnowledgeAssetLIMSE;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbj.CodecSystem;
-import api4kbj.FocusedImmutableLanguageEnvironment;
-import api4kbj.KRRDialect;
-import api4kbj.KRRDialectType;
-import api4kbj.KRRFormat;
-import api4kbj.KRRFormatType;
-import api4kbj.KRRLanguage;
+import api4kbc.BasicKnowledgeAssetCanonical;
+import api4kbj.BasicKnowledgeAsset;
 import api4kbj.KnowledgeSourceLevel;
 import cl2.CL;
 import cl2.CLCommentExpression;
@@ -29,67 +19,8 @@ public class Main {
 		// Direct construction of CLCommentExpression
 		String myCommentSymbol = "blah blah ...";
 		LOG.debug("Eager expression instantiation starting");
-		KnowledgeResourceConfiguredTemplate basicExpressionTemplate = new KnowledgeResourceConfiguredTemplate() {
 
-			@Override
-			public KnowledgeSourceLevel level() {
-				return KnowledgeSourceLevel.EXPRESSION;
-			}
-
-			@Override
-			public boolean isBasic() {
-				return true;
-			}
-
-			@Override
-			public FocusedImmutableLanguageEnvironment defaultEnvironment() {
-				return CL.CL_DEFAULT_ENVIRONMENT;
-			}
-
-			@Override
-			public KRRLanguage defaultLanguage() {
-				return CL.LANG;
-			}
-
-			@Override
-			public KRRDialect defaultDialect() {
-				return CL.XCL2;
-			}
-
-			@Override
-			public KRRDialectType<?> defaultDialectType() {
-				return CL.xcl2dom;
-			}
-
-			@Override
-			public KRRFormat defaultFormat() {
-				return CL.xcl2utf8;
-			}
-
-			@Override
-			public KRRFormatType<?> defaultFormatType() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public CodecSystem<?, ?> defaultCodecSystem() {
-				return CL.domUTF8bytearray;
-			}
-
-			@Override
-			public Object defaultReceiver() {
-				return System.out;
-			}
-
-			@Override
-			public InputStream defaultInput() {
-				return System.in;
-			}
-
-		};
-		CLCommentExpression myCommentExpression = CLCommentExpression
-				.eagerNewInstance(basicExpressionTemplate, myCommentSymbol);
+		CLCommentExpression myCommentExpression = new CLCommentExpression(myCommentSymbol);
 
 		// Testing the methods of CLCommentExpression
 		assert myCommentExpression.isBasic() : "Failed check for basic expression";
@@ -97,22 +28,21 @@ public class Main {
 		assert myCommentExpression.language() == CL.LANG : "Failed language check";
 		// Skipping the clears
 		// myCommentExpression.clearInitialValue();
-		assert myCommentExpression.getSymbol() == myCommentSymbol : "Symbol evalution incorrect.";
-		assert myCommentExpression.getComment().isEmpty() : "Failed nested comment is absent";
+		assert myCommentExpression.symbol() == myCommentSymbol : "Symbol evalution incorrect.";
 
 		// Construction of a CLCommentAsset lazily for a specific environment
 		LOG.debug("Lazy asset instantiation starting");
-		BasicKnowledgeAssetLIMSE myCommentAsset = new BasicKnowledgeAssetLIMSE(
-				myCommentExpression, CL.CL_DEFAULT_ENVIRONMENT);
+		BasicKnowledgeAsset myCommentAsset = new BasicKnowledgeAssetCanonical(
+				CL.CL_DEFAULT_ENVIRONMENT, myCommentExpression);
 		// BasicKnowledgeAssetLIMSE myCommentAsset =
 		// myCommentExpression.conceptualize(env);
-		assert myCommentAsset.express(CL.LANG) == myCommentExpression : "Failed lazy express method on asset";
+		assert myCommentAsset.canonicalExpression() == myCommentExpression : "Failed lazy express method on asset";
 
 		// Construction a CLCommentAsset lazily for the default environment
 		LOG.debug("Lazy asset instantiation starting");
-		BasicKnowledgeAssetLIMSE myCommentAsset2 = new BasicKnowledgeAssetLIMSE(
-				myCommentExpression, CL.CL_DEFAULT_ENVIRONMENT);
-		assert myCommentAsset2.express(CL.LANG) == myCommentExpression : "Failed lazy express method on asset";
+		BasicKnowledgeAsset myCommentAsset2 = new BasicKnowledgeAssetCanonical(
+				CL.CL_DEFAULT_ENVIRONMENT, myCommentExpression);
+		assert myCommentAsset2.canonicalExpression() == myCommentExpression : "Failed lazy express method on asset";
 		assert myCommentAsset2.equals(myCommentAsset) : "Failed equality check on assets.";
 
 		// Construction a CLManifestation lazily

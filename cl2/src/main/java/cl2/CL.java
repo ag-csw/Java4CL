@@ -2,11 +2,12 @@ package cl2;
 
 import elevation.Lifter;
 import elevation.Lowerer;
-import graphenvironment.FocusedGraphImmutableLanguageEnvironment;
+import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -51,7 +52,7 @@ public final class CL {
 		}
 	};
 
-	public static FocusedGraphImmutableLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new FocusedGraphImmutableLanguageEnvironment(
+	public static HashFocusedKRRLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new HashFocusedKRRLanguageEnvironment(
 			CL.LANG);
 
 	// TODO Capitalize constants
@@ -59,6 +60,12 @@ public final class CL {
 	};
 
 	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", XCL2) {
+
+		@Override
+		public Charset charset() {
+			return Charset.forName("UTF-8");
+		}
+		
 	};
 
 	public static final String URI_XCL2 = "http://purl.org/xcl/2.0/";

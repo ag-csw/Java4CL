@@ -2,18 +2,17 @@ package elevation;
 
 import java.util.Arrays;
 
-import krconfigured.EnvironmentConfigured;
-import krconfigured.KnowledgeResourceConfigured;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeEncoding;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.BasicKnowledgeManifestation;
-import api4kbj.FocusedImmutableLanguageEnvironment;
+import api4kbj.FocusedLanguageEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
 import api4kbj.KnowledgeIO;
 import api4kbj.KnowledgeManifestation;
+import api4kbj.KnowledgeResource;
 import api4kbj.KnowledgeSourceLevel;
 import api4kbj.StructuredKnowledgeAsset;
 import api4kbj.StructuredKnowledgeEncoding;
@@ -22,8 +21,8 @@ import api4kbj.StructuredKnowledgeManifestation;
 
 public interface Lowerer {
 
-	public default Liftable lower(KnowledgeResourceConfigured kr,
-			FocusedImmutableLanguageEnvironment e, KnowledgeSourceLevel level,
+	public default Liftable lower(KnowledgeResource kr,
+			FocusedLanguageEnvironment e, KnowledgeSourceLevel level,
 			Object... args) {
 		switch (level) {
 		case EXPRESSION:
@@ -45,7 +44,7 @@ public interface Lowerer {
 	}
 
 	public default KnowledgeExpression expresser(
-			KnowledgeResourceConfigured kr, Object... args) {
+			KnowledgeResource kr, Object... args) {
 		switch (kr.level()) {
 		case IO:
 			throw new IllegalArgumentException(
@@ -68,7 +67,7 @@ public interface Lowerer {
 	}
 
 	public default KnowledgeManifestation manifester(
-			KnowledgeResourceConfigured kr, Object... args) {
+			KnowledgeResource kr, Object... args) {
 		switch (kr.level()) {
 		case IO:
 			throw new IllegalArgumentException(
@@ -88,10 +87,10 @@ public interface Lowerer {
 	}
 
 	// TODO add default implementation
-	public KnowledgeEncoding encoder(EnvironmentConfigured kr, Object... args);
+	public KnowledgeEncoding encoder(KnowledgeResource kr, Object... args);
 
 	// TODO add default implementation
-	public KnowledgeIO reproducer(EnvironmentConfigured kr, Object... args);
+	public KnowledgeIO reproducer(KnowledgeResource kr, Object... args);
 
 	public default KnowledgeExpression express(KnowledgeAsset kr,
 			Object... args) {

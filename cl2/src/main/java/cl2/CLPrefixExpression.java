@@ -1,23 +1,22 @@
 package cl2;
 
-public abstract class CLPrefixExpression extends CLExpressionLIMSE implements
-		CLPrefix {
+public class CLPrefixExpression extends CLExpression {
 
-	// TODO make private and create static factory method
-	public CLPrefixExpression(CLManifestation manifestation) {
-		super(manifestation);
+	public CLPrefixExpression(String pre, String iri) {
+		super();
+		this.pre = pre;
+		this.iri = iri;
 	}
 
-	@Override
+	private String pre;
+	private String iri;
+
 	public String pre() {
-		// TODO Auto-generated method stub
-		return null;
+		return pre;
 	}
 
-	@Override
 	public String iri() {
-		// TODO Auto-generated method stub
-		return null;
+		return iri;
 	}
 
 }

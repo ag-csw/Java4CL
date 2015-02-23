@@ -5,14 +5,15 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import fj.F;
-import graphenvironment.GraphImmutableLanguageEnvironment;
-import graphenvironment.GraphImmutableLanguageEnvironment.*;
+import hashenvironment.HashKRRLanguageEnvironment;
+import hashenvironment.HashKRRLanguageEnvironment.*;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import api4kba.AbstractKRRLanguage;
+import api4kbc.FLanguageMapping;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLogic;
@@ -23,7 +24,7 @@ import api4kbj.Mapping;
 @RunWith(Parameterized.class)
 public class GraphImmutableLanguageEnvironmentTest {
 	public GraphImmutableLanguageEnvironmentTest(
-			GraphImmutableLanguageEnvironment env,
+			HashKRRLanguageEnvironment env,
 			BasicKnowledgeExpression expression,
 			KRRLanguage langNo,
 			KRRLanguage langYes,
@@ -33,7 +34,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetYes,
 			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetNo,
 			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetAll,
-			GraphImmutableLanguageEnvironment envsup) {
+			HashKRRLanguageEnvironment envsup) {
 		this.env = env;
 		this.expression = expression;
 		this.langYes = langYes;
@@ -47,7 +48,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 		this.envsup = envsup;
 	}
 
-	public GraphImmutableLanguageEnvironment env;
+	public HashKRRLanguageEnvironment env;
 	public BasicKnowledgeExpression expression;
 	public KRRLanguage langYes;
 	public KRRLanguage langNo;
@@ -57,7 +58,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 	public Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetYes;
 	public Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetNo;
 	public Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetAll;
-	public GraphImmutableLanguageEnvironment envsup;
+	public HashKRRLanguageEnvironment envsup;
 
 	@Test
 	public void testTest() {
@@ -177,7 +178,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 
 	}
 
-	boolean checkDomains(GraphImmutableLanguageEnvironment env) {
+	boolean checkDomains(HashKRRLanguageEnvironment env) {
 		for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : env
 				.mappings()) {
 			if (!env.isCompatibleWithClass(map.startClass())) {
@@ -187,7 +188,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 		return true;
 	}
 
-	boolean checkRanges(GraphImmutableLanguageEnvironment env) {
+	boolean checkRanges(HashKRRLanguageEnvironment env) {
 		for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : env
 				.mappings()) {
 			if (!env.isCompatibleWithClass(map.endClass())) {
@@ -197,7 +198,7 @@ public class GraphImmutableLanguageEnvironmentTest {
 		return true;
 	}
 
-	boolean checkFocus(GraphImmutableLanguageEnvironment env) {
+	boolean checkFocus(HashKRRLanguageEnvironment env) {
 		if (env.isFocused()) {
 			KRRLanguage foc = env.focusMember().value();
 			for (KRRLanguage member : env.members()) {
@@ -264,47 +265,6 @@ public class GraphImmutableLanguageEnvironmentTest {
 
 		}
 
-		class AbstractLanguageMapping<S extends KnowledgeExpression, T extends KnowledgeExpression>
-				implements LanguageMapping<S, T> {
-
-			public AbstractLanguageMapping(F<S, T> function,
-					KRRLanguage startLang, KRRLanguage endLang) {
-				Function = function;
-				this.startLang = startLang;
-				this.endLang = endLang;
-			}
-
-			private F<S, T> Function;
-			private KRRLanguage startLang;
-			private KRRLanguage endLang;
-
-			@Override
-			public Class<? extends S> startClass() {
-				return (Class<? extends S>) startLanguage().asClass();
-			}
-
-			@Override
-			public Class<? extends T> endClass() {
-				return (Class<? extends T>) endLanguage().asClass();
-			}
-
-			@Override
-			public F<S, T> function() {
-				return Function;
-			}
-
-			@Override
-			public KRRLanguage startLanguage() {
-				return startLang;
-			}
-
-			@Override
-			public KRRLanguage endLanguage() {
-				return endLang;
-			}
-
-		}
-
 		lang2.setClass(TestKE2.class);
 		lang1.setClass(TestKE1.class);
 
@@ -333,21 +293,15 @@ public class GraphImmutableLanguageEnvironmentTest {
 
 		};
 
-		LanguageMapping<TestKE1, TestKE1> idMap1 = new AbstractLanguageMapping<TestKE1, TestKE1>(
-				id1, lang1, lang1) {
+		LanguageMapping<TestKE1, TestKE1> idMap1 = new FLanguageMapping<TestKE1, TestKE1>(
+				id1, lang1, lang1);
+		LanguageMapping<TestKE2, TestKE2> idMap2 = new FLanguageMapping<TestKE2, TestKE2>(
+				id2, lang2, lang2);
 
-		};
-		LanguageMapping<TestKE2, TestKE2> idMap2 = new AbstractLanguageMapping<TestKE2, TestKE2>(
-				id2, lang2, lang2) {
+		LanguageMapping<TestKE1, TestKE2> upMap = new FLanguageMapping<TestKE1, TestKE2>(
+				up, lang1, lang2);
 
-		};
-
-		LanguageMapping<TestKE1, TestKE2> upMap = new AbstractLanguageMapping<TestKE1, TestKE2>(
-				up, lang1, lang2) {
-
-		};
-
-		GraphImmutableLanguageEnvironment env = new GraphImmutableLanguageEnvironment(
+		HashKRRLanguageEnvironment env = new HashKRRLanguageEnvironment(
 				lang1);
 
 		HashSet<KRRLanguage> langSet1 = new HashSet<KRRLanguage>();
@@ -356,13 +310,13 @@ public class GraphImmutableLanguageEnvironmentTest {
 		langSet2.add(lang1);
 		langSet2.add(lang2);
 
-		Builder builder = GraphImmutableLanguageEnvironment.init(lang1);
+		Builder builder = HashKRRLanguageEnvironment.init(lang1);
 		builder.addMapping(idMap1);
-		GraphImmutableLanguageEnvironment env1 = builder.build();
+		HashKRRLanguageEnvironment env1 = builder.build();
 
 		builder.addMapping(upMap);
 		builder.addFocusLanguage(lang2);
-		GraphImmutableLanguageEnvironment env2 = builder.build();
+		HashKRRLanguageEnvironment env2 = builder.build();
 
 		HashSet<LanguageMapping<?, ?>> mapSet1 = new HashSet<LanguageMapping<?, ?>>();
 		mapSet1.add(idMap1);

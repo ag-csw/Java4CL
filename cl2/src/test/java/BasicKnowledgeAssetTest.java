@@ -6,13 +6,14 @@ import cl2.CL;
 import api4kba.AbstractBasicKnowledgeExpression;
 import api4kbc.API4KB;
 import api4kbc.BasicKnowledgeAssetCanonical;
+import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KnowledgeExpression;
 
 public class BasicKnowledgeAssetTest {
 
 	@Test
 	public void assetShouldConceptualizeItsCanonicalExpression() {
-		KnowledgeExpression expression = new AbstractBasicKnowledgeExpression(
+		BasicKnowledgeExpression expression = new AbstractBasicKnowledgeExpression(
 				CL.LANG) {
 		};
 		BasicKnowledgeAssetCanonical asset = new BasicKnowledgeAssetCanonical(
