@@ -2,11 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>de.fuberlin.csw.cl</groupId>
-    <artifactId>Java4CL</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <artifactId>java4cl</artifactId>
   </parent>
   <artifactId>cl2</artifactId>
-  <groupId>de.fuberlin.csw.cl</groupId>
   <dependencies>
   	<dependency>
   		<groupId>de.fuberlin.csw.cl</groupId>
