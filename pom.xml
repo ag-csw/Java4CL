@@ -47,21 +47,11 @@
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-api</artifactId>
   		<version>1.7.7</version>
-  	</dependency>
-  	<dependency>
-	  <groupId>dom4j</groupId>
-	  <artifactId>dom4j</artifactId>
-	  <version>1.6.1</version>
-    </dependency>  	
+  	</dependency>  	
   	<dependency>
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-log4j12</artifactId>
   		<version>1.7.7</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.functionaljava</groupId>
-  		<artifactId>functionaljava</artifactId>
-  		<version>4.1</version>
   	</dependency>
   	<dependency>
   		<groupId>junit</groupId>

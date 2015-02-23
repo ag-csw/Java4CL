@@ -6,4 +6,11 @@
     <artifactId>java4cl</artifactId>
   </parent>
   <artifactId>api4kb</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.functionaljava</groupId>
+  		<artifactId>functionaljava</artifactId>
+  		<version>4.1</version>
+  	</dependency>
+  </dependencies>
 </project>
