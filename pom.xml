@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>Java4CL</artifactId>
+  <artifactId>java4cl</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Java4CL</name>
   <description>An API4KB compliant API for CL2 texts.</description>
@@ -32,7 +32,8 @@
   </build>
   <scm>
   	<url>https://github.com/ag-csw/Java4CL</url>
-  	<developerConnection>Tara Athan, Ralph Schaefermeier</developerConnection>
+  	<developerConnection>scm:git:git://github.com/ag-csw/Java4CL</developerConnection>
+  	<connection>scm:git:git://github.com/ag-csw/Java4CL</connection>
   </scm>
   <issueManagement>
   	<url>https://github.com/ag-csw/Java4CL/issues</url>
@@ -46,21 +47,11 @@
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-api</artifactId>
   		<version>1.7.7</version>
-  	</dependency>
-  	<dependency>
-	  <groupId>dom4j</groupId>
-	  <artifactId>dom4j</artifactId>
-	  <version>1.6.1</version>
-    </dependency>  	
+  	</dependency>  	
   	<dependency>
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-log4j12</artifactId>
   		<version>1.7.7</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.functionaljava</groupId>
-  		<artifactId>functionaljava</artifactId>
-  		<version>4.1</version>
   	</dependency>
   	<dependency>
   		<groupId>junit</groupId>
