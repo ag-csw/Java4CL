@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -29,9 +30,9 @@ public class StructuredKnowledgeExpressionTest {
 		this.components = components;
 	}
 
-	public FJSetStructuredKnowledgeExpression expression;
-	public Set<KRRLanguage> languages;
-	public Set<FJSetKnowledgeExpression> components;
+	private final FJSetStructuredKnowledgeExpression expression;
+	private final Set<KRRLanguage> languages;
+	private final Set<FJSetKnowledgeExpression> components;	
 
 	@Test
 	public void expressionLevelShouldBeExpression() {
@@ -45,12 +46,18 @@ public class StructuredKnowledgeExpressionTest {
 
 	@Test
 	public void expressionLanguagesShouldBeAsConstructed() {
-		assertTrue(languages.union(expression.languages()).minus(languages.intersect(expression.languages())).isEmpty());
+		Set<KRRLanguage> exlanguages  = expression.languages();
+		Ord<KRRLanguage> ordlang  = exlanguages.ord();
+		Ord<Set<KRRLanguage>> ordlangs = Ord.setOrd(ordlang);
+		assertTrue(ordlangs.eq(exlanguages, languages));
 	}
 
 	@Test
 	public void expressionComponentsShouldBeAsConstructed() {
-		assertTrue(components.union(expression.components()).minus(components.intersect(expression.components())).isEmpty());
+		Set<FJSetKnowledgeExpression> excomponents  = expression.components();
+		Ord<FJSetKnowledgeExpression> ordcomp  = excomponents.ord();
+		Ord<Set<FJSetKnowledgeExpression>> ordcomps = Ord.setOrd(ordcomp);
+		assertTrue(ordcomps.eq(excomponents, components));
 	}
 
 	@Test
