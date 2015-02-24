@@ -4,7 +4,7 @@ import functional.Option;
 
 public class CLImportationExpression extends CLExpression {
 	public CLImportationExpression(Option<CLCommentExpression> commment,
-			CLPrefixExpression[] prefixes, CLNameExpression name) {
+			CLPrefixExpression[] prefixes, CLName name) {
 		super();
 		this.commment = commment;
 		this.prefixes = prefixes;
@@ -13,7 +13,7 @@ public class CLImportationExpression extends CLExpression {
 
 	private Option<CLCommentExpression> commment;
 	private CLPrefixExpression[] prefixes;
-	private CLNameExpression name;
+	private CLName name;
 
 	// getter for comment
 	Option<CLCommentExpression> comment() {
@@ -26,7 +26,7 @@ public class CLImportationExpression extends CLExpression {
 	}
 
 	// getter for name
-	CLNameExpression name(){
+	CLName name(){
 		return name;
 	}
 
