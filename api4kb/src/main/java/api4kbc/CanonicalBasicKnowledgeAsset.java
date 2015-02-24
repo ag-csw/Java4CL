@@ -1,14 +1,14 @@
 package api4kbc;
 
-import api4kba.KnowledgeAssetCanonical;
+import api4kba.CanonicalKnowledgeAsset;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.FocusedLanguageEnvironment;
 
-public class BasicKnowledgeAssetCanonical extends KnowledgeAssetCanonical
+public class CanonicalBasicKnowledgeAsset extends CanonicalKnowledgeAsset
 		implements BasicKnowledgeAsset {
 
-	public BasicKnowledgeAssetCanonical(
+	public CanonicalBasicKnowledgeAsset(
 			FocusedLanguageEnvironment environment,
 			BasicKnowledgeExpression canonicalExpression) {
 		super(environment, canonicalExpression);

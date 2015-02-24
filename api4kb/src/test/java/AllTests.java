@@ -7,7 +7,7 @@ import org.junit.runners.Suite.SuiteClasses;
     BasicKnowledgeExpressionTest.class,//
     BasicKnowledgeAssetTest.class,//
     BasicKnowledgeManifestationTest.class,//
-		GraphImmutableLanguageEnvironmentTest.class,//
+		HashLanguageEnvironmentTest.class,//
 		KnowledgeSourceLevelTest.class, //
 		KRRLanguageTest.class })
 public class AllTests {

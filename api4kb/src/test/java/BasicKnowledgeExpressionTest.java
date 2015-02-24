@@ -16,6 +16,7 @@ import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeSourceLevel;
 import api4kbj.LanguageMapping;
 
 @RunWith(Parameterized.class)
@@ -33,12 +34,17 @@ public class BasicKnowledgeExpressionTest {
 	public String symbol;
 
 	@Test
+	public void expressionLevelShouldBeExpression() {
+		assertEquals(expression.level(), KnowledgeSourceLevel.EXPRESSION);
+	}
+
+	@Test
 	public void expressionShouldBeBasic() {
 		assertTrue(expression.isBasic());
 	}
 
 	@Test
-	public void expressionDialectShouldBeAsConstructed() {
+	public void expressionLanguageShouldBeAsConstructed() {
 		assertEquals(expression.language(), language);
 	}
 

@@ -22,8 +22,8 @@ import api4kbj.LanguageMapping;
 import api4kbj.Mapping;
 
 @RunWith(Parameterized.class)
-public class GraphImmutableLanguageEnvironmentTest {
-	public GraphImmutableLanguageEnvironmentTest(
+public class HashLanguageEnvironmentTest {
+	public HashLanguageEnvironmentTest(
 			HashKRRLanguageEnvironment env,
 			BasicKnowledgeExpression expression,
 			KRRLanguage langNo,

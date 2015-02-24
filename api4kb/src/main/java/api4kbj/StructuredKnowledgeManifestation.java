@@ -5,6 +5,6 @@ public interface StructuredKnowledgeManifestation extends
 		StructuredKnowledgeResource<KnowledgeManifestation> {
 
 	// getter for dialects
-	Iterable<KRRDialect> dialects();
+	Iterable<? extends KRRDialect> dialects();
 
 }

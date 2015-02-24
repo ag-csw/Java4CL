@@ -4,6 +4,6 @@ public interface StructuredKnowledgeEncoding extends KnowledgeEncoding,
 		StructuredKnowledgeResource<KnowledgeEncoding> {
 
 	// getter for formats
-	Iterable<KRRFormat> formats();
+	Iterable<? extends KRRFormat> formats();
 
 }

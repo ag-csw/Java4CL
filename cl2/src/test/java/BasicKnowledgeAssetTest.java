@@ -3,20 +3,16 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import cl2.CL;
-import api4kba.AbstractBasicKnowledgeExpression;
+import cl2.CLCommentExpression;
 import api4kbc.API4KB;
-import api4kbc.BasicKnowledgeAssetCanonical;
-import api4kbj.BasicKnowledgeExpression;
-import api4kbj.KnowledgeExpression;
+import api4kbc.CanonicalBasicKnowledgeAsset;
 
 public class BasicKnowledgeAssetTest {
 
 	@Test
 	public void assetShouldConceptualizeItsCanonicalExpression() {
-		BasicKnowledgeExpression expression = new AbstractBasicKnowledgeExpression(
-				CL.LANG) {
-		};
-		BasicKnowledgeAssetCanonical asset = new BasicKnowledgeAssetCanonical(
+		CLCommentExpression expression = new CLCommentExpression("This is a comment");
+		CanonicalBasicKnowledgeAsset asset = new CanonicalBasicKnowledgeAsset(
 				CL.CL_DEFAULT_ENVIRONMENT, expression);
 		assertTrue(API4KB.conceptualizes(asset, expression));
 	}

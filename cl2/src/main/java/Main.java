@@ -1,7 +1,7 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbc.BasicKnowledgeAssetCanonical;
+import api4kbc.CanonicalBasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.KnowledgeSourceLevel;
 import cl2.CL;
@@ -32,7 +32,7 @@ public class Main {
 
 		// Construction of a CLCommentAsset lazily for a specific environment
 		LOG.debug("Lazy asset instantiation starting");
-		BasicKnowledgeAsset myCommentAsset = new BasicKnowledgeAssetCanonical(
+		BasicKnowledgeAsset myCommentAsset = new CanonicalBasicKnowledgeAsset(
 				CL.CL_DEFAULT_ENVIRONMENT, myCommentExpression);
 		// BasicKnowledgeAssetLIMSE myCommentAsset =
 		// myCommentExpression.conceptualize(env);
@@ -40,7 +40,7 @@ public class Main {
 
 		// Construction a CLCommentAsset lazily for the default environment
 		LOG.debug("Lazy asset instantiation starting");
-		BasicKnowledgeAsset myCommentAsset2 = new BasicKnowledgeAssetCanonical(
+		BasicKnowledgeAsset myCommentAsset2 = new CanonicalBasicKnowledgeAsset(
 				CL.CL_DEFAULT_ENVIRONMENT, myCommentExpression);
 		assert myCommentAsset2.canonicalExpression() == myCommentExpression : "Failed lazy express method on asset";
 		assert myCommentAsset2.equals(myCommentAsset) : "Failed equality check on assets.";

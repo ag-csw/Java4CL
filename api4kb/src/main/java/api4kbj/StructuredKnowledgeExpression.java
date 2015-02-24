@@ -3,7 +3,7 @@ package api4kbj;
 public interface StructuredKnowledgeExpression extends KnowledgeExpression,
 		StructuredKnowledgeResource<KnowledgeExpression> {
 
-	Iterable<KRRLanguage> languages();
+	Iterable<? extends KRRLanguage> languages();
 
 	@Override
 	default boolean usesLanguage(KRRLanguage language) {

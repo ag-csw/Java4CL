@@ -14,7 +14,7 @@ import fj.F;
 import api4kba.AbstractBasicKnowledgeExpression;
 import api4kba.AbstractKRRLanguage;
 import api4kbc.API4KB;
-import api4kbc.BasicKnowledgeAssetCanonical;
+import api4kbc.CanonicalBasicKnowledgeAsset;
 import api4kbc.FLanguageMapping;
 import api4kbj.BasicKnowledgeAsset;
 import api4kbj.BasicKnowledgeExpression;
@@ -26,7 +26,7 @@ import api4kbj.LanguageMapping;
 
 @RunWith(Parameterized.class)
 public class BasicKnowledgeAssetTest {
-	public BasicKnowledgeAssetTest(BasicKnowledgeAssetCanonical asset,
+	public BasicKnowledgeAssetTest(CanonicalBasicKnowledgeAsset asset,
 			HashFocusedKRRLanguageEnvironment environment, TestKE expression) {
 		this.asset = asset;
 		this.environment = environment;
@@ -34,7 +34,7 @@ public class BasicKnowledgeAssetTest {
 	}
 
 
-	public BasicKnowledgeAssetCanonical asset;
+	public CanonicalBasicKnowledgeAsset asset;
 	public HashFocusedKRRLanguageEnvironment environment;
 	public TestKE expression;
 
@@ -177,9 +177,9 @@ public class BasicKnowledgeAssetTest {
         TestKE2 expression2 = new TestKE2(str);
 
 		
-		BasicKnowledgeAssetCanonical asset0 = new BasicKnowledgeAssetCanonical(env0, expression0);
-		BasicKnowledgeAssetCanonical asset1 = new BasicKnowledgeAssetCanonical(env1, expression1);
-		BasicKnowledgeAssetCanonical asset2 = new BasicKnowledgeAssetCanonical(env2, expression2);
+		CanonicalBasicKnowledgeAsset asset0 = new CanonicalBasicKnowledgeAsset(env0, expression0);
+		CanonicalBasicKnowledgeAsset asset1 = new CanonicalBasicKnowledgeAsset(env1, expression1);
+		CanonicalBasicKnowledgeAsset asset2 = new CanonicalBasicKnowledgeAsset(env2, expression2);
 
 
 		return Arrays.asList(new Object[][] { { asset0, env0, expression0 },
