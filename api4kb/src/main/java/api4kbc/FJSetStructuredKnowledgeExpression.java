@@ -18,7 +18,7 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 		this(components.bind(Ord.hashEqualsOrd(), s -> languages(s) ), components);
 	}
 
-	private Set<FJSetKnowledgeExpression> components;
+	private final Set<FJSetKnowledgeExpression> components;
 
 	@Override
 	public Set<FJSetKnowledgeExpression> components() {

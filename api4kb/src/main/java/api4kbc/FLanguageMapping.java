@@ -6,7 +6,7 @@ import api4kbj.LanguageMapping;
 import fj.F;
 
 public class FLanguageMapping<S extends KnowledgeExpression, T extends KnowledgeExpression>
-		implements LanguageMapping<S, T> {
+		implements LanguageMapping<S, T>, FJMapping<S, T> {
 
 	public FLanguageMapping(F<S, T> function, KRRLanguage startLang,
 			KRRLanguage endLang) {

@@ -10,7 +10,7 @@ public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
 		this.languages = languages;
 	}
 
-	private Set<KRRLanguage> languages;
+	private final Set<KRRLanguage> languages;
 
 	public Set<KRRLanguage> languages() {
 		return languages;

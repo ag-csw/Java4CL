@@ -13,13 +13,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import api4kba.AbstractKRRLanguage;
+import api4kbc.FJMapping;
 import api4kbc.FLanguageMapping;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
 import api4kbj.LanguageMapping;
-import api4kbj.Mapping;
 
 @RunWith(Parameterized.class)
 public class HashLanguageEnvironmentTest {
@@ -29,11 +29,11 @@ public class HashLanguageEnvironmentTest {
 			KRRLanguage langNo,
 			KRRLanguage langYes,
 			Iterable<? extends KRRLanguage> langSet,
-			Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapNo,
-			Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapYes,
-			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetYes,
-			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetNo,
-			Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetAll,
+			FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapNo,
+			FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapYes,
+			Iterable<? extends FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetYes,
+			Iterable<? extends FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetNo,
+			Iterable<? extends FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetAll,
 			HashKRRLanguageEnvironment envsup) {
 		this.env = env;
 		this.expression = expression;
@@ -53,11 +53,11 @@ public class HashLanguageEnvironmentTest {
 	public KRRLanguage langYes;
 	public KRRLanguage langNo;
 	public Iterable<? extends KRRLanguage> langSet;
-	public Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapNo;
-	public Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapYes;
-	public Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetYes;
-	public Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetNo;
-	public Iterable<? extends Mapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetAll;
+	public FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapNo;
+	public FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> mapYes;
+	public Iterable<? extends FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetYes;
+	public Iterable<? extends FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetNo;
+	public Iterable<? extends FJMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> mapSetAll;
 	public HashKRRLanguageEnvironment envsup;
 
 	@Test
