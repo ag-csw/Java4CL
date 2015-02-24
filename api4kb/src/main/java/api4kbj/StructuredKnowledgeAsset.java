@@ -6,9 +6,5 @@ public interface StructuredKnowledgeAsset extends KnowledgeAsset,
 	@Override
 	StructuredKnowledgeExpression canonicalExpression();
 
-	default// getter for canonical expression components as iterable
-	Iterable<? extends KnowledgeExpression> canonicalExpressions() {
-		return canonicalExpression().components();
-	}
 
 }
