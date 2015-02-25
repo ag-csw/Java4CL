@@ -1,5 +1,5 @@
 package cl2;
 
-public class CLSentenceOrStatementOrText {
+public class CLSentenceOrStatementOrText extends CLExpression {
 
 }
