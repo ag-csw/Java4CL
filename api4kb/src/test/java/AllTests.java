@@ -6,6 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import functional.None;
 import functional.Option;
+import functional.Some;
 import api4kba.AbstractKRRLanguage;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
@@ -71,8 +72,14 @@ public class AllTests {
 	public static String str = "Hello World!";
 	public static Option<TestKE0> arg0 = new None<TestKE0>();
 	public static TestKE0 expression0 = new TestKE0(str, arg0);
-	public static TestKE1 expression1 = new TestKE1(str);
-	public static TestKE2 expression2 = new TestKE2(str);
+	public static TestKE1 expression1a = new TestKE1("Foo");
+	public static Option<TestKE1> arg1 = new Some<TestKE1>(expression1a);
+	public static TestKE1 expression1 = new TestKE1(str, arg1);
+	public static TestKE2 expression2a = new TestKE2("Foo");
+	public static Option<TestKE2> arg2b = new Some<TestKE2>(expression2a);
+	public static TestKE2 expression2b = new TestKE2("Bah", arg2b);
+	public static Option<TestKE2> arg2 = new Some<TestKE2>(expression2b);
+	public static TestKE2 expression2 = new TestKE2(str, arg2);
 
 	public static String str0 = "hello world!";
 	public static String str1 = str;
@@ -158,6 +165,43 @@ abstract class TestKE implements BasicKnowledgeExpression {
 
 	public Option<? extends TestKE> arg() {
 		return arg;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((arg == null) ? 0 : arg.hashCode());
+		result = prime * result + ((lang == null) ? 0 : lang.hashCode());
+		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TestKE other = (TestKE) obj;
+		if (arg == null) {
+			if (other.arg != null)
+				return false;
+		} else if (!arg.equals(other.arg))
+			return false;
+		if (lang == null) {
+			if (other.lang != null)
+				return false;
+		} else if (!lang.equals(other.lang))
+			return false;
+		if (symbol == null) {
+			if (other.symbol != null)
+				return false;
+		} else if (!symbol.equals(other.symbol))
+			return false;
+		return true;
 	}
 
 
