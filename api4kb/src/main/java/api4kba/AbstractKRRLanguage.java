@@ -11,14 +11,15 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRLanguage(String name, KRRLogic logic) {
+	public AbstractKRRLanguage(String name, KRRLogic logic, Class<? extends KnowledgeExpression> clazz) {
 		this.name = name;
 		this.logic = logic;
+		this.clazz = clazz;
 	}
 
 	private final String name;
 
-	private Class<? extends KnowledgeExpression> clazz;
+	private final Class<? extends KnowledgeExpression> clazz;
 
 	private final KRRLogic logic;
 
@@ -46,6 +47,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((clazz == null) ? 0 : clazz.hashCode());
 		result = prime * result + ((logic == null) ? 0 : logic.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -53,38 +55,30 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof AbstractKRRLanguage)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		AbstractKRRLanguage other = (AbstractKRRLanguage) obj;
+		if (clazz == null) {
+			if (other.clazz != null)
+				return false;
+		} else if (!clazz.equals(other.clazz))
+			return false;
 		if (logic == null) {
-			if (other.logic != null) {
+			if (other.logic != null)
 				return false;
-			}
-		} else if (!logic.equals(other.logic)) {
+		} else if (!logic.equals(other.logic))
 			return false;
-		}
 		if (name == null) {
-			if (other.name != null) {
+			if (other.name != null)
 				return false;
-			}
-		} else if (!name.equals(other.name)) {
+		} else if (!name.equals(other.name))
 			return false;
-		}
 		return true;
 	}
 
-	// TODO make this package protected?
-	@Override
-	public void setClass(Class<? extends KnowledgeExpression> clazz) {
-		this.clazz = clazz;
-
-	}
 
 }

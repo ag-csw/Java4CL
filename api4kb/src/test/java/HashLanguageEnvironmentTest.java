@@ -48,6 +48,7 @@ public class HashLanguageEnvironmentTest {
 		this.envsup = envsup;
 	}
 
+	
 	public HashKRRLanguageEnvironment env;
 	public BasicKnowledgeExpression expression;
 	public KRRLanguage langYes;
@@ -217,56 +218,6 @@ public class HashLanguageEnvironmentTest {
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
 
-		KRRLogic logic = new KRRLogic() {
-
-			@Override
-			public String name() {
-				return "Logic A";
-			}
-		};
-
-		class LangA extends AbstractKRRLanguage {
-
-			public LangA(String name) {
-				super(name, logic);
-			}
-
-		}
-
-		KRRLanguage lang1 = new LangA("Language One");
-		KRRLanguage lang2 = new LangA("Language Two");
-
-		class TestKE1 implements BasicKnowledgeExpression {
-
-			private final String value;
-
-			TestKE1(String value) {
-				this.value = value.toLowerCase();
-			}
-
-			@Override
-			public KRRLanguage language() {
-				return lang1;
-			}
-
-		}
-		class TestKE2 implements BasicKnowledgeExpression {
-
-			private final String value;
-
-			TestKE2(String value) {
-				this.value = value.toUpperCase();
-			}
-
-			@Override
-			public KRRLanguage language() {
-				return lang2;
-			}
-
-		}
-
-		lang2.setClass(TestKE2.class);
-		lang1.setClass(TestKE1.class);
 
 		F<TestKE1, TestKE1> id1 = new F<TestKE1, TestKE1>() {
 
@@ -288,34 +239,34 @@ public class HashLanguageEnvironmentTest {
 
 			@Override
 			public TestKE2 f(TestKE1 a) {
-				return new TestKE2(a.value);
+				return new TestKE2(a.symbol());
 			}
 
 		};
 
 		LanguageMapping<TestKE1, TestKE1> idMap1 = new FLanguageMapping<TestKE1, TestKE1>(
-				id1, lang1, lang1);
+				id1, AllTests.lang1, AllTests.lang1);
 		LanguageMapping<TestKE2, TestKE2> idMap2 = new FLanguageMapping<TestKE2, TestKE2>(
-				id2, lang2, lang2);
+				id2, AllTests.lang2, AllTests.lang2);
 
 		LanguageMapping<TestKE1, TestKE2> upMap = new FLanguageMapping<TestKE1, TestKE2>(
-				up, lang1, lang2);
+				up, AllTests.lang1, AllTests.lang2);
 
 		HashKRRLanguageEnvironment env = new HashKRRLanguageEnvironment(
-				lang1);
+				AllTests.lang1);
 
 		HashSet<KRRLanguage> langSet1 = new HashSet<KRRLanguage>();
-		langSet1.add(lang1);
+		langSet1.add(AllTests.lang1);
 		HashSet<KRRLanguage> langSet2 = new HashSet<KRRLanguage>();
-		langSet2.add(lang1);
-		langSet2.add(lang2);
+		langSet2.add(AllTests.lang1);
+		langSet2.add(AllTests.lang2);
 
-		Builder builder = HashKRRLanguageEnvironment.init(lang1);
+		Builder builder = HashKRRLanguageEnvironment.init(AllTests.lang1);
 		builder.addMapping(idMap1);
 		HashKRRLanguageEnvironment env1 = builder.build();
 
 		builder.addMapping(upMap);
-		builder.addFocusLanguage(lang2);
+		builder.addFocusLanguage(AllTests.lang2);
 		HashKRRLanguageEnvironment env2 = builder.build();
 
 		HashSet<LanguageMapping<?, ?>> mapSet1 = new HashSet<LanguageMapping<?, ?>>();
@@ -335,11 +286,11 @@ public class HashLanguageEnvironmentTest {
 		};
 
 		return Arrays.asList(new Object[][] {
-				{ env, expression, lang2, lang1, langSet1, idMap2, idMap1,
+				{ env, expression, AllTests.lang2, AllTests.lang1, langSet1, idMap2, idMap1,
 						mapSet3, mapSet2, mapSet3, env1 },
-				{ env1, expression, lang2, lang1, langSet1, idMap2, idMap1,
+				{ env1, expression, AllTests.lang2, AllTests.lang1, langSet1, idMap2, idMap1,
 						mapSet1, mapSet2, mapSet1, env2 },
-				{ env2, expression2, null, lang1, langSet2, idMap2, upMap,
+				{ env2, expression2, null, AllTests.lang1, langSet2, idMap2, upMap,
 						mapSet2, mapSet4, mapSet2, env2 } }
 
 		);

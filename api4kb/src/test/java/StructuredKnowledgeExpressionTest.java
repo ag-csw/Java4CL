@@ -69,98 +69,12 @@ public class StructuredKnowledgeExpressionTest {
 	}
 	
 	@Parameterized.Parameters
-	public static Collection<Object[]> instancesToTest() {
-		KRRLogic logicA = new KRRLogic() {
-
-			@Override
-			public String name() {
-				return "Logic A";
-			}
-		};
-		class LangA extends AbstractKRRLanguage {
-
-			public LangA(String name) {
-				super(name, logicA);
-			}
-
-		}
-
-		KRRLogic logicB = new KRRLogic() {
-
-			@Override
-			public String name() {
-				return "Logic B";
-			}
-		};
-		class LangB extends AbstractKRRLanguage {
-
-			public LangB(String name) {
-				super(name, logicB);
-			}
-
-		}
-		
-		KRRLanguage lang0 = new LangA("Language Zero");
-		class TestKE0 extends TestFJSetKE {
-
-			TestKE0(String value) {
-				super(value.toLowerCase(), lang0);
-			}
-
-
-		}
-		lang0.setClass(TestKE0.class);
-
-
-		KRRLanguage lang1 = new LangA("Language One");
-		class TestKE1 extends TestFJSetKE {
-
-			TestKE1(String value) {
-				super(value, lang1);
-			}
-
-
-		}
-		lang1.setClass(TestKE1.class);
-
-		KRRLanguage lang2 = new LangB("Language Two");
-		class TestKE2 extends TestFJSetKE {
-
-			TestKE2(String value) {
-				super(value.toUpperCase(), lang2);
-			}
-
-
-		}
-		lang2.setClass(TestKE2.class);
-		
-
-
-        String str = "Hello World!";
-        TestKE0 expression0 = new TestKE0(str);
-        TestKE1 expression1 = new TestKE1(str);
-        TestKE2 expression2 = new TestKE2(str);
-
-        String str0 = "hello world!";
-        String str1 = str;
-        String str2 = "HELLO WORLD!";
+	public static Collection<Object[]> instancesToTest() {        
         
-        
-        
-        Ord<KRRLanguage> langOrder = Ord.hashEqualsOrd();
-		Ord<FJSetKnowledgeExpression> exprOrder  = Ord.hashEqualsOrd();
-
-		Set<KRRLanguage> languages0 = Set.set(langOrder , lang0, lang1, lang2);
-		Set<FJSetKnowledgeExpression> expressions0 = Set.set(exprOrder, expression0, expression1, expression2);
-		FJSetStructuredKnowledgeExpression stexpr0 = new FJSetStructuredKnowledgeExpression(languages0 , expressions0);
-
-		Set<KRRLanguage> languages1 = Set.set(langOrder , lang1, lang2);
-		Set<FJSetKnowledgeExpression> expressions1 = Set.set(exprOrder, expression1, expression2);
-		FJSetStructuredKnowledgeExpression stexpr1 = new FJSetStructuredKnowledgeExpression(expressions1);
 
 
-		return Arrays.asList(new Object[][] { { stexpr0, languages0, expressions0 },
-				{ stexpr1, languages1, expressions1 } });
+		return Arrays.asList(new Object[][] { { AllFJSetTests.stexpr0, AllFJSetTests.languages0, AllFJSetTests.expressions0 },
+				{ AllFJSetTests.stexpr1, AllFJSetTests.languages1, AllFJSetTests.expressions1 } });
 	}
 
 

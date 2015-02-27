@@ -39,29 +39,13 @@ public class AllTests {
 		}
 	};
 	
-	public static AbstractKRRLanguage lang0 = new LangA("Language Zero"){
-		@Override
-		public Class<? extends KnowledgeExpression> asClass() {
-			return TestKE0.class;
-		}
-
+	public static AbstractKRRLanguage lang0 = new LangA("Language Zero", TestKE0.class){
 	};
 
-	public static AbstractKRRLanguage lang1 = new LangA("Language One"){
-		@Override
-		public Class<? extends KnowledgeExpression> asClass() {
-			return TestKE1.class;
-		}
-
+	public static AbstractKRRLanguage lang1 = new LangA("Language One", TestKE1.class){
 	};
 
-	//KRRLanguage lang2 = new LangB("Language Two");
-	public static AbstractKRRLanguage lang2 = new LangA("Language Two"){
-		@Override
-		public Class<? extends KnowledgeExpression> asClass() {
-			return TestKE2.class;
-		}
-
+	public static AbstractKRRLanguage lang2 = new LangA("Language Two", TestKE2.class){
 	};
 	
 	public static HashFocusedKRRLanguageEnvironment env0 = new HashFocusedKRRLanguageEnvironment(AllTests.lang0);
@@ -70,9 +54,12 @@ public class AllTests {
 
 	
 	public static String str = "Hello World!";
+	public static String stra = "Foo";
+	public static String strb = "Bah";
+	
 	public static Option<TestKE0> arg0 = new None<TestKE0>();
 	public static TestKE0 expression0 = new TestKE0(str, arg0);
-	public static TestKE1 expression1a = new TestKE1("Foo");
+	public static TestKE1 expression1a = new TestKE1(stra);
 	public static Option<TestKE1> arg1 = new Some<TestKE1>(expression1a);
 	public static TestKE1 expression1 = new TestKE1(str, arg1);
 	public static TestKE2 expression2a = new TestKE2("Foo");
@@ -81,22 +68,32 @@ public class AllTests {
 	public static Option<TestKE2> arg2 = new Some<TestKE2>(expression2b);
 	public static TestKE2 expression2 = new TestKE2(str, arg2);
 
-	public static String str0 = "hello world!";
+	public static String str0 = str.toLowerCase();
 	public static String str1 = str;
-	public static String str2 = "HELLO WORLD!";
+	public static String str2 = str.toUpperCase();
+
+	public static String str0a = stra.toLowerCase();
+	public static String str1a = stra;
+	public static String str2a = stra.toUpperCase();
+
+	public static String str0b = stra.toLowerCase();
+	public static String str1b = stra;
+	public static String str2b = stra.toUpperCase();
+
 
 }
 class LangA extends AbstractKRRLanguage {
 
-	public LangA(String name) {
-		super(name, AllTests.logicA);
+	public LangA(String name, Class<? extends KnowledgeExpression> clazz) {
+		super(name, AllTests.logicA, clazz);
 	}
+
 
 }
 class LangB extends AbstractKRRLanguage {
 
-	public LangB(String name) {
-		super(name, AllTests.logicB);
+	public LangB(String name, Class<? extends KnowledgeExpression> clazz) {
+		super(name, AllTests.logicB, clazz);
 	}
 
 }

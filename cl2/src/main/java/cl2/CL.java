@@ -45,11 +45,7 @@ public final class CL {
 	};
 	// instantiate anonymous subclass of AbstractKRRLanguage
 	public static AbstractKRRLanguage LANG = new AbstractKRRLanguage(
-			"Common Logic", COMPLETE_CL_LOGIC) {
-		@Override
-		public Class<? extends CLExpression> asClass() {
-			return CLExpression.class;
-		}
+			"Common Logic", COMPLETE_CL_LOGIC, CLExpression.class) {
 	};
 
 	public static HashFocusedKRRLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new HashFocusedKRRLanguageEnvironment(

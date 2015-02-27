@@ -41,10 +41,4 @@ public class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 		return dialect().toString() + "." + asClass().getName() + "." + name();
 	}
 
-	@Override
-	public void setClass(Class<? extends T> clazz) {
-		this.clazz = clazz;
-
-	}
-
 }

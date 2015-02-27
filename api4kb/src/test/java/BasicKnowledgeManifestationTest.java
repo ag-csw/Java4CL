@@ -64,59 +64,24 @@ public class BasicKnowledgeManifestationTest {
 
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
-		KRRLogic logicA = new KRRLogic() {
 
-			@Override
-			public String name() {
-				return "Logic A";
-			}
-		};
-		KRRLogic logicB = new KRRLogic() {
-
-			@Override
-			public String name() {
-				return "Logic B";
-			}
-		};
-
-		KRRLanguage lang0 = new AbstractKRRLanguage("Language Zero", logicA) {
-
-			@Override
-			public Class<? extends KnowledgeExpression> asClass() {
-				return KnowledgeExpression.class;
-			};
-		};
-		KRRLanguage lang1 = new AbstractKRRLanguage("Language One", logicA) {
-
-			@Override
-			public Class<? extends KnowledgeExpression> asClass() {
-				return KnowledgeExpression.class;
-			};
-		};
-		KRRLanguage lang2 = new AbstractKRRLanguage("Language Two", logicB) {
-
-			@Override
-			public Class<? extends KnowledgeExpression> asClass() {
-				return KnowledgeExpression.class;
-			};
-		};
-
+		
 		String dialectName0 = "Dialect Zero";
-		KRRDialect dialect0 = new AbstractKRRDialect(dialectName0, lang0) {
+		KRRDialect dialect0 = new AbstractKRRDialect(dialectName0, AllTests.lang0) {
 		};
 		String dialectTypeName0 = "Dialect Type Zero";
 		Class<String> clazz0 = String.class;
 		KRRDialectType<String> wrappedDialectType0 = new AbstractKRRDialectType<String>(
 				dialectTypeName0, dialect0, clazz0) {
 		};
-		String wrappedValue0 = "Test Manifestation Zero";
+		String wrappedValue0 = "(" + "\"" + AllTests.str0 + "\"" + ")";
 		DialectTypeEnvironment environment0 = new HashKRRDialectTypeEnvironment(
 				wrappedDialectType0);
 		BasicKnowledgeManifestation manifestation0 = new WrapperBasicKnowledgeManifestation(
 				dialect0, wrappedDialectType0, wrappedValue0, environment0) {
 		};
 
-		String wrappedValue1 = "Test Manifestation One";
+		String wrappedValue1 = "(" + "\"" + AllTests.str1 + "\"" + ")";
 		BasicKnowledgeManifestation manifestation1 = new WrapperBasicKnowledgeManifestation(
 				dialect0, wrappedDialectType0, wrappedValue1, environment0) {
 		};

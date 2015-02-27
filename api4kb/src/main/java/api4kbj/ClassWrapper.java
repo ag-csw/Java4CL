@@ -6,6 +6,4 @@ public interface ClassWrapper<S> {
 
 	Class<? extends S> asClass();
 
-	void setClass(Class<? extends S> clazz);
-
 }
