@@ -3,7 +3,6 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -11,7 +10,6 @@ import org.junit.runners.Parameterized;
 import fj.Equal;
 import fj.Ord;
 import fj.data.Set;
-import api4kba.AbstractKRRLanguage;
 import api4kbc.API4KB;
 import api4kbfjset.FJSetKnowledgeExpression;
 import api4kbfjset.FJSetStructuredKnowledgeExpression;

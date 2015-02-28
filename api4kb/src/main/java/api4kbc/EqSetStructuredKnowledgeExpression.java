@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import fj.F;
 import fj.Function;
-import fj.Ord;
-import fj.data.Set;
 import functional.EqSet;
 import api4kbj.KRRLanguage;
 import api4kbj.StructuredKnowledgeExpression;

@@ -16,6 +16,7 @@ public class FileWriter extends IOWriter {
 	private Path path;
 	private byte[] bytes;
 	
+	@Override
 	public void write() throws IOException{
 	  FileOutputStream w = new FileOutputStream(path.toFile());
 	  //TODO only appropriate for small files to write entire byte array at once

@@ -6,14 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 
-import api4kbj.BasicKnowledgeAsset;
-import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.CodecSystem;
 import api4kbj.FocusedLanguageEnvironment;
 import api4kbj.ImmutableSource;
 import api4kbj.KRRDialect;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLanguageEnvironment;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;

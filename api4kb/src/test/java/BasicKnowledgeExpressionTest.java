@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 
 import functional.Option;
 import api4kbc.API4KB;
-import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;
 

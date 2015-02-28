@@ -11,7 +11,6 @@ import api4kba.AbstractKRRLanguage;
 import api4kba.AbstractKRRLogic;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
-import functional.EqSet;
 import api4kbj.KnowledgeExpression;
 
 @RunWith(Suite.class)

@@ -3,8 +3,6 @@
  */
 package api4kba;
 
-import java.io.ByteArrayOutputStream;
-
 import functional.FileWriter;
 import api4kbj.BasicKnowledgeIOWriter;
 import api4kbj.BasicKnowledgeEncoding;
@@ -33,6 +31,7 @@ public abstract class AbstractBasicKnowledgeIOWriter implements BasicKnowledgeIO
 		return config;
 	}
 
+	@Override
 	public FileWriter writer(){
 		byte[] bytes = ke.toByteArray();
 		return new FileWriter(config().path(), bytes);
