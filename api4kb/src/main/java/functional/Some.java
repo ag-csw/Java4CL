@@ -2,7 +2,7 @@ package functional;
 
 public class Some<T> implements Option<T> {
 
-	public Some(T value) {
+	public Some(final T value) {
 		this.value = value;
 	}
 
@@ -37,7 +37,7 @@ public class Some<T> implements Option<T> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}

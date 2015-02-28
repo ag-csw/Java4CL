@@ -10,17 +10,17 @@ import fj.F;
 
 public class EqSet<A> implements Iterable<A> {
 	
-	private EqSet(Set<A> set){
+	private EqSet(final Set<A> set){
 		this.set = set;
 	}
 	private Set<A> set;
 	//static factory method
 	@SafeVarargs
-	public static <B> EqSet<B> eqSet(B... as){
+	public static <B> EqSet<B> eqSet(final B... as){
 		return new EqSet<B>(Set.set(Ord.hashEqualsOrd(), as));
 	}
 	
-	public static <B> EqSet<B> eqSet(Set<B> set){
+	public static <B> EqSet<B> eqSet(final Set<B> set){
 		return new EqSet<B>(Set.iterableSet(Ord.hashEqualsOrd(), set));
 	}
 	
@@ -28,7 +28,7 @@ public class EqSet<A> implements Iterable<A> {
 		return set;
 	}
 
-	private static <B> Set<B> set( EqSet<B> x){
+	private static <B> Set<B> set(final EqSet<B> x){
 		return x.set();
 	}
 
@@ -36,14 +36,14 @@ public class EqSet<A> implements Iterable<A> {
 		return s -> set(s);
 	}
 	
-	public boolean contains(Object m) {
+	public boolean contains(final Object m) {
 		for (A x : set){
 			if( x.equals(m)) return true;
 		}
 		return false;
 	}
 
-	public boolean containsAll(Iterable<?> c) {
+	public boolean containsAll(final Iterable<?> c) {
 		for (Object m : c){
 			if(!contains(m)) return false;
 		}
@@ -61,7 +61,7 @@ public class EqSet<A> implements Iterable<A> {
 
 	//Monad methods
 	// static unit method
-	public static <B> EqSet<B> unit(B b){
+	public static <B> EqSet<B> unit(final B b){
 		return eqSet(b);
 	}
 	
@@ -72,7 +72,7 @@ public class EqSet<A> implements Iterable<A> {
 	
 	// join method
     //assertEquals( EqSet.join(EqSet.unit(EqSet.unit(x))), EqSet.unit(x) );
-    public static <B> EqSet<B> join(EqSet<EqSet<B>> x){
+    public static <B> EqSet<B> join(final EqSet<EqSet<B>> x){
 		Ord<B> ordb = Ord.hashEqualsOrd();
 		Ord<Set<B>> ordsetb = Ord.setOrd(ordb);
 		F<EqSet<B>, Set<B>> setf = EqSet.set_(); 
@@ -97,14 +97,13 @@ public class EqSet<A> implements Iterable<A> {
 	// Test: must preserve identity:   
 	// EqSet<A> x;
     // assertEquals( x.map( s -> s ), x );	
-	public <B> EqSet<B> map(
-			F<A, B> f) {
+	public <B> EqSet<B> map( final F<A, B> f) {
 		Ord<B> ordb = Ord.hashEqualsOrd();
 		return eqSet(set.map(ordb, f));
 	}
 
 	//static version of map
-	public static <B, C> EqSet<C> map(F<B, C> f, EqSet<B> x) {
+	public static <B, C> EqSet<C> map(final F<B, C> f, final EqSet<B> x) {
 		return x.map(f);
 	}
 
@@ -119,12 +118,12 @@ public class EqSet<A> implements Iterable<A> {
     // assertEquals(  EqSet.unit(x).bind(G) , G.f(x) );
 	// EqSet<A> z;
     // assertEquals( z.bind(s -> EqSet.unit(G.f(s))) , z.map(G));
-	public <B> EqSet<B> bind(F<A, EqSet<B>> f) {
+	public <B> EqSet<B> bind(final F<A, EqSet<B>> f) {
 		return join(map(f));
 	}
 
 	//static version of bind
-	public static <B, C> EqSet<C> bind(F<B, EqSet<C>> f, EqSet<B> x) {
+	public static <B, C> EqSet<C> bind(final F<B, EqSet<C>> f, final EqSet<B> x) {
 		return x.bind(f);
 	}
 
@@ -146,7 +145,7 @@ public class EqSet<A> implements Iterable<A> {
     }
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
         if (o == this)
             return true;
 
