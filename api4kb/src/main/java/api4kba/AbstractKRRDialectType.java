@@ -10,7 +10,7 @@ public class AbstractKRRDialectType<T> implements KRRDialectType<T> {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRDialectType(String name, KRRDialect dialect,
+	public AbstractKRRDialectType(final String name, final KRRDialect dialect,
 			Class<? extends T> clazz) {
 		this.name = name;
 		this.dialect = dialect;

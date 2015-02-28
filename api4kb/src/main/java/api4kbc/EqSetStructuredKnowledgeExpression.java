@@ -17,26 +17,26 @@ public class EqSetStructuredKnowledgeExpression extends EqSetKnowledgeExpression
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private EqSetStructuredKnowledgeExpression(EqSet<KRRLanguage> languages,
-			EqSet<EqSetKnowledgeExpression> components) {
+	private EqSetStructuredKnowledgeExpression(final EqSet<KRRLanguage> languages,
+			final EqSet<EqSetKnowledgeExpression> components) {
 		super(languages);
 		this.components = components;
 	}
 
 	private EqSetStructuredKnowledgeExpression(
-			EqSet<EqSetKnowledgeExpression> components) {
+			final EqSet<EqSetKnowledgeExpression> components) {
 		this(components.bind( languages_() ), components);
 	}
 
 	private final EqSet<EqSetKnowledgeExpression> components;
 	
 	//factory methods
-	public static EqSetStructuredKnowledgeExpression ke(EqSet<EqSetKnowledgeExpression> components){
+	public static EqSetStructuredKnowledgeExpression ke(final EqSet<EqSetKnowledgeExpression> components){
 		return new EqSetStructuredKnowledgeExpression(components);
 	}
 
-	public static EqSetStructuredKnowledgeExpression ke(EqSet<KRRLanguage> languages,
-			EqSet<EqSetKnowledgeExpression> components){
+	public static EqSetStructuredKnowledgeExpression ke(final EqSet<KRRLanguage> languages,
+			final EqSet<EqSetKnowledgeExpression> components){
 		return new EqSetStructuredKnowledgeExpression(languages, components);
 	}
 
@@ -45,7 +45,7 @@ public class EqSetStructuredKnowledgeExpression extends EqSetKnowledgeExpression
 		return components;
 	}
 
-	public static EqSet<EqSetKnowledgeExpression> components(EqSetStructuredKnowledgeExpression s) {
+	public static EqSet<EqSetKnowledgeExpression> components(final EqSetStructuredKnowledgeExpression s) {
 		return s.components();
 	}
 
@@ -60,13 +60,13 @@ public class EqSetStructuredKnowledgeExpression extends EqSetKnowledgeExpression
 	}
 
 	//Monad methods
-	public static EqSetStructuredKnowledgeExpression unit(EqSetKnowledgeExpression component){
+	public static EqSetStructuredKnowledgeExpression unit(final EqSetKnowledgeExpression component){
 		return ke(EqSet.eqSet(component));
 	}
 
 
 	// Must satisfy join(unit(unit(x))) = unit(x)
-	public static EqSetStructuredKnowledgeExpression join(EqSetStructuredKnowledgeExpression x){
+	public static EqSetStructuredKnowledgeExpression join(final EqSetStructuredKnowledgeExpression x){
 		return ke(x.components().
 				      bind( s -> flatten1(s)));		
 	}
@@ -76,14 +76,14 @@ public class EqSetStructuredKnowledgeExpression extends EqSetKnowledgeExpression
 		return s -> join(s);
 	}
 	
-	private static EqSet<EqSetKnowledgeExpression> flatten1(EqSetKnowledgeExpression x){
+	private static EqSet<EqSetKnowledgeExpression> flatten1(final EqSetKnowledgeExpression x){
 		if(x instanceof EqSetStructuredKnowledgeExpression){
 			return ((EqSetStructuredKnowledgeExpression) x).components();
 		}
 		return EqSet.eqSet(x);
 	}
 
-	public EqSetStructuredKnowledgeExpression bind(F<EqSetKnowledgeExpression, EqSetStructuredKnowledgeExpression> f){
+	public EqSetStructuredKnowledgeExpression bind(final F<EqSetKnowledgeExpression, EqSetStructuredKnowledgeExpression> f){
 		return ke(components.bind(Function.compose(components_(), f)));
 	}
 	
@@ -92,7 +92,7 @@ public class EqSetStructuredKnowledgeExpression extends EqSetKnowledgeExpression
 	// assertEquals( x.map(g).map(f) , map(f.compose(g)) );
 	// Test: must preserve identity:   
 	// assertEquals ( x.map(s -> s) , x )
-	public EqSetStructuredKnowledgeExpression map(F<EqSetKnowledgeExpression, EqSetKnowledgeExpression> f){
+	public EqSetStructuredKnowledgeExpression map(final F<EqSetKnowledgeExpression, EqSetKnowledgeExpression> f){
 		return ke(components().map(f));
 	}
 

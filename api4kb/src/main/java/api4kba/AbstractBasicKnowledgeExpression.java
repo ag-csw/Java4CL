@@ -6,7 +6,7 @@ import api4kbj.KRRLanguage;
 public abstract class AbstractBasicKnowledgeExpression implements
 		BasicKnowledgeExpression {
 
-	public AbstractBasicKnowledgeExpression(KRRLanguage language) {
+	public AbstractBasicKnowledgeExpression(final KRRLanguage language) {
 		this.language = language;
 	}
 

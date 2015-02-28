@@ -7,7 +7,7 @@ import api4kbj.KnowledgeExpression;
 
 public abstract class EqSetKnowledgeExpression implements KnowledgeExpression {
 
-	public EqSetKnowledgeExpression(EqSet<KRRLanguage> languages) {
+	public EqSetKnowledgeExpression(final EqSet<KRRLanguage> languages) {
 		this.languages = languages;
 	}
 
@@ -17,7 +17,7 @@ public abstract class EqSetKnowledgeExpression implements KnowledgeExpression {
 		return languages;
 	}	
 	
-	public static EqSet<KRRLanguage> languages(EqSetKnowledgeExpression expression){
+	public static EqSet<KRRLanguage> languages(final EqSetKnowledgeExpression expression){
 		return expression.languages();
 	}
 
@@ -27,7 +27,7 @@ public abstract class EqSetKnowledgeExpression implements KnowledgeExpression {
 	}
 	
 	@Override
-	public boolean usesLanguage(KRRLanguage language){
+	public boolean usesLanguage(final KRRLanguage language){
 		return languages.contains(language);
 	}
 
@@ -41,7 +41,7 @@ public abstract class EqSetKnowledgeExpression implements KnowledgeExpression {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

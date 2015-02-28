@@ -7,13 +7,13 @@ public abstract class AbstractKRRLogic {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private AbstractKRRLogic(String name) {
+	private AbstractKRRLogic(final String name) {
 		this.name = name;
 	}
 
 	private final String name;
 	
-	public static AbstractKRRLogic logic(String name){
+	public static AbstractKRRLogic logic(final String name){
 		return new AbstractKRRLogic(name){};
 	}
 
@@ -30,7 +30,7 @@ public abstract class AbstractKRRLogic {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

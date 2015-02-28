@@ -10,7 +10,7 @@ public abstract class AbstractKRRFormat implements KRRFormat {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRFormat(String name, KRRDialect dialect) {
+	public AbstractKRRFormat(final String name, final KRRDialect dialect) {
 		this.name = name;
 		this.dialect = dialect;
 	}

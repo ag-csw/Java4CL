@@ -9,7 +9,7 @@ import api4kbj.KRRStoreConfiguration;
 public class KRRFileStoreConfiguration implements KRRStoreConfiguration {
 
 
-	public KRRFileStoreConfiguration(String name, KRRFormat format, Path path) {
+	public KRRFileStoreConfiguration(final String name, final KRRFormat format, final Path path) {
 		super();
 		this.name = name;
 		this.format = format;

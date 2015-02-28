@@ -7,7 +7,7 @@ import api4kbj.KnowledgeExpression;
 
 public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
 
-	public FJSetKnowledgeExpression(Set<KRRLanguage> languages) {
+	public FJSetKnowledgeExpression(final Set<KRRLanguage> languages) {
 		this.languages = languages;
 	}
 
@@ -17,7 +17,7 @@ public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
 		return languages;
 	}	
 	
-	public static Set<KRRLanguage> languages(FJSetKnowledgeExpression expression){
+	public static Set<KRRLanguage> languages(final FJSetKnowledgeExpression expression){
 		return expression.languages();
 	}
 
@@ -27,7 +27,7 @@ public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
 	}
 	
 	@Override
-	public boolean usesLanguage(KRRLanguage language){
+	public boolean usesLanguage(final KRRLanguage language){
 		return languages.member(language);
 	}
 
@@ -41,7 +41,7 @@ public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

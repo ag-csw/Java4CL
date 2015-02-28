@@ -18,7 +18,7 @@ import api4kbc.KRRFileStoreConfiguration;
 public abstract class AbstractBasicKnowledgeIOWriter implements BasicKnowledgeIOWriter {
 
 
-	public AbstractBasicKnowledgeIOWriter(KRRFileStoreConfiguration config,
+	public AbstractBasicKnowledgeIOWriter(final KRRFileStoreConfiguration config,
 			BasicKnowledgeEncoding ke) {
 		super();
 		this.config = config;

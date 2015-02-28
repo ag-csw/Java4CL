@@ -8,8 +8,8 @@ import fj.F;
 public class FLanguageMapping<S extends KnowledgeExpression, T extends KnowledgeExpression>
 		implements LanguageMapping<S, T>, FJMapping<S, T> {
 
-	public FLanguageMapping(F<S, T> function, KRRLanguage startLang,
-			KRRLanguage endLang) {
+	public FLanguageMapping(final F<S, T> function, final KRRLanguage startLang,
+			final KRRLanguage endLang) {
 		Function = function;
 		this.startLang = startLang;
 		this.endLang = endLang;

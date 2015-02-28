@@ -10,9 +10,9 @@ public class WrapperBasicKnowledgeManifestation implements
 		BasicKnowledgeManifestation {
 
 	// Wrapper-based constructor
-	public WrapperBasicKnowledgeManifestation(KRRDialect dialect,
-			KRRDialectType<?> wrappedDialectType, Object wrappedValue,
-			DialectTypeEnvironment environment) {
+	public WrapperBasicKnowledgeManifestation(final KRRDialect dialect,
+			final KRRDialectType<?> wrappedDialectType, final Object wrappedValue,
+			final DialectTypeEnvironment environment) {
 		super();
 		this.dialect = dialect;
 		this.wrappedDialectType = wrappedDialectType;
@@ -21,9 +21,9 @@ public class WrapperBasicKnowledgeManifestation implements
 	}
 
 	// Expression-based constructor
-	public WrapperBasicKnowledgeManifestation(KRRDialect dialect,
-			BasicKnowledgeExpression expression,
-			DialectTypeEnvironment environment) {
+	public WrapperBasicKnowledgeManifestation(final KRRDialect dialect,
+			final BasicKnowledgeExpression expression,
+			final DialectTypeEnvironment environment) {
 		super();
 		this.dialect = dialect;
 		this.expression = expression;
@@ -47,7 +47,7 @@ public class WrapperBasicKnowledgeManifestation implements
 	}
 
 	@Override
-	public <T> T build(KRRDialectType<T> dialectType) {
+	public <T> T build(final KRRDialectType<T> dialectType) {
 		if (environment.containsMember(dialectType)) {
 			if (wrappedValue == null) {
 				wrappedValue = environment.build(expression, dialectType);

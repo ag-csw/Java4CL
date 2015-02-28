@@ -10,7 +10,7 @@ public abstract class AbstractKRRDialect implements KRRDialect {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRDialect(String name, KRRLanguage lang) {
+	public AbstractKRRDialect(final String name, final KRRLanguage lang) {
 		this.name = name;
 		this.lang = lang;
 	}

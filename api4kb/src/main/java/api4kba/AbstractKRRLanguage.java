@@ -10,7 +10,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRLanguage(String name, Class<? extends KnowledgeExpression> clazz, AbstractKRRLogic logic ) {
+	public AbstractKRRLanguage(final String name, final Class<? extends KnowledgeExpression> clazz, final AbstractKRRLogic logic ) {
 		this.name = name;
 		this.clazz = clazz;
 		this.logic = logic;
@@ -23,7 +23,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	private final AbstractKRRLogic logic;
 
 	
-	public static AbstractKRRLanguage language(String name, Class<? extends KnowledgeExpression> clazz, AbstractKRRLogic logic) {
+	public static AbstractKRRLanguage language(final String name, final Class<? extends KnowledgeExpression> clazz, final AbstractKRRLogic logic) {
 		return new AbstractKRRLanguage(name, clazz, logic){};
 	}
 
@@ -58,7 +58,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)

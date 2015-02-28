@@ -15,14 +15,14 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	private FJSetStructuredKnowledgeExpression(Set<KRRLanguage> languages,
-			Set<FJSetKnowledgeExpression> components) {
+	private FJSetStructuredKnowledgeExpression(final Set<KRRLanguage> languages,
+			final Set<FJSetKnowledgeExpression> components) {
 		super(languages);
 		this.components = components;
 	}
 
 	private FJSetStructuredKnowledgeExpression(
-			Set<FJSetKnowledgeExpression> components) {
+			final Set<FJSetKnowledgeExpression> components) {
 		this(components.bind(langOrder, s -> languages(s) ), components);
 	}
 
@@ -31,11 +31,11 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 	private final Set<FJSetKnowledgeExpression> components;
 	
 	//factory methods
-	public static FJSetStructuredKnowledgeExpression ke(Set<FJSetKnowledgeExpression> components){
+	public static FJSetStructuredKnowledgeExpression ke(final Set<FJSetKnowledgeExpression> components){
 		return new FJSetStructuredKnowledgeExpression(components);
 	}
 
-	public static FJSetStructuredKnowledgeExpression ke(Set<KRRLanguage> languages,
+	public static FJSetStructuredKnowledgeExpression ke(final Set<KRRLanguage> languages,
 			Set<FJSetKnowledgeExpression> components){
 		return new FJSetStructuredKnowledgeExpression(languages, components);
 	}
@@ -45,7 +45,7 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 		return components;
 	}
 
-	public static Set<FJSetKnowledgeExpression> components(FJSetStructuredKnowledgeExpression s) {
+	public static Set<FJSetKnowledgeExpression> components(final FJSetStructuredKnowledgeExpression s) {
 		return s.components();
 	}
 
@@ -66,7 +66,7 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 
 
 	// Must satisfy join(unit(unit(x))) = unit(x)
-	public static FJSetStructuredKnowledgeExpression join(FJSetStructuredKnowledgeExpression x){
+	public static FJSetStructuredKnowledgeExpression join(final FJSetStructuredKnowledgeExpression x){
 		return ke(x.components().
 				      bind(Ord.hashEqualsOrd(), s -> flatten1(s)));		
 	}
@@ -76,14 +76,14 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 		return s -> join(s);
 	}
 	
-	private static Set<FJSetKnowledgeExpression> flatten1(FJSetKnowledgeExpression x){
+	private static Set<FJSetKnowledgeExpression> flatten1(final FJSetKnowledgeExpression x){
 		if(x instanceof FJSetStructuredKnowledgeExpression){
 			return ((FJSetStructuredKnowledgeExpression) x).components();
 		}
 		return Set.set(Ord.hashEqualsOrd(), x);
 	}
 
-	public FJSetStructuredKnowledgeExpression bind(F<FJSetKnowledgeExpression, FJSetStructuredKnowledgeExpression> f){
+	public FJSetStructuredKnowledgeExpression bind(final F<FJSetKnowledgeExpression, FJSetStructuredKnowledgeExpression> f){
 		return ke(components.
 				    map(Ord.hashEqualsOrd(), f).
 				        bind(Ord.hashEqualsOrd(), components_()));
@@ -94,7 +94,7 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 	// assertEquals( x.map(g).map(f) , map(f.compose(g)) );
 	// Test: must preserve identity:   
 	// assertEquals ( x.map(s -> s) , x )
-	public FJSetStructuredKnowledgeExpression map(F<FJSetKnowledgeExpression, FJSetKnowledgeExpression> f){
+	public FJSetStructuredKnowledgeExpression map(final F<FJSetKnowledgeExpression, FJSetKnowledgeExpression> f){
 		return ke(components().map(Ord.hashEqualsOrd(), f));
 	}
 

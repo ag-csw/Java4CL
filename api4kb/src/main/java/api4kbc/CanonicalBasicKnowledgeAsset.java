@@ -9,8 +9,8 @@ public class CanonicalBasicKnowledgeAsset extends CanonicalKnowledgeAsset
 		implements BasicKnowledgeAsset {
 
 	public CanonicalBasicKnowledgeAsset(
-			FocusedLanguageEnvironment environment,
-			BasicKnowledgeExpression canonicalExpression) {
+			final FocusedLanguageEnvironment environment,
+			final BasicKnowledgeExpression canonicalExpression) {
 		super(environment, canonicalExpression);
 	}
 

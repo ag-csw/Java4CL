@@ -10,7 +10,7 @@ public interface FJMapping<T, R> extends Mapping<T, R> {
 	F<T, R> function();
 
 	@Override
-	default R f(T arg) {
+	default R f(final T arg) {
 		if (startClass().isAssignableFrom(arg.getClass())) {
 			return function().f(arg);
 		}

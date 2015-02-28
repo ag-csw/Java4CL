@@ -10,7 +10,7 @@ public abstract class AbstractKRRFormatType<S> implements KRRFormatType<S> {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRFormatType(String name, KRRFormat format,
+	public AbstractKRRFormatType(final String name, final KRRFormat format,
 			Class<? extends S> clazz) {
 		this.name = name;
 		this.format = format;

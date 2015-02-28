@@ -9,7 +9,7 @@ import api4kbj.KnowledgeAsset;
 public abstract class AbstractKnowledgeAsset implements KnowledgeAsset {
 
 	public AbstractKnowledgeAsset(
-			FocusedLanguageEnvironment environment) {
+			final FocusedLanguageEnvironment environment) {
 		this.environment = environment;
 	}
 
