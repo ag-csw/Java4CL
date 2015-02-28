@@ -10,14 +10,14 @@ import functional.None;
 import functional.Option;
 import functional.Some;
 import api4kba.AbstractKRRLanguage;
-import api4kbc.FJSetKnowledgeExpression;
-import api4kbc.FJSetStructuredKnowledgeExpression;
+import api4kbfjset.FJSetKnowledgeExpression;
+import api4kbfjset.FJSetStructuredKnowledgeExpression;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-    //StructuredKnowledgeExpressionTest.class//
+    FJSetStructuredKnowledgeExpressionTest.class//
    })
 public class AllFJSetTests {
 	

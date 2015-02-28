@@ -13,15 +13,15 @@ import fj.Ord;
 import fj.data.Set;
 import api4kba.AbstractKRRLanguage;
 import api4kbc.API4KB;
-import api4kbc.FJSetKnowledgeExpression;
-import api4kbc.FJSetStructuredKnowledgeExpression;
+import api4kbfjset.FJSetKnowledgeExpression;
+import api4kbfjset.FJSetStructuredKnowledgeExpression;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;
 
 @RunWith(Parameterized.class)
-public class StructuredKnowledgeExpressionTest {
+public class FJSetStructuredKnowledgeExpressionTest {
 
-	public StructuredKnowledgeExpressionTest(
+	public FJSetStructuredKnowledgeExpressionTest(
 			FJSetStructuredKnowledgeExpression expression,
 			Set<KRRLanguage> languages, Set<FJSetKnowledgeExpression> components) {
 		super();

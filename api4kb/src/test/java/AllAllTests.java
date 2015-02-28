@@ -5,7 +5,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ 
     AllTests.class,//
-    AllFJSetTests.class })
+    AllEqSetTests.class })
 public class AllAllTests {
 
 }
