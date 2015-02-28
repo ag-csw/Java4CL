@@ -18,17 +18,17 @@ public interface BasicKnowledgeManifestation extends KnowledgeManifestation,
 	DialectTypeEnvironment environment();
 
 	@Override
-	default boolean usesDialect(KRRDialect dialect) {
+	default boolean usesDialect(final KRRDialect dialect) {
 		return dialect().equals(dialect);
 	}
 
 	@Override
-	default boolean usesDialectTypeEnvironment(DialectTypeEnvironment environment) {
+	default boolean usesDialectTypeEnvironment(final DialectTypeEnvironment environment) {
 		return environment().equals(environment);
 	}
 
 
-	<T> T build(KRRDialectType<T> dialectType);
+	<T> T build(final KRRDialectType<T> dialectType);
 	
 
 }

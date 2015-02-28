@@ -8,7 +8,7 @@ public interface BasicKnowledgeIOWriter extends KnowledgeIO, BasicKnowledgeResou
 	KRRFileStoreConfiguration config();
 
 	@Override
-	default boolean usesStoreConfiguration(KRRStoreConfiguration config){
+	default boolean usesStoreConfiguration(final KRRStoreConfiguration config){
 		return config().equals(config);
 	}
 

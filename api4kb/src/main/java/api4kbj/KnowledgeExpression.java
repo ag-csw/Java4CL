@@ -15,6 +15,6 @@ public interface KnowledgeExpression extends KnowledgeResource, Liftable,
 		return KnowledgeSourceLevel.EXPRESSION;
 	}
 
-	boolean usesLanguage(KRRLanguage language);
+	boolean usesLanguage(final KRRLanguage language);
 
 }

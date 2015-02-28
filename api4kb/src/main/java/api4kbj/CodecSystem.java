@@ -18,7 +18,7 @@ public interface CodecSystem<T, S> {
 	 *            the decoded item
 	 * @return the encoded item
 	 */
-	public S code(T t);
+	public S code(final T t);
 
 	/**
 	 * 
@@ -26,6 +26,6 @@ public interface CodecSystem<T, S> {
 	 *            the encoded item
 	 * @return the decoded item
 	 */
-	public T decode(S s);
+	public T decode(final S s);
 
 }

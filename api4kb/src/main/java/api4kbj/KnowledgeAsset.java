@@ -32,12 +32,12 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 	 */
 	KnowledgeExpression canonicalExpression();
 
-	public default boolean accordingTo(
-			FocusedLanguageEnvironment environment) {
+	public default boolean compatibleWith(
+			final FocusedLanguageEnvironment environment) {
 		return environment.contains(environment());
 	}
 
-	public default boolean conceptualizes(KnowledgeExpression e) {
+	public default boolean conceptualizes(final KnowledgeExpression e) {
 		if (e.equals(canonicalExpression())) {
 			return true;
 		}

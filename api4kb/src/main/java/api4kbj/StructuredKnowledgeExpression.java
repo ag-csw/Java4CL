@@ -6,7 +6,7 @@ public interface StructuredKnowledgeExpression extends KnowledgeExpression,
 	Iterable<? extends KRRLanguage> languages();
 
 	@Override
-	default boolean usesLanguage(KRRLanguage language) {
+	default boolean usesLanguage(final KRRLanguage language) {
 		for (KRRLanguage lang : languages()) {
 			if (lang.equals(language))
 				return true;

@@ -18,6 +18,6 @@ public interface KnowledgeEncoding extends KnowledgeResource, Liftable,
 		return KnowledgeSourceLevel.ENCODING;
 	}
 
-	boolean usesFormat(KRRFormat format);
+	boolean usesFormat(final KRRFormat format);
 
 }

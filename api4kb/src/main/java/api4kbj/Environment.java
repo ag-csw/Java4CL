@@ -112,7 +112,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 *            the class wrapper to be tested
 	 * @return <tt>true</tt> if <tt>t</tt> is contained in the environment
 	 */
-	default boolean containsMember(T t) {
+	default boolean containsMember(final T t) {
 		for (T member : members()) {
 			if (member.equals(t)) {
 				return true;
@@ -130,7 +130,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * @return <tt>true</tt> if and only if all <tt>t</tt> belongs to the member
 	 *         collection
 	 */
-	default boolean containsMembers(Iterable<? extends T> t) {
+	default boolean containsMembers(final Iterable<? extends T> t) {
 		for (T s : t) {
 			if (!containsMember(s)) {
 				return false;
@@ -147,7 +147,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 *            the mapping to be tested
 	 * @return <tt>true</tt> if <tt>t</tt> is contained in the environment
 	 */
-	default boolean containsMapping(Mapping<? extends S, ? extends S> t) {
+	default boolean containsMapping(final Mapping<? extends S, ? extends S> t) {
 		for (Mapping<? extends S, ? extends S> map : mappings()) {
 			if (map.equals(t)) {
 				return true;
@@ -169,7 +169,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 *         mapping collection
 	 */
 	default boolean containsMappings(
-			Iterable<? extends Mapping<? extends S, ? extends S>> t) {
+			final Iterable<? extends Mapping<? extends S, ? extends S>> t) {
 		for (Mapping<? extends S, ? extends S> s : t) {
 			if (!containsMapping(s)) {
 				return false;
@@ -203,7 +203,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * @return <tt>true</tt> if the argument is an instance of the class of some
 	 *         member class wrapper.
 	 */
-	default boolean isCompatibleWith(S arg) {
+	default boolean isCompatibleWith(final S arg) {
 		if (arg == null) {
 			return false;
 		}
@@ -217,7 +217,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 		return false;
 	}
 
-	default <S1 extends S> S apply(S1 arg, T member) {
+	default <S1 extends S> S apply(final S1 arg, final T member) {
 		if (arg == null) {
 			throw new NullPointerException("Cannot map null");
 		}
@@ -263,7 +263,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 		return true;
 	}
 
-	default boolean isCompatibleWithClass(Class<?> clazz) {
+	default boolean isCompatibleWithClass(final Class<?> clazz) {
 		if (clazz == null)
 			return false;
 		for (T member : members()) {
@@ -274,7 +274,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	}
 
 	default Option<Mapping<? extends S, ? extends S>> findMapping(
-			Class<?> startClazz, Class<?> endClazz) {
+			final Class<?> startClazz, final Class<?> endClazz) {
 		if (startClazz == null || endClazz == null)
 			return new None<Mapping<? extends S, ? extends S>>();
 		for (Mapping<? extends S, ? extends S> mp : mappings()) {

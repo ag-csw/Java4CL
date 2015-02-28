@@ -11,8 +11,8 @@ public interface KnowledgeManifestation extends KnowledgeResource, Liftable,
 		return KnowledgeSourceLevel.MANIFESTATION;
 	}
 	
-	boolean usesDialectTypeEnvironment(DialectTypeEnvironment environment);
+	boolean usesDialectTypeEnvironment(final DialectTypeEnvironment environment);
 
-	boolean usesDialect(KRRDialect dialect);
+	boolean usesDialect(final KRRDialect dialect);
 
 }

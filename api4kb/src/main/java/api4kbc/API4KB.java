@@ -33,7 +33,7 @@ public final class API4KB {
 
 	public static boolean accordingTo(KnowledgeAsset asset,
 			FocusedLanguageEnvironment environment) {
-		return asset.accordingTo(environment);
+		return asset.environment().equals(environment);
 	}
 
 	public static boolean actualizes(PublicEvent event, Proficiency proficiency) {

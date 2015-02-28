@@ -6,9 +6,9 @@ public interface Mutable<A extends Immutable> {
 	A getSnapshot();
 
 	// setter for the Immutable snapshot
-	void setSnapshot(A snapshot);
+	void setSnapshot(final A snapshot);
 	
 	//updater for the Immutable snapshot
-	void updateSnapshot(Mapping<A,A> mapping);
+	void updateSnapshot(final Mapping<A,A> mapping);
 
 }

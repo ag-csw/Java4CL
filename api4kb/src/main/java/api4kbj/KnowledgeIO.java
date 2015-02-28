@@ -10,6 +10,6 @@ public interface KnowledgeIO extends KnowledgeResource, Liftable {
 		return KnowledgeSourceLevel.IO;
 	}
 
-	boolean usesStoreConfiguration(KRRStoreConfiguration config);
+	boolean usesStoreConfiguration(final KRRStoreConfiguration config);
 
 }

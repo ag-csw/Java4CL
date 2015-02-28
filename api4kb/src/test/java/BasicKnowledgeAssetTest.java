@@ -43,9 +43,9 @@ public class BasicKnowledgeAssetTest {
 	}
 
 	@Test
-	public void assetAndItsEnvironmentShouldSatisfyAccordingToRelation() {
+	public void assetAndItsEnvironmentShouldSatisfyCompatibleWithRelation() {
 		assertTrue(API4KB.accordingTo(asset, asset.environment()));
-		assertTrue(asset.accordingTo(asset.environment()));
+		assertTrue(asset.compatibleWith(asset.environment()));
 	}
 
 	@Parameterized.Parameters

@@ -3,7 +3,7 @@ package api4kbj;
 public enum KnowledgeSourceLevel {
 	IO, ENCODING, MANIFESTATION, EXPRESSION, ASSET;
 
-	private static KnowledgeSourceLevel byOrdinal(int i) {
+	private static KnowledgeSourceLevel byOrdinal(final int i) {
 		switch (i) {
 		case (0):
 			return IO;

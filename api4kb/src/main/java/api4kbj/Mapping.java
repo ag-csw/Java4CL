@@ -8,6 +8,6 @@ public interface Mapping<T, R> {
 
 	Object function();
 
-	R f(T arg);
+	R f(final T arg);
 
 }

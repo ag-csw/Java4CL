@@ -6,11 +6,11 @@ public interface BasicKnowledgeEncoding extends KnowledgeEncoding,
 	KRRFormat format();
 
 	@Override
-	default boolean usesFormat(KRRFormat format) {
+	default boolean usesFormat(final KRRFormat format) {
 		return format().equals(format);
 	}
 
-	<S> S build(KRRFormatType<S> formatType);
+	<S> S build(final KRRFormatType<S> formatType);
 
 
 	byte[] toByteArray();
