@@ -28,7 +28,7 @@ public abstract class EqSetKnowledgeExpression implements KnowledgeExpression {
 	
 	@Override
 	public boolean usesLanguage(KRRLanguage language){
-		return languages.member(language);
+		return languages.contains(language);
 	}
 
 	@Override

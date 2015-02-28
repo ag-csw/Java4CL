@@ -53,8 +53,8 @@ public class AllEqSetTests {
 	public static Ord<EqSetKnowledgeExpression> exprOrder = Ord.hashEqualsOrd();
 
 	public static EqSet<KRRLanguage> languages0 = EqSet.eqSet(lang0, lang1);
-	public static EqSet<EqSetKnowledgeExpression> expressions0 = EqSet.eqSet(
-			expression0, expression1);
+	public static Set<EqSetKnowledgeExpression> fjexpressions0 = Set.empty(Ord.hashEqualsOrd());
+	public static EqSet<EqSetKnowledgeExpression> expressions0 = EqSet.eqSet();
 	public static EqSetStructuredKnowledgeExpression stexpr0 = EqSetStructuredKnowledgeExpression
 			.ke(languages0, expressions0);
 
@@ -82,19 +82,27 @@ public class AllEqSetTests {
 	public static EqSetStructuredKnowledgeExpression stexpr4 = EqSetStructuredKnowledgeExpression
 			.join(stexpr3);
 
+	public static EqSet<EqSetKnowledgeExpression> singleton0 = EqSet
+			.unit(expression0);
 	public static EqSet<EqSetKnowledgeExpression> singleton1 = EqSet
 			.unit(expression1);
 	public static EqSet<EqSetKnowledgeExpression> singleton2 = EqSet
-			.unit(expression2);
+			.unit(stexpr2);
 
+	public static F<EqSetKnowledgeExpression, EqSet<EqSetKnowledgeExpression>> G0 = s -> EqSet
+			.eqSet();
 	public static F<EqSetKnowledgeExpression, EqSet<EqSetKnowledgeExpression>> G1 = s -> EqSet
 			.eqSet(s, AllEqSetTests.expression1);
 	public static F<EqSetKnowledgeExpression, EqSet<EqSetKnowledgeExpression>> G2 = s -> EqSet
 			.eqSet(s, AllEqSetTests.expression2);
+	public static F<EqSetKnowledgeExpression, EqSet<EqSetKnowledgeExpression>> G3 = EqSet.unit_();
+	public static F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H0 = s -> EqSet
+			.eqSet(s, expressions0);
 	public static F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H1 = s -> EqSet
 			.eqSet(s, expressions1);
 	public static F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H2 = s -> EqSet
 			.eqSet(s, expressions2);
+	public static F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H3 = EqSet.unit_();
 
 }
 

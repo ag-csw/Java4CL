@@ -1,6 +1,7 @@
 package functional;
 
 import static fj.Function.curry;
+
 import java.util.Iterator;
 
 import fj.Ord;
@@ -20,26 +21,33 @@ public class EqSet<A> implements Iterable<A> {
 	}
 	
 	public static <B> EqSet<B> eqSet(Set<B> set){
-		return new EqSet<B>(set);
+		return new EqSet<B>(Set.iterableSet(Ord.hashEqualsOrd(), set));
 	}
 	
-	public Set<A> set(){
+	private Set<A> set(){
 		return set;
 	}
 
-	// assertEquals(EqSet.set(x), x.set());
-	public static <B> Set<B> set( EqSet<B> x){
+	private static <B> Set<B> set( EqSet<B> x){
 		return x.set();
 	}
 
-	// F<EqSet<B>, Set<B>> setf = EqSet.set_(); 
-	// assertEquals(setf.f(x), x.set());
-	public static <B> F<EqSet<B>, Set<B>> set_() {
+	private static <B> F<EqSet<B>, Set<B>> set_() {
 		return s -> set(s);
 	}
 	
-	public boolean member(A a) {
-		return set.member(a);
+	public boolean contains(Object m) {
+		for (A x : set){
+			if( x.equals(m)) return true;
+		}
+		return false;
+	}
+
+	public boolean containsAll(Iterable<?> c) {
+		for (Object m : c){
+			if(!contains(m)) return false;
+		}
+		return true;
 	}
 	
 	public int size() {
@@ -58,7 +66,6 @@ public class EqSet<A> implements Iterable<A> {
 	}
 	
 	//first-class version of unit
-    // assertEquals(EqSet.unit_().f(x), EqSet.unit(x));
 	public static <B> F<B, EqSet<B>> unit_(){
 		return b -> unit(b);
 	}
@@ -81,8 +88,8 @@ public class EqSet<A> implements Iterable<A> {
 
 	// map method
 	// A x;
-	// F<A, EqSet<A>> F;
-    // assertEquals( EqSet.unit(F.f(x)) , EqSet.unit(x).map(F) );
+	// G<A, EqSet<A>> F;
+    // assertEquals( EqSet.unit(G.f(x)) , EqSet.unit(x).map(G) );
 	// Test: must preserve composition:
 	// F<A, B> G;
 	// F<B, C> H
@@ -97,35 +104,31 @@ public class EqSet<A> implements Iterable<A> {
 	}
 
 	//static version of map
-	// Test: map(f, x) = x.map(f)
 	public static <B, C> EqSet<C> map(F<B, C> f, EqSet<B> x) {
 		return x.map(f);
 	}
 
 	// first-class version of map
-	// Test: map_().apply(f).apply(x) = x.map(f)
 	public static <B, C> F<F<B, C>, F<EqSet<B>, EqSet<C>>> map_() {
 		return curry((f, as) -> as.map(f));
 	}
 
 	// bind method
 	// A x;
-	// F<A, EqSet<A>> F;
-    // assertEquals(  EqSet.unit(x).bind(F) , F.f(x) );
+	// F<A, EqSet<A>> G;
+    // assertEquals(  EqSet.unit(x).bind(G) , G.f(x) );
 	// EqSet<A> z;
-    // assertEquals( z.bind(s -> EqSet.unit(F.f(s))) , z.map(F));
+    // assertEquals( z.bind(s -> EqSet.unit(G.f(s))) , z.map(G));
 	public <B> EqSet<B> bind(F<A, EqSet<B>> f) {
 		return join(map(f));
 	}
 
 	//static version of bind
-	// Test: bind(f, x) = x.bind(f)
 	public static <B, C> EqSet<C> bind(F<B, EqSet<C>> f, EqSet<B> x) {
 		return x.bind(f);
 	}
 
 	// first-class version of bind
-	// Test: bind_().apply(f).apply(x) = x.bind(f)
 	public static <B, C> F<F<B, EqSet<C>>, F<EqSet<B>, EqSet<C>>> bind_() {
 		return curry((f, as) -> as.bind(f));
 	}
@@ -160,17 +163,4 @@ public class EqSet<A> implements Iterable<A> {
             return false;
         }
 	}
-	public boolean containsAll(Iterable<?> c) {
-		for (Object m : c){
-			if(!contains(m)) return false;
-		}
-		return true;
-	}
-	public boolean contains(Object m) {
-		for (A x : set){
-			if( x.equals(m)) return true;
-		}
-		return false;
-	}
-
 }

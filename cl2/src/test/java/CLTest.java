@@ -13,7 +13,7 @@ public class CLTest {
 	public void testLang() {
 		assertEquals(
 				"The name of the Common Logic language should be 'Common Logic'.",
-				"Common Logic", CL.LANG.name());
+				"Common Logic 2", CL.LANG.name());
 	}
 
 	public void testNamespace() {

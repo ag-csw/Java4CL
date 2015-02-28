@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 import api4kba.AbstractCodecSystem;
 import api4kba.AbstractKRRLanguage;
-import api4kbj.EqSet;
+import api4kba.AbstractKRRLogic;
 
 public final class CL {
 
@@ -36,16 +36,10 @@ public final class CL {
 	}
 
 	// constants
-	public static EqSet COMPLETE_CL_LOGIC = new EqSet() {
-
-		@Override
-		public String name() {
-			return "Complete Common Logic Language";
-		}
-	};
+	public static AbstractKRRLogic COMPLETE_CL_LOGIC = AbstractKRRLogic.logic("Common Logic 2");
 	// call static factory method of AbstractKRRLanguage
 	public static AbstractKRRLanguage LANG = AbstractKRRLanguage.language(
-			"Common Logic", CLExpression.class, COMPLETE_CL_LOGIC);
+			"Common Logic 2", CLExpression.class, COMPLETE_CL_LOGIC);
 
 	public static HashFocusedKRRLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new HashFocusedKRRLanguageEnvironment(
 			CL.LANG);
