@@ -4,6 +4,6 @@ import api4kbjpro.Proficiency;
 
 public interface PublicEvent extends Event {
 
-	boolean actualizes(Proficiency proficiency);
+	boolean actualizes(final Proficiency proficiency);
 
 }

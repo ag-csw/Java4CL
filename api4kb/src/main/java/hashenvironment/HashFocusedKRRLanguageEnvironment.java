@@ -9,7 +9,7 @@ public class HashFocusedKRRLanguageEnvironment extends
 		HashKRRLanguageEnvironment implements
 		FocusedLanguageEnvironment {
 
-	public HashFocusedKRRLanguageEnvironment(AbstractKRRLanguage lang) {
+	public HashFocusedKRRLanguageEnvironment(final AbstractKRRLanguage lang) {
 		super(lang);
 
 	}

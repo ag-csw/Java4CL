@@ -21,11 +21,11 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public HashKRRDialectTypeEnvironment(KRRDialectType<?> dialectType) {
+	public HashKRRDialectTypeEnvironment(final KRRDialectType<?> dialectType) {
 		this(init(dialectType));
 	}
 
-	public static Builder init(KRRDialectType<?> dialectType) {
+	public static Builder init(final KRRDialectType<?> dialectType) {
 		Builder builder = new Builder();
 		builder.addMembers(dialectType);
 		builder.addFocusLanguage(dialectType);
@@ -45,13 +45,13 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 		public Builder() {
 		}
 
-		public void addMembers(KRRDialectType<?>... dialectTypes) {
+		public void addMembers(final KRRDialectType<?>... dialectTypes) {
 			for (KRRDialectType<?> dialectType : dialectTypes) {
 				this.dialectTypes.add(dialectType);
 			}
 		}
 
-		public void addFocusLanguage(KRRDialectType<?> dialectType) {
+		public void addFocusLanguage(final KRRDialectType<?> dialectType) {
 			if (!this.dialectTypes.contains(dialectType)) {
 				throw new IllegalArgumentException("The dialect type " + dialectType
 						+ " is not contained in the environment.");
@@ -60,16 +60,16 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 			this.focus = new Some<KRRDialectType<?>>(dialectType);
 		}
 
-		public void addPreserves(EquivalenceRelation preservesValue) {
+		public void addPreserves(final EquivalenceRelation preservesValue) {
 			this.preserves = new Some<EquivalenceRelation>(preservesValue);
 		}
 
-		public void addLowerer(F<BasicKnowledgeExpression, ?> lowererValue) {
+		public void addLowerer(final F<BasicKnowledgeExpression, ?> lowererValue) {
 			this.lowerer = new Some<F<BasicKnowledgeExpression, ?>>(lowererValue);
 		}
 
 		public void addMappings(
-				Iterable<DialectTypeMapping<?, ?>> mappings) {
+				final Iterable<DialectTypeMapping<?, ?>> mappings) {
 			for (DialectTypeMapping<?, ?> map : mappings) {
 				addMapping(map);
 			}
@@ -81,7 +81,7 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 		}
 
 		public void addMapping(
-				DialectTypeMapping<?, ?> map) {
+				final DialectTypeMapping<?, ?> map) {
 			this.mappings.add(map);
 			this.dialectTypes.add(map.startType());
 			this.dialectTypes.add(map.endType());
@@ -89,7 +89,7 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 		}
 	}
 
-	private HashKRRDialectTypeEnvironment(Builder builder) {
+	private HashKRRDialectTypeEnvironment(final Builder builder) {
 		this.dialectTypes = (HashSet<KRRDialectType<?>>) builder.dialectTypes.clone();
 		this.focus = builder.focus.clone();
 		this.mappings = (Iterable<DialectTypeMapping<?, ?>>) builder.mappings
@@ -103,8 +103,8 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 	// library
 	private final HashSet<KRRDialectType<?>> dialectTypes;
 	private final Iterable<DialectTypeMapping<?, ?>> mappings;
-	private Option<EquivalenceRelation> preserves;
-	private Option<F<BasicKnowledgeExpression, ?>> lowerer = new None<F<BasicKnowledgeExpression, ?>>();
+	private final Option<EquivalenceRelation> preserves;
+	private final Option<F<BasicKnowledgeExpression, ?>> lowerer;
 
 	// TODO modify to change return type to immutable collection
 	@Override
@@ -113,7 +113,7 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 	}
 
 	@Override
-	public boolean containsMember(KRRDialectType<?> dialectType) {
+	public boolean containsMember(final KRRDialectType<?> dialectType) {
 		return dialectTypes.contains(dialectType);
 	}
 
@@ -148,7 +148,7 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 	}
 	
 	@Override
-	public <T> T build(BasicKnowledgeExpression e, KRRDialectType<T> dialectType){
+	public <T> T build(final BasicKnowledgeExpression e, final KRRDialectType<T> dialectType){
 		if(!isDescending()){
 			return null;
 		}

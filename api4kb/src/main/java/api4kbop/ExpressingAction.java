@@ -19,7 +19,7 @@ public interface ExpressingAction<T extends KnowledgeAsset> extends
 	KRRLanguage lang();
 
 	@Override
-	default KnowledgeExpression f(T t) {
+	default KnowledgeExpression f(final T t) {
 		FocusedLanguageEnvironment env = t.environment();
 		if (!env.containsMember(lang())) {
 			throw new IllegalArgumentException("The environment of the asset "

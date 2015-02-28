@@ -20,11 +20,11 @@ public class HashKRRLanguageEnvironment implements
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public HashKRRLanguageEnvironment(KRRLanguage lang) {
+	public HashKRRLanguageEnvironment(final KRRLanguage lang) {
 		this(init(lang));
 	}
 
-	public static Builder init(KRRLanguage lang) {
+	public static Builder init(final KRRLanguage lang) {
 		Builder builder = new Builder();
 		builder.addLanguages(lang);
 		builder.addFocusLanguage(lang);
@@ -43,13 +43,13 @@ public class HashKRRLanguageEnvironment implements
 		public Builder() {
 		}
 
-		public void addLanguages(KRRLanguage... languages) {
+		public void addLanguages(final KRRLanguage... languages) {
 			for (KRRLanguage lang : languages) {
 				this.languages.add(lang);
 			}
 		}
 
-		public void addFocusLanguage(KRRLanguage language) {
+		public void addFocusLanguage(final KRRLanguage language) {
 			if (!this.languages.contains(language)) {
 				throw new IllegalArgumentException("The language " + language
 						+ " is not contained in the environment.");
@@ -58,12 +58,12 @@ public class HashKRRLanguageEnvironment implements
 			this.focusLanguage = new Some<KRRLanguage>(language);
 		}
 
-		public void addPreserves(EquivalenceRelation preserves) {
+		public void addPreserves(final EquivalenceRelation preserves) {
 			this.preserves = new Some<EquivalenceRelation>(preserves);
 		}
 
 		public void addMappings(
-				Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations) {
+				final Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations) {
 			for (LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map : translations) {
 				this.translations.add(map);
 				this.languages.add(map.startLanguage());
@@ -77,7 +77,7 @@ public class HashKRRLanguageEnvironment implements
 		}
 
 		public void addMapping(
-				LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map) {
+				final LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression> map) {
 			this.translations.add(map);
 			this.languages.add(map.startLanguage());
 			this.languages.add(map.endLanguage());
@@ -85,7 +85,7 @@ public class HashKRRLanguageEnvironment implements
 		}
 	}
 
-	private HashKRRLanguageEnvironment(Builder builder) {
+	private HashKRRLanguageEnvironment(final Builder builder) {
 		this.languages = (HashSet<KRRLanguage>) builder.languages.clone();
 		this.focusLanguage = builder.focusLanguage.clone();
 		this.translations = (Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>>) builder.translations
@@ -98,7 +98,7 @@ public class HashKRRLanguageEnvironment implements
 	// library
 	private final HashSet<KRRLanguage> languages;
 	private final Iterable<LanguageMapping<? extends KnowledgeExpression, ? extends KnowledgeExpression>> translations;
-	private Option<EquivalenceRelation> preserves;
+	private final Option<EquivalenceRelation> preserves;
 
 	// TODO modify to change return type to immutable collection
 	@Override
@@ -107,7 +107,7 @@ public class HashKRRLanguageEnvironment implements
 	}
 
 	@Override
-	public boolean containsMember(KRRLanguage lang) {
+	public boolean containsMember(final KRRLanguage lang) {
 		return languages.contains(lang);
 	}
 
@@ -152,7 +152,7 @@ public class HashKRRLanguageEnvironment implements
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
