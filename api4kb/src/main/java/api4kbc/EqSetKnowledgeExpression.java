@@ -1,28 +1,28 @@
 package api4kbc;
 
 import fj.F;
-import fj.data.Set;
+import functional.EqSet;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
 
-public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
+public abstract class EqSetKnowledgeExpression implements KnowledgeExpression {
 
-	public FJSetKnowledgeExpression(Set<KRRLanguage> languages) {
+	public EqSetKnowledgeExpression(EqSet<KRRLanguage> languages) {
 		this.languages = languages;
 	}
 
-	private final Set<KRRLanguage> languages;
+	private final EqSet<KRRLanguage> languages;
 
-	public Set<KRRLanguage> languages() {
+	public EqSet<KRRLanguage> languages() {
 		return languages;
 	}	
 	
-	public static Set<KRRLanguage> languages(FJSetKnowledgeExpression expression){
+	public static EqSet<KRRLanguage> languages(EqSetKnowledgeExpression expression){
 		return expression.languages();
 	}
 
 	//first-class version of languages()
-	public static F<FJSetKnowledgeExpression, Set<KRRLanguage>> languages_(){
+	public static F<EqSetKnowledgeExpression, EqSet<KRRLanguage>> languages_(){
 		return s -> languages(s);
 	}
 	
@@ -46,9 +46,9 @@ public abstract class FJSetKnowledgeExpression implements KnowledgeExpression {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof FJSetKnowledgeExpression))
+		if (!(obj instanceof EqSetKnowledgeExpression))
 			return false;
-		FJSetKnowledgeExpression other = (FJSetKnowledgeExpression) obj;
+		EqSetKnowledgeExpression other = (EqSetKnowledgeExpression) obj;
 		if (languages == null) {
 			if (other.languages != null)
 				return false;

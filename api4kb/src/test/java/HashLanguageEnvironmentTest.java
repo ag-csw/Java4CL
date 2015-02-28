@@ -12,12 +12,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import api4kba.AbstractKRRLanguage;
 import api4kbc.FJMapping;
 import api4kbc.FLanguageMapping;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
 import api4kbj.LanguageMapping;
 

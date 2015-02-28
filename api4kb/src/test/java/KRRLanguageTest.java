@@ -8,40 +8,58 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import api4kba.AbstractKRRLanguage;
+import api4kba.AbstractKRRLogic;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
 import api4kbj.KnowledgeExpression;
 
 @RunWith(Parameterized.class)
 public class KRRLanguageTest {
-	public KRRLanguage language;
 
-	public KRRLanguageTest(KRRLanguage language) {
+	public KRRLanguageTest(KRRLanguage language, String name,
+			Class<? extends KnowledgeExpression> clazz, AbstractKRRLogic logic) {
+		super();
 		this.language = language;
+		this.name = name;
+		this.clazz = clazz;
+		this.logic = logic;
+	}
+
+
+	public KRRLanguage language;
+	public String name;
+	public Class<? extends KnowledgeExpression> clazz;
+	public AbstractKRRLogic logic;
+
+	@Test
+	public final void languageShouldBeEqualToLanguageBuiltFromStaticFactoryMethod() {
+        KRRLanguage otherLanguage = AbstractKRRLanguage.
+        		language(language.name(), language.asClass(), language.logic());		
+		assertEquals(language, otherLanguage);
 	}
 
 	@Test
-	public final void nameOfLanguageShouldNotBeEmpty() {
-		assertTrue(language.name().length() > 0);
+	public void languageNameShouldBeAsConstructed() {
+		assertEquals(language.name(), name);
 	}
 
 	@Test
-	public final void nameOfLogicOfLanguageShouldNotBeEmpty() {
-		assertTrue(language.logic().name().length() > 0);
+	public void languageClassShouldBeAsConstructed() {
+		assertEquals(language.asClass(), clazz);
 	}
 
-	//@Test
-	//public final void equalsShouldBeBasedOnFields() {
-	//	KRRLanguage otherLanguage = new AbstractKRRLanguage(language.name(),
-	//			language.logic(), language.asClass()) {
-	//	};
-	//	assertEquals(otherLanguage, language);
-	//}
+	@Test
+	public void languageLogicShouldBeAsConstructed() {
+		assertEquals(language.logic(), logic);
+	}
+
 
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
-		return Arrays.asList(new Object[][] { { AllTests.lang0 },
-				{ AllTests.lang1 }, { AllFJSetTests.lang2 } });
+		return Arrays.asList(new Object[][] { 
+				{ AllTests.lang0, AllTests.languageName0, AllTests.clazz0, AllTests.logicA },
+				{ AllTests.lang1, AllTests.languageName1, AllTests.clazz1, AllTests.logicA },
+				{ AllTests.lang2, AllTests.languageName2, AllTests.clazz2, AllTests.logicB },
+		});
 	}
 
 }

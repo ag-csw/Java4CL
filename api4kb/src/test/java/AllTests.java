@@ -8,9 +8,10 @@ import functional.None;
 import functional.Option;
 import functional.Some;
 import api4kba.AbstractKRRLanguage;
+import api4kba.AbstractKRRLogic;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
+import functional.EqSet;
 import api4kbj.KnowledgeExpression;
 
 @RunWith(Suite.class)
@@ -23,34 +24,32 @@ import api4kbj.KnowledgeExpression;
 		KRRLanguageTest.class })
 public class AllTests {
 
-	public static KRRLogic logicA = new KRRLogic() {
+	public static String logicNameA = "Logic A";
+	public static String logicNameB = "Logic B";
+	
+	public static AbstractKRRLogic logicA = AbstractKRRLogic.logic(logicNameA);
+	public static AbstractKRRLogic logicB = AbstractKRRLogic.logic(logicNameB);
 
-		@Override
-		public String name() {
-			return "Logic A";
-		}
+	public static String languageName0 = "Language Zero";
+	public static String languageName1 = "Language One";
+	public static String languageName2 = "Language Two";
+	
+	public static Class<? extends KnowledgeExpression> clazz0 =  TestKE0.class;
+	public static Class<? extends KnowledgeExpression> clazz1 =  TestKE1.class;
+	public static Class<? extends KnowledgeExpression> clazz2 =  TestKE2.class;
+		
+	public static AbstractKRRLanguage lang0 = new LangA("Language Zero", clazz0){
+	};
+
+	public static AbstractKRRLanguage lang1 = new LangA("Language One", clazz1){
+	};
+
+	public static AbstractKRRLanguage lang2 = new LangB("Language Two", clazz2){
 	};
 	
-	public static KRRLogic logicB = new KRRLogic() {
-
-		@Override
-		public String name() {
-			return "Logic B";
-		}
-	};
-	
-	public static AbstractKRRLanguage lang0 = new LangA("Language Zero", TestKE0.class){
-	};
-
-	public static AbstractKRRLanguage lang1 = new LangA("Language One", TestKE1.class){
-	};
-
-	public static AbstractKRRLanguage lang2 = new LangA("Language Two", TestKE2.class){
-	};
-	
-	public static HashFocusedKRRLanguageEnvironment env0 = new HashFocusedKRRLanguageEnvironment(AllTests.lang0);
-	public static HashFocusedKRRLanguageEnvironment env1 = new HashFocusedKRRLanguageEnvironment(AllTests.lang1);
-	public static HashFocusedKRRLanguageEnvironment env2 = new HashFocusedKRRLanguageEnvironment(AllTests.lang2);
+	public static HashFocusedKRRLanguageEnvironment env0 = new HashFocusedKRRLanguageEnvironment(lang0);
+	public static HashFocusedKRRLanguageEnvironment env1 = new HashFocusedKRRLanguageEnvironment(lang1);
+	public static HashFocusedKRRLanguageEnvironment env2 = new HashFocusedKRRLanguageEnvironment(lang2);
 
 	
 	public static String str = "Hello World!";
@@ -85,7 +84,7 @@ public class AllTests {
 class LangA extends AbstractKRRLanguage {
 
 	public LangA(String name, Class<? extends KnowledgeExpression> clazz) {
-		super(name, AllTests.logicA, clazz);
+		super(name, clazz, AllTests.logicA);
 	}
 
 
@@ -93,7 +92,7 @@ class LangA extends AbstractKRRLanguage {
 class LangB extends AbstractKRRLanguage {
 
 	public LangB(String name, Class<? extends KnowledgeExpression> clazz) {
-		super(name, AllTests.logicB, clazz);
+		super(name, clazz, AllTests.logicB);
 	}
 
 }

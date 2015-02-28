@@ -10,16 +10,12 @@ import org.junit.runners.Parameterized;
 
 import api4kba.AbstractKRRDialect;
 import api4kba.AbstractKRRDialectType;
-import api4kba.AbstractKRRLanguage;
 import api4kbc.API4KB;
 import api4kbc.WrapperBasicKnowledgeManifestation;
 import api4kbj.BasicKnowledgeManifestation;
 import api4kbj.DialectTypeEnvironment;
 import api4kbj.KRRDialect;
 import api4kbj.KRRDialectType;
-import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
-import api4kbj.KnowledgeExpression;
 
 @RunWith(Parameterized.class)
 public class BasicKnowledgeManifestationTest {

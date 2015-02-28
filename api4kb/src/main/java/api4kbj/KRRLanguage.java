@@ -1,8 +1,10 @@
 package api4kbj;
 
+import api4kba.AbstractKRRLogic;
+
 public interface KRRLanguage extends ClassWrapper<KnowledgeExpression> {
 
-	KRRLogic logic();
+	AbstractKRRLogic logic();
 
 	@Override
 	default Class<? extends KnowledgeExpression> asClass() {

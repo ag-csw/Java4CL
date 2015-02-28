@@ -14,14 +14,14 @@ import api4kbc.FJSetKnowledgeExpression;
 import api4kbc.FJSetStructuredKnowledgeExpression;
 import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
-import api4kbj.KRRLogic;
-import api4kbj.KnowledgeExpression;
 
 @RunWith(Suite.class)
 @SuiteClasses({ 
-    StructuredKnowledgeExpressionTest.class//
+    //StructuredKnowledgeExpressionTest.class//
    })
 public class AllFJSetTests {
+	
+	
 	
 	public static AbstractKRRLanguage lang0 = new LangA("Language Zero", TestFJSetKE0.class){
 	};
@@ -55,14 +55,20 @@ public class AllFJSetTests {
 	
 	public static Ord<FJSetKnowledgeExpression> exprOrder  = Ord.hashEqualsOrd();
 
-	public static Set<KRRLanguage> languages0 = Set.set(langOrder , AllTests.lang0, AllTests.lang1, AllTests.lang2);
-	public static Set<FJSetKnowledgeExpression> expressions0 = Set.set(exprOrder, expression0, expression1, expression2);
-	public static FJSetStructuredKnowledgeExpression stexpr0 = new FJSetStructuredKnowledgeExpression(languages0 , expressions0);
+	public static Set<KRRLanguage> languages0 = Set.set(langOrder , AllTests.lang0, AllTests.lang1);
+	public static Set<FJSetKnowledgeExpression> expressions0 = Set.set(exprOrder, expression0, expression1);
+	public static FJSetStructuredKnowledgeExpression stexpr0 = FJSetStructuredKnowledgeExpression.ke(languages0 , expressions0);
 
 	public static Set<KRRLanguage> languages1 = Set.set(langOrder , lang1, lang2);
 	public static Set<FJSetKnowledgeExpression> expressions1 = Set.set(exprOrder, expression1, expression2);
-	public static FJSetStructuredKnowledgeExpression stexpr1 = new FJSetStructuredKnowledgeExpression(expressions1);
+	public static FJSetStructuredKnowledgeExpression stexpr1 = FJSetStructuredKnowledgeExpression.ke(expressions1);
 
+	public static Set<KRRLanguage> languages2 = Set.set(langOrder , lang0, lang1, lang2);
+	public static Set<FJSetKnowledgeExpression> expressions2 = Set.set(exprOrder, stexpr0, stexpr1);
+	public static FJSetStructuredKnowledgeExpression stexpr2 = FJSetStructuredKnowledgeExpression.ke(expressions2);
+
+	public static FJSetStructuredKnowledgeExpression stexpr3 = FJSetStructuredKnowledgeExpression.join(stexpr2);
+	public static FJSetStructuredKnowledgeExpression stexpr4 = FJSetStructuredKnowledgeExpression.join(stexpr3);
 
 }
 class TestFJSetKE0 extends TestFJSetKE {
