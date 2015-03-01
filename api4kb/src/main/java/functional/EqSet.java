@@ -38,7 +38,8 @@ public class EqSet<A> implements Iterable<A> {
 	
 	public boolean contains(final Object m) {
 		for (A x : set){
-			if( x.equals(m)) return true;
+			if( x == m ) return true;
+			if( (x != null) && (x.equals(m))) return true;
 		}
 		return false;
 	}
