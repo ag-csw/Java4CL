@@ -74,10 +74,9 @@ public class EqSet<A> implements Iterable<A> {
 	// join method
     //assertEquals( EqSet.join(EqSet.unit(EqSet.unit(x))), EqSet.unit(x) );
     public static <B> EqSet<B> join(final EqSet<EqSet<B>> x){
-		Ord<B> ordb = Ord.hashEqualsOrd();
-		Ord<Set<B>> ordsetb = Ord.setOrd(ordb);
-		F<EqSet<B>, Set<B>> setf = EqSet.set_(); 
-    	return eqSet(Set.join(ordb, x.set().map(ordsetb, setf)));
+		final Ord<B> ordb = Ord.hashEqualsOrd();
+		final Ord<Set<B>> ordsetb = Ord.setOrd(ordb);
+    	return eqSet(Set.join(ordb, x.set().map(ordsetb, EqSet.set_())));
     }
     
 	// first-class version of join(x)
@@ -99,7 +98,7 @@ public class EqSet<A> implements Iterable<A> {
 	// EqSet<A> x;
     // assertEquals( x.map( s -> s ), x );	
 	public <B> EqSet<B> map( final F<A, B> f) {
-		Ord<B> ordb = Ord.hashEqualsOrd();
+		final Ord<B> ordb = Ord.hashEqualsOrd();
 		return eqSet(set.map(ordb, f));
 	}
 

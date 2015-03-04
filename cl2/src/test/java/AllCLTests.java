@@ -9,6 +9,7 @@ import fj.data.List;
 
 @RunWith(Suite.class)
 @SuiteClasses({ CLTest.class,
+	FJCLTextConstructionTest.class,
 	BasicKnowledgeAssetTest.class })
 public class AllCLTests {
 

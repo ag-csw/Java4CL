@@ -7,7 +7,6 @@ import java.util.Iterator;
 
 import fj.F;
 import fj.data.List;
-import functional.EqSet;
 import static fj.Function.curry;
 
 /**
@@ -27,7 +26,7 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	final private List<A> argsList;
 
 	// factory methods
-	
+
 	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> empty() {
 		return new FJCLTextConstruction<B>(List.nil(), List.nil());
 	}
@@ -36,7 +35,6 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 			final List<B> argsList) {
 		return new FJCLTextConstruction<B>(List.nil(), argsList);
 	}
-
 
 	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> text(
 			final List<CLCommentExpression> commentsList, final List<B> argsList) {
@@ -67,16 +65,19 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	}
 
 	public boolean contains(final Object m) {
-		for (A x : argsList){
-			if( x == m ) return true;
-			if( (x != null) && (x.equals(m))) return true;
+		for (A x : argsList) {
+			if (x == m)
+				return true;
+			if ((x != null) && (x.equals(m)))
+				return true;
 		}
 		return false;
 	}
 
 	public boolean containsAll(final Iterable<?> c) {
-		for (Object m : c){
-			if(!contains(m)) return false;
+		for (Object m : c) {
+			if (!contains(m))
+				return false;
 		}
 		return true;
 	}
@@ -85,10 +86,10 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 		return argsList.length();
 	}
 
-
 	// Monad methods
 	// unit method
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> unit(B x) {
+	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> unit(
+			B x) {
 		return text(List.nil(), List.single(x));
 	}
 
@@ -102,6 +103,7 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	public static <B extends CLSentenceOrStatementOrText> F<B, FJCLTextConstruction<B>> unit_() {
 		return b -> unit(List.nil(), b);
 	}
+
 	public static <B extends CLSentenceOrStatementOrText> F<B, FJCLTextConstruction<B>> unit_(
 			List<CLCommentExpression> commentsList) {
 		return b -> unit(commentsList, b);
@@ -120,10 +122,13 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	// Must satisfy join(unit(unit(x))) = unit(x)
 	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> join(
 			FJCLTextConstruction<FJCLTextConstruction<B>> x) {
-		return text(
-				x.commentsList().append(
-						x.argsList().bind(s -> flattenComments(s))), x
-						.argsList().bind(s -> argsList(s)));
+//		return text(
+//		x.commentsList().append(
+//				x.argsList().bind(s -> flattenComments(s))), x
+//				.argsList().bind(s -> argsList(s)));
+		@SuppressWarnings("unchecked")
+		FJCLTextConstruction<B> result = (FJCLTextConstruction<B>) flatten(x);
+		return result;
 	}
 
 	// first-class version of join(x)
@@ -159,7 +164,6 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 		return List.nil();
 	}
 
-	
 	// bind method
 	public <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> bind(
 			F<A, FJCLTextConstruction<B>> f) {
@@ -203,39 +207,59 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	public static <B extends CLSentenceOrStatementOrText, C extends CLSentenceOrStatementOrText> F<F<B, C>, F<FJCLTextConstruction<B>, FJCLTextConstruction<C>>> map_() {
 		return curry((f, as) -> as.map(f));
 	}
+
+	public static CLSentenceOrStatementOrText flattenRec(
+			CLSentenceOrStatementOrText x) {
+		if (!(x instanceof FJCLTextConstruction))
+			return x;
+		@SuppressWarnings("unchecked")
+		final FJCLTextConstruction<CLSentenceOrStatementOrText> y = (FJCLTextConstruction<CLSentenceOrStatementOrText>) x;
+		return flatten(y.map(s -> flattenRec(s)));
+
+	}
+
 	@Override
-    public int hashCode() {
-        int h = 0;
-        Iterator<A> i = argsList.iterator();
-        while (i.hasNext()) {
-            A obj = i.next();
-            if (obj != null)
-                h += obj.hashCode();
-        }
-        return h;
-    }
+	public int hashCode() {
+		int h = 0;
+		Iterator<CLCommentExpression> i = commentsList.iterator();
+		while (i.hasNext()) {
+			CLCommentExpression obj = i.next();
+			if (obj != null)
+				h += obj.hashCode();
+		}
+		Iterator<A> i1 = argsList.iterator();
+		while (i1.hasNext()) {
+			A obj = i1.next();
+			if (obj != null)
+				h += obj.hashCode();
+		}
+		return h;
+	}
 
 	@Override
 	public boolean equals(final Object o) {
-        if (o == this)
-            return true;
-
-        if (!(o instanceof FJCLTextConstruction))
-            return false;
-        FJCLTextConstruction<?> c = (FJCLTextConstruction<?>) o;
-        if (c.length() != length())
-            return false;
-        try {
-            if (!commentsList.equals(c.commentsList))
-                return false;
-            if (!argsList.equals(c.argsList))
-                return false;
-            return true;
-        } catch (ClassCastException unused)   {
-            return false;
-        } catch (NullPointerException unused) {
-            return false;
-        }
+		if (o == this)
+			return true;
+		if (o == null)
+			return false;
+		if (o.hashCode() != this.hashCode())
+			return false;
+		if (!(o instanceof FJCLTextConstruction))
+			return false;
+		FJCLTextConstruction<?> c = (FJCLTextConstruction<?>) o;
+		if (c.length() != length())
+			return false;
+		try {
+			if (!commentsList.equals(c.commentsList))
+				return false;
+			if (!argsList.equals(c.argsList))
+				return false;
+			return true;
+		} catch (ClassCastException unused) {
+			return false;
+		} catch (NullPointerException unused) {
+			return false;
+		}
 	}
 
 }
