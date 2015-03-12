@@ -5,6 +5,7 @@ import static fj.Function.curry;
 import java.util.Iterator;
 
 import fj.Ord;
+import fj.data.List;
 import fj.data.Set;
 import fj.F;
 
@@ -37,11 +38,24 @@ public class EqSet<A> implements Iterable<A> {
 	}
 	
 	public boolean contains(final Object m) {
+		//TODO Using this naive implementation based on the iterator
+		// makes the equals method quadratic in the size of the set
+		if (m == null) return false;
 		for (A x : set){
 			if( x == m ) return true;
 			if( (x != null) && (x.equals(m))) return true;
 		}
 		return false;
+		//try{
+		//	@SuppressWarnings("unchecked")
+		//	final A a = (A) m;
+		//	return set.member(a);
+		//}
+		//catch(ClassCastException unused){
+		//	return false;		
+        //} catch (NullPointerException unused) {
+         //  return false;
+        //}
 	}
 
 	public boolean containsAll(final Iterable<?> c) {
@@ -53,6 +67,29 @@ public class EqSet<A> implements Iterable<A> {
 	
 	public int size() {
 		return set.size();
+	}
+
+	public boolean isEmpty() {
+		return set.isEmpty();
+	}
+	
+	public EqSet<A> insert(final A m) {
+		return eqSet(set.insert(m));
+	}
+
+	public EqSet<A> delete(final A a) {
+		return eqSet(set.delete(a));
+	}
+	public static <B> EqSet<B> fromList(final List<B> c) {
+		return c.foldLeft( x -> (s -> x.insert(s)), EqSet.eqSet());			
+	}
+	
+	public EqSet<A> filter(final F<A, Boolean> H){
+		EqSet<A> s = EqSet.eqSet();
+		for (A c : set){
+			if (H.f(c)) s = s.insert(c);
+		}
+		return s;
 	}
 
 	@Override
@@ -141,7 +178,7 @@ public class EqSet<A> implements Iterable<A> {
             if (obj != null)
                 h += obj.hashCode();
         }
-        return h;
+        return h + size();
     }
 
 	@Override
@@ -162,4 +199,13 @@ public class EqSet<A> implements Iterable<A> {
             return false;
         }
 	}
+
+	public EqSet<A> union(EqSet<A> x) {
+		return eqSet(set.union(x.set));
+	}
+
+	public static <B> EqSet<B> empty() {
+		return EqSet.eqSet();
+	}
+
 }

@@ -1,5 +1,9 @@
 package cl2;
 
-public class CLSentenceOrStatementOrText extends CLExpression {
+import functional.EqSet;
+
+public abstract class CLSentenceOrStatementOrText extends CLExpression {
+
+	abstract public CLSentenceOrStatementOrText insertComments(EqSet<CLCommentExpression> e);
 
 }

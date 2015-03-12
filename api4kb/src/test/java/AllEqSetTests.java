@@ -4,8 +4,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import fj.F;
 import fj.Ord;
+import fj.data.Array;
 import fj.data.Set;
+import functional.EqEither;
 import functional.EqSet;
+import functional.EqSetPolyTree;
 import functional.None;
 import functional.Option;
 import functional.Some;
@@ -16,8 +19,11 @@ import api4kbj.BasicKnowledgeExpression;
 import api4kbj.KRRLanguage;
 
 @RunWith(Suite.class)
-@SuiteClasses({ EqSetTest.class //
+@SuiteClasses({ 
+	EqSetTest.class, //
+	EqSetPolyTreeTest.class //
 })
+
 public class AllEqSetTests {
 
 	public static AbstractKRRLanguage lang0 = new LangA("Language Zero",
@@ -103,6 +109,33 @@ public class AllEqSetTests {
 	public static F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H2 = s -> EqSet
 			.eqSet(s, expressions2);
 	public static F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H3 = EqSet.unit_();
+	
+	
+	
+	///PolyTrees
+	public static Integer int4 = 0; 
+	public static EqEither<Integer, EqSetPolyTree<Integer>> either4 = EqEither.unitLeft(int4); 
+	public static EqSetPolyTree<Integer> treex4 = EqSetPolyTree.unit(int4);
+	public static EqSet<Integer> contentsy4 = EqSet.eqSet(int4, 1);
+	public static EqSet<EqEither<Integer, EqSetPolyTree<Integer>>> sety4 = EqSet.eqSet(EqEither.unitRight(treex4), EqEither.unitLeft(1));
+	public static EqSetPolyTree<Integer> treey4 = EqSetPolyTree.tree(sety4);
+	public static F<Integer, EqSetPolyTree<Integer>> G4 = s -> EqSetPolyTree.unit(int4).insertLeaf(s);
+
+	public static F<EqSetPolyTree<Integer>, 
+	                EqSetPolyTree<EqSetPolyTree<Integer>>> H4 = 
+	                  s -> EqSetPolyTree.unit(treey4)
+	                                      .insertLeaf(s).
+	                                          insertBranch(EqSetPolyTree.unit(treex4));
+
+	                  static Integer n = (int)Math.pow(2, 9);
+	            	public static EqSet<Integer> contentsy5 = EqSet.eqSet(Set.iterableSet(Ord.intOrd, Array.range(0, n)));
+	            	public static EqSet<EqEither<Integer, EqSetPolyTree<Integer>>> sety5 = contentsy5.map(s -> EqEither.unitLeft(s));
+	            	public static EqSetPolyTree<Integer> treey5 = EqSetPolyTree.tree(sety5);
+
+	            	public static EqSet<Integer> contentsy6 = EqSet.eqSet(Set.iterableSet(Ord.intOrd, Array.range(0, 2*n)));
+	            	public static EqSet<EqEither<Integer, EqSetPolyTree<Integer>>> sety6 = contentsy6.map(s -> EqEither.unitLeft(s));
+	            	public static EqSetPolyTree<Integer> treey6 = EqSetPolyTree.tree(sety6);
+
 
 }
 

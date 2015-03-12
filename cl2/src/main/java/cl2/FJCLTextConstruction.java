@@ -5,8 +5,11 @@ package cl2;
 
 import java.util.Iterator;
 
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 import fj.F;
 import fj.data.List;
+import functional.EqSet;
 import static fj.Function.curry;
 
 /**
@@ -27,16 +30,19 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 
 	// factory methods
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> empty() {
+	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> 
+	empty() {
 		return new FJCLTextConstruction<B>(List.nil(), List.nil());
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> text(
+	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> 
+	text(
 			final List<B> argsList) {
 		return new FJCLTextConstruction<B>(List.nil(), argsList);
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> text(
+	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> 
+	text(
 			final List<CLCommentExpression> commentsList, final List<B> argsList) {
 		return new FJCLTextConstruction<B>(commentsList, argsList);
 	}
@@ -260,6 +266,30 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 		} catch (NullPointerException unused) {
 			return false;
 		}
+	}
+
+	@Override
+	public boolean isBasic() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public KnowledgeSourceLevel level() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean usesLanguage(KRRLanguage language) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public CLSentenceOrStatementOrText insertComments(
+			EqSet<CLCommentExpression> comments) {
+		return this;
 	}
 
 }

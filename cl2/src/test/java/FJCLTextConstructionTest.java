@@ -19,6 +19,7 @@ import cl2.CLCommentExpression;
 public class FJCLTextConstructionTest {
 
 
+
 	public FJCLTextConstructionTest(
 			CLSentenceOrStatementOrText kex,
 			List<CLSentenceOrStatementOrText> listy,
@@ -31,8 +32,8 @@ public class FJCLTextConstructionTest {
 		this.listy = listy;
 		this.textx = textx;
 		this.texty = texty;
-		G = g;
-		H = h;
+		this.G = g;
+		this.H = h;
 		K = Function.compose(H, G);
 		x = FJCLTextConstruction.unit(List.nil(), textx);
 		textz = FJCLTextConstruction.empty();
@@ -41,7 +42,10 @@ public class FJCLTextConstructionTest {
 		listn = List.list(ken);
 		textn = FJCLTextConstruction.unit(ken);
 		n = FJCLTextConstruction.unit(textn);
-	}
+		U = FJCLTextConstruction::unit;
+		U2 = FJCLTextConstruction::unit;
+		J = FJCLTextConstruction::join;	
+		}
 
 	public CLSentenceOrStatementOrText ken;
 	public CLSentenceOrStatementOrText kex;
@@ -60,6 +64,9 @@ public class FJCLTextConstructionTest {
 	public FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>> x;
 	public FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>> n;
 	public Ord<CLSentenceOrStatementOrText> ordb = Ord.hashEqualsOrd();
+	public F<CLSentenceOrStatementOrText, FJCLTextConstruction<CLSentenceOrStatementOrText>> U;
+	public F<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>, FJCLTextConstruction<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>>> U2;
+	public F<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>, FJCLTextConstruction<CLSentenceOrStatementOrText>> J;
 
 	@Test
 	public final void textShouldBeEqualToOtherFJCLTextConstructionBuiltFromStaticVarargsMethod() {
@@ -128,9 +135,7 @@ public class FJCLTextConstructionTest {
 
 	@Test
 	public final void firstClassJoinShouldEqualStaticJoin() {
-		F<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>, FJCLTextConstruction<CLSentenceOrStatementOrText>> joinf = FJCLTextConstruction
-				.join_();
-		assertEquals(joinf.f(x), FJCLTextConstruction.join(x));
+		assertEquals(J.f(x), FJCLTextConstruction.join(x));
 	}
 
 	// Monad Left Identity Law
@@ -185,15 +190,17 @@ public class FJCLTextConstructionTest {
 		assertEquals(FJCLTextConstruction.unit(kex).bind(G), G.f(kex));
 		assertEquals(FJCLTextConstruction.unit(textx).bind(H), H.f(textx));
 		assertEquals(FJCLTextConstruction.unit(texty).bind(H), H.f(texty));
-		assertEquals(FJCLTextConstruction.unit(x).bind(FJCLTextConstruction.unit_()), FJCLTextConstruction.unit(x));
+		assertEquals(FJCLTextConstruction.unit(x).bind(FJCLTextConstruction::unit), FJCLTextConstruction.unit(x));
+		assertEquals(FJCLTextConstruction.unit(x).bind(U2), FJCLTextConstruction.unit(x));
 	}
 
+	
 	// Definition: x.bind(G) = join(x.map(G))
 	@Test
 	public final void bindShouldEqualJoinMap() {
 		assertEquals(textx.bind(G), FJCLTextConstruction.join(textx.map(G)));
 		assertEquals(textx.bind(K), FJCLTextConstruction.join(textx.map(K)));
-		assertEquals(textx.bind(FJCLTextConstruction.unit_()), FJCLTextConstruction.join(textx.map(FJCLTextConstruction.unit_())));
+		assertEquals(textx.bind(FJCLTextConstruction::unit), FJCLTextConstruction.join(textx.map(FJCLTextConstruction::unit)));
 		assertEquals(texty.bind(G), FJCLTextConstruction.join(texty.map(G)));
 	}
 
@@ -201,15 +208,15 @@ public class FJCLTextConstructionTest {
 	public final void xBindFShouldEqualStaticBindFX() {
 		assertEquals(textx.bind(G), FJCLTextConstruction.bind(G, textx));
 		assertEquals(textx.bind(K), FJCLTextConstruction.bind(K, textx));
-		assertEquals(textx.bind(FJCLTextConstruction.unit_()), FJCLTextConstruction.bind(FJCLTextConstruction.unit_(), textx));
+		assertEquals(textx.bind(FJCLTextConstruction::unit), FJCLTextConstruction.bind(FJCLTextConstruction::unit, textx));
 		assertEquals(texty.bind(G), FJCLTextConstruction.bind(G, texty));
 		assertEquals(texty.bind(K), FJCLTextConstruction.bind(K, texty));
-		assertEquals(texty.bind(FJCLTextConstruction.unit_()), FJCLTextConstruction.bind(FJCLTextConstruction.unit_(), texty));
+		assertEquals(texty.bind(FJCLTextConstruction::unit), FJCLTextConstruction.bind(FJCLTextConstruction::unit, texty));
 		assertEquals(textz.bind(G), FJCLTextConstruction.bind(G, textz));
 		assertEquals(textz.bind(K), FJCLTextConstruction.bind(K, textz));
-		assertEquals(textz.bind(FJCLTextConstruction.unit_()), FJCLTextConstruction.bind(FJCLTextConstruction.unit_(), textz));
+		assertEquals(textz.bind(FJCLTextConstruction::unit), FJCLTextConstruction.bind(FJCLTextConstruction::unit, textz));
 		assertEquals(x.bind(H), FJCLTextConstruction.bind(H, x));
-		assertEquals(x.bind(FJCLTextConstruction.unit_()), FJCLTextConstruction.bind(FJCLTextConstruction.unit_(), x));
+		assertEquals(x.bind(FJCLTextConstruction::unit), FJCLTextConstruction.bind(FJCLTextConstruction::unit, x));
 	}
 
 	@Test
@@ -223,15 +230,15 @@ public class FJCLTextConstructionTest {
 
 	@Test
 	public final void bindUnitShouldEqualIdentity() {
-		assertEquals(textx.bind(FJCLTextConstruction.unit_()), textx);
-		assertEquals(texty.bind(FJCLTextConstruction.unit_()), texty);
-		assertEquals(textz.bind(FJCLTextConstruction.unit_()), textz);
-		assertEquals(x.bind(FJCLTextConstruction.unit_()), x);		
+		assertEquals(textx.bind(FJCLTextConstruction::unit), textx);
+		assertEquals(texty.bind(FJCLTextConstruction::unit), texty);
+		assertEquals(textz.bind(FJCLTextConstruction::unit), textz);
+		assertEquals(x.bind(FJCLTextConstruction::unit), x);		
 	}
 	
 	@Test
 	public final void bindUnitFShouldEqualMapF() {
-		assertEquals(textx.bind(FJCLTextConstruction.unit_()), textx);
+		assertEquals(textx.bind(FJCLTextConstruction::unit), textx);
 		assertEquals(textx.bind(s -> FJCLTextConstruction.unit(G.f(s))), textx.map(G));
 		assertEquals(textx.bind(s -> FJCLTextConstruction.unit(K.f(s))), textx.map(K));
 		assertEquals(texty.bind(s -> FJCLTextConstruction.unit(G.f(s))), texty.map(G));
