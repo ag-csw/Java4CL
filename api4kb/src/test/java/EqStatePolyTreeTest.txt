@@ -1,0 +1,354 @@
+import static org.junit.Assert.*;
+
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import fj.F;
+import fj.Function;
+import functional.EqEither;
+import functional.EqState;
+import functional.EqStatePolyTree;
+
+@RunWith(Parameterized.class)
+public class EqStatePolyTreeTest {
+
+	public EqStatePolyTreeTest(
+			Integer ix,
+			EqState<Integer> contentsy,
+			EqState<EqEither<Integer, EqStatePolyTree<Integer>>> sety,
+			EqStatePolyTree<Integer> treex,
+			EqStatePolyTree<Integer> treey,
+			F<Integer, EqStatePolyTree<Integer>> g,
+			F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<Integer>>> h) {
+		super();
+		this.ix = ix;
+		this.contentsy = contentsy;
+		this.sety = sety;
+		this.treex = treex;
+		this.treey = treey;
+		G = g;
+		H = h;
+		K = Function.compose(H, G);
+		x = EqStatePolyTree.unit(treex);
+		setz = EqState.nil();
+		treez = EqStatePolyTree.tree(setz);
+		//in = null;
+		//setn = EqState.list(in);
+		//treen = EqStatePolyTree.tree(setn);
+		//n = EqStatePolyTree.unit(treen);
+	}
+
+	//public EqEither<Integer, EqStatePolyTree<Integer>> in;
+	public Integer ix;
+	public EqState<Integer> contentsy;
+	public EqState<EqEither<Integer, EqStatePolyTree<Integer>>> sety;
+	public EqStatePolyTree<Integer> treex;
+	public EqStatePolyTree<Integer> treey;
+
+	public F<Integer, EqStatePolyTree<Integer>> G;
+	public F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<Integer>>> H;
+	
+	public EqState<EqEither<Integer, EqStatePolyTree<Integer>>> setz;
+	//public EqState<EqEither<Integer, EqStatePolyTree<Integer>>> setn;
+	public EqStatePolyTree<Integer> treez;
+	//public EqStatePolyTree<Integer> treen;
+    public F<Integer, EqStatePolyTree<EqStatePolyTree<Integer>>> K;
+	public EqStatePolyTree<EqStatePolyTree<Integer>> x;
+	//public EqStatePolyTree<EqStatePolyTree<Integer>> n;
+
+	@Test
+	public final void equalsShouldWork() {
+		assertEquals(EqEither.unitLeft(ix), EqEither.unitLeft(ix));
+		assertEquals(EqState.list(EqEither.unitLeft(ix)), EqState.list(EqEither.unitLeft(ix)));
+		assertEquals(treex, treex);
+		assertEquals(EqStatePolyTree.tree(EqState.list(EqEither.unitLeft(ix))), EqStatePolyTree.tree(EqState.list(EqEither.unitLeft(ix))));
+		//assertEquals(treex, EqStatePolyTree.unit(ix));
+	}
+
+	@Test
+	public void singletonTreeShouldBeAsConstructed() {
+		assertTrue(treex.contains(ix));
+		assertTrue(treex.size() == 1);
+	}
+
+	@Test
+	public final void treeShouldBeEqualToOtherEqStateBuiltFromStaticFactorySetMethod() {
+		assertEquals(treey, EqStatePolyTree.tree(sety));
+	}
+
+	@Test
+	public void treeShouldBeAsConstructed() {
+		assertTrue(treey.containsAll(contentsy));
+		assertTrue(treey.size() == contentsy.length());
+	}
+
+	@Test
+	public final void singletonShouldContainExpression() {
+		assertTrue(treex.contains(ix));
+	}
+
+	@Test
+	public final void treeWithNullShouldBeMappable() {
+		//assertEquals(treen.map(s -> s), treen);
+		//assertEquals(treen.bind(EqStatePolyTree::unit), treen);
+	}
+
+	@Test
+	public final void differentEqStatesShouldNotBeEqual() {
+		assertFalse(treex.equals(treez)); //different size
+		assertFalse(treex.equals(x)); //different type parameter
+		assertFalse(treex.equals(ix)); //different class
+		assertFalse(treex.equals(G)); //different class
+		//assertFalse(treez.equals(treen));
+		//assertFalse(treen.equals(treex));
+		assertFalse(treex.equals(null));
+	}
+
+	@Test
+	public final void treeShouldNotContainNonMember() {
+		assertFalse(treex.contains(ix + 1));
+	}
+	
+	@Test
+	public final void treeShouldHaveSizeOfSet() {
+		//assertEquals(treey.size(), sety.length());
+		assertEquals(treex.size(), 1);
+		assertEquals(treez.size(), 0);
+		//assertEquals(treen.size(), 1);
+		assertEquals(x.size(), 1);
+	}
+
+	@Test
+	public final void firstClassUnitShouldEqualStaticUnit() {
+		assertEquals(EqStatePolyTree.unit_().f(ix), EqStatePolyTree.unit(ix));
+		assertEquals(EqStatePolyTree.unit_().f(treex), EqStatePolyTree.unit(treex));
+		assertEquals(EqStatePolyTree.unit_().f(treey), EqStatePolyTree.unit(treey));
+		assertEquals(EqStatePolyTree.unit_().f(x), EqStatePolyTree.unit(x));
+	}
+
+	@Test
+	public final void firstClassJoinShouldEqualStaticJoin() {
+		F<EqStatePolyTree<EqStatePolyTree<Integer>>, EqStatePolyTree<Integer>> joinf = EqStatePolyTree
+				.join_();
+		assertEquals(joinf.f(x), EqStatePolyTree.join(x));
+	}
+
+	
+	@Test
+	public final void xMapFShouldEqualStaticMapFX() {
+		assertEquals(treex.map(G), EqStatePolyTree.map(G, treex));
+		assertEquals(treex.map(K), EqStatePolyTree.map(K, treex));
+		assertEquals(treey.map(G), EqStatePolyTree.map(G, treey));
+		assertEquals(treey.map(K), EqStatePolyTree.map(K, treey));
+		assertEquals(treez.map(G), EqStatePolyTree.map(G, treez));
+		assertEquals(treez.map(K), EqStatePolyTree.map(K, treez));
+		assertEquals(x.map(H), EqStatePolyTree.map(H, x));
+	}
+
+	@Test
+	public final void xMapFShouldEqualFirstClassMapFX() {
+		F<F<Integer,EqStatePolyTree<Integer>>, F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<Integer>>>> map1 = EqStatePolyTree.map_();
+		F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<Integer>>> mapG = map1.f(G);
+		assertEquals(treex.map(G), mapG.f(treex));
+		assertEquals(treey.map(G), mapG.f(treey));
+		assertEquals(treez.map(G), mapG.f(treez));
+	}
+
+	@Test
+	public final void xBindFShouldEqualStaticBindFX() {
+		assertEquals(treex.bind(G), EqStatePolyTree.bind(G, treex));
+		assertEquals(treex.bind(K), EqStatePolyTree.bind(K, treex));
+		assertEquals(treex.bind(EqStatePolyTree::unit), EqStatePolyTree.bind(EqStatePolyTree::unit, treex));
+		assertEquals(treey.bind(G), EqStatePolyTree.bind(G, treey));
+		assertEquals(treey.bind(K), EqStatePolyTree.bind(K, treey));
+		assertEquals(treey.bind(EqStatePolyTree::unit), EqStatePolyTree.bind(EqStatePolyTree::unit, treey));
+		assertEquals(treez.bind(G), EqStatePolyTree.bind(G, treez));
+		assertEquals(treez.bind(K), EqStatePolyTree.bind(K, treez));
+		assertEquals(treez.bind(EqStatePolyTree::unit), EqStatePolyTree.bind(EqStatePolyTree::unit, treez));
+		assertEquals(x.bind(H), EqStatePolyTree.bind(H, x));
+		assertEquals(x.bind(EqStatePolyTree::unit), EqStatePolyTree.bind(EqStatePolyTree::unit, x));
+	}
+
+	@Test
+	public final void xBindFShouldEqualFirstClassBindFX() {
+		F<F<Integer,EqStatePolyTree<Integer>>, F<EqStatePolyTree<Integer>, EqStatePolyTree<Integer>>> bind1 = EqStatePolyTree.bind_();
+		F<EqStatePolyTree<Integer>, EqStatePolyTree<Integer>> bindG = bind1.f(G);
+		assertEquals(treex.bind(G), bindG.f(treex));
+		assertEquals(treey.bind(G), bindG.f(treey));
+		assertEquals(treez.bind(G), bindG.f(treez));
+	}
+
+
+	// Functor Law 
+	// Functor Identity
+	@Test
+	public final void mapShouldPreserveIdentityF() {
+		assertEquals(treex.map(s -> s), treex);
+		assertEquals(treey.map(s -> s), treey);
+		assertEquals(x.map(s -> s), x);
+	}
+
+	// Functor Associativity
+	@Test
+	public final void mapShouldPreserveComposition() {
+		assertEquals(treex.map(G).map(H), treex.map(K));
+		assertEquals(treey.map(G).map(H), treey.map(K));
+	}
+
+	// Natural Transformation (Unit)
+	@Test
+	public final void unitFShouldEqualUnitMapF() {
+		assertEquals(EqStatePolyTree.unit(G.f(ix)), EqStatePolyTree.unit(ix).map(G));
+		assertEquals(EqStatePolyTree.unit(K.f(ix)), EqStatePolyTree.unit(ix).map(K));
+		assertEquals(EqStatePolyTree.unit(H.f(treex)), EqStatePolyTree.unit(treex).map(H));
+		assertEquals(EqStatePolyTree.unit(H.f(treey)), EqStatePolyTree.unit(treey).map(H));
+		assertEquals(EqStatePolyTree.unit(ix), EqStatePolyTree.unit(ix).map(s -> s));
+	}
+
+
+	// Monad Right Identity Law
+	
+	//join . fmap join     ≡ join . join
+	@Test
+	public final void joinMapJoinShouldEqualJoinJoin() {
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>> ux = EqStatePolyTree.unit(x);
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>> uy = EqStatePolyTree.unit(EqStatePolyTree.unit(treey));
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>> uz = EqStatePolyTree.unit(EqStatePolyTree.unit(treez));
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>>> uxx = EqStatePolyTree.unit(EqStatePolyTree.unit(x));
+		assertEquals( EqStatePolyTree.join(ux.map(EqStatePolyTree.join_())),
+			      EqStatePolyTree.join(EqStatePolyTree.join(ux)));
+		assertEquals( EqStatePolyTree.join(uy.map(EqStatePolyTree.join_())),
+			      EqStatePolyTree.join(EqStatePolyTree.join(uy)));
+		assertEquals( EqStatePolyTree.join(uz.map(EqStatePolyTree.join_())),
+			      EqStatePolyTree.join(EqStatePolyTree.join(uz)));
+		assertEquals( EqStatePolyTree.join(uxx.map(EqStatePolyTree.join_())),
+			      EqStatePolyTree.join(EqStatePolyTree.join(uxx)));
+		
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>> wx = ux.insertLeaf(EqStatePolyTree.unit(treey));
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>> vy = EqStatePolyTree.unit(EqStatePolyTree.unit(treey).insertLeaf(treex).insertBranch(x));
+		EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>> wy = vy.insertBranch(wx);
+		assertEquals( wx.map(EqStatePolyTree.join_()),
+			      EqStatePolyTree.join(wx));
+		assertEquals( EqStatePolyTree.join(wy.map(EqStatePolyTree.join_())),
+				EqStatePolyTree.join(EqStatePolyTree.join(wy)));
+	}
+	
+	// Monad Left Identity Law
+	// join . fmap return   ≡ id 
+	@Test
+	public final void joinMapUnitShouldBeIdentity() {
+		assertEquals(EqStatePolyTree.join(treex.map(EqStatePolyTree.unit_())),
+		               treex);
+		assertEquals(EqStatePolyTree.join(treey.map(EqStatePolyTree.unit_())),
+                treey);
+		assertEquals(EqStatePolyTree.join(treez.map(EqStatePolyTree.unit_())),
+                treez);
+		assertEquals(EqStatePolyTree.join(x.map(EqStatePolyTree.unit_())),
+	                   x);
+	}
+	// join . return = id
+	@Test
+	public final void joinUnitShouldBeIdentity() {
+		assertEquals(EqStatePolyTree.join(EqStatePolyTree.unit(treex)), treex);
+		assertEquals(EqStatePolyTree.join(EqStatePolyTree.unit(treey)), treey);
+		assertEquals(EqStatePolyTree.join(EqStatePolyTree.unit(treez)), treez);
+		assertEquals(EqStatePolyTree.join(EqStatePolyTree.unit(x)), x);
+		
+	}
+	
+	// redundant, given bind = join(map)
+	@Test
+	public final void bindUnitShouldEqualIdentity() {
+		assertEquals(treex.bind(EqStatePolyTree::unit), treex);
+		assertEquals(treey.bind(EqStatePolyTree::unit), treey);
+		assertEquals(treez.bind(EqStatePolyTree::unit), treez);
+		assertEquals(x.bind(EqStatePolyTree::unit), x);		
+	}
+	
+	
+	
+	//join . fmap (fmap f) ≡ fmap f . join
+	@Test
+	public final void joinMapMapFShouldBeMapFJoin() {
+		F<    F<Integer, EqStatePolyTree<Integer>>,
+		      F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<Integer>>>  > map1 = EqStatePolyTree.map_();
+		F<    F<Integer, EqStatePolyTree<EqStatePolyTree<Integer>>>,
+	      F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>>>  > map2 = EqStatePolyTree.map_();
+		F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<Integer>>> mapG = map1.f(G);
+		F<EqStatePolyTree<Integer>, EqStatePolyTree<EqStatePolyTree<EqStatePolyTree<Integer>>>> mapK = map2.f(K);
+		EqStatePolyTree<EqStatePolyTree<Integer>> y = EqStatePolyTree.unit(treey);
+		EqStatePolyTree<EqStatePolyTree<Integer>> z = EqStatePolyTree.unit(treez);
+		assertEquals( EqStatePolyTree.join(x.map(mapG)),
+				  EqStatePolyTree.join(x).map(G));
+		assertEquals(EqStatePolyTree.join(y.map(mapG)),
+				  EqStatePolyTree.join(y).map(G));
+		assertEquals(EqStatePolyTree.join(z.map(mapG)),
+				  EqStatePolyTree.join(z).map(G));
+		assertEquals( EqStatePolyTree.join(x.map(mapK)),
+				  EqStatePolyTree.join(x).map(K));
+		assertEquals(EqStatePolyTree.join(y.map(mapK)),
+				  EqStatePolyTree.join(y).map(K));
+		assertEquals(EqStatePolyTree.join(z.map(mapK)),
+				  EqStatePolyTree.join(z).map(K));
+		
+		assertEquals( x.bind(mapG),
+				  EqStatePolyTree.join(x).map(G));
+		assertEquals( y.bind(mapG),
+				  EqStatePolyTree.join(y).map(G));
+
+	}
+
+	//redundant, given bind = join(map) and join(unit) = id
+	@Test
+	public final void unitBindFShouldEqualF() {
+		assertEquals(EqStatePolyTree.unit(ix).bind(EqStatePolyTree::unit), EqStatePolyTree.unit(ix));
+		assertEquals(EqStatePolyTree.unit(ix).bind(G), G.f(ix));
+		assertEquals(EqStatePolyTree.unit(ix).bind(K), K.f(ix));
+		assertEquals(EqStatePolyTree.unit(treex).bind(EqStatePolyTree::unit), EqStatePolyTree.unit(treex));
+		assertEquals(EqStatePolyTree.unit(treex).bind(H), H.f(treex));
+		assertEquals(EqStatePolyTree.unit(treey).bind(EqStatePolyTree::unit), EqStatePolyTree.unit(treey));
+		assertEquals(EqStatePolyTree.unit(treey).bind(H), H.f(treey));
+		assertEquals(EqStatePolyTree.unit(x).bind(EqStatePolyTree::unit), EqStatePolyTree.unit(x));
+	}
+
+	// Definition: x.bind(G) = join(x.map(G))
+	@Test
+	public final void bindShouldEqualJoinMap() {
+		assertEquals(treex.bind(G), EqStatePolyTree.join(treex.map(G)));
+		assertEquals(treex.bind(K), EqStatePolyTree.join(treex.map(K)));
+		assertEquals(treex.bind(EqStatePolyTree::unit), EqStatePolyTree.join(treex.map(EqStatePolyTree::unit)));
+		assertEquals(treey.bind(G), EqStatePolyTree.join(treey.map(G)));
+	}
+
+	@Parameterized.Parameters
+	public static Collection<Object[]> instancesToTest() {
+		return Arrays.asList(new Object[][] {
+				{ AllEqStateTests.int0, AllEqStateTests.contentsy0, AllEqStateTests.listy0,
+					AllEqStateTests.treex0, AllEqStateTests.treey0,
+					AllEqStateTests.G0, AllEqStateTests.H0 },
+					
+					{ AllEqStateTests.int1, AllEqStateTests.contentsy1, AllEqStateTests.listy1,
+						AllEqStateTests.treex1, AllEqStateTests.treey1,
+						AllEqStateTests.G1, AllEqStateTests.H1 },
+						
+						{ AllEqStateTests.int2, AllEqStateTests.contentsy2, AllEqStateTests.listy2,
+							AllEqStateTests.treex2, AllEqStateTests.treey2,
+							AllEqStateTests.G2, AllEqStateTests.H2 },
+							
+					{ AllEqStateTests.int0, AllEqStateTests.contentsy5, AllEqStateTests.listy5,
+						AllEqStateTests.treex0, AllEqStateTests.treey5,
+						AllEqStateTests.G0, AllEqStateTests.H0
+						},
+						
+					{ AllEqStateTests.int0, AllEqStateTests.contentsy6, AllEqStateTests.listy6,
+						AllEqStateTests.treex0, AllEqStateTests.treey6,
+						AllEqStateTests.G0, AllEqStateTests.H0
+						}
+					});
+	}
+
+}

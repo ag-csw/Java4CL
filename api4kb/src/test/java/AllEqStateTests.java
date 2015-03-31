@@ -4,20 +4,36 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import fj.F;
 import fj.data.List;
+import fj.data.State;
 import functional.EqEither;
+import functional.EqState;
 import functional.ListPolyTree;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ListPolyTreeTest.class //
+@SuiteClasses({ EqStateTest.class //
 })
-public class AllListTests {
+public class AllEqStateTests {
+	
+	// EqState alone
+	public static Integer int0 = 0;
+	public static List<Integer> stack0 = List.nil();
+	public static State<List<Integer>,Integer> statey0 = State.constant(2);
+	public static EqState<List<Integer>,Integer> eqstatex0 = EqState.unit(int0);
+	public static EqState<List<Integer>,Integer> eqstatey0 =EqState.eqState(statey0);
+	public static F<Integer, String> f0 = s -> s.toString();
+	public static F<Integer, EqState<List<Integer>,Integer>> g0 =
+			s -> EqState.unit(s);
+	public static F<EqState<List<Integer>,Integer>, 
+	EqState<List<Integer>,EqState<List<Integer>,Integer>>> h0 =
+	        s -> EqState.unit(s);
+	
+	
 
 	// /PolyTrees
 
 	public static List<EqEither<Integer, ListPolyTree<Integer>>> listEmpty = List
 			.nil();
 
-	public static Integer int0 = 0;
 	public static EqEither<Integer, ListPolyTree<Integer>> either0 = EqEither
 			.unitLeft(int0);
 	public static List<EqEither<Integer, ListPolyTree<Integer>>> listx0 = List

@@ -55,11 +55,57 @@ public class EqEither<A, B> {
 		return value.right().value();
 	}
 	
-	public <C> C bimap(Function<A, C> h, Function<B, C> f){
-		if (isLeft()) return h.apply(left());
-		return f.apply(right());
+	public static <B, C> EqEither<B, C> joinRight( EqEither<B, EqEither<B, C>> x){
+		if (x.isLeft()) return unitLeft(x.left());
+		return x.right();
 	}
+
+	public static <B, C> EqEither<B, C> joinLeft( EqEither<EqEither<B, C>, C> x){
+		if (x.isLeft()) return x.left();
+		return unitRight(x.right());
+	}
+	
+	
+	public <C> C bimapOne(F<A, C> h, F<B, C> f){
+		if (isLeft()) return h.f(left());
+		return f.f(right());
+	}
+	
+	// static version of bimapOne
+	public static <B, C, D> D bimapOne(F<B, D> h, F<C, D> f, EqEither<B, C> x){
+		return x.bimapOne(h, f);
 		
+	}
+	
+	// first class version of bimapOne
+	public static <B, C, D> F<EqEither<B, C>, D> bimapOne_(F<B, D> h, F<C, D> f){
+		return s -> s.bimapOne(h, f);
+	}
+
+	public static <C> F<EqEither<C,C>,C> forgetEither(){
+		F<C, C> idC = s -> s;
+		return bimapOne_(idC, idC);
+	}
+	
+	public <C, D> EqEither<C, D> bimapF(F<A, C> h, F<B, D> f){
+		if (isLeft()) return unitLeft(h.f(left()));
+		return unitRight(f.f(right()));
+	}
+
+	public <C, D> EqEither<C, D> bimapLeft(F<A, C> h, F<B, C> f){
+		 return unitLeft(bimapOne(h, f));
+		//if (isLeft()) return unitLeft(h.f(left()));
+		//return unitLeft(f.f(right()));
+	}
+
+	public <C> EqEither<C, B> mapLeft(F<A, C> h){
+		return bimapF(h, s -> s);
+	}
+
+	public <C> EqEither<A, C> mapRight(F<B, C> f){
+		return bimapF(s -> s, f);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

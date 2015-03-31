@@ -127,7 +127,7 @@ public class AllEqSetTests {
 	                                      .insertLeaf(s).
 	                                          insertBranch(EqSetPolyTree.unit(treex4));
 
-	                  static Integer n = (int)Math.pow(2, 9);
+	                  static Integer n = (int)Math.pow(2, 7);
 	            	public static EqSet<Integer> contentsy5 = EqSet.eqSet(Set.iterableSet(Ord.intOrd, Array.range(0, n)));
 	            	public static EqSet<EqEither<Integer, EqSetPolyTree<Integer>>> sety5 = contentsy5.map(s -> EqEither.unitLeft(s));
 	            	public static EqSetPolyTree<Integer> treey5 = EqSetPolyTree.tree(sety5);

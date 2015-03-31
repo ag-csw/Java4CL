@@ -17,5 +17,10 @@
   		<artifactId>functionaljava-java8</artifactId>
   		<version>4.2</version>
   	</dependency>
+  	<dependency>
+	  <groupId>org.scalacheck</groupId>
+	  <artifactId>scalacheck_2.11</artifactId>
+	  <version>1.12.2</version>
+    </dependency>
   </dependencies>
 </project>

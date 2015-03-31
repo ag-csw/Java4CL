@@ -21,6 +21,7 @@ public class ListPolyTree<A> implements Iterable<A> {
 		return new ListPolyTree<B>(components);
 	}
 	
+	//unit
 	public static <B> ListPolyTree<B> 
 	unit(B x){
 		return new 
@@ -34,6 +35,7 @@ public class ListPolyTree<A> implements Iterable<A> {
 		return b -> unit(b);
 	}
 
+	//empty
 	public static <B> ListPolyTree<B> 
 	empty(){
 		return new 
@@ -46,11 +48,26 @@ public class ListPolyTree<A> implements Iterable<A> {
 		return tree(s.map(t -> EqEither.unitLeft(t)));
 	}
 
+	// get components
+     public List<EqEither<A, ListPolyTree<A>>> components(){
+		return components;
+	}
+	public static <B> List<EqEither<B, ListPolyTree<B>>> components(ListPolyTree<B> tree){
+		return tree.components();
+	}
+	
+	public static <B>  F<ListPolyTree<B>,  List<EqEither<B, ListPolyTree<B>>> > components_(){
+		return s -> s.components();
+	}
+	
+
+	//insert leaf
 	public ListPolyTree<A>
 	insertLeaf(A a) {
 			return tree(List.cons(EqEither.unitLeft(a), components));
 	}
 
+	//insert branch
 	public ListPolyTree<A>
 	insertBranch(ListPolyTree<A> t) {
 			return tree(List.cons(EqEither.unitRight(t), components));
@@ -68,9 +85,13 @@ public class ListPolyTree<A> implements Iterable<A> {
 		
 	public static <B> ListPolyTree<B> 
 	join(ListPolyTree<ListPolyTree<B>> y){
-		return new 
-		   ListPolyTree<B>(
-				   y.components.bind(s -> extract(s))); 
+		//return new 
+		 //  ListPolyTree<B>(
+		//		   y.components.bind(s -> extract(s))); 
+		F<ListPolyTree<ListPolyTree<B>>, List<EqEither<B, ListPolyTree<B>>>> H = s -> List.cons(EqEither.unitRight(join(s)), List.nil()); 
+		F<EqEither<ListPolyTree<B>, ListPolyTree<ListPolyTree<B>>>, List<EqEither<B, ListPolyTree<B>>> > G;
+		G = EqEither.bimapOne_(components_(), H);
+		return tree(y.components.bind(G));
 	}
 
 	public static <B> F<ListPolyTree<ListPolyTree<B>>, ListPolyTree<B>> join_() {

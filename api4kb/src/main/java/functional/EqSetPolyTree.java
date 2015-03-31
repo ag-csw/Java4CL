@@ -4,7 +4,9 @@ import static fj.Function.curry;
 
 import java.util.Iterator;
 import java.util.function.BiFunction;
+
 import fj.F;
+import fj.Function;
 
 public class EqSetPolyTree<A> implements Iterable<A> {
 
@@ -20,8 +22,10 @@ public class EqSetPolyTree<A> implements Iterable<A> {
 		return new EqSetPolyTree<B>(components);
 	}
 
+	// unit
 	public static <B> EqSetPolyTree<B> unit(B x) {
 		return new EqSetPolyTree<B>(EqSet.unit(EqEither.unitLeft(x)));
+		
 	}
 
 	// first-class version of unit
@@ -29,6 +33,7 @@ public class EqSetPolyTree<A> implements Iterable<A> {
 		return b -> unit(b);
 	}
 
+	//empty
 	public static <B> EqSetPolyTree<B> empty() {
 		return new EqSetPolyTree<B>(EqSet.empty());
 	}
@@ -37,16 +42,41 @@ public class EqSetPolyTree<A> implements Iterable<A> {
 		return EqSetPolyTree.tree(s.map(t -> EqEither.unitLeft(t)));
 	}
 
+	// get components
+	public EqSet<EqEither<A, EqSetPolyTree<A>>> components(){
+		return components;
+	}
+	
+	public static <B> EqSet<EqEither<B, EqSetPolyTree<B>>> components(EqSetPolyTree<B> tree){
+		return tree.components();
+	}
+	
+	public static <B>  F<EqSetPolyTree<B>,  EqSet<EqEither<B, EqSetPolyTree<B>>> > components_(){
+		return s -> s.components();
+	}
+	
+	//insert leaf
 	public EqSetPolyTree<A> insertLeaf(A a) {
 		return EqSetPolyTree.tree(components.insert(EqEither.unitLeft(a)));
 	}
 
+	//insert branch
 	public EqSetPolyTree<A> insertBranch(EqSetPolyTree<A> t) {
 		return EqSetPolyTree.tree(components.insert(EqEither.unitRight(t)));
 	}
 
+	// join(y) = (N) ((M) y) bind_M (
+	//        bimapOne( (M), unit_M( unitR( join ) ) ) 
+    //    ) )
+	// join_N = (join_M o map_M)( bimapOne( id) (unit_M o unit_R o join_N) ) 
 	public static <B> EqSetPolyTree<B> join(EqSetPolyTree<EqSetPolyTree<B>> y) {
-		return tree(y.components.bind(x -> x.bimap(s -> s.components,
+		//F<EqEither<EqSetPolyTree<B>, EqSetPolyTree<EqSetPolyTree<B>>>, EqSet<EqEither<B, EqSetPolyTree<B>>> > G;
+		//G = EqEither.bimapOne_(components_(),
+		//		s -> EqSet.unit(EqEither.unitRight(join(s))));
+		//EqSet<EqEither<EqSetPolyTree<B>, EqSetPolyTree<EqSetPolyTree<B>>>> ycomp = y.components;
+		//EqSet<EqEither<B, EqSetPolyTree<B>>> yG = ycomp.bind(G);
+		//EqSetPolyTree<B> t = tree(yG);
+		return tree(y.components.bind(EqEither.bimapOne_(components_(),
 				s -> EqSet.unit(EqEither.unitRight(join(s))))));
 	}
 
@@ -66,16 +96,21 @@ public class EqSetPolyTree<A> implements Iterable<A> {
 	}
 
 	// extract value from a node of the tree and map
-	private static <B, C> EqEither<C, EqSetPolyTree<C>> extractmap(
-			EqEither<B, EqSetPolyTree<B>> x, F<B, C> G) {
-		if (x.isLeft()) {
-			return EqEither.unitLeft(G.f(x.left()));
-		}
-		return EqEither.unitRight(x.right().map(G));
-	}
+	//private static <B, C> EqEither<C, EqSetPolyTree<C>> extractmap(
+	//		EqEither<B, EqSetPolyTree<B>> x, F<B, C> G) {
+		//if (x.isLeft()) {
+		//	return EqEither.unitLeft(G.f(x.left()));
+		//}
+		//return EqEither.unitRight(x.right().map(G));
+	//	F<F<B, C>, F<EqSetPolyTree<B>, EqSetPolyTree<C>>> H = EqSetPolyTree.map_(); 
+	//	return  x.bimapF(G, H.f(G));
+	//}
 
+	// map_N(f) = map_M( bimap(f, map_N(f)) )
 	public <B> EqSetPolyTree<B> map(F<A, B> G) {
-		return tree(components.map(s -> extractmap(s, G)));
+		//return tree(components.map(s -> extractmap(s, G)));
+		F<F<A, B>, F<EqSetPolyTree<A>, EqSetPolyTree<B>>> H = EqSetPolyTree.map_(); 
+		return tree(components.map(s -> s.bimapF(G, H.f(G))));
 	}
 
 	public static <B, C> EqSetPolyTree<C> map(F<B, C> g, EqSetPolyTree<B> treex) {
@@ -84,6 +119,10 @@ public class EqSetPolyTree<A> implements Iterable<A> {
 
 	public static <B, C> F<F<B, C>, F<EqSetPolyTree<B>, EqSetPolyTree<C>>> map_() {
 		return curry((f, as) -> as.map(f));
+	}
+	
+	public <B> EqSetPolyTree<B> shallowMap(F<EqEither<A, EqSetPolyTree<A>>, EqEither<B, EqSetPolyTree<B>>> f){
+		return EqSetPolyTree.tree(components.map(f));
 	}
 
 	public <B> EqSetPolyTree<B> bind(F<A, EqSetPolyTree<B>> H) {
@@ -126,21 +165,29 @@ public class EqSetPolyTree<A> implements Iterable<A> {
 		return flatten().components.size();
 	}
 
+	// unitLeft \co \forgetOr \co \mapLeft( unit_{N}{})
 	public static <B> EqEither<EqSetPolyTree<B>, EqSetPolyTree<EqSetPolyTree<B>>> level(
 			final EqEither<B, EqSetPolyTree<B>> x) {
-		if (x.isLeft())
-			return EqEither.unitLeft((unit(x.left())));
-		return EqEither.unitLeft(x.right());
+		//if (x.isLeft())
+		//	return EqEither.unitLeft((unit(x.left())));
+		//return EqEither.unitLeft(x.right());
+		//F<EqSetPolyTree<B>,EqSetPolyTree<B>> id = s -> s;
+		//return x.bimapLeft(EqSetPolyTree.unit_(), id);
+		EqEither<EqSetPolyTree<B>, EqSetPolyTree<B>> y = x.mapLeft(unit_());
+		F<EqEither<EqSetPolyTree<B>, EqSetPolyTree<B>>, EqSetPolyTree<B>> delta = EqEither.forgetEither();
+		EqSetPolyTree<B> z = delta.f(y);
+		return EqEither.unitLeft(z);
 	}
 
 	public boolean isFlat() {
 		return EqEither.isAllLeft(components);
 	}
 
+	// flatten \co join \co \map_{M}( \level)
 	public static <B> EqSetPolyTree<B> flatten(EqSetPolyTree<B> x) {
 		if (x.isFlat())
 			return x;
-		return flatten(join(EqSetPolyTree.tree(x.components.map(s -> level(s)))));
+		return flatten(join(x.shallowMap(s -> level(s))));
 	}
 
 	public EqSetPolyTree<A> flatten() {
