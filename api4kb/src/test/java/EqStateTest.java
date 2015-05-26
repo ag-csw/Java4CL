@@ -177,7 +177,7 @@ public class EqStateTest {
 		assertEqualsEqState(xG, G.f(intx), stack);
 		assertEqualsEqState(x.bind(H), H.f(eqstatex), stack);
 		assertEqualsEqState(sty.bind(H), H.f(eqstatey), stack);
-		assertEqualsEqState(EqState.unit(x).bind(EqState::unit), EqState.unit(x), stack);
+		assertEqualsEqState(EqState.unit(x).bind(y -> EqState.unit(y)), EqState.unit(x), stack);
 	}
 
 	// Definition: x.bind(G) = join(x.map(G))
@@ -199,7 +199,7 @@ public class EqStateTest {
 		assertEqualsEqStateEqState(eqstatey.bind(K), EqState.bind(K, eqstatey), stack, stack);
 		//assertEqualsEqState(eqstatey.bind(EqState::unit), EqState.bind(EqState::unit, eqstatey), stack);
 		assertEqualsEqState(x.bind(H), EqState.bind(H, x), stack);
-		assertEqualsEqState(x.bind(EqState::unit), EqState.bind(EqState::unit, x), stack);
+		assertEqualsEqState(x.bind(EqState::unit), EqState.bind(y -> EqState.unit(y), x), stack);
 	}
 
 	@Test
@@ -212,17 +212,17 @@ public class EqStateTest {
 
 	@Test
 	public final void bindUnitShouldEqualIdentity() {
-		assertEqualsEqState(eqstatex.bind(EqState::unit), eqstatex, stack);
-		assertEqualsEqState(eqstatey.bind(EqState::unit), eqstatey, stack);
-		assertEqualsEqState(x.bind(EqState::unit), x, stack);		
+		assertEqualsEqState(eqstatex.bind(y -> EqState.unit(y)), eqstatex, stack);
+		assertEqualsEqState(eqstatey.bind(y -> EqState.unit(y)), eqstatey, stack);
+		assertEqualsEqState(x.bind(y -> EqState.unit(y)), x, stack);		
 	}
 	
 	@Test
 	public final void bindUnitFShouldEqualMapF() {
-		assertEqualsEqState(eqstatex.bind(EqState::unit), eqstatex, stack);
+		assertEqualsEqState(eqstatex.bind(y -> EqState.unit(y)), eqstatex, stack);
 		assertEqualsEqState(eqstatex.bind(s -> EqState.unit(D.f(s))), eqstatex.map(D), stack);
 		assertEqualsEqState(eqstatex.bind(s -> EqState.unit(F.f(s))), eqstatex.map(F), stack);
-		assertEqualsEqState(eqstatey.bind(EqState::unit), eqstatey, stack);
+		assertEqualsEqState(eqstatey.bind(y -> EqState.unit(y)), eqstatey, stack);
 		assertEqualsEqState(eqstatey.bind(s -> EqState.unit(D.f(s))), eqstatey.map(D), stack);
 		assertEqualsEqState(eqstatey.bind(s -> EqState.unit(F.f(s))), eqstatey.map(F), stack);
 	}
