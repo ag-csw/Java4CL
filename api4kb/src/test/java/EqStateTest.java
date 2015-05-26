@@ -199,7 +199,7 @@ public class EqStateTest {
 		assertEqualsEqStateEqState(eqstatey.bind(K), EqState.bind(K, eqstatey), stack, stack);
 		//assertEqualsEqState(eqstatey.bind(EqState::unit), EqState.bind(EqState::unit, eqstatey), stack);
 		assertEqualsEqState(x.bind(H), EqState.bind(H, x), stack);
-		assertEqualsEqState(x.bind(EqState::unit), EqState.bind(y -> EqState.unit(y), x), stack);
+		assertEqualsEqState(x.bind(y -> EqState.unit(y)), EqState.bind(y -> EqState.unit(y), x), stack);
 	}
 
 	@Test
