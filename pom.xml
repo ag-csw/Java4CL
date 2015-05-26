@@ -4,44 +4,60 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Java4CL</name>
   <description>An API4KB compliant API for CL2 texts.</description>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<scala.version>2.11.6</scala.version>
+		<scala.binary.version>2.11</scala.binary.version>
+		<scala.version.tools>2.11</scala.version.tools>
+  </properties>
+  
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
         </configuration>
       </plugin>
+      <plugin>
+		<groupId>net.alchim31.maven</groupId>
+		<artifactId>scala-maven-plugin</artifactId>
+		<version>3.2.0</version>
+		<!--configuration>
+		  <recompileMode>incremental</recompileMode>
+		</configuration-->
+		<executions>
+          <execution>
+            <id>compile</id>
+			<!-- this is so we don't end with a compile error in maven-compiler-plugin -->					
+			<phase>process-sources</phase> 					
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+			<configuration>
+				<scalaVersion>${scala.version}</scalaVersion>
+				<scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
+				<excludes>
+					<exclude>CheckEqSet.scala</exclude>
+				</excludes>
+            </configuration>
+          </execution>
+        </executions>
+	  </plugin>
       <!-- disable surefire -->
-	  <plugin>
+	  <!--plugin>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-surefire-plugin</artifactId>
 		<version>2.7</version>
 		<configuration>
 			<skipTests>true</skipTests>
 		</configuration>
-	  </plugin>
-	  <!-- enable scalatest -->
-	  <plugin>
-		<groupId>org.scalatest</groupId>
-		<artifactId>scalatest-maven-plugin</artifactId>
-		<version>1.0</version>
-		<configuration>
-			<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-			<junitxml>.</junitxml>
-			<filereports>WDF TestSuite.txt</filereports>
-		</configuration>
-		<executions>
-			<execution>
-				<id>test</id>
-				<goals>
-					<goal>test</goal>
-				</goals>
-			</execution>
-		</executions>
-	  </plugin>
+	  </plugin-->
     </plugins>
   </build>
   <scm>
@@ -57,6 +73,11 @@
   	<name>Freie Universitaet Berlin, Athan Services</name>
   </organization>
   <dependencies>
+	<dependency>
+		<groupId>org.scala-lang</groupId>
+		<artifactId>scala-library</artifactId>
+		<version>${scala.version}</version>
+	</dependency>
   	<dependency>
   		<groupId>org.slf4j</groupId>
   		<artifactId>slf4j-api</artifactId>
@@ -74,7 +95,7 @@
   	</dependency>
   	<dependency>
       <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_2.11</artifactId>
+      <artifactId>scalatest_${scala.version.tools}</artifactId>
       <version>2.2.4</version>
       <scope>test</scope>
     </dependency>
