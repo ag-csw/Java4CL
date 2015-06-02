@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import api4kbc.EqSetKnowledgeExpression;
 import fj.F;
 import fj.Function;
 import fj.Ord;
@@ -25,12 +24,12 @@ public class EqSetTest {
 	// AllEqSetTests.H1 },
 
 	public EqSetTest(
-			EqSetKnowledgeExpression kex,
-			Set<EqSetKnowledgeExpression> sety,
-			EqSet<EqSetKnowledgeExpression> eqsetx,
-			EqSet<EqSetKnowledgeExpression> eqsety,
-			F<EqSetKnowledgeExpression, EqSet<EqSetKnowledgeExpression>> g,
-			F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> h) {
+			EqSet<Integer> kex,
+			Set<EqSet<Integer>> sety,
+			EqSet<EqSet<Integer>> eqsetx,
+			EqSet<EqSet<Integer>> eqsety,
+			F<EqSet<Integer>, EqSet<EqSet<Integer>>> g,
+			F<EqSet<EqSet<Integer>>, EqSet<EqSet<EqSet<Integer>>>> h) {
 		super();
 		this.kex = kex;
 		this.sety = sety;
@@ -50,22 +49,22 @@ public class EqSetTest {
 	}
 
 	//public EqSetKnowledgeExpression ken;
-	public EqSetKnowledgeExpression kex;
-	public Set<EqSetKnowledgeExpression> sety;
-	public EqSet<EqSetKnowledgeExpression> eqsetx;
-	public EqSet<EqSetKnowledgeExpression> eqsety;
+	public EqSet<Integer> kex;
+	public Set<EqSet<Integer>> sety;
+	public EqSet<EqSet<Integer>> eqsetx;
+	public EqSet<EqSet<Integer>> eqsety;
 
-	public F<EqSetKnowledgeExpression, EqSet<EqSetKnowledgeExpression>> G;
-	public F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> H;
+	public F<EqSet<Integer>, EqSet<EqSet<Integer>>> G;
+	public F<EqSet<EqSet<Integer>>, EqSet<EqSet<EqSet<Integer>>>> H;
 	
-	public Set<EqSetKnowledgeExpression> setz;
+	public Set<EqSet<Integer>> setz;
 	//public Set<EqSetKnowledgeExpression> setn;
-	public EqSet<EqSetKnowledgeExpression> eqsetz;
+	public EqSet<EqSet<Integer>> eqsetz;
 	//public EqSet<EqSetKnowledgeExpression> eqsetn;
-    public F<EqSetKnowledgeExpression, EqSet<EqSet<EqSetKnowledgeExpression>>> K;
-	public EqSet<EqSet<EqSetKnowledgeExpression>> x;
+    public F<EqSet<Integer>, EqSet<EqSet<EqSet<Integer>>>> K;
+	public EqSet<EqSet<EqSet<Integer>>> x;
 	//public EqSet<EqSet<EqSetKnowledgeExpression>> n;
-	public Ord<EqSetKnowledgeExpression> ordb = Ord.hashEqualsOrd();
+	public Ord<EqSet<Integer>> ordb = Ord.hashEqualsOrd();
 
 	@Test
 	public final void eqsetShouldBeEqualToOtherEqSetBuiltFromStaticVarargsMethod() {
@@ -134,7 +133,7 @@ public class EqSetTest {
 
 	@Test
 	public final void firstClassJoinShouldEqualStaticJoin() {
-		F<EqSet<EqSet<EqSetKnowledgeExpression>>, EqSet<EqSetKnowledgeExpression>> joinf = EqSet
+		F<EqSet<EqSet<EqSet<Integer>>>, EqSet<EqSet<Integer>>> joinf = EqSet
 				.join_();
 		assertEquals(joinf.f(x), EqSet.join(x));
 	}
@@ -162,8 +161,8 @@ public class EqSetTest {
 
 	@Test
 	public final void xMapFShouldEqualFirstClassMapFX() {
-		F<F<EqSetKnowledgeExpression,EqSet<EqSetKnowledgeExpression>>, F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>>> map1 = EqSet.map_();
-		F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSet<EqSetKnowledgeExpression>>> mapG = map1.f(G);
+		F<F<EqSet<Integer>,EqSet<EqSet<Integer>>>, F<EqSet<EqSet<Integer>>, EqSet<EqSet<EqSet<Integer>>>>> map1 = EqSet.map_();
+		F<EqSet<EqSet<Integer>>, EqSet<EqSet<EqSet<Integer>>>> mapG = map1.f(G);
 		assertEquals(eqsetx.map(G), mapG.f(eqsetx));
 		assertEquals(eqsety.map(G), mapG.f(eqsety));
 		assertEquals(eqsetz.map(G), mapG.f(eqsetz));
@@ -220,8 +219,8 @@ public class EqSetTest {
 
 	@Test
 	public final void xBindFShouldEqualFirstClassBindFX() {
-		F<F<EqSetKnowledgeExpression,EqSet<EqSetKnowledgeExpression>>, F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSetKnowledgeExpression>>> bind1 = EqSet.bind_();
-		F<EqSet<EqSetKnowledgeExpression>, EqSet<EqSetKnowledgeExpression>> bindG = bind1.f(G);
+		F<F<EqSet<Integer>,EqSet<EqSet<Integer>>>, F<EqSet<EqSet<Integer>>, EqSet<EqSet<Integer>>>> bind1 = EqSet.bind_();
+		F<EqSet<EqSet<Integer>>, EqSet<EqSet<Integer>>> bindG = bind1.f(G);
 		assertEquals(eqsetx.bind(G), bindG.f(eqsetx));
 		assertEquals(eqsety.bind(G), bindG.f(eqsety));
 		assertEquals(eqsetz.bind(G), bindG.f(eqsetz));
@@ -249,18 +248,9 @@ public class EqSetTest {
 	@Parameterized.Parameters
 	public static Collection<Object[]> instancesToTest() {
 		return Arrays.asList(new Object[][] {
-				{ AllEqSetTests.expression0, AllEqSetTests.fjexpressions0,
-					AllEqSetTests.singleton0, AllEqSetTests.expressions0,
-					AllEqSetTests.G0, AllEqSetTests.H0 },
-				{ AllEqSetTests.expression1, AllEqSetTests.fjexpressions1,
-						AllEqSetTests.singleton1, AllEqSetTests.expressions1,
-						AllEqSetTests.G1, AllEqSetTests.H1 },
-						{ AllEqSetTests.stexpr2, AllEqSetTests.fjexpressions2,
-							AllEqSetTests.singleton2, AllEqSetTests.expressions2,
-							AllEqSetTests.G2, AllEqSetTests.H2 }, 
-						{ AllEqSetTests.stexpr2, AllEqSetTests.fjexpressions2,
-							AllEqSetTests.singleton2, AllEqSetTests.expressions2,
-							AllEqSetTests.G3, AllEqSetTests.H3 } 
+				{ AllEqSetTests.kex0, AllEqSetTests.fjsety0,
+					AllEqSetTests.eqsetx0, AllEqSetTests.eqsety0,
+					AllEqSetTests.G0, AllEqSetTests.H0 }
 					});
 	}
 

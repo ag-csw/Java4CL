@@ -16,5 +16,9 @@ public abstract class AbstractBasicKnowledgeExpression implements
 	public KRRLanguage language() {
 		return language;
 	}
+	
+	public static KRRLanguage language_(AbstractBasicKnowledgeExpression ke){
+		return ke.language();
+	}
 
 }

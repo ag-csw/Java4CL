@@ -51,6 +51,10 @@ public class EqEither<A, B> {
 		return value.left().value();
 	}
 
+	//public static <B,C> B left_(EqEither<B,C> x){
+	//	return x.left();
+	//}
+
 	public B right(){
 		return value.right().value();
 	}
