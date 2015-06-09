@@ -3,3 +3,4 @@ bin
 .classpath
 /target/
 .settings
+.cache
