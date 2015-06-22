@@ -1,6 +1,4 @@
 package cl2;
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeSourceLevel;
 
 /**
  * 

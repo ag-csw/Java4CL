@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import cl2.CL;
 import cl2.CLCommentExpression;
-import cl2.CLExpression;
 
 public class CLTest {
 

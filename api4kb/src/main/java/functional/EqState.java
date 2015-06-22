@@ -54,7 +54,7 @@ public class EqState<S, A> {
 	// static unit method
 	public static <T, B> EqState<T, B> unit(final B b){
 		F<T, P2<T, B>> f = s -> p(s, b);
-		EqState<T,B> result = new EqState(f);
+		EqState<T,B> result = new EqState<T,B>(f);
 		return result;
 	}
 	

@@ -1,60 +1,54 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>java4cl</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Java4CL</name>
-  <description>An API4KB compliant API for CL2 texts.</description>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>java4cl</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Java4CL</name>
+	<description>An API4KB compliant API for CL2 texts.</description>
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<scala.version>2.11.6</scala.version>
 		<scala.binary.version>2.11</scala.binary.version>
 		<scala.version.tools>2.11</scala.version.tools>
-  </properties>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-      <plugin>
-		<groupId>net.alchim31.maven</groupId>
-		<artifactId>scala-maven-plugin</artifactId>
-		<version>3.2.0</version>
-		<!--configuration>
-		  <recompileMode>incremental</recompileMode>
-		</configuration-->
-		<executions>
-          <execution>
-            <id>compile</id>
-			<!-- this is so we don't end with a compile error in maven-compiler-plugin -->					
-			<phase>process-sources</phase> 					
-            <goals>
-              <goal>compile</goal>
-              <goal>testCompile</goal>
-            </goals>
-			<configuration>
-				<scalaVersion>${scala.version}</scalaVersion>
-				<scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
-				<excludes>
-					<exclude>CheckEqSet.scala</exclude>
-				</excludes>
-            </configuration>
-          </execution>
-        </executions>
-	  </plugin>
-	  <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.7.5.201505241946</version>
-      </plugin>
-      <!-- disable surefire -->
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<!--configuration> <recompileMode>incremental</recompileMode> </configuration -->
+				<executions>
+					<execution>
+						<id>compile</id>
+						<!-- this is so we don't end with a compile error in maven-compiler-plugin -->
+						<phase>process-sources</phase>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<scalaVersion>${scala.version}</scalaVersion>
+							<scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
+							<excludes>
+								<exclude>CheckEqSet.scala</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- disable surefire -->
 	  <!--plugin>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-surefire-plugin</artifactId>
@@ -62,53 +56,53 @@
 		<configuration>
 			<skipTests>true</skipTests>
 		</configuration>
-	  </plugin-->
-    </plugins>
-  </build>
-  <scm>
-  	<url>https://github.com/ag-csw/Java4CL</url>
-  	<developerConnection>scm:git:git://github.com/ag-csw/Java4CL</developerConnection>
-  	<connection>scm:git:git://github.com/ag-csw/Java4CL</connection>
-  </scm>
-  <issueManagement>
-  	<url>https://github.com/ag-csw/Java4CL/issues</url>
-  	<system>GitHub</system>
-  </issueManagement>
-  <organization>
-  	<name>Freie Universitaet Berlin, Athan Services</name>
-  </organization>
-  <dependencies>
-	<dependency>
-		<groupId>org.scala-lang</groupId>
-		<artifactId>scala-library</artifactId>
-		<version>${scala.version}</version>
-	</dependency>
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-api</artifactId>
-  		<version>1.7.7</version>
-  	</dependency>  	
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-log4j12</artifactId>
-  		<version>1.7.7</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.12</version>
-  	</dependency>
-  	<dependency>
-      <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_${scala.version.tools}</artifactId>
-      <version>2.2.4</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <groupId>de.fuberlin.csw.cl</groupId>
-  <packaging>pom</packaging>
-  <modules>
-  	<module>api4kb</module>
-  	<module>cl2</module>
-  </modules>
+				</plugin -->
+		</plugins>
+	</build>
+	<scm>
+		<url>https://github.com/ag-csw/Java4CL</url>
+		<developerConnection>scm:git:git://github.com/ag-csw/Java4CL</developerConnection>
+		<connection>scm:git:git://github.com/ag-csw/Java4CL</connection>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/ag-csw/Java4CL/issues</url>
+		<system>GitHub</system>
+	</issueManagement>
+	<organization>
+		<name>Freie Universitaet Berlin, Athan Services</name>
+	</organization>
+	<dependencies>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.7</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_${scala.version.tools}</artifactId>
+			<version>2.2.4</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<groupId>de.fuberlin.csw.cl</groupId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>api4kb</module>
+		<module>cl2</module>
+	</modules>
 </project>

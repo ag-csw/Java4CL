@@ -1,9 +1,5 @@
 package functional;
 
-import static fj.Function.curry;
-
-import java.util.function.Function;
-
 import fj.F;
 import fj.data.Either;
 

@@ -2,7 +2,7 @@ package api4kbj;
 
 import functional.Some;
 
-public interface FocusedDialectTypeEnvironment extends FocusedEnvironment {
+public interface FocusedDialectTypeEnvironment<T> extends FocusedEnvironment<KRRDialectType<T>, T> {
 
 
 	/**
@@ -12,6 +12,6 @@ public interface FocusedDialectTypeEnvironment extends FocusedEnvironment {
 	 * @see #isFocused()
 	 */
 	@Override
-	Some<? extends KRRDialectType> focusMember();
+	Some<? extends KRRDialectType<T>> focusMember();
 
 }

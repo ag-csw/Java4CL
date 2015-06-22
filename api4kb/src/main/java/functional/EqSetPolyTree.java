@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.function.BiFunction;
 
 import fj.F;
-import fj.Function;
 
 public class EqSetPolyTree<A> implements Iterable<A> {
 

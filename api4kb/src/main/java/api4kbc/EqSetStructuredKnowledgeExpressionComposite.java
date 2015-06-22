@@ -52,6 +52,7 @@ public class EqSetStructuredKnowledgeExpressionComposite<E extends AbstractBasic
 		return components.size();
 	}
 
+	@Override
 	public EqSet<KRRLanguage> languages() {
 		return languages;
 	}

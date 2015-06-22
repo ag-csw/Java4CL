@@ -13,7 +13,6 @@ import fj.Function;
 import fj.Ord;
 import fj.data.List;
 import cl2.FJCLTextConstruction;
-import cl2.CLCommentExpression;
 
 @RunWith(Parameterized.class)
 public class FJCLTextConstructionTest {
