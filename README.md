@@ -3,6 +3,10 @@ Java4CL
 
 A Java library for ISO Common Logic ontologies.
 
+Coverage
+--------
+![codecov.io](http://codecov.io/github/greenTara/Java4CL/branch.svg?branch=java8)
+
 Build instructions
 ------------------
 
