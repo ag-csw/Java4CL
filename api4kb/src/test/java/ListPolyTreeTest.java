@@ -3,6 +3,7 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -13,6 +14,7 @@ import functional.EqEither;
 import fj.data.List;
 import functional.ListPolyTree;
 
+@Ignore 
 @RunWith(Parameterized.class)
 public class ListPolyTreeTest {
 
