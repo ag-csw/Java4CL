@@ -8,16 +8,14 @@ public class KnowledgeSourceLevelTest {
 
 	@Test
 	public void levelsShouldHaveSpecificOrdinals() {
-		assertEquals("The ordinal of ASSET is incorrect", 4,
+		assertEquals("The ordinal of ASSET should be 3", 3,
 				KnowledgeSourceLevel.ASSET.ordinal());
-		assertEquals("The ordinal of EXPRESSION is incorrect", 3,
+		assertEquals("The ordinal of EXPRESSION should be 2", 2,
 				KnowledgeSourceLevel.EXPRESSION.ordinal());
-		assertEquals("The ordinal of MANIFESTATION is incorrect", 2,
+		assertEquals("The ordinal of MANIFESTATION should be 1", 1,
 				KnowledgeSourceLevel.MANIFESTATION.ordinal());
-		assertEquals("The ordinal of ENCODING is incorrect", 1,
+		assertEquals("The ordinal of ENCODING should be 0", 0,
 				KnowledgeSourceLevel.ENCODING.ordinal());
-		assertEquals("The ordinal of IO is incorrect", 0,
-				KnowledgeSourceLevel.IO.ordinal());
 	}
 
 	@Test

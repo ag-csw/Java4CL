@@ -14,7 +14,6 @@ import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeAsset;
 import api4kbj.KnowledgeEncoding;
 import api4kbj.KnowledgeExpression;
-import api4kbj.KnowledgeIO;
 import api4kbj.KnowledgeManifestation;
 import api4kbj.KnowledgeResource;
 import api4kbj.MutableSource;
@@ -63,14 +62,6 @@ public final class API4KB {
 	public static Boolean lowers(KnowledgeResource krdown,
 			KnowledgeResource krup) {
 		return lifts(krup, krdown);
-	}
-
-	public static Boolean reproduces(KnowledgeIO i, KnowledgeEncoding e) {
-		return lowers(i, e);
-	}
-
-	public static Boolean prototypes(KnowledgeEncoding e, KnowledgeIO i) {
-		return lifts(e, i);
 	}
 
 	public static Boolean encodes(KnowledgeEncoding e, KnowledgeManifestation m) {

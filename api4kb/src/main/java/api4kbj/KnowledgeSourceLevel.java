@@ -1,19 +1,17 @@
 package api4kbj;
 
 public enum KnowledgeSourceLevel {
-	IO, ENCODING, MANIFESTATION, EXPRESSION, ASSET;
+	ENCODING, MANIFESTATION, EXPRESSION, ASSET;
 
 	private static KnowledgeSourceLevel byOrdinal(final int i) {
 		switch (i) {
 		case (0):
-			return IO;
-		case (1):
 			return ENCODING;
-		case (2):
+		case (1):
 			return MANIFESTATION;
-		case (3):
+		case (2):
 			return EXPRESSION;
-		case (4):
+		case (3):
 			return ASSET;
 		default:
 			throw new IllegalArgumentException(
@@ -35,6 +33,6 @@ public enum KnowledgeSourceLevel {
 	}
 
 	public boolean hasPred() {
-		return !equals(IO);
+		return !equals(ENCODING);
 	}
 }
