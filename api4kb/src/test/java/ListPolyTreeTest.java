@@ -14,8 +14,8 @@ import functional.EqEither;
 import fj.data.List;
 import functional.ListPolyTree;
 
-@Ignore 
 @RunWith(Parameterized.class)
+@Ignore
 public class ListPolyTreeTest {
 
 	public ListPolyTreeTest(

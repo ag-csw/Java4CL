@@ -38,7 +38,7 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 	}
 
 	public default boolean conceptualizes(final KnowledgeExpression e) {
-		if (e.equals(canonicalExpression())) {
+		if (canonicalExpression().equals(e)) {
 			return true;
 		}
 		// TODO implement test based on equivalence relation that defines the

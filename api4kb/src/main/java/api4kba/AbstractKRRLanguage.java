@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeExpressionLike;
 
 public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
-	public AbstractKRRLanguage(final String name, final Class<? extends KnowledgeExpression> clazz, final AbstractKRRLogic logic ) {
+	public AbstractKRRLanguage(final String name, final Class<? extends KnowledgeExpressionLike> clazz, final AbstractKRRLogic logic ) {
 		this.name = name;
 		this.clazz = clazz;
 		this.logic = logic;
@@ -18,12 +18,12 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 
 	private final String name;
 
-	private final Class<? extends KnowledgeExpression> clazz;
+	private final Class<? extends KnowledgeExpressionLike> clazz;
 
 	private final AbstractKRRLogic logic;
 
 	
-	public static AbstractKRRLanguage language(final String name, final Class<? extends KnowledgeExpression> clazz, final AbstractKRRLogic logic) {
+	public static AbstractKRRLanguage language(final String name, final Class<? extends KnowledgeExpressionLike> clazz, final AbstractKRRLogic logic) {
 		return new AbstractKRRLanguage(name, clazz, logic){};
 	}
 
@@ -33,7 +33,7 @@ public abstract class AbstractKRRLanguage implements KRRLanguage {
 	}
 
 	@Override
-	public Class<? extends KnowledgeExpression> asClass() {
+	public Class<? extends KnowledgeExpressionLike> asClass() {
 		return clazz;
 	}
 

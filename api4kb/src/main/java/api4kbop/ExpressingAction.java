@@ -26,7 +26,7 @@ public interface ExpressingAction<T extends KnowledgeAsset> extends
 					+ t + " is not capable of mapping to the language" + lang()
 					+ " of this expressing action.");
 		}
-		KnowledgeExpression result = env.apply(t.canonicalExpression(), lang());
+		KnowledgeExpression result = (KnowledgeExpression) env.apply(t.canonicalExpression(), lang());
 		return result;
 	}
 

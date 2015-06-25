@@ -39,7 +39,7 @@ public final class CL {
 	public static AbstractKRRLogic COMPLETE_CL_LOGIC = AbstractKRRLogic.logic("Common Logic 2");
 	// call static factory method of AbstractKRRLanguage
 	public static AbstractKRRLanguage LANG = AbstractKRRLanguage.language(
-			"Common Logic 2", CLExpression.class, COMPLETE_CL_LOGIC);
+			"Common Logic 2", CLExpressionLike.class, COMPLETE_CL_LOGIC);
 
 	public static HashFocusedKRRLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new HashFocusedKRRLanguageEnvironment(
 			CL.LANG);
@@ -129,5 +129,15 @@ public final class CL {
 		return null;
 
 	}
+	
+	public static CLCommentExpression[] concatComments(CLCommentExpression[] a, CLCommentExpression[] b) {
+		int aLen = a.length;
+		int bLen = b.length;
+		CLCommentExpression[] c= new CLCommentExpression[aLen+bLen];
+		System.arraycopy(a, 0, c, 0, aLen);
+		System.arraycopy(b, 0, c, aLen, bLen);
+		return c;
+	}
+
 
 }

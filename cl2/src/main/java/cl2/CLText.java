@@ -7,6 +7,7 @@ package cl2;
  * @author ralph
  *
  */
-public abstract class CLText extends CLExpression {
+public abstract class CLText extends CLExpression  {
+	
 
 }

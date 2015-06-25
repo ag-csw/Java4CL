@@ -16,32 +16,65 @@ import static fj.Function.curry;
  * @author tara
  *
  */
-public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
-		extends CLSentenceOrStatementOrText {
+public class FJCLTextConstruction<A extends CLExpression>
+		extends CLText {
 
-	private FJCLTextConstruction(final List<CLCommentExpression> commentsList,
-			final List<A> argsList) {
-		this.commentsList = commentsList;
-		this.argsList = argsList;
+	@Override
+	public boolean isBasic() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	final private List<CLCommentExpression> commentsList;
+	@Override
+	public KnowledgeSourceLevel level() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean usesLanguage(KRRLanguage language) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Iterable<CLCommentExpression> comments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CLExpression insertComments(CLCommentExpression... comments) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+/*
+	
+	private FJCLTextConstruction(
+			final List<A> argsList,
+			 CLCommentExpression... comments
+			) {
+		this.argsList = argsList;
+		this.comments = comments;
+	}
+
+	private CLCommentExpression[] comments;
 	final private List<A> argsList;
 
 	// factory methods
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> 
+	public static <B extends CLExpression> FJCLTextConstruction<B> 
 	empty() {
 		return new FJCLTextConstruction<B>(List.nil(), List.nil());
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> 
+	public static <B extends CLExpression> FJCLTextConstruction<B> 
 	text(
 			final List<B> argsList) {
 		return new FJCLTextConstruction<B>(List.nil(), argsList);
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> 
+	public static <B extends CLExpression> FJCLTextConstruction<B> 
 	text(
 			final List<CLCommentExpression> commentsList, final List<B> argsList) {
 		return new FJCLTextConstruction<B>(commentsList, argsList);
@@ -51,13 +84,13 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 		return argsList;
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> List<B> argsList(
+	public static <B extends CLExpression> List<B> argsList(
 			FJCLTextConstruction<B> x) {
 		return x.argsList;
 	}
 
 	// first-class version of argsList(x)
-	public static <B extends CLSentenceOrStatementOrText> F<FJCLTextConstruction<B>, List<B>> argsList_() {
+	public static <B extends CLExpression> F<FJCLTextConstruction<B>, List<B>> argsList_() {
 		return s -> argsList(s);
 	}
 
@@ -65,7 +98,7 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 		return commentsList;
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> List<CLCommentExpression> commentsList(
+	public static <B extends CLExpression> List<CLCommentExpression> commentsList(
 			FJCLTextConstruction<B> x) {
 		return x.commentsList();
 	}
@@ -94,29 +127,29 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 
 	// Monad methods
 	// unit method
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> unit(
+	public static <B extends CLExpression> FJCLTextConstruction<B> unit(
 			B x) {
 		return text(List.nil(), List.single(x));
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> unit(
+	public static <B extends CLExpression> FJCLTextConstruction<B> unit(
 			List<CLCommentExpression> commentsList, B x) {
 		return text(commentsList, List.single(x));
 	}
 
 	// first-class version of unit
 	// assertEquals(unit_().apply(x), unit(x))
-	public static <B extends CLSentenceOrStatementOrText> F<B, FJCLTextConstruction<B>> unit_() {
+	public static <B extends CLExpression> F<B, FJCLTextConstruction<B>> unit_() {
 		return b -> unit(List.nil(), b);
 	}
 
-	public static <B extends CLSentenceOrStatementOrText> F<B, FJCLTextConstruction<B>> unit_(
+	public static <B extends CLExpression> F<B, FJCLTextConstruction<B>> unit_(
 			List<CLCommentExpression> commentsList) {
 		return b -> unit(commentsList, b);
 	}
 
 	// flatten method
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> flatten(
+	public static <B extends CLExpression> FJCLTextConstruction<B> flatten(
 			FJCLTextConstruction<B> x) {
 		return text(
 				x.commentsList().append(
@@ -126,7 +159,7 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 
 	// join method
 	// Must satisfy join(unit(unit(x))) = unit(x)
-	public static <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> join(
+	public static <B extends CLExpression> FJCLTextConstruction<B> join(
 			FJCLTextConstruction<FJCLTextConstruction<B>> x) {
 //		return text(
 //		x.commentsList().append(
@@ -138,15 +171,15 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	}
 
 	// first-class version of join(x)
-	public static <B extends CLSentenceOrStatementOrText> F<FJCLTextConstruction<FJCLTextConstruction<B>>, FJCLTextConstruction<B>> join_() {
+	public static <B extends CLExpression> F<FJCLTextConstruction<FJCLTextConstruction<B>>, FJCLTextConstruction<B>> join_() {
 		return s -> join(s);
 	}
 
-	private static <B extends CLSentenceOrStatementOrText> List<B> flattenArgs(
+	private static <B extends CLExpression> List<B> flattenArgs(
 			B x) {
 		if (x instanceof FJCLTextConstruction) {
 			@SuppressWarnings("unchecked")
-			final FJCLTextConstruction<CLSentenceOrStatementOrText> y = (FJCLTextConstruction<CLSentenceOrStatementOrText>) x;
+			final FJCLTextConstruction<CLExpression> y = (FJCLTextConstruction<CLExpression>) x;
 			if (y.length() == 0)
 				return List.nil();
 			try {
@@ -161,17 +194,17 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	}
 
 	private static List<CLCommentExpression> flattenComments(
-			CLSentenceOrStatementOrText x) {
+			CLExpression x) {
 		if (x instanceof FJCLTextConstruction) {
 			@SuppressWarnings("unchecked")
-			final FJCLTextConstruction<CLSentenceOrStatementOrText> y = (FJCLTextConstruction<CLSentenceOrStatementOrText>) x;
+			final FJCLTextConstruction<CLExpression> y = (FJCLTextConstruction<CLExpression>) x;
 			return y.commentsList();
 		}
 		return List.nil();
 	}
 
 	// bind method
-	public <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> bind(
+	public <B extends CLExpression> FJCLTextConstruction<B> bind(
 			F<A, FJCLTextConstruction<B>> f) {
 		return join(map(f));
 
@@ -179,14 +212,14 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 
 	// static version of bind
 	// Test: bind(f, x) = x.bind(f)
-	public static <B extends CLSentenceOrStatementOrText, C extends CLSentenceOrStatementOrText> FJCLTextConstruction<C> bind(
+	public static <B extends CLExpression, C extends CLExpression> FJCLTextConstruction<C> bind(
 			F<B, FJCLTextConstruction<C>> f, FJCLTextConstruction<B> x) {
 		return x.bind(f);
 	}
 
 	// first-class version of bind
 	// Test: bind_().apply(f).apply(x) = x.bind(f)
-	public static <B extends CLSentenceOrStatementOrText, C extends CLSentenceOrStatementOrText> F<F<B, FJCLTextConstruction<C>>, F<FJCLTextConstruction<B>, FJCLTextConstruction<C>>> bind_() {
+	public static <B extends CLExpression, C extends CLExpression> F<F<B, FJCLTextConstruction<C>>, F<FJCLTextConstruction<B>, FJCLTextConstruction<C>>> bind_() {
 		return curry((f, as) -> as.bind(f));
 	}
 
@@ -196,30 +229,30 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	// assertEquals( x.map(g).map(f) , map(f.compose(g)) );
 	// Test: must preserve identity:
 	// assertEquals ( x.map(s -> s) , x )
-	public <B extends CLSentenceOrStatementOrText> FJCLTextConstruction<B> map(
+	public <B extends CLExpression> FJCLTextConstruction<B> map(
 			F<A, B> f) {
 		return text(commentsList, argsList.map(f));
 	}
 
 	// static version of map
 	// Test: map(f, x) = x.map(f)
-	public static <B extends CLSentenceOrStatementOrText, C extends CLSentenceOrStatementOrText> FJCLTextConstruction<C> map(
+	public static <B extends CLExpression, C extends CLExpression> FJCLTextConstruction<C> map(
 			F<B, C> f, FJCLTextConstruction<B> x) {
 		return x.map(f);
 	}
 
 	// first-class version of map
 	// Test: map_().apply(f).apply(x) = x.map(f)
-	public static <B extends CLSentenceOrStatementOrText, C extends CLSentenceOrStatementOrText> F<F<B, C>, F<FJCLTextConstruction<B>, FJCLTextConstruction<C>>> map_() {
+	public static <B extends CLExpression, C extends CLExpression> F<F<B, C>, F<FJCLTextConstruction<B>, FJCLTextConstruction<C>>> map_() {
 		return curry((f, as) -> as.map(f));
 	}
 
-	public static CLSentenceOrStatementOrText flattenRec(
-			CLSentenceOrStatementOrText x) {
+	public static CLExpression flattenRec(
+			CLExpression x) {
 		if (!(x instanceof FJCLTextConstruction))
 			return x;
 		@SuppressWarnings("unchecked")
-		final FJCLTextConstruction<CLSentenceOrStatementOrText> y = (FJCLTextConstruction<CLSentenceOrStatementOrText>) x;
+		final FJCLTextConstruction<CLExpression> y = (FJCLTextConstruction<CLExpression>) x;
 		return flatten(y.map(s -> flattenRec(s)));
 
 	}
@@ -269,6 +302,11 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	}
 
 	@Override
+	public FJCLTextConstruction<A> insertComments(CLCommentExpression... comments) {
+		return new FJCLTextConstruction<A>(name, text, CL.concatComments(comments, incomments));
+	}
+
+	@Override
 	public boolean isBasic() {
 		// TODO Auto-generated method stub
 		return false;
@@ -287,9 +325,10 @@ public class FJCLTextConstruction<A extends CLSentenceOrStatementOrText>
 	}
 
 	@Override
-	public CLSentenceOrStatementOrText insertComments(
-			EqSet<CLCommentExpression> comments) {
-		return this;
+	public Iterable<CLCommentExpression> comments() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
+	*/
 }
+

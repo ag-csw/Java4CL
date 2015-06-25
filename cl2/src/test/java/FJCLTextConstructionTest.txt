@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import cl2.CLSentenceOrStatementOrText;
+import cl2.CLExpression;
 import fj.F;
 import fj.Function;
 import fj.Ord;
@@ -20,12 +20,12 @@ public class FJCLTextConstructionTest {
 
 
 	public FJCLTextConstructionTest(
-			CLSentenceOrStatementOrText kex,
-			List<CLSentenceOrStatementOrText> listy,
-			FJCLTextConstruction<CLSentenceOrStatementOrText> textx,
-			FJCLTextConstruction<CLSentenceOrStatementOrText> texty,
-			F<CLSentenceOrStatementOrText, FJCLTextConstruction<CLSentenceOrStatementOrText>> g,
-			F<FJCLTextConstruction<CLSentenceOrStatementOrText>, FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>> h) {
+			CLExpression kex,
+			List<CLExpression> listy,
+			FJCLTextConstruction<CLExpression> textx,
+			FJCLTextConstruction<CLExpression> texty,
+			F<CLExpression, FJCLTextConstruction<CLExpression>> g,
+			F<FJCLTextConstruction<CLExpression>, FJCLTextConstruction<FJCLTextConstruction<CLExpression>>> h) {
 		super();
 		this.kex = kex;
 		this.listy = listy;
@@ -46,26 +46,26 @@ public class FJCLTextConstructionTest {
 		J = FJCLTextConstruction::join;	
 		}
 
-	public CLSentenceOrStatementOrText ken;
-	public CLSentenceOrStatementOrText kex;
-	public List<CLSentenceOrStatementOrText> listy;
-	public FJCLTextConstruction<CLSentenceOrStatementOrText> textx;
-	public FJCLTextConstruction<CLSentenceOrStatementOrText> texty;
+	public CLExpression ken;
+	public CLExpression kex;
+	public List<CLExpression> listy;
+	public FJCLTextConstruction<CLExpression> textx;
+	public FJCLTextConstruction<CLExpression> texty;
 
-	public F<CLSentenceOrStatementOrText, FJCLTextConstruction<CLSentenceOrStatementOrText>> G;
-	public F<FJCLTextConstruction<CLSentenceOrStatementOrText>, FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>> H;
+	public F<CLExpression, FJCLTextConstruction<CLExpression>> G;
+	public F<FJCLTextConstruction<CLExpression>, FJCLTextConstruction<FJCLTextConstruction<CLExpression>>> H;
 	
-	public List<CLSentenceOrStatementOrText> listz;
-	public List<CLSentenceOrStatementOrText> listn;
-	public FJCLTextConstruction<CLSentenceOrStatementOrText> textz;
-	public FJCLTextConstruction<CLSentenceOrStatementOrText> textn;
-    public F<CLSentenceOrStatementOrText, FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>> K;
-	public FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>> x;
-	public FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>> n;
-	public Ord<CLSentenceOrStatementOrText> ordb = Ord.hashEqualsOrd();
-	public F<CLSentenceOrStatementOrText, FJCLTextConstruction<CLSentenceOrStatementOrText>> U;
-	public F<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>, FJCLTextConstruction<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>>> U2;
-	public F<FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>, FJCLTextConstruction<CLSentenceOrStatementOrText>> J;
+	public List<CLExpression> listz;
+	public List<CLExpression> listn;
+	public FJCLTextConstruction<CLExpression> textz;
+	public FJCLTextConstruction<CLExpression> textn;
+    public F<CLExpression, FJCLTextConstruction<FJCLTextConstruction<CLExpression>>> K;
+	public FJCLTextConstruction<FJCLTextConstruction<CLExpression>> x;
+	public FJCLTextConstruction<FJCLTextConstruction<CLExpression>> n;
+	public Ord<CLExpression> ordb = Ord.hashEqualsOrd();
+	public F<CLExpression, FJCLTextConstruction<CLExpression>> U;
+	public F<FJCLTextConstruction<FJCLTextConstruction<CLExpression>>, FJCLTextConstruction<FJCLTextConstruction<FJCLTextConstruction<CLExpression>>>> U2;
+	public F<FJCLTextConstruction<FJCLTextConstruction<CLExpression>>, FJCLTextConstruction<CLExpression>> J;
 
 	@Test
 	public final void textShouldBeEqualToOtherFJCLTextConstructionBuiltFromStaticVarargsMethod() {
@@ -160,8 +160,8 @@ public class FJCLTextConstructionTest {
 
 	@Test
 	public final void xMapFShouldEqualFirstClassMapFX() {
-		F<F<CLSentenceOrStatementOrText,FJCLTextConstruction<CLSentenceOrStatementOrText>>, F<FJCLTextConstruction<CLSentenceOrStatementOrText>, FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>>> map1 = FJCLTextConstruction.map_();
-		F<FJCLTextConstruction<CLSentenceOrStatementOrText>, FJCLTextConstruction<FJCLTextConstruction<CLSentenceOrStatementOrText>>> mapG = map1.f(G);
+		F<F<CLExpression,FJCLTextConstruction<CLExpression>>, F<FJCLTextConstruction<CLExpression>, FJCLTextConstruction<FJCLTextConstruction<CLExpression>>>> map1 = FJCLTextConstruction.map_();
+		F<FJCLTextConstruction<CLExpression>, FJCLTextConstruction<FJCLTextConstruction<CLExpression>>> mapG = map1.f(G);
 		assertEquals(textx.map(G), mapG.f(textx));
 		assertEquals(texty.map(G), mapG.f(texty));
 		assertEquals(textz.map(G), mapG.f(textz));
@@ -220,8 +220,8 @@ public class FJCLTextConstructionTest {
 
 	@Test
 	public final void xBindFShouldEqualFirstClassBindFX() {
-		F<F<CLSentenceOrStatementOrText,FJCLTextConstruction<CLSentenceOrStatementOrText>>, F<FJCLTextConstruction<CLSentenceOrStatementOrText>, FJCLTextConstruction<CLSentenceOrStatementOrText>>> bind1 = FJCLTextConstruction.bind_();
-		F<FJCLTextConstruction<CLSentenceOrStatementOrText>, FJCLTextConstruction<CLSentenceOrStatementOrText>> bindG = bind1.f(G);
+		F<F<CLExpression,FJCLTextConstruction<CLExpression>>, F<FJCLTextConstruction<CLExpression>, FJCLTextConstruction<CLExpression>>> bind1 = FJCLTextConstruction.bind_();
+		F<FJCLTextConstruction<CLExpression>, FJCLTextConstruction<CLExpression>> bindG = bind1.f(G);
 		assertEquals(textx.bind(G), bindG.f(textx));
 		assertEquals(texty.bind(G), bindG.f(texty));
 		assertEquals(textz.bind(G), bindG.f(textz));

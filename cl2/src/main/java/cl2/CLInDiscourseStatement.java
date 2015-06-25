@@ -7,14 +7,15 @@ package cl2;
  * @author ralph
  *
  */
-public class CLInDiscourseStatement extends CLDiscourseStatement {
+public abstract class CLInDiscourseStatement extends CLDiscourseStatement {
 
 	/**
 	 * 
-	 * @param terms
+	 * @param args
 	 */
-	public CLInDiscourseStatement(CLTerm[] terms) {
-		super(terms);
+	public CLInDiscourseStatement(CLTermSequence args) {
+		super(args);
 	}
+
 
 }

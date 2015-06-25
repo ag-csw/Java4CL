@@ -9,7 +9,7 @@ public interface BasicKnowledgeAsset extends KnowledgeAsset,
 	 * 
 	 * @return the canonical expression of the asset
 	 */
-	KnowledgeExpression canonicalExpression();	
+	BasicKnowledgeExpression canonicalExpression();	
 
 	
 }

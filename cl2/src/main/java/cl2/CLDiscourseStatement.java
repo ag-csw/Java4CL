@@ -4,19 +4,19 @@ package cl2;
  * 
  * @author ralph
  */
-public abstract class CLDiscourseStatement {
+public abstract class CLDiscourseStatement extends CLStatement {
 
-	private CLTerm[] terms;
+	private CLTermSequence args;
 
 	/**
 	 * 
 	 */
-	public CLDiscourseStatement(CLTerm[] terms) {
-		this.terms = terms;
+	public CLDiscourseStatement(CLTermSequence args) {
+		this.args = args;
 	}
 	
-	public CLTerm[] terms() {
-		return terms;
+	public CLTermSequence args() {
+		return args;
 	}
 
 }

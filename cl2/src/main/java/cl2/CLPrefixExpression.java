@@ -1,6 +1,6 @@
 package cl2;
 
-public class CLPrefixExpression extends CLExpression {
+public class CLPrefixExpression extends CLExpressionLike {
 
 	public CLPrefixExpression(String pre, String iri) {
 		super();

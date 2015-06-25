@@ -1,6 +1,6 @@
 package cl2;
 
-public class CLCommentExpression extends CLExpression  {
+public class CLCommentExpression extends CLExpressionLike  {
 
 
 	public CLCommentExpression(String symbol) {

@@ -1,14 +1,12 @@
 package cl2;
 
-import api4kba.AbstractBasicKnowledgeExpression;
+import api4kbj.BasicKnowledgeExpression;
 
-public abstract class CLExpression extends AbstractBasicKnowledgeExpression implements
-		CLKnowledgeResource {
+public abstract class CLExpression extends CLExpressionLike implements
+		CLKnowledgeResource, BasicKnowledgeExpression, CLCommentable {
 
-	public CLExpression() {
-		super(CL.LANG);
-	}
-	
-	
+	abstract public CLExpression insertComments(
+			CLCommentExpression... comments);
+
 
 }
