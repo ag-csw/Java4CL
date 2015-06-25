@@ -1,10 +1,10 @@
 /**
  * 
  */
-package cl2;
+package cl2a;
 
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeSourceLevel;
+import cl2.CLCommentExpression;
+import cl2array.CLTermSequence;
 
 /**
  * @author ralph

@@ -1,4 +1,4 @@
-package cl2;
+package cl2a;
 
 import api4kba.AbstractKRRFormat;
 

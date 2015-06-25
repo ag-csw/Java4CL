@@ -1,13 +1,9 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbc.CanonicalBasicKnowledgeAsset;
-import api4kbj.BasicKnowledgeAsset;
 import api4kbj.KnowledgeSourceLevel;
 import cl2.CL;
 import cl2.CLCommentExpression;
-import cl2.CLExpression;
-import cl2.FJCLTextConstruction;
 
 public class Main {
 

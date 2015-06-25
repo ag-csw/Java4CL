@@ -1,4 +1,7 @@
-package cl2;
+package cl2i;
+
+import cl2.CLCommentExpression;
+import cl2a.CLExpressionLike;
 
 
 public interface CLCommentable {

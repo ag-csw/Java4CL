@@ -1,16 +1,13 @@
 /**
  * 
  */
-package cl2;
+package cl2fj;
 
-import java.util.Iterator;
-
+import cl2.CLCommentExpression;
+import cl2a.CLExpression;
+import cl2a.CLText;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeSourceLevel;
-import fj.F;
-import fj.data.List;
-import functional.EqSet;
-import static fj.Function.curry;
 
 /**
  * @author tara

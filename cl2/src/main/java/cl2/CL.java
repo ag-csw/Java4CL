@@ -25,6 +25,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import cl2a.CLDialect;
+import cl2a.CLExpressionLike;
+import cl2a.CLFormat;
 import api4kba.AbstractCodecSystem;
 import api4kba.AbstractKRRLanguage;
 import api4kba.AbstractKRRLogic;

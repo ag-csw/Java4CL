@@ -2,11 +2,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import cl2.CLExpression;
-import cl2.FJCLTextConstruction;
-import fj.F;
-import fj.data.List;
-
 @RunWith(Suite.class)
 @SuiteClasses({ CLTest.class,
 	//FJCLTextConstructionTest.class,

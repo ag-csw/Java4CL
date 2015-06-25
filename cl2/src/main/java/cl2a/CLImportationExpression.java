@@ -1,6 +1,7 @@
-package cl2;
+package cl2a;
 
-import functional.Option;
+import cl2.CLName;
+import cl2.CLPrefixExpression;
 
 public abstract class CLImportationExpression extends CLText {
 

@@ -1,5 +1,7 @@
 package cl2;
 
+import cl2a.CLExpressionLike;
+
 public class CLPrefixExpression extends CLExpressionLike {
 
 	public CLPrefixExpression(String pre, String iri) {

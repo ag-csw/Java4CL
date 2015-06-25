@@ -1,5 +1,6 @@
 package cl2;
 
+import cl2a.CLDialect;
 import api4kba.AbstractCodecSystem;
 import api4kba.AbstractKRRDialectType;
 

@@ -1,7 +1,9 @@
 /**
  * 
  */
-package cl2;
+package cl2a;
+
+import cl2array.CLTermSequence;
 
 /**
  * @author ralph

@@ -1,9 +1,15 @@
 /**
  * 
  */
-package cl2;
+package cl2array;
 
 import java.util.Arrays;
+
+import cl2.CL;
+import cl2.CLCommentExpression;
+import cl2.CLName;
+import cl2a.CLStatement;
+import cl2a.CLText;
 
 /**
  * @author ralph
@@ -33,6 +39,7 @@ public class CLTitling extends CLStatement {
 		return text;
 	}
 
+	@Override
 	public Iterable<CLCommentExpression> comments() {
 		return Arrays.asList(comments);
 	}

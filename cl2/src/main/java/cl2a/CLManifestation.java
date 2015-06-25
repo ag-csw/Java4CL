@@ -1,5 +1,6 @@
-package cl2;
+package cl2a;
 
+import cl2.CLDialectType;
 import api4kbc.WrapperBasicKnowledgeManifestation;
 import api4kbj.DialectTypeEnvironment;
 

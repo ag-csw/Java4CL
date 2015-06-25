@@ -1,9 +1,12 @@
 /**
  * 
  */
-package cl2;
+package cl2array;
 
 import java.util.Arrays;
+
+import cl2a.CLExpressionLike;
+import cl2a.CLTermOrSequenceMarker;
 
 /**
  * @author ralph
