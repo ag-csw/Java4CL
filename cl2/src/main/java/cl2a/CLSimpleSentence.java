@@ -9,4 +9,9 @@ package cl2a;
  *
  */
 public abstract class CLSimpleSentence extends CLSentence {
+
+	public CLSimpleSentence(CLPrefixSequence prefixes,
+			CLCommentSequence comments) {
+		super(prefixes, comments);
+	}
 }

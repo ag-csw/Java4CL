@@ -3,11 +3,9 @@
  */
 package cl2array;
 
-import java.util.Arrays;
-
-import cl2.CL;
-import cl2.CLCommentExpression;
 import cl2.CLName;
+import cl2a.CLCommentSequence;
+import cl2a.CLPrefixSequence;
 import cl2a.CLStatement;
 import cl2a.CLText;
 
@@ -17,18 +15,21 @@ import cl2a.CLText;
  */
 public class CLTitling extends CLStatement {
 	
-	private CLName name;
-	private CLText text;
-	private CLCommentExpression[] comments;
+	private final CLName name;
+	private final CLText text;
 	
 	/**
 	 * @param name
 	 * @param text
 	 */
-	public CLTitling(CLName name, CLText text, CLCommentExpression... comments) {
+	public CLTitling(
+			CLPrefixSequence prefixes,
+			CLCommentSequence comments,
+			CLName name, CLText text 
+			) {
+		super(prefixes, comments);
 		this.name = name;
 		this.text = text;
-		this.comments = comments;
 	}
 
 	public CLName name() {
@@ -39,14 +40,18 @@ public class CLTitling extends CLStatement {
 		return text;
 	}
 
-	@Override
-	public Iterable<CLCommentExpression> comments() {
-		return Arrays.asList(comments);
-	}
 
 	@Override
-	public CLTitling insertComments(CLCommentExpression... incomments) {
-		return new CLTitling(name, text, CL.concatComments(comments, incomments));
+	public CLTitling insertComments(CLCommentSequence incomments) {
+		return new CLTitling( prefixes(), comments().concat(incomments), 
+				name, text);
+	}
+
+
+	@Override
+	public CLTitling insertPrefixes(CLPrefixSequence inprefixes) {
+		return new CLTitling( prefixes().concat(inprefixes),
+				comments(), name, text);
 	}
 
 

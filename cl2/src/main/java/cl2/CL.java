@@ -1,7 +1,5 @@
 package cl2;
 
-import elevation.Lifter;
-import elevation.Lowerer;
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import java.io.IOException;
@@ -25,12 +23,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import cl2a.CLDialect;
-import cl2a.CLExpressionLike;
-import cl2a.CLFormat;
 import api4kba.AbstractCodecSystem;
 import api4kba.AbstractKRRLanguage;
 import api4kba.AbstractKRRLogic;
+import cl2a.CLDialect;
+import cl2a.CLExpressionLike;
+import cl2a.CLFormat;
+import elevation.Lifter;
+import elevation.Lowerer;
 
 public final class CL {
 
@@ -137,6 +137,16 @@ public final class CL {
 		int aLen = a.length;
 		int bLen = b.length;
 		CLCommentExpression[] c= new CLCommentExpression[aLen+bLen];
+		System.arraycopy(a, 0, c, 0, aLen);
+		System.arraycopy(b, 0, c, aLen, bLen);
+		return c;
+	}
+
+	public static CLPrefixExpression[] concatPrefixes(
+			CLPrefixExpression[] a, CLPrefixExpression[] b) {
+		int aLen = a.length;
+		int bLen = b.length;
+		CLPrefixExpression[] c= new CLPrefixExpression[aLen+bLen];
 		System.arraycopy(a, 0, c, 0, aLen);
 		System.arraycopy(b, 0, c, aLen, bLen);
 		return c;

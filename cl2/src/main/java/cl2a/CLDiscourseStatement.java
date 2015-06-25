@@ -1,6 +1,5 @@
 package cl2a;
 
-import cl2array.CLTermSequence;
 
 /**
  * 
@@ -13,8 +12,9 @@ public abstract class CLDiscourseStatement extends CLStatement {
 	/**
 	 * 
 	 */
-	public CLDiscourseStatement(CLTermSequence args) {
-		this.args = args;
+	public CLDiscourseStatement(CLPrefixSequence prefixes, CLCommentSequence comments, CLTermSequence args2) {
+		super(prefixes, comments);
+		this.args = args2;
 	}
 	
 	public CLTermSequence args() {

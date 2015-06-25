@@ -3,11 +3,11 @@
  */
 package cl2fj;
 
-import cl2.CLCommentExpression;
+import cl2a.CLCommentSequence;
 import cl2a.CLExpression;
+import cl2a.CLPrefixSequence;
 import cl2a.CLText;
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeSourceLevel;
+import cl2a.CLTextSequence;
 
 /**
  * @author tara
@@ -16,36 +16,36 @@ import api4kbj.KnowledgeSourceLevel;
 public class FJCLTextConstruction<A extends CLExpression>
 		extends CLText {
 
-	@Override
-	public boolean isBasic() {
-		// TODO Auto-generated method stub
-		return false;
+    public FJCLTextConstruction(CLPrefixSequence prefixes,
+			CLCommentSequence comments,
+			CLTextSequence texts) {
+		super(prefixes, comments);
+		this.texts = texts;
 	}
 
-	@Override
-	public KnowledgeSourceLevel level() {
-		// TODO Auto-generated method stub
-		return null;
+
+	private final CLTextSequence texts;
+
+
+	public CLTextSequence texts() {
+		return texts;
 	}
 
-	@Override
-	public boolean usesLanguage(KRRLanguage language) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
-	public Iterable<CLCommentExpression> comments() {
-		// TODO Auto-generated method stub
-		return null;
+	public FJCLTextConstruction<A> insertComments(CLCommentSequence incomments) {
+		return new FJCLTextConstruction<A>( prefixes(), comments().concat(incomments), 
+				texts);
 	}
 
+
 	@Override
-	public CLExpression insertComments(CLCommentExpression... comments) {
-		// TODO Auto-generated method stub
-		return null;
+	public FJCLTextConstruction<A> insertPrefixes(CLPrefixSequence inprefixes) {
+		return new FJCLTextConstruction<A>( prefixes().concat(inprefixes),
+				comments(), texts);
 	}
-/*
+
+	/*
 	
 	private FJCLTextConstruction(
 			final List<A> argsList,
@@ -327,5 +327,6 @@ public class FJCLTextConstruction<A extends CLExpression>
 		return null;
 	}
 	*/
+
 }
 

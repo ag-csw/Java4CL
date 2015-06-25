@@ -8,5 +8,9 @@ package cl2a;
  */
 public abstract class CLEquation extends CLSimpleSentence {
 
+	public CLEquation(CLPrefixSequence prefixes, CLCommentSequence comments) {
+		super(prefixes, comments);
+	}
+
 
 }

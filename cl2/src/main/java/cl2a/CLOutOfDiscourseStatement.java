@@ -3,8 +3,7 @@
  */
 package cl2a;
 
-import cl2.CLCommentExpression;
-import cl2array.CLTermSequence;
+import cl2array.CLTermSequenceArray;
 
 /**
  * @author ralph
@@ -12,17 +11,10 @@ import cl2array.CLTermSequence;
  */
 public abstract class CLOutOfDiscourseStatement extends CLDiscourseStatement {
 
-	/**
-	 * @param terms
-	 */
-	public CLOutOfDiscourseStatement(CLTermSequence args) {
-		super(args);
+	public CLOutOfDiscourseStatement(CLPrefixSequence prefixes,
+			CLCommentSequence comments, CLTermSequenceArray args) {
+		super(prefixes, comments, args);
 	}
 
-	@Override
-	public CLOutOfDiscourseStatement insertComments(CLCommentExpression... comments) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

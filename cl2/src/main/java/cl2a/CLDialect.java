@@ -1,7 +1,7 @@
 package cl2a;
 
-import cl2.CL;
 import api4kba.AbstractKRRDialect;
+import cl2.CL;
 
 public abstract class CLDialect extends AbstractKRRDialect {
 

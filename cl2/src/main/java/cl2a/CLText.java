@@ -9,6 +9,10 @@ package cl2a;
  *
  */
 public abstract class CLText extends CLExpression  {
-	
+
+	public CLText(CLPrefixSequence prefixes, CLCommentSequence comments) {
+		super(prefixes, comments);
+	}
+		
 
 }

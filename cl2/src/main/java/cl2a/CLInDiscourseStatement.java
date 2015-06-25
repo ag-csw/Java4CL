@@ -3,7 +3,7 @@
  */
 package cl2a;
 
-import cl2array.CLTermSequence;
+import cl2array.CLTermSequenceArray;
 
 /**
  * @author ralph
@@ -11,12 +11,9 @@ import cl2array.CLTermSequence;
  */
 public abstract class CLInDiscourseStatement extends CLDiscourseStatement {
 
-	/**
-	 * 
-	 * @param args
-	 */
-	public CLInDiscourseStatement(CLTermSequence args) {
-		super(args);
+	public CLInDiscourseStatement(CLPrefixSequence prefixes,
+			CLCommentSequence comments, CLTermSequenceArray args) {
+		super(prefixes, comments, args);
 	}
 
 

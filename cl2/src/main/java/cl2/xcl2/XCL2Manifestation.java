@@ -1,9 +1,9 @@
 package cl2.xcl2;
 
+import api4kbj.DialectTypeEnvironment;
 import cl2.CL;
 import cl2.CLDialectType;
 import cl2a.CLManifestation;
-import api4kbj.DialectTypeEnvironment;
 
 public class XCL2Manifestation extends CLManifestation {
 
