@@ -2,20 +2,19 @@ package cl2array;
 
 import java.util.Arrays;
 
-import cl2.CL;
-import cl2.CLCommentExpression;
+import cl2.CLComment;
 import cl2a.CLCommentSequence;
 
 public class CLCommentSequenceArray extends CLCommentSequence {
 	
-	private final CLCommentExpression[] comments;
+	private final CLComment[] comments;
 
-	public CLCommentSequenceArray(CLCommentExpression... comments) {
+	public CLCommentSequenceArray(CLComment... comments) {
 		this.comments = comments;
 	}
 
 	@Override
-	public Iterable<CLCommentExpression> args() {
+	public Iterable<CLComment> args() {
 		return Arrays.asList(comments);
 	}
 
@@ -27,13 +26,13 @@ public class CLCommentSequenceArray extends CLCommentSequence {
 	@Override
 	public CLCommentSequence concat(CLCommentSequence incomments) {
 		int bLen = incomments.length();
-		CLCommentExpression[] b= new CLCommentExpression[bLen];
+		CLComment[] b= new CLComment[bLen];
 		int i = 0;
-        for (final CLCommentExpression incomment : incomments.args())
+        for (final CLComment incomment : incomments.args())
         {
-            b[i] = incomment;
+            b[i++] = incomment;
         }		
-        CLCommentExpression[] c = CL.concatComments(comments, b);
+        CLComment[] c = CLArray.concatComments(comments, b);
 		return new CLCommentSequenceArray(c);
 	}
 

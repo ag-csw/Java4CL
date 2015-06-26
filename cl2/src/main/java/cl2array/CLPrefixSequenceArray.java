@@ -1,21 +1,21 @@
 package cl2array;
 
 import java.util.Arrays;
+import java.util.Collection;
 
-import cl2.CL;
-import cl2.CLPrefixExpression;
+import cl2.CLPrefix;
 import cl2a.CLPrefixSequence;
 
 public class CLPrefixSequenceArray extends CLPrefixSequence {
 	
-	private final CLPrefixExpression[] prefixes;
+	private final CLPrefix[] prefixes;
 
-	public CLPrefixSequenceArray(CLPrefixExpression... prefixes) {
+	public CLPrefixSequenceArray(final CLPrefix... prefixes) {
 		this.prefixes = prefixes;
 	}
 
 	@Override
-	public Iterable<CLPrefixExpression> args() {
+	public Collection<? extends CLPrefix> args() {
 		return Arrays.asList(prefixes);
 	}
 
@@ -25,15 +25,15 @@ public class CLPrefixSequenceArray extends CLPrefixSequence {
 	}
 	
 	@Override
-	public CLPrefixSequence concat(CLPrefixSequence inprefixes) {
+	public CLPrefixSequence concat(final CLPrefixSequence inprefixes) {
 		int bLen = inprefixes.length();
-		CLPrefixExpression[] b= new CLPrefixExpression[bLen];
+		CLPrefix[] b= new CLPrefix[bLen];
 		int i = 0;
-        for (final CLPrefixExpression inprefix : inprefixes.args())
+        for (final CLPrefix inprefix : inprefixes.args())
         {
-            b[i] = inprefix;
+            b[i++] = inprefix;
         }		
-        CLPrefixExpression[] c = CL.concatPrefixes(prefixes, b);
+        CLPrefix[] c = CLArray.concatPrefixes(prefixes, b);
 		return new CLPrefixSequenceArray(c);
 	}
 

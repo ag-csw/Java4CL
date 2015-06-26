@@ -6,7 +6,7 @@ import hashenvironment.HashFocusedKRRLanguageEnvironment;
 import org.junit.Test;
 
 import cl2.CL;
-import cl2.CLCommentExpression;
+import cl2.CLComment;
 
 public class CLTest {
 
@@ -34,7 +34,7 @@ public class CLTest {
 		assertEquals("Equality of environments should be based on fields",
 				CL.CL_DEFAULT_ENVIRONMENT,
 				new HashFocusedKRRLanguageEnvironment(CL.LANG));
-		CLCommentExpression expression = new CLCommentExpression("");
+		CLComment expression = new CLComment("");
 		assertTrue(
 				"A Common Logic expression should be compatible with the Common Logic default environment",
 				CL.CL_DEFAULT_ENVIRONMENT.isCompatibleWith(expression));

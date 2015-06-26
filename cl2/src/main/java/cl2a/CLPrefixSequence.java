@@ -1,6 +1,8 @@
 package cl2a;
 
-import cl2.CLPrefixExpression;
+import java.util.Collection;
+
+import cl2.CLPrefix;
 
 
 
@@ -10,7 +12,7 @@ public abstract class CLPrefixSequence extends CLExpressionLike {
 		super();
 	}
 
-	public abstract Iterable<CLPrefixExpression> args();
+	public abstract Collection<? extends CLPrefix> args();
 	
 	public abstract int length();
 

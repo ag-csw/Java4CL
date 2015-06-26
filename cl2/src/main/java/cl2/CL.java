@@ -48,8 +48,7 @@ public final class CL {
 			CL.LANG);
 
 	// TODO Capitalize constants
-	public static CLDialect XCL2 = new CLDialect("XCL2") {
-	};
+	public static CLDialect XCL2 = new CLDialectXML("XCL2");
 
 	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", XCL2) {
 
@@ -132,25 +131,5 @@ public final class CL {
 		return null;
 
 	}
-	
-	public static CLCommentExpression[] concatComments(CLCommentExpression[] a, CLCommentExpression[] b) {
-		int aLen = a.length;
-		int bLen = b.length;
-		CLCommentExpression[] c= new CLCommentExpression[aLen+bLen];
-		System.arraycopy(a, 0, c, 0, aLen);
-		System.arraycopy(b, 0, c, aLen, bLen);
-		return c;
-	}
-
-	public static CLPrefixExpression[] concatPrefixes(
-			CLPrefixExpression[] a, CLPrefixExpression[] b) {
-		int aLen = a.length;
-		int bLen = b.length;
-		CLPrefixExpression[] c= new CLPrefixExpression[aLen+bLen];
-		System.arraycopy(a, 0, c, 0, aLen);
-		System.arraycopy(b, 0, c, aLen, bLen);
-		return c;
-	}
-
 
 }

@@ -7,41 +7,41 @@ import cl2a.CLCommentSequence;
 import cl2a.CLExpression;
 import cl2a.CLPrefixSequence;
 import cl2a.CLText;
-import cl2a.CLTextSequence;
+import cl2a.CLExpressionSequence;
 
 /**
  * @author tara
  *
  */
-public class FJCLTextConstruction<A extends CLExpression>
+public class CLTextConstructionfjList<A extends CLExpression>
 		extends CLText {
 
-    public FJCLTextConstruction(CLPrefixSequence prefixes,
+    public CLTextConstructionfjList(CLPrefixSequence prefixes,
 			CLCommentSequence comments,
-			CLTextSequence texts) {
+			CLExpressionSequence texts) {
 		super(prefixes, comments);
 		this.texts = texts;
 	}
 
 
-	private final CLTextSequence texts;
+	private final CLExpressionSequence texts;
 
 
-	public CLTextSequence texts() {
+	public CLExpressionSequence texts() {
 		return texts;
 	}
 
 
 	@Override
-	public FJCLTextConstruction<A> insertComments(CLCommentSequence incomments) {
-		return new FJCLTextConstruction<A>( prefixes(), comments().concat(incomments), 
+	public CLTextConstructionfjList<A> insertComments(CLCommentSequence incomments) {
+		return new CLTextConstructionfjList<A>( prefixes(), comments().concat(incomments), 
 				texts);
 	}
 
 
 	@Override
-	public FJCLTextConstruction<A> insertPrefixes(CLPrefixSequence inprefixes) {
-		return new FJCLTextConstruction<A>( prefixes().concat(inprefixes),
+	public CLTextConstructionfjList<A> insertPrefixes(CLPrefixSequence inprefixes) {
+		return new CLTextConstructionfjList<A>( prefixes().concat(inprefixes),
 				comments(), texts);
 	}
 

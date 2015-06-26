@@ -12,9 +12,12 @@ public abstract class CLDiscourseStatement extends CLStatement {
 	/**
 	 * 
 	 */
-	public CLDiscourseStatement(CLPrefixSequence prefixes, CLCommentSequence comments, CLTermSequence args2) {
+	public CLDiscourseStatement(
+			final CLPrefixSequence prefixes, 
+			final CLCommentSequence comments, 
+			final CLTermSequence args) {
 		super(prefixes, comments);
-		this.args = args2;
+		this.args = args;
 	}
 	
 	public CLTermSequence args() {

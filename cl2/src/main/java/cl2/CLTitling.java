@@ -1,9 +1,8 @@
 /**
  * 
  */
-package cl2array;
+package cl2;
 
-import cl2.CLName;
 import cl2a.CLCommentSequence;
 import cl2a.CLPrefixSequence;
 import cl2a.CLStatement;
@@ -23,9 +22,10 @@ public class CLTitling extends CLStatement {
 	 * @param text
 	 */
 	public CLTitling(
-			CLPrefixSequence prefixes,
-			CLCommentSequence comments,
-			CLName name, CLText text 
+			final CLPrefixSequence prefixes,
+			final CLCommentSequence comments,
+			final CLName name, 
+			final CLText text 
 			) {
 		super(prefixes, comments);
 		this.name = name;
@@ -42,14 +42,14 @@ public class CLTitling extends CLStatement {
 
 
 	@Override
-	public CLTitling insertComments(CLCommentSequence incomments) {
+	public CLTitling insertComments(final CLCommentSequence incomments) {
 		return new CLTitling( prefixes(), comments().concat(incomments), 
 				name, text);
 	}
 
 
 	@Override
-	public CLTitling insertPrefixes(CLPrefixSequence inprefixes) {
+	public CLTitling insertPrefixes(final CLPrefixSequence inprefixes) {
 		return new CLTitling( prefixes().concat(inprefixes),
 				comments(), name, text);
 	}

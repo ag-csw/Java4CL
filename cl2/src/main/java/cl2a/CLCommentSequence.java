@@ -1,6 +1,6 @@
 package cl2a;
 
-import cl2.CLCommentExpression;
+import cl2.CLComment;
 
 
 
@@ -11,7 +11,7 @@ public abstract class CLCommentSequence extends CLExpressionLike {
 	}
 
 	//TODO rename to comments()
-	public abstract Iterable<CLCommentExpression> args();
+	public abstract Iterable<CLComment> args();
 	
 	public abstract int length();
 

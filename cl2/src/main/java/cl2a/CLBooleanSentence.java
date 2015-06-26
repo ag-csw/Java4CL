@@ -9,9 +9,9 @@ package cl2a;
  * @author ralph
  *
  */
-public abstract class CLSentence extends CLExpression {
+public abstract class CLBooleanSentence extends CLSentence {
 
-	public CLSentence(
+	public CLBooleanSentence(
 			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments) {
 		super(prefixes, comments);

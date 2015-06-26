@@ -14,7 +14,7 @@ import cl2a.CLTermSequence;
  */
 public class CLTermSequenceArray extends CLTermSequence {
 
-	CLTermOrSequenceMarker[] args;
+	private final CLTermOrSequenceMarker[] args;
 	
 	/**
 	 * 
@@ -23,10 +23,27 @@ public class CLTermSequenceArray extends CLTermSequence {
 		this.args = args;
 	}
 
-
 	@Override
 	public Iterable<CLTermOrSequenceMarker> args() {
 		return Arrays.asList(args);
+	}
+
+	@Override
+	public int length(){
+		return args.length;
+	}
+
+	@Override
+	public CLTermSequence concat(CLTermSequence inargs) {
+		int bLen = inargs.length();
+		CLTermOrSequenceMarker[] b= new CLTermOrSequenceMarker[bLen];
+		int i = 0;
+        for (final CLTermOrSequenceMarker inarg : inargs.args())
+        {
+            b[i++] = inarg;
+        }		
+        CLTermOrSequenceMarker[] c = CLArray.concatArgs(args, b);
+		return new CLTermSequenceArray(c);
 	}
 
 }

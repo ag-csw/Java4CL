@@ -3,7 +3,7 @@ import org.slf4j.LoggerFactory;
 
 import api4kbj.KnowledgeSourceLevel;
 import cl2.CL;
-import cl2.CLCommentExpression;
+import cl2.CLComment;
 
 public class Main {
 
@@ -18,7 +18,7 @@ public class Main {
 		String myCommentSymbol = "blah blah ...";
 		LOG.debug("Eager expression instantiation starting");
 
-		CLCommentExpression myCommentExpression = new CLCommentExpression(myCommentSymbol);
+		CLComment myCommentExpression = new CLComment(myCommentSymbol);
 
 		// Testing the methods of CLCommentExpression
 		assert myCommentExpression.isBasic() : "Failed check for basic expression";

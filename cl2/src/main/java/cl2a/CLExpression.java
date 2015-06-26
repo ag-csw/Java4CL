@@ -11,7 +11,9 @@ public abstract class CLExpression extends CLExpressionLike implements
 	private CLCommentSequence comments;
 
 	
-	public CLExpression(CLPrefixSequence prefixes, CLCommentSequence comments){
+	public CLExpression(
+			final CLPrefixSequence prefixes, 
+			final CLCommentSequence comments){
 		this.prefixes = prefixes;
 		this.comments = comments;
 		
