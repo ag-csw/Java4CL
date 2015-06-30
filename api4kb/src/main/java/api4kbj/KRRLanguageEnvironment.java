@@ -7,7 +7,7 @@ package api4kbj;
  *
  */
 public interface KRRLanguageEnvironment extends
-		Environment<KRRLanguage, KnowledgeExpression> {
+		Environment<KRRLanguage, KnowledgeExpressionLike> {
 
 	/*
 	 * @Override default boolean isCompatibleWith(KnowledgeExpression arg) { if

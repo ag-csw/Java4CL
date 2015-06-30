@@ -1,9 +1,11 @@
 import static org.junit.Assert.*;
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
+
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.runners.Parameterized;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,6 +39,7 @@ public class BasicKnowledgeAssetTest {
 		assertEquals(asset.environment(), environment);
 	}
 
+	@Ignore
 	@Test
 	public void assetExpressionShouldBeAsConstructed() {
 		assertEquals(asset.canonicalExpression(), expression);

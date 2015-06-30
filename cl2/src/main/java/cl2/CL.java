@@ -1,7 +1,5 @@
 package cl2;
 
-import elevation.Lifter;
-import elevation.Lowerer;
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import java.io.IOException;
@@ -28,6 +26,11 @@ import org.xml.sax.SAXException;
 import api4kba.AbstractCodecSystem;
 import api4kba.AbstractKRRLanguage;
 import api4kba.AbstractKRRLogic;
+import cl2a.CLDialect;
+import cl2a.CLExpressionLike;
+import cl2a.CLFormat;
+import elevation.Lifter;
+import elevation.Lowerer;
 
 public final class CL {
 
@@ -39,14 +42,13 @@ public final class CL {
 	public static AbstractKRRLogic COMPLETE_CL_LOGIC = AbstractKRRLogic.logic("Common Logic 2");
 	// call static factory method of AbstractKRRLanguage
 	public static AbstractKRRLanguage LANG = AbstractKRRLanguage.language(
-			"Common Logic 2", CLExpression.class, COMPLETE_CL_LOGIC);
+			"Common Logic 2", CLExpressionLike.class, COMPLETE_CL_LOGIC);
 
 	public static HashFocusedKRRLanguageEnvironment CL_DEFAULT_ENVIRONMENT = new HashFocusedKRRLanguageEnvironment(
 			CL.LANG);
 
 	// TODO Capitalize constants
-	public static CLDialect XCL2 = new CLDialect("XCL2") {
-	};
+	public static CLDialect XCL2 = new CLDialectXML("XCL2");
 
 	public static CLFormat xcl2utf8 = new CLFormat("XCL2_UTF-8", XCL2) {
 

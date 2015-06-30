@@ -10,13 +10,13 @@ import org.junit.runner.RunWith;
 import api4kba.AbstractKRRLanguage;
 import api4kba.AbstractKRRLogic;
 import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeExpression;
+import api4kbj.KnowledgeExpressionLike;
 
 @RunWith(Parameterized.class)
 public class KRRLanguageTest {
 
 	public KRRLanguageTest(KRRLanguage language, String name,
-			Class<? extends KnowledgeExpression> clazz, AbstractKRRLogic logic) {
+			Class<? extends KnowledgeExpressionLike> clazz, AbstractKRRLogic logic) {
 		super();
 		this.language = language;
 		this.name = name;
@@ -27,7 +27,7 @@ public class KRRLanguageTest {
 
 	public KRRLanguage language;
 	public String name;
-	public Class<? extends KnowledgeExpression> clazz;
+	public Class<? extends KnowledgeExpressionLike> clazz;
 	public AbstractKRRLogic logic;
 
 	@Test

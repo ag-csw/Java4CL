@@ -5,6 +5,7 @@ import api4kbj.FocusedLanguageEnvironment;
 import api4kbj.KnowledgeExpression;
 
 public abstract class CanonicalKnowledgeAsset extends AbstractKnowledgeAsset {
+	
 
 	public CanonicalKnowledgeAsset(
 			final FocusedLanguageEnvironment environment,
@@ -13,11 +14,23 @@ public abstract class CanonicalKnowledgeAsset extends AbstractKnowledgeAsset {
 		this.canonicalExpression = canonicalExpression;
 	}
 
-	private KnowledgeExpression canonicalExpression;
+	final protected KnowledgeExpression canonicalExpression;
 
 	@Override
 	public KnowledgeExpression canonicalExpression() {
 		return canonicalExpression;
 	}
+	
+	@Override
+	public boolean conceptualizes(KnowledgeExpression e) {
+		KnowledgeExpression ce = canonicalExpression();
+		if (ce.equals(e)) {
+			return true;
+		}
+		// TODO implement test based on equivalence relation that defines the
+		// asset
+		return false;
+	}
+
 
 }

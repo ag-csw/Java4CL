@@ -1,11 +1,9 @@
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import api4kbc.CanonicalBasicKnowledgeAsset;
-import api4kbj.BasicKnowledgeAsset;
 import api4kbj.KnowledgeSourceLevel;
 import cl2.CL;
-import cl2.CLCommentExpression;
+import cl2.CLComment;
 
 public class Main {
 
@@ -20,7 +18,7 @@ public class Main {
 		String myCommentSymbol = "blah blah ...";
 		LOG.debug("Eager expression instantiation starting");
 
-		CLCommentExpression myCommentExpression = new CLCommentExpression(myCommentSymbol);
+		CLComment myCommentExpression = new CLComment(myCommentSymbol);
 
 		// Testing the methods of CLCommentExpression
 		assert myCommentExpression.isBasic() : "Failed check for basic expression";
@@ -29,11 +27,17 @@ public class Main {
 		// Skipping the clears
 		// myCommentExpression.clearInitialValue();
 		assert myCommentExpression.symbol() == myCommentSymbol : "Symbol evalution incorrect.";
+		
+		/*
+		//Make an empty text construction
+		// commented by the comment expression
+		FJCLTextConstruction<CLExpression> tc1 = FJCLTextConstruction.empty();
+		FJCLTextConstruction<CLExpression> tc2 = tc1.insertComments(myCommentExpression);
 
 		// Construction of a CLCommentAsset lazily for a specific environment
 		LOG.debug("Lazy asset instantiation starting");
 		BasicKnowledgeAsset myCommentAsset = new CanonicalBasicKnowledgeAsset(
-				CL.CL_DEFAULT_ENVIRONMENT, myCommentExpression);
+				CL.CL_DEFAULT_ENVIRONMENT, tc2);
 		// BasicKnowledgeAssetLIMSE myCommentAsset =
 		// myCommentExpression.conceptualize(env);
 		assert myCommentAsset.canonicalExpression() == myCommentExpression : "Failed lazy express method on asset";
@@ -41,7 +45,7 @@ public class Main {
 		// Construction a CLCommentAsset lazily for the default environment
 		LOG.debug("Lazy asset instantiation starting");
 		BasicKnowledgeAsset myCommentAsset2 = new CanonicalBasicKnowledgeAsset(
-				CL.CL_DEFAULT_ENVIRONMENT, myCommentExpression);
+				CL.CL_DEFAULT_ENVIRONMENT, tc2);
 		assert myCommentAsset2.canonicalExpression() == myCommentExpression : "Failed lazy express method on asset";
 		assert myCommentAsset2.equals(myCommentAsset) : "Failed equality check on assets.";
 
@@ -49,6 +53,7 @@ public class Main {
 		// CLManifestationG<Element> myManifestation;
 		LOG.debug("Manifest method call starting");
 		System.exit(0);
+		*/
 		/*
 		 * myCommentManifestation = myCommentExpression.manifest(CL.xcl2dom);
 		 * LOG.debug("Manifest method returns: {}", myCommentManifestation);

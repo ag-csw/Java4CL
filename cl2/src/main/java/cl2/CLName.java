@@ -1,6 +1,8 @@
 package cl2;
 
-public class CLName extends CLExpression {
+import cl2a.CLTerm;
+
+public class CLName extends CLTerm {
 
 	public CLName(String symbol) {
 		super();

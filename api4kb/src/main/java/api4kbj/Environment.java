@@ -6,8 +6,8 @@ import functional.Option;
 import functional.Some;
 
 /**
- * ImmutableEnvironment is a structure composed of an iterable of Mappings,
- * along with an iterable of members that are the domains and ranges of the
+ * Environment is a structure composed of an Iterable of Mappings,
+ * along with an Iterable of members that are the domains and ranges of the
  * mappings, as ClassWrappers.
  * 
  * Accessor methods should describe what mappings and members are in the

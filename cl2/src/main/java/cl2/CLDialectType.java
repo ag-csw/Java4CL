@@ -2,6 +2,7 @@ package cl2;
 
 import api4kba.AbstractCodecSystem;
 import api4kba.AbstractKRRDialectType;
+import cl2a.CLDialect;
 
 public class CLDialectType<T> extends AbstractKRRDialectType<T> {
 
