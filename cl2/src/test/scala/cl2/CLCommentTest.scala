@@ -5,7 +5,7 @@ import org.scalatest.matchers._
 import api4kbj.BasicKnowledgeExpression._
 import cl2a._
 
-class TestAPI4KP extends FlatSpec with Matchers {
+class CLCommentTest extends FlatSpec with Matchers {
 
   "A CLComment" should "use language CL" in {
     val lang = CL.LANG
