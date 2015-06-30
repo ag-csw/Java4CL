@@ -3,7 +3,9 @@ package api4kba;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractKRRLogic {
+import api4kbj.KRRLogic;
+
+public abstract class AbstractKRRLogic implements KRRLogic {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
