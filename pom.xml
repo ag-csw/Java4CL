@@ -18,15 +18,7 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
-				<executions>
-				  <execution>
-				    <phase>compile</phase>
-				    <goals>
-				      <goal>compile</goal>
-				    </goals>
-				  </execution>
-				</executions>
+				<version>3.1</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -35,7 +27,7 @@
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.0</version>
 				<!--configuration> <recompileMode>incremental</recompileMode> </configuration -->
 				<executions>
 					<execution>
@@ -43,32 +35,16 @@
 						<!-- this is so we don't end with a compile error in maven-compiler-plugin -->
 						<phase>process-sources</phase>
 						<goals>
-							<goal>add-source</goal>
 							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<scalaVersion>${scala.version}</scalaVersion>
-							<scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
-							<compileOrder>JavaThenScala</compileOrder>
-						</configuration>
-					</execution>
-					<execution>
-						<id>test-compile</id>
-						<!-- this is so we don't end with a compile error in maven-compiler-plugin -->
-						<phase>process-test-sources</phase>
-						<goals>
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
 							<scalaVersion>${scala.version}</scalaVersion>
 							<scalaCompatVersion>${scala.binary.version}</scalaCompatVersion>
-							<compileOrder>JavaThenScala</compileOrder>
 							<excludes>
 								<exclude>CheckEqSet.scala</exclude>
 							</excludes>
 						</configuration>
-					</execution>
-					<execution>
 					</execution>
 				</executions>
 			</plugin>
