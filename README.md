@@ -13,7 +13,7 @@ Build instructions
 The build process is managed by Maven.
 
 Right-click on the main project root *Java4CL* and select **Run As → Maven
-Build…**. In the opening dialog, in the field labeled *"Goals:*" enter `test`,
+Build…**. In the opening dialog, in the field labeled *"Goals:*" enter `install`,
 then press **Run**.
 
 ### Eclipse
