@@ -28,6 +28,8 @@ Then import the project:
 2. Select *Maven / Existing Maven Projects*.
 3. Navigate to the project rool folder and select it.
 
+**Note:** There seems to be a problem with the Scala tools in combination with automatic building enabled in Eclipse, which leads to false Scala related error messages in Scala source editors and Eclipse's problem view. Therefore, it might be desirable to turn Eclipse's auto build feature off while working with Scala.
+
 During development it might be desirable to make use of Eclipse's automatic
 building mechanism. In order to keep Eclipse's classpath information consistent
 with the information provided by Maven, after changes to the classpath, right
