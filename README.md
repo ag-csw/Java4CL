@@ -12,11 +12,21 @@ Build instructions
 
 The build process is managed by Maven.
 
-Right-click on the main project root *Java4CL* and select **Run As → Maven
-Build…**. In the opening dialog, in the field labeled *"Goals:*" enter `install`,
-then press **Run**.
+Open a terminal and navigate to the project root directory *Java4CL* and type:
+
+    mvn install
 
 ### Eclipse
+
+In order to import the project into Eclipse, in addition to the above instructions, type:
+
+    mvn eclipse:eclipse
+    
+Then import the project:
+
+1. From the menu, select *File / Import...*.
+2. Select *Maven / Existing Maven Projects*.
+3. Navigate to the project rool folder and select it.
 
 During development it might be desirable to make use of Eclipse's automatic
 building mechanism. In order to keep Eclipse's classpath information consistent
