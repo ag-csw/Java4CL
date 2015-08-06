@@ -1,6 +1,6 @@
 package cl2a;
 
-import cl2.CLSequenceMarker;
+import cl2.CLStringSequenceMarker;
 
 
 
@@ -10,7 +10,7 @@ public abstract class CLSequenceMarkerSequence extends CLExpressionLike {
 		super();
 	}
 
-	public abstract Iterable<CLSequenceMarker> args();
+	public abstract Iterable<CLStringSequenceMarker> args();
 
 	public abstract int length();
 

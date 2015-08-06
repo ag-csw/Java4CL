@@ -2,7 +2,7 @@ package cl2a;
 
 import java.util.Collection;
 
-import cl2.CLComment;
+import cl2.CLStringComment;
 
 
 
@@ -13,7 +13,7 @@ public abstract class CLCommentSequence extends CLExpressionLike {
 	}
 
 	//TODO rename to comments()
-	public abstract Collection<? extends CLComment> args();
+	public abstract Collection<? extends CLStringComment> args();
 	
 	public abstract int length();
 

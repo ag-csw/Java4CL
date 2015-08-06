@@ -1,11 +1,11 @@
 package cl2;
 
-import cl2a.CLExpressionLike;
+import cl2a.CLComment;
 
-public class CLComment extends CLExpressionLike  {
+public class CLStringComment extends CLComment  {
 
 
-	public CLComment(String symbol) {
+	public CLStringComment(String symbol) {
 		super();
 		this.symbol = symbol;
 	}
@@ -13,6 +13,7 @@ public class CLComment extends CLExpressionLike  {
 	// private fields
 	private String symbol;
 
+	@Override
 	public String symbol() {
 		return symbol;
 	}

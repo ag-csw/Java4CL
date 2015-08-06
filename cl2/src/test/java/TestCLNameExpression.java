@@ -1,5 +1,4 @@
-import cl2.CLStringPrefix;
-import cl2.CLStringName;
+import cl2.CLStringInterpretableName;
 
 /**
  * @author ralph
@@ -12,7 +11,7 @@ public class TestCLNameExpression {
 	 */
 	public TestCLNameExpression() {
 		
-		CLStringName name = new CLStringName("http://example.org/import.xcl#text.xcl");
+		CLStringInterpretableName name = new CLStringInterpretableName("http://example.org/import.xcl#text.xcl");
 	}
 
 }

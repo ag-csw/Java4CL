@@ -3,19 +3,19 @@ package cl2array;
 import java.util.Arrays;
 import java.util.Collection;
 
-import cl2.CLComment;
+import cl2.CLStringComment;
 import cl2a.CLCommentSequence;
 
 public class CLCommentSequenceArray extends CLCommentSequence {
 	
-	private final CLComment[] comments;
+	private final CLStringComment[] comments;
 
-	public CLCommentSequenceArray(CLComment... comments) {
+	public CLCommentSequenceArray(CLStringComment... comments) {
 		this.comments = comments;
 	}
 
 	@Override
-	public Collection<CLComment> args() {
+	public Collection<CLStringComment> args() {
 		return Arrays.asList(comments);
 	}
 
@@ -27,13 +27,13 @@ public class CLCommentSequenceArray extends CLCommentSequence {
 	@Override
 	public CLCommentSequence concat(CLCommentSequence incomments) {
 		int bLen = incomments.length();
-		CLComment[] b= new CLComment[bLen];
+		CLStringComment[] b= new CLStringComment[bLen];
 		int i = 0;
-        for (final CLComment incomment : incomments.args())
+        for (final CLStringComment incomment : incomments.args())
         {
             b[i++] = incomment;
         }		
-        CLComment[] c = CLArray.concatComments(comments, b);
+        CLStringComment[] c = CLArray.concatComments(comments, b);
 		return new CLCommentSequenceArray(c);
 	}
 

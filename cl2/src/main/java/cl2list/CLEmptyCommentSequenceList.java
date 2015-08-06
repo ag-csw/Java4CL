@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import cl2.CLComment;
+import cl2.CLStringComment;
 import cl2a.CLCommentSequence;
 
 
@@ -16,7 +16,7 @@ public class CLEmptyCommentSequenceList extends CLCommentSequence {
 	}
 
 	@Override
-	public Collection<? extends CLComment> args(){
+	public Collection<? extends CLStringComment> args(){
 		return CollectionUtils.emptyCollection();
 	}
 	
