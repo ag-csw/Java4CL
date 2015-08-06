@@ -13,11 +13,10 @@ public abstract class CLQuantifiedSentence extends CLSentence {
 	private CLSentence body;
 
 	public CLQuantifiedSentence(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments,
 			final CLBindingSequence bindings,
 			final CLSentence body) {
-		super(prefixes, comments);
+		super(comments);
 		this.bindings = bindings;
 		this.body = body;
 	}

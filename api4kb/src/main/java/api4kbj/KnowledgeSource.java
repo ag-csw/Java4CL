@@ -1,13 +1,8 @@
 package api4kbj;
 
-public interface KnowledgeSource extends Source {
-	/**
-	 * Returns the abstraction level.
-	 * 
-	 * @return the abstraction level
-	 * @see KnowledgeAsset, KnowledgeExpression, KnowledgeManifestation,
-	 *      KnowledgeEncoding, KnowledgeIO
-	 */
-	KnowledgeSourceLevel level();
+import api4kb.doc.annotation.OntologyClass;
+
+@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/KnowledgeSource")
+public interface KnowledgeSource extends Source, KnowledgeSourceLike {
 
 }

@@ -1,5 +1,8 @@
 package api4kbj;
 
+import api4kb.doc.annotation.OntologyClass;
+
+@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/Immtable")
 public interface Immutable {
 	// An interface for immutable classes.
 	// All public fields must be final.

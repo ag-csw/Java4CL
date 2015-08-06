@@ -5,7 +5,6 @@ package cl2;
 
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
 import cl2a.CLSentenceSequence;
 
 /**
@@ -20,11 +19,10 @@ public class CLDisjunction extends CLBooleanSentence {
 	 * 
 	 */
 	public CLDisjunction(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments,
 			final CLSentenceSequence disjuncts
 			) {
-		super(prefixes, comments);
+		super(comments);
 		this.disjuncts = disjuncts;
 
 	}
@@ -39,15 +37,8 @@ public class CLDisjunction extends CLBooleanSentence {
 
 	@Override
 	public CLDisjunction insertComments(final CLCommentSequence incomments) {
-		return new CLDisjunction( prefixes(), comments().concat(incomments), 
+		return new CLDisjunction( comments().concat(incomments), 
 				disjuncts);
-	}
-
-
-	@Override
-	public CLDisjunction insertPrefixes(final CLPrefixSequence inprefixes) {
-		return new CLDisjunction( prefixes().concat(inprefixes),
-				comments(), disjuncts);
 	}
 
 	

@@ -1,10 +1,10 @@
 package cl2;
 
-import cl2a.CLTerm;
+import cl2a.CLName;
 
-public class CLName extends CLTerm {
+public class CLStringName extends CLName {
 
-	public CLName(String symbol) {
+	public CLStringName(String symbol) {
 		super();
 		this.symbol = symbol;
 	}

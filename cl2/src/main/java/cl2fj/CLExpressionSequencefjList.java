@@ -3,12 +3,10 @@
  */
 package cl2fj;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import cl2a.CLExpressionSequence;
 import cl2a.CLExpression;
-import cl2array.CLArray;
 import fj.data.List;
 
 /**

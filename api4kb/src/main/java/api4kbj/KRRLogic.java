@@ -1,6 +1,10 @@
 package api4kbj;
 
-public interface KRRLogic {
+import api4kb.doc.annotation.OntologyClass;
+
+@OntologyClass(value = 
+  "http://www.omg.org/spec/OntoIOp/OntoIOpTerminology/Logic")
+	public interface KRRLogic {
 
 
 }

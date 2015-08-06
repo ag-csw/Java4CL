@@ -5,7 +5,6 @@ package cl2;
 
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
 import cl2a.CLSentence;
 
 /**
@@ -20,10 +19,9 @@ public class CLNegation extends CLBooleanSentence {
 	 * 
 	 */
 	public CLNegation(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments,
 			final CLSentence sent) {
-		super(prefixes, comments);
+		super(comments);
 		this.sent = sent;
 
 	}
@@ -38,17 +36,9 @@ public class CLNegation extends CLBooleanSentence {
 
 	@Override
 	public CLNegation insertComments(final CLCommentSequence incomments) {
-		return new CLNegation( prefixes(), comments().concat(incomments), 
+		return new CLNegation(comments().concat(incomments), 
 				sent);
 	}
-
-
-	@Override
-	public CLNegation insertPrefixes(final CLPrefixSequence inprefixes) {
-		return new CLNegation( prefixes().concat(inprefixes),
-				comments(), sent);
-	}
-
 	
 	
 }

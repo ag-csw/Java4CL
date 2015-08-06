@@ -2,9 +2,9 @@ package cl2;
 
 import cl2a.CLExpressionLike;
 
-public class CLPrefix extends CLExpressionLike {
+public class CLStringPrefix extends CLExpressionLike {
 
-	public CLPrefix(String pre, String iri) {
+	public CLStringPrefix(String pre, String iri) {
 		super();
 		this.pre = pre;
 		this.iri = iri;

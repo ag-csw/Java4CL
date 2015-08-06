@@ -12,9 +12,8 @@ package cl2a;
 public abstract class CLBooleanSentence extends CLSentence {
 
 	public CLBooleanSentence(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments) {
-		super(prefixes, comments);
+		super( comments);
 	}
 
 }

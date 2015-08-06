@@ -5,7 +5,6 @@ package cl2fj;
 
 import cl2a.CLCommentSequence;
 import cl2a.CLExpression;
-import cl2a.CLPrefixSequence;
 import cl2a.CLText;
 import cl2a.CLExpressionSequence;
 
@@ -16,10 +15,10 @@ import cl2a.CLExpressionSequence;
 public class CLTextConstructionfjList<A extends CLExpression>
 		extends CLText {
 
-    public CLTextConstructionfjList(CLPrefixSequence prefixes,
+    public CLTextConstructionfjList(
 			CLCommentSequence comments,
 			CLExpressionSequence texts) {
-		super(prefixes, comments);
+		super(comments);
 		this.texts = texts;
 	}
 
@@ -34,16 +33,10 @@ public class CLTextConstructionfjList<A extends CLExpression>
 
 	@Override
 	public CLTextConstructionfjList<A> insertComments(CLCommentSequence incomments) {
-		return new CLTextConstructionfjList<A>( prefixes(), comments().concat(incomments), 
+		return new CLTextConstructionfjList<A>( comments().concat(incomments), 
 				texts);
 	}
 
-
-	@Override
-	public CLTextConstructionfjList<A> insertPrefixes(CLPrefixSequence inprefixes) {
-		return new CLTextConstructionfjList<A>( prefixes().concat(inprefixes),
-				comments(), texts);
-	}
 
 	/*
 	

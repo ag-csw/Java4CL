@@ -4,27 +4,30 @@ import java.util.Collection;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import cl2a.CLPrefix;
-import cl2a.CLPrefixSequence;
+import cl2.CLComment;
+import cl2a.CLCommentSequence;
 
 
 
-public class CLEmptyCommentSequenceList extends CLPrefixSequence {
+public class CLEmptyCommentSequenceList extends CLCommentSequence {
 
 	public CLEmptyCommentSequenceList() {
 		super();
 	}
 
-	public Collection<? extends CLPrefix> args(){
+	@Override
+	public Collection<? extends CLComment> args(){
 		return CollectionUtils.emptyCollection();
 	}
 	
+	@Override
 	public int length(){
 		return 0;
 	}
 
-	public CLPrefixSequence concat(CLPrefixSequence inprefixes){
-		return inprefixes;
+	@Override
+	public CLCommentSequence concat(CLCommentSequence incomments){
+		return incomments;
 	}
 
 

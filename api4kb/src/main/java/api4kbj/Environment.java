@@ -71,6 +71,9 @@ import functional.Some;
  *            a superclass for members of the ClassWrappers, e.g. for a
  *            LanguageEnvironemnt, S is KnowledgeExpression
  */
+import api4kb.doc.annotation.OntologyClass;
+
+@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/Environment")
 public interface Environment<T extends ClassWrapper<? extends S>, S>
 		extends Immutable {
 

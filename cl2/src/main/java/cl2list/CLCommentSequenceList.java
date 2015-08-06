@@ -21,14 +21,17 @@ public class CLCommentSequenceList extends CLCommentSequence {
 		this.comments = comments;
 	}
 
+	@Override
 	public Collection<? extends CLComment> args(){
 		return comments;
 	}
 	
+	@Override
 	public int length(){
 		return comments.size();
 	}
 
+	@Override
 	public CLCommentSequence concat(final CLCommentSequence incomments){
 		List<CLComment> newcomments = comments;
 		newcomments.addAll(incomments.args());

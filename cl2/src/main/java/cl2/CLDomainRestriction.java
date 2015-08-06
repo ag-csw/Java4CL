@@ -3,7 +3,6 @@ package cl2;
 import java.util.function.Function;
 
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
 import cl2a.CLTerm;
 import cl2a.CLText;
 
@@ -13,11 +12,10 @@ public class CLDomainRestriction extends CLText {
 	private final CLText body;
 
 	public CLDomainRestriction(
-			final CLPrefixSequence prefixes,
 			final CLCommentSequence comments, 
 			final CLTerm domain,
 			final CLText body) {
-		super(prefixes, comments);
+		super(comments);
 		this.domain = domain;
 		this.body = body;
 	}
@@ -32,18 +30,12 @@ public class CLDomainRestriction extends CLText {
 
 	@Override
 	public CLDomainRestriction insertComments(CLCommentSequence incomments) {
-		return new CLDomainRestriction( prefixes(), comments().concat(incomments), 
+		return new CLDomainRestriction( comments().concat(incomments), 
 				domain, body);
-	}
-
-	@Override
-	public CLDomainRestriction insertPrefixes(CLPrefixSequence inprefixes) {
-		return new CLDomainRestriction( prefixes().concat(inprefixes),
-				comments(), domain, body);
 	}
 	
 	public CLDomainRestriction mapText(Function<CLText, CLText> f){
-		return new CLDomainRestriction(prefixes(), comments(), domain,
+		return new CLDomainRestriction(comments(), domain,
 				f.apply(this));
 	}
 

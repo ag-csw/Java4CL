@@ -1,7 +1,7 @@
 package cl2array;
 
 import cl2.CLComment;
-import cl2.CLPrefix;
+import cl2.CLStringPrefix;
 import cl2a.CLExpression;
 import cl2a.CLTermOrSequenceMarker;
 
@@ -22,11 +22,11 @@ public final class CLArray {
 		return c;
 	}
 
-	public static CLPrefix[] concatPrefixes(
-			final CLPrefix[] a, final CLPrefix[] b) {
+	public static CLStringPrefix[] concatPrefixes(
+			final CLStringPrefix[] a, final CLStringPrefix[] b) {
 		int aLen = a.length;
 		int bLen = b.length;
-		CLPrefix[] c= new CLPrefix[aLen+bLen];
+		CLStringPrefix[] c= new CLStringPrefix[aLen+bLen];
 		System.arraycopy(a, 0, c, 0, aLen);
 		System.arraycopy(b, 0, c, aLen, bLen);
 		return c;

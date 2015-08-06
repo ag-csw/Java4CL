@@ -4,7 +4,6 @@
 package cl2;
 
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
 import cl2a.CLSimpleSentence;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
@@ -22,11 +21,10 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	 * 
 	 */
 	public CLAtomicSentence(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments,
 			final CLTerm operator, 
 			final CLTermSequence args) {
-		super(prefixes, comments);
+		super(comments);
 		this.operator = operator;
 		this.args = args;
 
@@ -49,15 +47,8 @@ public class CLAtomicSentence extends CLSimpleSentence {
 
 	@Override
 	public CLAtomicSentence insertComments(final CLCommentSequence incomments) {
-		return new CLAtomicSentence( prefixes(), comments().concat(incomments), 
+		return new CLAtomicSentence(comments().concat(incomments), 
 				operator, args);
-	}
-
-
-	@Override
-	public CLAtomicSentence insertPrefixes(final CLPrefixSequence inprefixes) {
-		return new CLAtomicSentence( prefixes().concat(inprefixes),
-				comments(), operator, args);
 	}
 
 	

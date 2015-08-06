@@ -5,7 +5,6 @@ package cl2;
 
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
 import cl2a.CLSentence;
 
 /**
@@ -21,12 +20,11 @@ public class CLImplication extends CLBooleanSentence {
 	 * 
 	 */
 	public CLImplication(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments,
 			final CLSentence antecedent,
 			final CLSentence consequent
 			) {
-		super(prefixes, comments);
+		super(comments);
 		this.antecedent = antecedent;
 		this.consequent = consequent;
 
@@ -49,17 +47,9 @@ public class CLImplication extends CLBooleanSentence {
 
 	@Override
 	public CLImplication insertComments(final CLCommentSequence incomments) {
-		return new CLImplication( prefixes(), comments().concat(incomments), 
+		return new CLImplication( comments().concat(incomments), 
 				antecedent, consequent);
 	}
-
-
-	@Override
-	public CLImplication insertPrefixes(final CLPrefixSequence inprefixes) {
-		return new CLImplication( prefixes().concat(inprefixes),
-				comments(), antecedent, consequent);
-	}
-
 	
 	
 }

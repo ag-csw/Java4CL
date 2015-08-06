@@ -1,6 +1,7 @@
 package cl2array;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import cl2.CLComment;
 import cl2a.CLCommentSequence;
@@ -14,7 +15,7 @@ public class CLCommentSequenceArray extends CLCommentSequence {
 	}
 
 	@Override
-	public Iterable<CLComment> args() {
+	public Collection<CLComment> args() {
 		return Arrays.asList(comments);
 	}
 

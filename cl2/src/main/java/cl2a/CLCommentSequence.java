@@ -1,5 +1,7 @@
 package cl2a;
 
+import java.util.Collection;
+
 import cl2.CLComment;
 
 
@@ -11,7 +13,7 @@ public abstract class CLCommentSequence extends CLExpressionLike {
 	}
 
 	//TODO rename to comments()
-	public abstract Iterable<CLComment> args();
+	public abstract Collection<? extends CLComment> args();
 	
 	public abstract int length();
 

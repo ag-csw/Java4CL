@@ -1,10 +1,9 @@
 package api4kbj;
 
-public interface BasicSource extends Source {
+import api4kb.doc.annotation.OntologyClass;
 
-	@Override
-	default boolean isBasic() {
-		return true;
-	}
+@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/BasicSource")
+public interface BasicSource extends Source, Basic {
+
 
 }

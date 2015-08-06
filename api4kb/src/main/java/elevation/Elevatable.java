@@ -1,7 +1,7 @@
 package elevation;
 
-import api4kbj.KnowledgeResource;
+import api4kbj.KnowledgeSource;
 
-public interface Elevatable extends KnowledgeResource {
+public interface Elevatable extends KnowledgeSource {
 
 }

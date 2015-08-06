@@ -1,7 +1,7 @@
 package cl2;
 
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
+import cl2a.CLName;
 import cl2a.CLText;
 
 public class CLImportation extends CLText {
@@ -9,10 +9,9 @@ public class CLImportation extends CLText {
 	private final CLName name;
 
 	public CLImportation(
-			final CLPrefixSequence prefixes,
 			final CLCommentSequence comments, 
 			final CLName name) {
-		super(prefixes, comments);
+		super(comments);
 		this.name = name;
 	}
 
@@ -23,16 +22,9 @@ public class CLImportation extends CLText {
 
 	@Override
 	public CLImportation insertComments(CLCommentSequence incomments) {
-		return new CLImportation( prefixes(), comments().concat(incomments), 
+		return new CLImportation( comments().concat(incomments), 
 				name);
 	}
-
-	@Override
-	public CLImportation insertPrefixes(CLPrefixSequence inprefixes) {
-		return new CLImportation( prefixes().concat(inprefixes),
-				comments(), name);
-	}
-
 
 
 }

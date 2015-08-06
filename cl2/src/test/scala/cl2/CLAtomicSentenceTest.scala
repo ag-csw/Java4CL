@@ -1,0 +1,52 @@
+package cl2
+
+import org.scalatest._
+import org.scalatest.matchers._
+import cl2a._
+import api4kbj.KnowledgeSourceLevel._
+import prop.GeneratorDrivenPropertyChecks
+import cl2array._
+
+class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+    "A CLAtomicSentence" should "be basic" in {
+    val comments = new CLCommentSequenceArray()
+    val operator = new CLStringName("rel")
+    val termsequence = new CLTermSequenceArray()
+    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
+    (atomicsent.isBasic()) should be (true)
+  }
+   
+    "A CLAtomicSentence" should "use language CL" in {
+    val lang = CL.LANG
+    val comments = new CLCommentSequenceArray()
+    val operator = new CLStringName("rel")
+    val termsequence = new CLTermSequenceArray()
+    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
+    (atomicsent.language()) should be (lang)
+  }
+    
+    "A CLAtomicSentence" should "have knowledge source level EXPRESSION" in {
+    val comments = new CLCommentSequenceArray()
+    val operator = new CLStringName("rel")
+    val termsequence = new CLTermSequenceArray()
+    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
+   (atomicsent.level()) should be (EXPRESSION)
+  }
+    
+  "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
+    forAll ("operator-string") { (operatorString: String) =>
+    val comments = new CLCommentSequenceArray()
+    val operator = new CLStringName(operatorString)
+    val termsequence = new CLTermSequenceArray()
+    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
+    val atomop = atomicsent.operator()
+    val atomopresult = atomop match {
+      case atomopname: CLStringName => atomopname
+      case _ => throw new ClassCastException
+    }
+    (atomopresult.symbol()) should be (operatorString)
+    }
+
+
+  }
+}

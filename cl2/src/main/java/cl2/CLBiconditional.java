@@ -5,7 +5,6 @@ package cl2;
 
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSequence;
-import cl2a.CLPrefixSequence;
 import cl2a.CLSentence;
 
 /**
@@ -21,12 +20,11 @@ public class CLBiconditional extends CLBooleanSentence {
 	 * 
 	 */
 	public CLBiconditional(
-			final CLPrefixSequence prefixes, 
 			final CLCommentSequence comments,
 			final CLSentence left,
 			final CLSentence right
 			) {
-		super(prefixes, comments);
+		super(comments);
 		this.left = left;
 		this.right = right;
 
@@ -49,16 +47,10 @@ public class CLBiconditional extends CLBooleanSentence {
 
 	@Override
 	public CLBiconditional insertComments(final CLCommentSequence incomments) {
-		return new CLBiconditional( prefixes(), comments().concat(incomments), 
+		return new CLBiconditional( comments().concat(incomments), 
 				left, right);
 	}
 
-
-	@Override
-	public CLBiconditional insertPrefixes(final CLPrefixSequence inprefixes) {
-		return new CLBiconditional( prefixes().concat(inprefixes),
-				comments(), left, right);
-	}
 
 	
 	

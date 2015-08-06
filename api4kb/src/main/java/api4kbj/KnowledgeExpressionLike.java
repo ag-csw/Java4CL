@@ -3,8 +3,7 @@ package api4kbj;
 import elevation.Liftable;
 import elevation.Lowerable;
 
-public interface KnowledgeExpressionLike extends Liftable,
-		Lowerable {
+public interface KnowledgeExpressionLike extends KnowledgeSourceLike {
 
 	//EquivalenceRelation ID = new EquivalenceRelation();
 

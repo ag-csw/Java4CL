@@ -1,6 +1,5 @@
 package cl2a;
 
-import cl2.CLInterpretableName;
 
 
 

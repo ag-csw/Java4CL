@@ -1,7 +1,9 @@
 package api4kbj;
 
 import elevation.Lowerable;
+import api4kb.doc.annotation.OntologyClass;
 
+@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/KnowledgeAsset")
 /**
  * Interface for knowledge assets, which are lowerable knowledge resources in a
  * focused environment at the {@link KnowledgeSourceLevel.ASSET} abstraction
