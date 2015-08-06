@@ -42,8 +42,9 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
     val termsequence = new CLTermSequenceArray()
     val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
     val atomop = atomicsent.operator()
+    (atomop) should be (operator)
     val atomopresult = atomop match {
-      case atomopname: CLStringInterpretableName => atomopname
+      case atomopname: CLName => atomopname
       case _ => throw new ClassCastException
     }
     (atomopresult.symbol()) should be (operatorString)
@@ -58,9 +59,10 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
     val termsequence = new CLTermSequenceArray(term1)
     val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
     val atomargs = atomicsent.args()
+    (atomargs) should be (termsequence)
     val atomargsscala:Iterable[CLTermOrSequenceMarker] = atomargs.args()
     val atomnameterm1 = atomargsscala.head match {
-      case atomargsname:CLStringInterpretableName => atomargsname
+      case atomargsname:CLName => atomargsname
       case _ => throw new ClassCastException  
     }
     (atomnameterm1.symbol()) should be (argString)
