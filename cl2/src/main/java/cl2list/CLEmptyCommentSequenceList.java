@@ -4,14 +4,14 @@ import java.util.Collection;
 
 import org.apache.commons.collections4.CollectionUtils;
 
-import cl2.CLPrefix;
+import cl2a.CLPrefix;
 import cl2a.CLPrefixSequence;
 
 
 
-public class CLEmptyPrefixSequenceList extends CLPrefixSequence {
+public class CLEmptyCommentSequenceList extends CLPrefixSequence {
 
-	public CLEmptyPrefixSequenceList() {
+	public CLEmptyCommentSequenceList() {
 		super();
 	}
 
