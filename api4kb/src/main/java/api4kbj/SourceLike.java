@@ -7,8 +7,6 @@ public interface SourceLike {
 	 * 
 	 * @return <tt>true</tt> if this knowledge resource is basic (not
 	 *         structured)
-	 * @see BasicKnowledgeResourceConfigured,
-	 *      StructuredKnowledgeResourceConfigured
 	 */
 	boolean isBasic();
 

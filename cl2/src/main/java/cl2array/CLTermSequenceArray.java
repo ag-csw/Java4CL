@@ -34,7 +34,7 @@ public class CLTermSequenceArray extends CLTermSequence {
 	}
 
 	@Override
-	public CLTermSequence concat(CLTermSequence inargs) {
+	public CLTermSequenceArray concat(CLTermSequence inargs) {
 		int bLen = inargs.length();
 		CLTermOrSequenceMarker[] b= new CLTermOrSequenceMarker[bLen];
 		int i = 0;

@@ -99,7 +99,8 @@ public class XCL2ContentHandler implements ContentHandler {
 	}
 
 	/**
-	 * @param args
+	 * 
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		// SAXParserFactory spf = SAXParserFactory.newInstance();

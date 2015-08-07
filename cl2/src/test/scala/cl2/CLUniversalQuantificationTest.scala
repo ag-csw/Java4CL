@@ -10,7 +10,7 @@ import collection.JavaConversions._
 import scala.collection.immutable.List
 import java.util.Arrays;
 
-class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class CLUniversalQuantificationTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   implicit override val generatorDrivenConfig =
   PropertyCheckConfig(
       minSuccessful = 200,

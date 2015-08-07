@@ -1,8 +1,8 @@
 package cl2;
 
-import cl2a.CLName;
+import cl2a.CLInterpretableName;
 
-public class CLStringInterpretableName extends CLName {
+public class CLStringInterpretableName extends CLInterpretableName {
 
 	public CLStringInterpretableName(String symbol) {
 		super();

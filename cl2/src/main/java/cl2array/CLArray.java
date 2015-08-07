@@ -3,6 +3,7 @@ package cl2array;
 import cl2.CLStringComment;
 import cl2a.CLExpression;
 import cl2a.CLTermOrSequenceMarker;
+import cl2a.CLInterpretableName;
 
 public final class CLArray {
 
@@ -26,6 +27,16 @@ public final class CLArray {
 		int aLen = a.length;
 		int bLen = b.length;
 		CLTermOrSequenceMarker[] c= new CLTermOrSequenceMarker[aLen+bLen];
+		System.arraycopy(a, 0, c, 0, aLen);
+		System.arraycopy(b, 0, c, aLen, bLen);
+		return c;
+	}
+
+	public static CLInterpretableName[] concatBindings(
+			final CLInterpretableName[] a, final CLInterpretableName[] b) {
+		int aLen = a.length;
+		int bLen = b.length;
+		CLInterpretableName[] c= new CLInterpretableName[aLen+bLen];
 		System.arraycopy(a, 0, c, 0, aLen);
 		System.arraycopy(b, 0, c, aLen, bLen);
 		return c;
