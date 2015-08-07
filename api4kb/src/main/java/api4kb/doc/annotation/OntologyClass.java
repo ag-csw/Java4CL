@@ -15,7 +15,7 @@ public @interface OntologyClass {
 	
 	/**
 	 * An IRI identifying the ontology class the annotation subject corresponds to.
-	 * @return
+	 * @return an iri
 	 */
 	String value();
 
