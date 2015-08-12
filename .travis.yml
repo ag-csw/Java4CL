@@ -1,7 +1,7 @@
 language: java
 jdk:
 - oraclejdk8
-script: mvn clean test javadoc:javadoc
+script: mvn test javadoc:javadoc
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 env:
