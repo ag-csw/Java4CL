@@ -14,7 +14,7 @@ The build process is managed by Maven.
 
 Open a terminal, navigate to the project root directory *Java4CL* and type:
 
-    mvn install
+    mvn install -DskipTests=true -Dmaven.javadoc.skip=true
 
 ### Eclipse
 
