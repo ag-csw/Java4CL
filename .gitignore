@@ -5,3 +5,4 @@ bin
 .settings
 .cache
 owl2/target
+doc

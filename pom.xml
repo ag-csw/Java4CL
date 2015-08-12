@@ -81,6 +81,14 @@
 			<skipTests>true</skipTests>
 		</configuration>
 				</plugin -->
+				
+		<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.3</version>
+          <configuration>
+          </configuration>
+        </plugin>
 		</plugins>
 	</build>
 	<scm>
@@ -128,5 +136,6 @@
 	<modules>
 		<module>api4kb</module>
 		<module>cl2</module>
+		<module>owl</module>
 	</modules>
 </project>
