@@ -8,7 +8,7 @@ public abstract class AbstractBasicKnowledgeEncoding implements
 		BasicKnowledgeEncoding {
 
 	// Wrapper-based constructor
-	public <T> AbstractBasicKnowledgeEncoding((final T value,
+	public <T> AbstractBasicKnowledgeEncoding(final T value,
 			KRRFormatType<T> formatType) {
 		// TODO add a validation flag to indicate that
 		// value should be checked for validity relative to dialect
