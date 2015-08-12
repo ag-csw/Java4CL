@@ -4,6 +4,6 @@ import api4kba._
 
 class API4KBTest extends FlatSpec with Matchers {
 
-    (1) should be (1)
+    (1) should be (2)
 
 }
