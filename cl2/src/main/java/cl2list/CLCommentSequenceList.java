@@ -4,25 +4,25 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import cl2.CLStringComment;
+import cl2a.CLComment;
 import cl2a.CLCommentSequence;
 
 
 
 public class CLCommentSequenceList extends CLCommentSequence {
 
-	private final List<CLStringComment> comments;
+	private final List<CLComment> comments;
 
-	public CLCommentSequenceList(final CLStringComment... comments) {
+	public CLCommentSequenceList(final CLComment... comments) {
 		this.comments = Arrays.asList(comments);
 	}
 
-	public CLCommentSequenceList(final List<CLStringComment> comments) {
+	public CLCommentSequenceList(final List<CLComment> comments) {
 		this.comments = comments;
 	}
 
 	@Override
-	public Collection<? extends CLStringComment> args(){
+	public Collection<? extends CLComment> args(){
 		return comments;
 	}
 	
@@ -33,7 +33,7 @@ public class CLCommentSequenceList extends CLCommentSequence {
 
 	@Override
 	public CLCommentSequence concat(final CLCommentSequence incomments){
-		List<CLStringComment> newcomments = comments;
+		List<CLComment> newcomments = comments;
 		newcomments.addAll(incomments.args());
 		return new CLCommentSequenceList(newcomments);
 	}

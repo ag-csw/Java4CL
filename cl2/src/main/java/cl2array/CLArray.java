@@ -1,6 +1,6 @@
 package cl2array;
 
-import cl2.CLStringComment;
+import cl2a.CLComment;
 import cl2a.CLExpression;
 import cl2a.CLTermOrSequenceMarker;
 import cl2a.CLInterpretableName;
@@ -12,11 +12,11 @@ public final class CLArray {
 	}
 
 	
-	public static CLStringComment[] concatComments(
-			final CLStringComment[] a, final CLStringComment[] b) {
+	public static CLComment[] concatComments(
+			final CLComment[] a, final CLComment[] b) {
 		int aLen = a.length;
 		int bLen = b.length;
-		CLStringComment[] c= new CLStringComment[aLen+bLen];
+		CLComment[] c= new CLComment[aLen+bLen];
 		System.arraycopy(a, 0, c, 0, aLen);
 		System.arraycopy(b, 0, c, aLen, bLen);
 		return c;
@@ -51,5 +51,5 @@ public final class CLArray {
 		System.arraycopy(b, 0, c, aLen, bLen);
 		return c;
 	}
-
+	
 }

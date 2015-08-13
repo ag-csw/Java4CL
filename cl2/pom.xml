@@ -17,7 +17,7 @@
 			<!--reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
 			<junitxml>.</junitxml>
 			<filereports>WDF TestSuite.txt</filereports-->
-			<suites>TestAll, cl2.CLCommentTest, cl2.CLAtomicSentenceTest, cl2.CLStringNameTest</suites>
+			<suites>TestAll, cl2.CLCommentTest, cl2.CLAtomicSentenceTest, cl2.CLStringNameTest, cl2.CLUniversalTest</suites>
 		</configuration>
 		<executions>
 			<execution>

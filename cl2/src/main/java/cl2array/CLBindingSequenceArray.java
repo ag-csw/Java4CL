@@ -4,7 +4,7 @@
 package cl2array;
 
 import java.util.Arrays;
-
+import java.util.Collection;
 import cl2a.CLInterpretableName;
 import cl2a.CLBindingSequence;
 
@@ -15,16 +15,24 @@ import cl2a.CLBindingSequence;
 public class CLBindingSequenceArray extends CLBindingSequence {
 
 	private final CLInterpretableName[] args;
+	private final CLInterpretableName argHead;
+	private final CLInterpretableName[] argTail;
 	
 	/**
 	 * 
 	 */
-	public CLBindingSequenceArray(CLInterpretableName... args) {
-		this.args = args;
+	public CLBindingSequenceArray(CLInterpretableName argHead, CLInterpretableName... argTail) {
+		this.argHead = argHead;
+		this.argTail = argTail;
+		int aLen = argTail.length;
+		CLInterpretableName[] c= new CLInterpretableName[aLen+1];
+		c[0] = argHead;
+		System.arraycopy(argTail, 0, c, 1, aLen);
+		this.args = c;
 	}
 
 	@Override
-	public Iterable<CLInterpretableName> args() {
+	public Collection<CLInterpretableName> args() {
 		return Arrays.asList(args);
 	}
 
@@ -35,15 +43,14 @@ public class CLBindingSequenceArray extends CLBindingSequence {
 
 	@Override
 	public CLBindingSequenceArray concat(CLBindingSequence inargs) {
-		int bLen = inargs.length();
-		CLInterpretableName[] b= new CLInterpretableName[bLen];
-		int i = 0;
-        for (final CLInterpretableName inarg : inargs.args())
-        {
-            b[i++] = inarg;
-        }		
-        CLInterpretableName[] c = CLArray.concatBindings(args, b);
-		return new CLBindingSequenceArray(c);
+		CLInterpretableName[] b = inargs.args().toArray(args);
+        if (length() > 1) {
+          CLInterpretableName[] c = CLArray.concatBindings(argTail, b);
+    	  return new CLBindingSequenceArray(argHead, c);
+    	}
+    	else  {
+    	  return new CLBindingSequenceArray(argHead, b);	  
+        }
 	}
 
 }

@@ -1,7 +1,7 @@
 package cl2a;
 
 
-
+import java.util.Collection;
 
 public abstract class CLBindingSequence extends CLExpressionLike {
 
@@ -9,7 +9,7 @@ public abstract class CLBindingSequence extends CLExpressionLike {
 		super();
 	}
 
-	public abstract Iterable<CLInterpretableName> args();
+	public abstract Collection<? extends CLInterpretableName> args();
 
 	public abstract int length();
 

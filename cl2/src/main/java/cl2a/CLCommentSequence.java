@@ -13,7 +13,7 @@ public abstract class CLCommentSequence extends CLExpressionLike {
 	}
 
 	//TODO rename to comments()
-	public abstract Collection<? extends CLStringComment> args();
+	public abstract Collection<? extends CLComment> args();
 	
 	public abstract int length();
 
