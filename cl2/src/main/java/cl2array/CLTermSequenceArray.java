@@ -4,6 +4,7 @@
 package cl2array;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import cl2a.CLTermOrSequenceMarker;
 import cl2a.CLTermSequence;
@@ -24,7 +25,7 @@ public class CLTermSequenceArray extends CLTermSequence {
 	}
 
 	@Override
-	public Iterable<CLTermOrSequenceMarker> args() {
+	public Collection<? extends CLTermOrSequenceMarker> args() {
 		return Arrays.asList(args);
 	}
 

@@ -15,7 +15,7 @@ public class CLCommentSequenceArray extends CLCommentSequence {
 	}
 
 	@Override
-	public Collection<CLComment> args() {
+	public Collection<? extends CLComment> args() {
 		return Arrays.asList(comments);
 	}
 

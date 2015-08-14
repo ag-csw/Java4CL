@@ -4,6 +4,7 @@
 package cl2array;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import cl2a.CLExpressionSequence;
 import cl2a.CLExpression;
@@ -24,7 +25,7 @@ public class CLExpressionSequenceArray extends CLExpressionSequence {
 	}
 
 	@Override
-	public Iterable<CLExpression> args() {
+	public Collection<? extends CLExpression> args() {
 		return Arrays.asList(args);
 	}
 

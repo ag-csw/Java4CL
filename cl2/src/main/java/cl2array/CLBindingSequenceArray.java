@@ -32,7 +32,7 @@ public class CLBindingSequenceArray extends CLBindingSequence {
 	}
 
 	@Override
-	public Collection<CLInterpretableName> args() {
+	public Collection<? extends CLInterpretableName> args() {
 		return Arrays.asList(args);
 	}
 

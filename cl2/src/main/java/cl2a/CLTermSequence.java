@@ -1,5 +1,7 @@
 package cl2a;
 
+import java.util.Collection;
+
 
 
 public abstract class CLTermSequence extends CLExpressionLike {
@@ -8,7 +10,7 @@ public abstract class CLTermSequence extends CLExpressionLike {
 		super();
 	}
 
-	public abstract Iterable<CLTermOrSequenceMarker> args();
+	public abstract Collection<? extends CLTermOrSequenceMarker> args();
 
 	public abstract int length();
 

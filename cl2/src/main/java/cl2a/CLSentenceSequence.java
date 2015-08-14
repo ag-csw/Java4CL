@@ -1,5 +1,7 @@
 package cl2a;
 
+import java.util.Collection;
+
 
 
 public abstract class CLSentenceSequence extends CLExpressionLike {
@@ -8,7 +10,7 @@ public abstract class CLSentenceSequence extends CLExpressionLike {
 		super();
 	}
 
-	public abstract Iterable<CLSentence> args();
+	public abstract Collection<? extends CLSentence> args();
 
 	public abstract int length();
 
