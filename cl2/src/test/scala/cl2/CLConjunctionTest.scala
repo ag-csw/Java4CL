@@ -29,20 +29,20 @@ class CLConjunctionTest extends FlatSpec with Matchers with GeneratorDrivenPrope
     val testsent = new CLConjunction(comments, new CLSentenceSequenceArray( conjunct1, conjunct2) )
       
       
-  "A CLConjunctio" should "be basic" in {
+  "A CLConjunction" should "be basic" in {
     (testsent.isBasic()) should be(true)
   }
 
-  "A CLConjunctio" should "use language CL" in {
+  "A CLConjunction" should "use language CL" in {
     val lang = CL.LANG
     (testsent.language()) should be(lang)
   }
 
-  "A CLConjunctio" should "have knowledge source level EXPRESSION" in {
+  "A CLConjunction" should "have knowledge source level EXPRESSION" in {
     (testsent.level()) should be(EXPRESSION)
   }
 
-  "The conjuncts of a CLConjunctio" should "be equal to the parameter passed to the constructor" in {
+  "The conjuncts of a CLConjunction" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray:Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
       val comments = new CLCommentSequenceArray(commentsarray:_*)
@@ -51,9 +51,10 @@ class CLConjunctionTest extends FlatSpec with Matchers with GeneratorDrivenPrope
       val termsequence = new CLTermSequenceArray(varx, varx)
       val body = new CLAtomicSentence(comments0, operator, termsequence)
       val bindings = new CLBindingSequenceArray(varx)
-      val testsent = new CLConjunctio(comments, bindings, body)
-      val ubody = (testsent body)
-      (ubody) should be (body)
+      val conjuncts = new CLSentenceSequenceArray( conjunct1, conjunct2)
+      val testsent = new CLConjunction(comments,  conjuncts)
+      val conjunctsExtracted = (testsent conjuncts)
+      (conjunctsExtracted) should be (conjuncts)
     }
   }
 }
