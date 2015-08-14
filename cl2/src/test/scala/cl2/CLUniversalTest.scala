@@ -12,21 +12,20 @@ import java.util.Arrays;
 
 class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   implicit override val generatorDrivenConfig =
-  PropertyCheckConfig(
+    PropertyCheckConfig(
       minSuccessful = 200,
       maxDiscarded = 1000,
-      minSize = 10, 
+      minSize = 10,
       maxSize = 20,
       workers = 1)
-    val comments = new CLCommentSequenceArray()
-    val varx = new CLStringInterpretableName("x")
-    val operator = new CLStringInterpretableName("allEqual")
-    val termsequence = new CLTermSequenceArray(varx, varx)
-    val body = new CLAtomicSentence(comments, operator, termsequence)
-    val bindings = new CLBindingSequenceArray(varx)
-    val testexpression = new CLUniversal(comments, bindings, body)
-      
-      
+  val comments = new CLCommentSequenceArray()
+  val varx = new CLStringInterpretableName("x")
+  val operator = new CLStringInterpretableName("allEqual")
+  val termsequence = new CLTermSequenceArray(varx, varx)
+  val body = new CLAtomicSentence(comments, operator, termsequence)
+  val bindings = new CLBindingSequenceArray(varx)
+  val testexpression = new CLUniversal(comments, bindings, body)
+
   "A CLUniversal" should "be basic" in {
     (testexpression.isBasic()) should be(true)
   }
@@ -40,10 +39,25 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
     (testexpression.level()) should be(EXPRESSION)
   }
 
+  "The comments of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
+    forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
+      val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
+      val comments = new CLCommentSequenceArray(commentsarray: _*)
+      val comments0 = new CLCommentSequenceArray()
+      val operator = new CLStringInterpretableName(operatorString)
+      val termsequence = new CLTermSequenceArray(varx, varx)
+      val body = new CLAtomicSentence(comments0, operator, termsequence)
+      val bindings = new CLBindingSequenceArray(varx)
+      val testexpression = new CLUniversal(comments, bindings, body)
+      val testcomments = (testexpression comments)
+      (testcomments) should be (comments)
+    }
+  }
+
   "The body of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
-      val commentsarray:Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray:_*)
+      val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
+      val comments = new CLCommentSequenceArray(commentsarray: _*)
       val comments0 = new CLCommentSequenceArray()
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray(varx, varx)
@@ -51,7 +65,7 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
       val bindings = new CLBindingSequenceArray(varx)
       val testexpression = new CLUniversal(comments, bindings, body)
       val testbody = (testexpression body)
-      (testbody) should be (body)
+      (testbody) should be(body)
     }
   }
 }

@@ -59,7 +59,7 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
     }
   }
 
-  "The term sequence of a CLAtomicSentence" should "be equal to the parameter passed to the term constructor" in {
+  "The comment sequence of a CLAtomicSentence" should "be equal to the parameter passed to the term constructor" in {
     forAll("arg-string") { (argString: String) =>
       val comments = new CLCommentSequenceArray()
       val operator = new CLStringInterpretableName("rel")
@@ -77,18 +77,42 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
     }
   }
   
-   "The term sequence of a CLAtomicSentence constructed from a length two term sequence" should "have length two" in {
-    forAll("arg-string1", "arg-string2") { (argString1: String, argString2: String) =>
+  "The term sequence of a CLAtomicSentence" should "be equal to the parameter passed to the term constructor" in {
+    forAll("arg-string") { (argString: String) =>
       val comments = new CLCommentSequenceArray()
       val operator = new CLStringInterpretableName("rel")
-      val term1 = new CLStringInterpretableName(argString1)
-      val term2 = new CLStringInterpretableName(argString2)
-      val termsequence = new CLTermSequenceArray(term1, term2)
+      val term1 = new CLStringInterpretableName(argString)
+      val termsequence = new CLTermSequenceArray(term1)
       val testexpression = new CLAtomicSentence(comments, operator, termsequence)
       val testargs = testexpression.args()
-      (testargs.length()) should be(termsequence.length())
+      (testargs) should be(termsequence)
+      val testargsscala: Iterable[CLTermOrSequenceMarker] = testargs.args()
+      val testnameterm1 = testargsscala.head match {
+        case testargsname: CLName => testargsname
+        case _                    => throw new ClassCastException
+      }
+      (testnameterm1.symbol()) should be(argString)
     }
-  } 
+  }
+
+  "The comments of a CLAtomicSentence" should "be equal to the parameter passed to the constructor" in {
+    forAll("comment-symbols", "operator-string", "symbols", minSuccessful(100)) { 
+      (commentSymbols: List[String], operatorString: String, symbols: List[String] ) =>
+      val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
+      val comments = new CLCommentSequenceArray(commentsarray: _*)
+      val comments0 = new CLCommentSequenceArray()
+      val operator = new CLStringInterpretableName("rel")
+      val terms:List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
+      var termsequence:CLTermSequenceArray = new CLTermSequenceArray()
+      for (term <- terms){
+        termsequence = termsequence.concat(new CLTermSequenceArray(term))
+      }
+      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+      val testcomments = (testexpression comments)
+      (testcomments) should be (comments)
+    }
+  }
+  
    "The term sequence of a CLAtomicSentence" should "have the same length as the one passed to the term constructor" in {
     forAll("symbols") { (symbols: List[String]) =>
       val comments = new CLCommentSequenceArray()
