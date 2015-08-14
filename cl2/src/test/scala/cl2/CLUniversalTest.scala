@@ -24,20 +24,20 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
     val termsequence = new CLTermSequenceArray(varx, varx)
     val body = new CLAtomicSentence(comments, operator, termsequence)
     val bindings = new CLBindingSequenceArray(varx)
-    val universalsent = new CLUniversal(comments, bindings, body)
+    val testexpression = new CLUniversal(comments, bindings, body)
       
       
   "A CLUniversal" should "be basic" in {
-    (universalsent.isBasic()) should be(true)
+    (testexpression.isBasic()) should be(true)
   }
 
   "A CLUniversal" should "use language CL" in {
     val lang = CL.LANG
-    (universalsent.language()) should be(lang)
+    (testexpression.language()) should be(lang)
   }
 
   "A CLUniversal" should "have knowledge source level EXPRESSION" in {
-    (universalsent.level()) should be(EXPRESSION)
+    (testexpression.level()) should be(EXPRESSION)
   }
 
   "The body of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
@@ -49,9 +49,9 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
       val termsequence = new CLTermSequenceArray(varx, varx)
       val body = new CLAtomicSentence(comments0, operator, termsequence)
       val bindings = new CLBindingSequenceArray(varx)
-      val universalsent = new CLUniversal(comments, bindings, body)
-      val ubody = (universalsent body)
-      (ubody) should be (body)
+      val testexpression = new CLUniversal(comments, bindings, body)
+      val testbody = (testexpression body)
+      (testbody) should be (body)
     }
   }
 }

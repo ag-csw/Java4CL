@@ -22,8 +22,8 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
     val comments = new CLCommentSequenceArray()
     val operator = new CLStringInterpretableName("rel")
     val termsequence = new CLTermSequenceArray()
-    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-    (atomicsent.isBasic()) should be(true)
+    val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+    (testexpression.isBasic()) should be(true)
   }
 
   "A CLAtomicSentence" should "use language CL" in {
@@ -31,16 +31,16 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
     val comments = new CLCommentSequenceArray()
     val operator = new CLStringInterpretableName("rel")
     val termsequence = new CLTermSequenceArray()
-    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-    (atomicsent.language()) should be(lang)
+    val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+    (testexpression.language()) should be(lang)
   }
 
   "A CLAtomicSentence" should "have knowledge source level EXPRESSION" in {
     val comments = new CLCommentSequenceArray()
     val operator = new CLStringInterpretableName("rel")
     val termsequence = new CLTermSequenceArray()
-    val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-    (atomicsent.level()) should be(EXPRESSION)
+    val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+    (testexpression.level()) should be(EXPRESSION)
   }
 
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
@@ -48,14 +48,14 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val comments = new CLCommentSequenceArray()
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray()
-      val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-      val atomop = atomicsent.operator()
-      (atomop) should be(operator)
-      val atomopresult = atomop match {
-        case atomopname: CLName => atomopname
+      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+      val testop = testexpression.operator()
+      (testop) should be(operator)
+      val testopresult = testop match {
+        case testopname: CLName => testopname
         case _                  => throw new ClassCastException
       }
-      (atomopresult.symbol()) should be(operatorString)
+      (testopresult.symbol()) should be(operatorString)
     }
   }
 
@@ -65,15 +65,15 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val operator = new CLStringInterpretableName("rel")
       val term1 = new CLStringInterpretableName(argString)
       val termsequence = new CLTermSequenceArray(term1)
-      val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-      val atomargs = atomicsent.args()
-      (atomargs) should be(termsequence)
-      val atomargsscala: Iterable[CLTermOrSequenceMarker] = atomargs.args()
-      val atomnameterm1 = atomargsscala.head match {
-        case atomargsname: CLName => atomargsname
+      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+      val testargs = testexpression.args()
+      (testargs) should be(termsequence)
+      val testargsscala: Iterable[CLTermOrSequenceMarker] = testargs.args()
+      val testnameterm1 = testargsscala.head match {
+        case testargsname: CLName => testargsname
         case _                    => throw new ClassCastException
       }
-      (atomnameterm1.symbol()) should be(argString)
+      (testnameterm1.symbol()) should be(argString)
     }
   }
   
@@ -84,9 +84,9 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val term1 = new CLStringInterpretableName(argString1)
       val term2 = new CLStringInterpretableName(argString2)
       val termsequence = new CLTermSequenceArray(term1, term2)
-      val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-      val atomargs = atomicsent.args()
-      (atomargs.length()) should be(termsequence.length())
+      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+      val testargs = testexpression.args()
+      (testargs.length()) should be(termsequence.length())
     }
   } 
    "The term sequence of a CLAtomicSentence" should "have the same length as the one passed to the term constructor" in {
@@ -98,8 +98,8 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPr
       for (term <- terms){
         termsequence = termsequence.concat(new CLTermSequenceArray(term))
       }
-      val atomicsent = new CLAtomicSentence(comments, operator, termsequence)
-      ((atomicsent args) length) should be (termsequence length)
+      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
+      ((testexpression args) length) should be (termsequence length)
     }
   }
 }

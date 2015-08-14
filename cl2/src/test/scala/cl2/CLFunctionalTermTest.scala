@@ -22,8 +22,8 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
     val comments = new CLCommentSequenceArray()
     val operator = new CLStringInterpretableName("rel")
     val termsequence = new CLTermSequenceArray()
-    val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-    (functionalterm.isBasic()) should be(true)
+    val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+    (testexpression.isBasic()) should be(true)
   }
 
   "A CLFunctionalTerm" should "use language CL" in {
@@ -31,16 +31,16 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
     val comments = new CLCommentSequenceArray()
     val operator = new CLStringInterpretableName("rel")
     val termsequence = new CLTermSequenceArray()
-    val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-    (functionalterm.language()) should be(lang)
+    val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+    (testexpression.language()) should be(lang)
   }
 
   "A CLFunctionalTerm" should "have knowledge source level EXPRESSION" in {
     val comments = new CLCommentSequenceArray()
     val operator = new CLStringInterpretableName("rel")
     val termsequence = new CLTermSequenceArray()
-    val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-    (functionalterm.level()) should be(EXPRESSION)
+    val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+    (testexpression.level()) should be(EXPRESSION)
   }
 
   "The operator symbol of a CLFunctionalTerm" should "be equal to the parameter passed to the operator constructor" in {
@@ -48,14 +48,14 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val comments = new CLCommentSequenceArray()
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray()
-      val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-      val functionaltermop = functionalterm.operator()
-      (functionaltermop) should be(operator)
-      val functionaltermopresult = functionaltermop match {
-        case functionaltermopname: CLName => functionaltermopname
+      val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+      val testop = testexpression.operator()
+      (testop) should be(operator)
+      val testopresult = testop match {
+        case testopname: CLName => testopname
         case _                  => throw new ClassCastException
       }
-      (functionaltermopresult.symbol()) should be(operatorString)
+      (testopresult.symbol()) should be(operatorString)
     }
   }
 
@@ -65,15 +65,15 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val operator = new CLStringInterpretableName("rel")
       val term1 = new CLStringInterpretableName(argString)
       val termsequence = new CLTermSequenceArray(term1)
-      val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-      val functionaltermargs = functionalterm.args()
-      (functionaltermargs) should be(termsequence)
-      val functionaltermargsscala: Iterable[CLTermOrSequenceMarker] = functionaltermargs.args()
-      val functionaltermnameterm1 = functionaltermargsscala.head match {
-        case functionaltermargsname: CLName => functionaltermargsname
+      val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+      val testargs = testexpression.args()
+      (testargs) should be(termsequence)
+      val testargsscala: Iterable[CLTermOrSequenceMarker] = testargs.args()
+      val testnameterm1 = testargsscala.head match {
+        case testargsname: CLName => testargsname
         case _                    => throw new ClassCastException
       }
-      (functionaltermnameterm1.symbol()) should be(argString)
+      (testnameterm1.symbol()) should be(argString)
     }
   }
   
@@ -84,9 +84,9 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
       val term1 = new CLStringInterpretableName(argString1)
       val term2 = new CLStringInterpretableName(argString2)
       val termsequence = new CLTermSequenceArray(term1, term2)
-      val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-      val functionaltermargs = functionalterm.args()
-      (functionaltermargs.length()) should be(termsequence.length())
+      val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+      val testargs = testexpression.args()
+      (testargs.length()) should be(termsequence.length())
     }
   } 
    "The term sequence of a CLFunctionalTerm" should "have the same length as the one passed to the term constructor" in {
@@ -98,8 +98,8 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
       for (term <- terms){
         termsequence = termsequence.concat(new CLTermSequenceArray(term))
       }
-      val functionalterm = new CLFunctionalTerm(comments, operator, termsequence)
-      ((functionalterm args) length) should be (termsequence length)
+      val testexpression = new CLFunctionalTerm(comments, operator, termsequence)
+      ((testexpression args) length) should be (termsequence length)
     }
   }
 }
