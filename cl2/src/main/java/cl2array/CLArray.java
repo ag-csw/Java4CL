@@ -1,6 +1,7 @@
 package cl2array;
 
 import cl2a.CLComment;
+import cl2a.CLSentence;
 import cl2a.CLExpression;
 import cl2a.CLTermOrSequenceMarker;
 import cl2a.CLInterpretableName;
@@ -37,6 +38,16 @@ public final class CLArray {
 		int aLen = a.length;
 		int bLen = b.length;
 		CLInterpretableName[] c= new CLInterpretableName[aLen+bLen];
+		System.arraycopy(a, 0, c, 0, aLen);
+		System.arraycopy(b, 0, c, aLen, bLen);
+		return c;
+	}
+
+	public static CLSentence[] concatSentences(
+			final CLSentence[] a, final CLSentence[] b) {
+		int aLen = a.length;
+		int bLen = b.length;
+		CLSentence[] c= new CLSentence[aLen+bLen];
 		System.arraycopy(a, 0, c, 0, aLen);
 		System.arraycopy(b, 0, c, aLen, bLen);
 		return c;
