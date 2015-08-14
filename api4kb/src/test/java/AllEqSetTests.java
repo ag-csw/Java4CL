@@ -13,7 +13,7 @@ import functional.EqSetPolyTree;
 @RunWith(Suite.class)
 @SuiteClasses({ 
 	EqSetTest.class, //
-	EqSetPolyTreeTest.class //
+	//EqSetPolyTreeTest.class //
 })
 
 public class AllEqSetTests {
