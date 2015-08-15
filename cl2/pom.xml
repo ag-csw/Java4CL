@@ -24,6 +24,7 @@
 					cl2.CLFunctionalTermTest,
 					cl2.CLInDiscourseStatementTest,
 					cl2.CLStringNameTest, 
+					cl2.CLTextConstructionTest, 
 					cl2.CLUniversalTest 
 					</suites>
 				</configuration>

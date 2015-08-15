@@ -27,18 +27,22 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
   val testexpression = new CLUniversal(comments, bindings, body)
 
   "A CLUniversal" should "be basic" in {
-    (testexpression.isBasic()) should be(true)
+    (testexpression isBasic) should be (true)
   }
 
   "A CLUniversal" should "use language CL" in {
     val lang = CL.LANG
-    (testexpression.language()) should be(lang)
+    (testexpression language) should be (lang)
   }
 
   "A CLUniversal" should "have knowledge source level EXPRESSION" in {
-    (testexpression.level()) should be(EXPRESSION)
+    (testexpression level) should be (EXPRESSION)
   }
 
+  "The binding sequence of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
+    (testexpression bindings) should be (bindings)
+  }
+    
   "The comments of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]

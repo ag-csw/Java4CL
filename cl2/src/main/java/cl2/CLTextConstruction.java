@@ -25,7 +25,7 @@ public class CLTextConstruction
 	private final CLExpressionSequence args;
 
 
-	public CLExpressionSequence texts() {
+	public CLExpressionSequence expressions() {
 		return args;
 	}
 
