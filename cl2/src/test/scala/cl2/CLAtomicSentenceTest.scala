@@ -1,129 +1,165 @@
 package cl2
 
+import org.scalacheck.Gen
 import org.scalatest._
 import org.scalatest.matchers._
-import cl2a._
-import api4kbj.KnowledgeSourceLevel._
-import prop.GeneratorDrivenPropertyChecks
-import cl2array._
-import collection.JavaConversions._
+import prop.PropertyChecks
 import scala.collection.immutable.List
+
+import collection.JavaConversions._
 import java.util.Arrays;
 
-class CLAtomicSentenceTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+import api4kbj.KnowledgeSourceLevel._
+import cl2a._
+import cl2array._
+
+class CLAtomicSentenceTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
-  PropertyCheckConfig(
+    PropertyCheckConfig(
       minSuccessful = 200,
       maxDiscarded = 1000,
-      minSize = 10, 
+      minSize = 10,
       maxSize = 20,
       workers = 1)
+
+  val comments1 = new CLCommentSequenceArray()
+  val comments2 = new CLCommentSequenceArray()
+  val comments3 = new CLCommentSequenceArray(new CLStringComment("comment"))
+  val operator1 = new CLStringInterpretableName("rel")
+  val operator2 = new CLStringInterpretableName("rel")
+  val operator3 = new CLStringInterpretableName("otherrel")
+  val termsequence1 = new CLTermSequenceArray()
+  val termsequence2 = new CLTermSequenceArray()
+  val testexpression1 = new CLAtomicSentence(comments1, operator1, termsequence1)
+  val testexpression2 = new CLAtomicSentence(comments2, operator2, termsequence2)
+  val testfragment1 = new CLFunctionalTerm(comments1, operator1, termsequence1)
+  val termsequence3 = new CLTermSequenceArray(testfragment1)
+  val testexpression3 = new CLAtomicSentence(comments3, operator3, termsequence3)
+  val testexpression4 = new CLAtomicSentence(comments3, operator1, termsequence1)
+  val testexpression5 = new CLAtomicSentence(comments1, operator3, termsequence1)
+  val testexpression6 = new CLAtomicSentence(comments1, operator1, termsequence3)
+
+  val clstringsymbolgen: Gen[String] =
+    for (
+      a <- Gen listOf (
+        for (i <- Gen choose (9, Character.MAX_CODE_POINT))
+          yield String copyValueOf (Character toChars i))
+    ) yield (a mkString) replaceAll ("[\\p{Cc}&&[^\r\n\t]]", "")
+
+  val clstringinamegen: Gen[CLStringInterpretableName] =
+    for (s <- clstringsymbolgen)
+      yield new CLStringInterpretableName(s)
+
+  val clliststringinamesymbolgen: Gen[List[String]] = 
+      Gen listOf clstringsymbolgen
+
+  val clliststringinamegen: Gen[List[CLStringInterpretableName]] = 
+    Gen listOf clstringinamegen
+
+  val clstringcommentgen: Gen[CLStringComment] =
+    for (s <- clstringsymbolgen)
+      yield new CLStringComment(s)
+
+  val clliststringcommentgen: Gen[List[CLStringComment]] = 
+    Gen listOf clstringcommentgen
+
+  val clstringcommentsequencegen: Gen[CLCommentSequence] = 
+    for (a <- Gen listOf clstringcommentgen)
+      yield new CLCommentSequenceArray(a.toArray[CLStringComment]: _*)
+  
+  val cltermsequencegen: Gen[CLTermSequence] = 
+    for (a <- clliststringinamegen)
+      yield new CLTermSequenceArray(a.toArray[CLStringInterpretableName]: _*)
+
   "A CLAtomicSentence" should "be basic" in {
-    val comments = new CLCommentSequenceArray()
-    val operator = new CLStringInterpretableName("rel")
-    val termsequence = new CLTermSequenceArray()
-    val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-    (testexpression.isBasic()) should be(true)
+    (testexpression1 isBasic) should be(true)
   }
 
   "A CLAtomicSentence" should "use language CL" in {
-    val lang = CL.LANG
-    val comments = new CLCommentSequenceArray()
-    val operator = new CLStringInterpretableName("rel")
-    val termsequence = new CLTermSequenceArray()
-    val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-    (testexpression.language()) should be(lang)
+    (testexpression1 language) should be(CL.LANG)
   }
 
   "A CLAtomicSentence" should "have knowledge source level EXPRESSION" in {
-    val comments = new CLCommentSequenceArray()
-    val operator = new CLStringInterpretableName("rel")
-    val termsequence = new CLTermSequenceArray()
-    val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-    (testexpression.level()) should be(EXPRESSION)
+    (testexpression1 level) should be(EXPRESSION)
   }
 
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
-    forAll("operator-string", minSuccessful(100)) { (operatorString: String) =>
-      val comments = new CLCommentSequenceArray()
-      val operator = new CLStringInterpretableName(operatorString)
+    forAll((clstringinamegen, "operator"), minSuccessful(100)) { (operator: CLStringInterpretableName) =>
+      val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)
+      (testexpression operator) should be(operator)
+    }
+  }
+
+  "The term sequence of a CLAtomicSentence from a length zero term sequence" should
+    "be equal to the parameter passed to the term constructor" in {
       val termsequence = new CLTermSequenceArray()
-      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-      val testop = testexpression.operator()
-      (testop) should be(operator)
-      val testopresult = testop match {
-        case testopname: CLName => testopname
-        case _                  => throw new ClassCastException
+      val testexpression = new CLAtomicSentence(comments1, operator1, termsequence)
+      (testexpression args) should equal(termsequence1)
+    }
+
+  "The term sequence of a CLAtomicSentence from a length one term sequence" should
+    "be equal to the parameter passed to the term constructor 1" in {
+      forAll((clstringinamegen, "term1")) { (term1: CLStringInterpretableName) =>
+        val termsequence = new CLTermSequenceArray(term1)
+        val testexpression = new CLAtomicSentence(comments1, operator1, termsequence)
+        (testexpression args) should equal(termsequence)
       }
-      (testopresult.symbol()) should be(operatorString)
+    }
+
+  "The term sequence of a CLAtomicSentence from a length one term sequence" should
+    "be equal to the parameter passed to the term constructor 2" in {
+      forAll((clstringinamegen, "operator"), minSuccessful(100)) { (operator: CLStringInterpretableName) =>
+        val termsequence = new CLTermSequenceArray(testfragment1)
+        val testexpression = new CLAtomicSentence(comments1, operator, termsequence)
+        val testargs = testexpression.args()
+        (testexpression args) should equal(termsequence)
+      }
+    }
+
+  "The term sequence of a CLAtomicSentence constructed from a length two term sequence" should
+    "be equal to the parameter passed to the term constructor" in {
+      forAll((clstringinamegen, "term1"), (clstringinamegen, "term1")) { (term1: CLStringInterpretableName, term2: CLStringInterpretableName) =>
+        val termsequence = new CLTermSequenceArray(term1, term2)
+        val testexpression = new CLAtomicSentence(comments1, operator1, termsequence)
+        (testexpression args) should equal(termsequence)
+      }
+    }
+
+  "The components of a CLAtomicSentence" should "equal the argument passed to the term constructor" in {
+    forAll((clstringcommentsequencegen, "commentsequence"), (clstringinamegen, "operator"), (cltermsequencegen, "termsequence")) {
+      (commentsequence: CLCommentSequence, operator: CLStringInterpretableName, termsequence: CLTermSequence) =>
+        val testexpression = new CLAtomicSentence(commentsequence, operator, termsequence)
+        (testexpression comments) should equal(commentsequence)
+        (testexpression operator) should equal(operator)
+        (testexpression args) should equal(termsequence)
     }
   }
 
-  "The comment sequence of a CLAtomicSentence" should "be equal to the parameter passed to the term constructor" in {
-    forAll("arg-string") { (argString: String) =>
-      val comments = new CLCommentSequenceArray()
-      val operator = new CLStringInterpretableName("rel")
-      val term1 = new CLStringInterpretableName(argString)
-      val termsequence = new CLTermSequenceArray(term1)
-      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-      val testargs = testexpression.args()
-      (testargs) should be(termsequence)
-      val testargsscala: Iterable[CLTermOrSequenceMarker] = testargs.args()
-      val testnameterm1 = testargsscala.head match {
-        case testargsname: CLName => testargsname
-        case _                    => throw new ClassCastException
-      }
-      (testnameterm1.symbol()) should be(argString)
-    }
+  "Equality of CLAtomicSentence" should "depend only on its fields" in {
+    (testexpression1) should equal(testexpression2)
+    (testexpression1) should not equal (testexpression3)
+    (testexpression1) should not equal (testexpression4)
+    (testexpression1) should not equal (testexpression5)
+    (testexpression1) should not equal (testexpression6)
+    (testexpression1) should not equal (null)
   }
-  
-  "The term sequence of a CLAtomicSentence" should "be equal to the parameter passed to the term constructor" in {
-    forAll("arg-string") { (argString: String) =>
-      val comments = new CLCommentSequenceArray()
-      val operator = new CLStringInterpretableName("rel")
-      val term1 = new CLStringInterpretableName(argString)
-      val termsequence = new CLTermSequenceArray(term1)
-      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-      val testargs = testexpression.args()
-      (testargs) should be(termsequence)
-      val testargsscala: Iterable[CLTermOrSequenceMarker] = testargs.args()
-      val testnameterm1 = testargsscala.head match {
-        case testargsname: CLName => testargsname
-        case _                    => throw new ClassCastException
-      }
-      (testnameterm1.symbol()) should be(argString)
+
+  "Equality of CLAtomicSentence" should "depend only on its fields 2" in {
+    forAll((clstringcommentsequencegen, "commentsequence"), (clstringinamegen, "operator"), (cltermsequencegen, "termsequence")) {
+      (commentsequence: CLCommentSequence, operator: CLStringInterpretableName, termsequence: CLTermSequence) =>        
+        val commentsequence2 = new CLCommentSequenceArray(commentsequence args)
+
+        val operator2 = new CLStringInterpretableName(operator symbol)
+
+        val termsarray: Array[CLTermOrSequenceMarker] = (termsequence args) toArray new Array[CLTermOrSequenceMarker](0)
+        val termsequence2 = new CLTermSequenceArray(termsequence args)
+
+
+        val testexpression = new CLAtomicSentence(commentsequence, operator, termsequence)
+        val testexpression2 = new CLAtomicSentence(commentsequence2, operator2, termsequence2)
+
+        (testexpression) should equal(testexpression2)
     }
   }
 
-  "The comments of a CLAtomicSentence" should "be equal to the parameter passed to the constructor" in {
-    forAll("comment-symbols", "operator-string", "symbols", minSuccessful(100)) { 
-      (commentSymbols: List[String], operatorString: String, symbols: List[String] ) =>
-      val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray: _*)
-      val comments0 = new CLCommentSequenceArray()
-      val operator = new CLStringInterpretableName("rel")
-      val terms:List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
-      var termsequence:CLTermSequenceArray = new CLTermSequenceArray()
-      for (term <- terms){
-        termsequence = termsequence.concat(new CLTermSequenceArray(term))
-      }
-      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-      val testcomments = (testexpression comments)
-      (testcomments) should be (comments)
-    }
-  }
-  
-   "The term sequence of a CLAtomicSentence" should "have the same length as the one passed to the term constructor" in {
-    forAll("symbols") { (symbols: List[String]) =>
-      val comments = new CLCommentSequenceArray()
-      val operator = new CLStringInterpretableName("rel")
-      val terms:List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
-      var termsequence:CLTermSequenceArray = new CLTermSequenceArray()
-      for (term <- terms){
-        termsequence = termsequence.concat(new CLTermSequenceArray(term))
-      }
-      val testexpression = new CLAtomicSentence(comments, operator, termsequence)
-      ((testexpression args) length) should be (termsequence length)
-    }
-  }
 }

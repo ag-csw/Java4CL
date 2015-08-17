@@ -26,7 +26,7 @@ public class Main {
 		assert myCommentExpression.language() == CL.LANG : "Failed language check";
 		// Skipping the clears
 		// myCommentExpression.clearInitialValue();
-		assert myCommentExpression.symbol() == myCommentSymbol : "Symbol evalution incorrect.";
+		assert myCommentExpression.data() == myCommentSymbol : "Symbol evalution incorrect.";
 		
 		/*
 		//Make an empty text construction

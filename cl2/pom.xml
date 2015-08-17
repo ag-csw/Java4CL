@@ -19,14 +19,14 @@
 						<junitxml>.</junitxml> <filereports>WDF TestSuite.txt</filereports -->
 					<suites>TestAll, 
 					cl2.CLAtomicSentenceTest,
-					cl2.CLConjunctionTest, 
+					<!--cl2.CLConjunctionTest, 
 					cl2.CLFunctionalTermTest,
-					cl2.CLInDiscourseStatementTest,
+					cl2.CLInDiscourseStatementTest,-->
 					cl2.CLStringCommentTest, 
 					cl2.CLStringInterpretableNameTest, 
-					cl2.CLStringSequenceMarkerTest, 
+					cl2.CLStringSequenceMarkerTest<!--, 
 					cl2.CLTextConstructionTest, 
-					cl2.CLUniversalTest 
+					//cl2.CLUniversalTest -->
 					</suites>
 				</configuration>
 				<executions>

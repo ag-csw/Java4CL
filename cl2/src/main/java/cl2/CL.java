@@ -131,5 +131,19 @@ public final class CL {
 		return null;
 
 	}
+	
+	public static boolean isValidStringSymbol(String symbol){
+		return symbol.replaceAll("[\\p{Cc}&&[^\r\n\t]]", "").equals(symbol);
+	}
+
+	public static String xmlContentEncode(String text) {
+		// TODO implement escaping
+		return text;
+	}
+
+	public static String xmlAttributeEncode(String value) {
+		// TODO implement escaping
+		return value;
+	}
 
 }

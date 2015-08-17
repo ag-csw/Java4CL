@@ -14,6 +14,10 @@ public class CLCommentSequenceArray extends CLCommentSequence {
 		this.comments = comments;
 	}
 
+	public <T extends CLComment> CLCommentSequenceArray(Collection<T> comments) {
+		this(comments.toArray(new CLComment[0]));
+	}
+
 	@Override
 	public Collection<? extends CLComment> args() {
 		return Arrays.asList(comments);
@@ -35,6 +39,28 @@ public class CLCommentSequenceArray extends CLCommentSequence {
         }		
         CLComment[] c = CLArray.concatComments(comments, b);
 		return new CLCommentSequenceArray(c);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(comments);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CLCommentSequenceArray other = (CLCommentSequenceArray) obj;
+		if (!Arrays.equals(comments, other.comments))
+			return false;
+		return true;
 	}
 
 }
