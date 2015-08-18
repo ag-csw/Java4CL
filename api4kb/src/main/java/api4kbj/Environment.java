@@ -111,8 +111,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * Return <tt>true</tt> if and only if the class wrapper is a member
 	 * contained in the environment.
 	 * 
-	 * @param t
-	 *            the class wrapper to be tested
+	 * @param t the class wrapper to be tested
 	 * @return <tt>true</tt> if <tt>t</tt> is contained in the environment
 	 */
 	default boolean containsMember(final T t) {
@@ -128,8 +127,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * Return <tt>true</tt> if and only if all of the items in the collection
 	 * are members contained in the environment.
 	 * 
-	 * @param t
-	 *            the collection to be tested
+	 * @param t the collection to be tested
 	 * @return <tt>true</tt> if and only if all <tt>t</tt> belongs to the member
 	 *         collection
 	 */
@@ -146,8 +144,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * Return <tt>true</tt> if and only if the argument is a mapping contained
 	 * in the environment.
 	 * 
-	 * @param t
-	 *            the mapping to be tested
+	 * @param t the mapping to be tested
 	 * @return <tt>true</tt> if <tt>t</tt> is contained in the environment
 	 */
 	default boolean containsMapping(final Mapping<? extends S, ? extends S> t) {
@@ -166,8 +163,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * The default method assumes that all mappings are explicitly represented
 	 * in the
 	 * 
-	 * @param t
-	 *            the collection to be tested
+	 * @param t   the collection to be tested
 	 * @return <tt>true</tt> if and only if all <tt>t</tt> belongs to the
 	 *         mapping collection
 	 */
@@ -201,8 +197,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 
 	/**
 	 * 
-	 * @param arg
-	 *            an argument to be tested for compatibility
+	 * @param arg an argument to be tested for compatibility
 	 * @return <tt>true</tt> if the argument is an instance of the class of some
 	 *         member class wrapper.
 	 */
@@ -248,10 +243,10 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * Return <tt>true</tt> if this environment contains the environment
 	 * <tt>other</tt>.
 	 * 
-	 * @param other
-	 *            an environment
+	 * @param other an environment
 	 * @return <tt>true</tt> if this environment contains <tt>other</tt>
 	 */
+
 	default <T1 extends ClassWrapper<S1>, S1 extends S> boolean contains(
 			Environment<T1, S1> other) {
 		if (other == null)

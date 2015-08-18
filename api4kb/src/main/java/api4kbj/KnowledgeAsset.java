@@ -4,14 +4,14 @@ import elevation.Lowerable;
 import api4kb.doc.annotation.OntologyClass;
 
 /**
- * @author taraathan
- * @api4kp.OntologyClass <a href="http://www.omg.org/spec/API4KB/API4KBTerminology/KnowledgeAsset">API4KBTerminology/KnowledgeAsset</a>
- * 
  * Interface for knowledge assets, which are lowerable knowledge resources in a
  * focused environment at the {@link KnowledgeSourceLevel.ASSET} abstraction
  * level.
+
+ * @author taraathan
+ * @api4kp.OntologyClass <a href="http://www.omg.org/spec/API4KB/API4KBTerminology/KnowledgeAsset">API4KBTerminology/KnowledgeAsset</a>
  */
-@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/KnowledgeAsset")
+
 public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 
 	@Override

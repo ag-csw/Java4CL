@@ -34,6 +34,8 @@
 				<version>2.10.3</version>
 				<configuration>
 					<outputDirectory>/home/travis/build/ag-csw/Java4CL/javadoc</outputDirectory>
+					<aggregate>true</aggregate>
+					<additionalparam>-Xdoclint:none</additionalparam>
 					<tags>
 						<tag>
 							<name>api4kp.OntologyClass</name>

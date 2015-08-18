@@ -62,6 +62,7 @@
 				<version>2.10.3</version>
 				<configuration>
 					<outputDirectory>/home/travis/build/ag-csw/Java4CL/javadoc</outputDirectory>
+					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
 			</plugin>
 
