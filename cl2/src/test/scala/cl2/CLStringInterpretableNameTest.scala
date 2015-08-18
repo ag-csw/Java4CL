@@ -124,7 +124,7 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
     forAll((CLGenerators.clstringsymbolgen, "symbol")) { (symbol: String) =>
       {
         val testfragment = new CLStringInterpretableName(symbol)
-       (testfragment1 toString) should equal("<cl:Name>" + CL.xmlContentEncode(testfragment1 symbol) + "<\\cl:Name>")
+       (testfragment toString) should equal("<cl:Name>" + CL.xmlContentEncode(testfragment symbol) + "<\\cl:Name>")
       }
     }
   }

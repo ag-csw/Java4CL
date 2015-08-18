@@ -8,6 +8,7 @@ import api4kb.doc.annotation.OntologyClass;
  * Interface for knowledge assets, which are lowerable knowledge resources in a
  * focused environment at the {@link KnowledgeSourceLevel.ASSET} abstraction
  * level.
+ * @api4kp.OntologyClass <a href="http://www.omg.org/spec/API4KB/API4KBTerminology/KnowledgeAsset">API4KBTerminology/KnowledgeAsset</a>
  * 
  * @author taraathan
  *

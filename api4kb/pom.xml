@@ -34,6 +34,13 @@
 				<version>2.10.3</version>
 				<configuration>
 					<outputDirectory>/home/travis/build/ag-csw/Java4CL/javadoc</outputDirectory>
+					<tags>
+						<tag>
+							<name>api4kp.OntologyClass</name>
+							<placement>a</placement>
+							<head>Ontology Class:</head>
+						</tag>
+					</tags>
 				</configuration>
 			</plugin>
 		</plugins>
