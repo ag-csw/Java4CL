@@ -30,6 +30,9 @@ object CLGenerators {
   val clliststringinamegen: Gen[List[CLStringInterpretableName]] = 
     Gen listOf (clstringinamegen)
 
+  val clstringdatagen: Gen[CLStringIriInterpretedName] = for (s <- clstringsymbolgen)
+      yield CLStringIriInterpretedName.createCLStringIriInterpretedNameFromString(s)  
+  
   val clstringcommentgen: Gen[CLStringComment] =
     for (s <- clstringsymbolgen)
       yield new CLStringComment(s)

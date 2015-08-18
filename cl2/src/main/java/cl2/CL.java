@@ -1,5 +1,6 @@
 package cl2;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import java.io.IOException;
@@ -142,8 +143,11 @@ public final class CL {
 	}
 
 	public static String xmlAttributeEncode(String value) {
-		// TODO implement escaping
-		return value;
+		return StringEscapeUtils.escapeXml(value);
+	}
+
+	public static String xmlAttributeEncodeIri(CLIRI datatype) {
+		return StringEscapeUtils.escapeXml(datatype.toString());
 	}
 
 }
