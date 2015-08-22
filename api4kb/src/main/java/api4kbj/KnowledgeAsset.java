@@ -5,7 +5,7 @@ import api4kb.doc.annotation.OntologyClass;
 
 /**
  * Interface for knowledge assets, which are lowerable knowledge resources in a
- * focused environment at the {@link KnowledgeSourceLevel.ASSET} abstraction
+ * focused preserving environment at the {@link KnowledgeSourceLevel.ASSET} abstraction
  * level.
 
  * @author taraathan
@@ -27,7 +27,7 @@ public interface KnowledgeAsset extends KnowledgeResource, Lowerable {
 	FocusedLanguageEnvironment environment();
 
 	/**
-	 * Returns the canonical expression (i.e. expression in the focus language of the environment of the asset) of the asset.
+	 * Returns the canonical expression (that is, the expression in the focus language of the environment of the asset) of the asset.
 	 * 
 	 * @return the canonical expression of the asset
 	 */

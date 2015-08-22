@@ -1,8 +1,10 @@
 package api4kbj;
 
-import api4kb.doc.annotation.OntologyClass;
-
-@OntologyClass(value = "http://www.omg.org/spec/API4KB/API4KBTerminology/BasicKnowledgeManifestation")
+/**
+ * 
+ * @author taraathan
+ * @api4kp.OntologyClass <a href="http://www.omg.org/spec/API4KB/API4KBTerminology/BasicKnowledgeResource">API4KBTerminology/BasicKnowledgeResource</a>
+ */
 public interface BasicKnowledgeResource extends BasicSource, KnowledgeResource  {
 
 }
