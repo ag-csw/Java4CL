@@ -69,9 +69,6 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
         (testfragmenta hashCode) should equal(testfragmenta2 hashCode)
       }
     }
-  }
-
-    "The hashcode of CLStringInterpretableNames" should "depend only on its symbol 2" in {    
     forAll((CLGenerators.clstringinamegen,"namea"), (CLGenerators.clstringinamegen,"nameb")) { 
       (namea: CLStringInterpretableName, nameb: CLStringInterpretableName) =>
       {
@@ -98,10 +95,6 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
         (testfragmenta) should equal(testfragmenta2)
       }
     }
-  }
-
-    "Equality of CLStringInterpretableNames" should "depend only on their symbols 2" in {
-    (testfragment1.hashCode().equals(testfragment2.hashCode())) should be(true)
     forAll((CLGenerators.clstringinamegen,"namea"), (CLGenerators.clstringinamegen,"nameb")) { 
       (namea: CLStringInterpretableName, nameb: CLStringInterpretableName) =>
       {

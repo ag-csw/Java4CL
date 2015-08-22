@@ -51,6 +51,13 @@ object CLGenerators {
   val clstringsequencemarkergen = 
        for (s<-clstringsymbolgen) 
          yield new CLStringSequenceMarker(s)
+  
+  //TODO make a valid IRI generator by assembling from segments
+  
+  //TODO use the IRI generator to make a data generator with arbitrary IRI datatype
+  
+  //TODO make generators for other kinds of symbols - Image, objects as XML serializations (JAXB?)
+  
 
   
 }
