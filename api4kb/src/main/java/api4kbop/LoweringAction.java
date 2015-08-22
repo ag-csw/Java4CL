@@ -4,6 +4,6 @@ import elevation.Liftable;
 import elevation.Lowerable;
 
 public interface LoweringAction<T extends Lowerable, R extends Liftable>
-		extends Action<T, R> {
+		extends UnaryAction<T, R> {
 
 }
