@@ -18,5 +18,5 @@ public abstract class CLCommentSequence extends CLExpressionLike {
 	public abstract int length();
 
 	public abstract CLCommentSequence concat(CLCommentSequence incomments);
-
+	
 }

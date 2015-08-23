@@ -5,6 +5,7 @@ import org.scalatest._
 import org.scalatest.matchers._
 import prop.PropertyChecks
 import scala.collection.immutable.List
+import org.typelevel.discipline.scalatest._
 
 import collection.JavaConversions._
 import java.util.Arrays;
@@ -13,7 +14,9 @@ import api4kbj.KnowledgeSourceLevel._
 import cl2a._
 import cl2array._
 
-class CLAtomicSentenceTest extends FlatSpec with Matchers with PropertyChecks {
+class CLAtomicSentenceTest extends FlatSpec 
+  with Matchers 
+  with PropertyChecks{
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(
       minSuccessful = 200,
@@ -161,5 +164,6 @@ class CLAtomicSentenceTest extends FlatSpec with Matchers with PropertyChecks {
         (testexpression) should equal(testexpression2)
     }
   }
+  
 
 }

@@ -30,7 +30,7 @@ public class CLTest {
 				CL.CL_DEFAULT_ENVIRONMENT.containsMember(CL.LANG));
 		assertEquals(
 				"The Common Logic language should be the focus language of the default CL environment.",
-				CL.LANG, CL.CL_DEFAULT_ENVIRONMENT.focusMember().value());
+				CL.LANG, CL.CL_DEFAULT_ENVIRONMENT.optionalFocusMember().value());
 		assertEquals("Equality of environments should be based on fields",
 				CL.CL_DEFAULT_ENVIRONMENT,
 				new HashFocusedKRRLanguageEnvironment(CL.LANG));

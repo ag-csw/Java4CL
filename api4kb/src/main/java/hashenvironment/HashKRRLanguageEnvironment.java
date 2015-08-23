@@ -117,12 +117,12 @@ public class HashKRRLanguageEnvironment implements
 	}
 
 	@Override
-	public Option<KRRLanguage> focusMember() {
+	public Option<KRRLanguage> optionalFocusMember() {
 		return focusLanguage;
 	}
 
 	@Override
-	public Option<EquivalenceRelation> preserves() {
+	public Option<EquivalenceRelation> optionalPreserves() {
 		return preserves;
 	}
 

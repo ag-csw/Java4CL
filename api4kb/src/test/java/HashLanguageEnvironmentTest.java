@@ -199,7 +199,7 @@ public class HashLanguageEnvironmentTest {
 
 	boolean checkFocus(HashKRRLanguageEnvironment env) {
 		if (env.isFocused()) {
-			KRRLanguage foc = env.focusMember().value();
+			KRRLanguage foc = env.optionalFocusMember().value();
 			for (KRRLanguage member : env.members()) {
 				if (!(member.equals(foc))
 						&& (env.findMapping(member.asClass(), foc.asClass())

@@ -3,6 +3,10 @@
  */
 package cl2;
 
+import java.util.function.Function;
+import java.util.function.BiFunction;
+import java.util.function.UnaryOperator;
+
 import cl2a.CLCommentSequence;
 import cl2a.CLSimpleSentence;
 import cl2a.CLTerm;
@@ -50,13 +54,41 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		return args;
 	}
 
+    /**
+     * Returns a modified copy derived by applying functions to each of the
+     * fields: comments, operator, args.
+     * Law: when the passed operators are the identity operators, then the
+     * copy is equal to the original.
+     * Law: copy is composable.
+     * 
+     * @param commentsOperator function that modifies a CL comment sequence
+     * @param operatorOperator function that modifies a CL term
+     * @param argsOperator  function that modifies a CL term sequence
+     * @return modified copy of this CL atomic sentence
+     */
+	public CLAtomicSentence copy(
+			final Function<CLCommentSequence, ? extends CLCommentSequence> commentsOperator,
+			final Function<CLTerm, ? extends CLTerm> operatorOperator,
+			final Function<CLTermSequence, ? extends CLTermSequence> argsOperator
+			) {
+				return 
+						new CLAtomicSentence(
+								commentsOperator.apply(comments()),
+								operatorOperator.apply(operator),
+								argsOperator.apply(args)
+								);
+		
+	}
 
 	@Override
 	public CLAtomicSentence insertComments(final CLCommentSequence incomments) {
-		return new CLAtomicSentence(comments().concat(incomments), 
-				operator, args);
+		BiFunction<CLCommentSequence, CLCommentSequence, CLCommentSequence> F = CLCommentSequence::concat;
+		return copy(
+				s -> F.apply(s,incomments), 
+				s -> s, 
+				s -> s);
 	}
-
+		
 	@Override
 	public int hashCode() {
 		final int prime = 31;

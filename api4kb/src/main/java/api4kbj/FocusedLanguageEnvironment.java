@@ -1,9 +1,7 @@
 package api4kbj;
 
-import functional.Some;
-
 public interface FocusedLanguageEnvironment extends
-		KRRLanguageEnvironment {
+		KRRLanguageEnvironment, FocusedEnvironment<KRRLanguage, KnowledgeExpressionLike> {
 
 
 	/**
@@ -13,6 +11,6 @@ public interface FocusedLanguageEnvironment extends
 	 * @see #isFocused()
 	 */
 	@Override
-	Some<? extends KRRLanguage> focusMember();
+	KRRLanguage focusMember();
 
 }

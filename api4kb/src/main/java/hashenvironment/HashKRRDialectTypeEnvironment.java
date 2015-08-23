@@ -123,12 +123,12 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 	}
 
 	@Override
-	public Option<KRRDialectType<?>> focusMember() {
+	public Option<KRRDialectType<?>> optionalFocusMember() {
 		return focus;
 	}
 
 	@Override
-	public Option<EquivalenceRelation> preserves() {
+	public Option<EquivalenceRelation> optionalPreserves() {
 		return preserves;
 	}
 

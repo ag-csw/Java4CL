@@ -97,7 +97,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * @return the optional focus member of the environment
 	 * @see #isFocused()
 	 */
-	Option<? extends T> focusMember();
+	Option<? extends T> optionalFocusMember();
 
 	/**
 	 * Return the equivalence relation that is preserved by all mappings.
@@ -105,7 +105,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 	 * @return the equivalence relation that is preserved by all mappings
 	 * @see #isPreserving()
 	 */
-	Option<EquivalenceRelation> preserves();
+	Option<EquivalenceRelation> optionalPreserves();
 
 	/**
 	 * Return <tt>true</tt> if and only if the class wrapper is a member
@@ -179,7 +179,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 
 	/**
 	 * Return <tt>true</tt> if the environment has a focus. If <tt>true</tt>,
-	 * the method {@link #focusMember()} should return a Some, otherwise it
+	 * the method {@link #optionalFocusMember()} should return a Some, otherwise it
 	 * should return a None.
 	 * 
 	 * @return <tt>true</tt> if the environment has a focus
@@ -188,7 +188,7 @@ public interface Environment<T extends ClassWrapper<? extends S>, S>
 
 	/**
 	 * Return <tt>true</tt> if the environment has a property that is preserved
-	 * by the mappings. If <tt>true</tt>, the method {@link #preserves()} should
+	 * by the mappings. If <tt>true</tt>, the method {@link #optionalPreserves()} should
 	 * return a Some, otherwise it should return a None.
 	 * 
 	 * @return <tt>true</tt> if the environment has a focus

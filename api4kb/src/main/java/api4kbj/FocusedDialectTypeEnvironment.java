@@ -12,6 +12,6 @@ public interface FocusedDialectTypeEnvironment<T> extends FocusedEnvironment<KRR
 	 * @see #isFocused()
 	 */
 	@Override
-	Some<? extends KRRDialectType<T>> focusMember();
+	Some<? extends KRRDialectType<T>> optionalFocusMember();
 
 }

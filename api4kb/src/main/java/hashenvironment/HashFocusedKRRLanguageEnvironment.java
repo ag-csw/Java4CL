@@ -15,8 +15,13 @@ public class HashFocusedKRRLanguageEnvironment extends
 	}
 
 	@Override
-	public Some<KRRLanguage> focusMember() {
-		return (Some<KRRLanguage>) super.focusMember();
+	public Some<KRRLanguage> optionalFocusMember() {
+		return (Some<KRRLanguage>) super.optionalFocusMember();
+	}
+
+	@Override
+	public KRRLanguage focusMember() {
+		return optionalFocusMember().value();
 	}
 
 }
