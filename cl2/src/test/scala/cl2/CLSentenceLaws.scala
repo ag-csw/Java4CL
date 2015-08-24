@@ -55,7 +55,12 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
       cl2.toJavaFunction {s => s},
       cl2.toJavaFunction {s => s},
       cl2.toJavaFunction {s => s}
-      )
+      ) &&
+    atom.hashCode() == atom.copy(
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s}
+      ).hashCode()
   }
 
   def atomComposeIdentity(
