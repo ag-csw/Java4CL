@@ -1,14 +1,10 @@
 package cl2
-package cl2.cl2laws
 
 import cl2._
-import cl2a._
 import java.util.function._
+import scala.compat.java8._
 import org.scalatest._
 import org.scalatest.matchers._
-import prop.PropertyChecks
-import scala.collection.immutable.List
-import org.scalacheck.Gen
 import org.scalacheck.Prop
 import collection.JavaConversions._
 import api4kbj.KnowledgeSourceLevel._
@@ -26,11 +22,24 @@ trait CLSentenceLaws extends Laws {
 
 object CLAtomicSentenceLaws extends CLSentenceLaws {
   
+    val idCLCommentSequence:Function[CLCommentSequence, CLCommentSequence] = new Function[CLCommentSequence, CLCommentSequence] {
+      override def apply(a: CLCommentSequence): CLCommentSequence = a
+    }
+
+    val idCLTerm = new Function[CLTerm, CLTerm] {
+      override def apply(a: CLTerm): CLTerm = a
+    }
+    
+    val idCLTermSequence = new Function[CLTermSequence, CLTermSequence] {
+      override def apply(a: CLTermSequence): CLTermSequence = a
+    }
+    
     def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>
     atom == atom.copy(
-      (s => identity[CLCommentSequence](s)).asInstanceOf[UnaryOperator[CLCommentSequence]],
-      (s => identity[CLTerm](s)).asInstanceOf[UnaryOperator[CLTerm]],
-      (s => identity[CLTermSequence](s)).asInstanceOf[UnaryOperator[CLTermSequence]])
+      idCLCommentSequence,
+      idCLTerm,
+      idCLTermSequence
+      )
   }
 
   def atomComposeIdentity(

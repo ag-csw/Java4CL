@@ -5,7 +5,6 @@ package cl2;
 
 import java.util.function.Function;
 import java.util.function.BiFunction;
-import java.util.function.UnaryOperator;
 
 import cl2a.CLCommentSequence;
 import cl2a.CLSimpleSentence;

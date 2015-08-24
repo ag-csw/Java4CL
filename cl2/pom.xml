@@ -20,7 +20,7 @@
 					<suites>
 						TestAll,
 						cl2.CLAtomicSentenceTest,
-						cl2.cl2laws.CLAtomicSentenceLawTest,
+						cl2.CLAtomicSentenceLawTest,
 						<!--cl2.CLConjunctionTest, cl2.CLFunctionalTermTest, cl2.CLInDiscourseStatementTest, -->
 						cl2.CLStringCommentTest,
 						cl2.CLStringInterpretableNameTest,
@@ -98,12 +98,17 @@
 		<dependency>
 			<groupId>org.typelevel</groupId>
 			<artifactId>discipline_2.11</artifactId>
-			<version>0.4</version>
+			<version>0.3</version>
 		</dependency>
 		<dependency>
-	        <groupId>org.spire-math</groupId>
-	        <artifactId>algebra_2.11</artifactId>
-	        <version>0.3.1</version>
-        </dependency>
+			<groupId>org.spire-math</groupId>
+			<artifactId>algebra_2.11</artifactId>
+			<version>0.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang.modules</groupId>
+			<artifactId>scala-java8-compat_2.11</artifactId>
+			<version>0.5.0</version>
+		</dependency>
 	</dependencies>
 </project>

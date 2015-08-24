@@ -74,7 +74,21 @@ object CLGenerators {
   val clsequencemarkergen: Gen[CLSequenceMarker] = clstringsequencemarkergen
       
  //CLFunctionalTerm
-  val clfunctionaltermgen: Gen[CLFunctionalTerm] =
+  val clfunctionalterm0gen: Gen[CLFunctionalTerm] =
+    for {
+      comments <- clcommentsequencegen
+      operator <- clnamegen
+      args <- cltermsequence0gen
+    } yield new CLFunctionalTerm(comments, operator, args)
+
+  val clfunctionalterm1gen: Gen[CLFunctionalTerm] =
+    for {
+      comments <- clcommentsequencegen
+      operator <- clterm1gen
+      args <- cltermsequence1gen
+    } yield new CLFunctionalTerm(comments, operator, args)
+
+    val clfunctionaltermgen: Gen[CLFunctionalTerm] =
     for {
       comments <- clcommentsequencegen
       operator <- cltermgen
@@ -82,14 +96,26 @@ object CLGenerators {
     } yield new CLFunctionalTerm(comments, operator, args)
 
  //CLTerm
-  val cltermgen: Gen[CLTerm] = Gen.frequency(
+  val clterm1gen: Gen[CLTerm] = Gen.frequency(
     (1, clnamegen),
+    (1, clfunctionalterm0gen))
+
+  val cltermgen: Gen[CLTerm] = Gen.frequency(
+    (100, clnamegen),
     (1, clfunctionaltermgen))
 
   val cllisttermgen: Gen[List[CLTerm]] =
     Gen listOf (cltermgen)
 
  //CLTermOrSequenceMarker
+  val cltermorsequencemarker0gen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
+    (1, clnamegen),
+    (1, clsequencemarkergen))
+
+  val cltermorsequencemarker1gen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
+    (1, clterm1gen),
+    (1, clsequencemarkergen))
+
   val cltermorsequencemarkergen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
     (1, cltermgen),
     (1, clsequencemarkergen))
@@ -98,6 +124,14 @@ object CLGenerators {
     Gen listOf (cltermorsequencemarkergen)
 
  //CLTermSequence
+  val cltermsequence0gen: Gen[CLTermSequence] =
+    for {a <- Gen listOf (cltermorsequencemarker0gen)}
+      yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
+
+  val cltermsequence1gen: Gen[CLTermSequence] =
+    for {a <- Gen listOf (cltermorsequencemarker1gen)}
+      yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
+
   val cltermsequencegen: Gen[CLTermSequence] =
     for {a <- cllisttermorsequencemarkergen}
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
@@ -105,8 +139,8 @@ object CLGenerators {
   val clatomgen: Gen[CLAtomicSentence] =
     for {
       comments <- clcommentsequencegen
-      operator <- cltermgen
-      args <- cltermsequencegen
+      operator <- clterm1gen
+      args <- cltermsequence1gen
     } yield new CLAtomicSentence(comments, operator, args)
 
   implicit val arbCLAtomicSentence = Arbitrary(clatomgen)
