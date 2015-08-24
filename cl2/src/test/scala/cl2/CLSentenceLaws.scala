@@ -22,12 +22,27 @@ trait CLSentenceLaws extends Laws {
     sent.isBasic() == true
   }
   
+  def sentenceEqualsItselfIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
+    sent.equals(sent) == true
+  }
+  
+  def sentenceNotEqualNullIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
+    sent.equals(null) == false
+  }
+  
+  def sentenceNotEqualTermIdentity: Prop = Prop.forAll { ((sent: CLSentence), (term:CLTerm) ) =>
+    sent.equals(term) == false
+  }
+  
   def sentence:RuleSet = new RuleSet {
      def name = "sentence"
       def bases: Seq[(String, Laws#RuleSet)] = Seq()
       def parents: Seq[RuleSet] = Seq()
      def props = Seq(
-       ("Sentence is Basic", sentenceIsBasicIdentity)    
+       ("Sentence is Basic", sentenceIsBasicIdentity),    
+       ("Sentence equals itself", sentenceEqualsItselfIdentity),   
+       ("Sentence not equal null", sentenceNotEqualNullIdentity),   
+       ("Sentence not equal term", sentenceNotEqualTermIdentity)   
      )
   }
 

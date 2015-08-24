@@ -74,6 +74,18 @@ class CLAtomicSentenceTest extends FlatSpec
     for (a <- clliststringinamegen)
       yield new CLTermSequenceArray(a.toArray[CLStringInterpretableName]: _*)
 
+  "A CLAtomicSentence constructor call with null argument" should "throw a NullPointerException" in {
+    intercept[NullPointerException]{
+      val testfragment = new CLAtomicSentence(comments1, null, termsequence1)
+    }
+    intercept[NullPointerException]{
+      val testfragment = new CLAtomicSentence(comments1, operator1, null)
+    }
+    intercept[NullPointerException]{
+      val testfragment = new CLAtomicSentence(comments1, null, null)
+    }
+  }  
+  
   "A CLAtomicSentence" should "be basic" in {
     (testexpression1 isBasic) should be(true)
   }
