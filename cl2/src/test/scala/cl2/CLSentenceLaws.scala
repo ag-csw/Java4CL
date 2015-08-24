@@ -17,6 +17,8 @@ import org.typelevel.discipline._
  * Laws that must be obeyed by any `CL atomic sentence`.
  */
 trait CLSentenceLaws extends Laws {
+  
+  val emptyComments = new CLCommentSequenceArray()
 
   def sentenceIsBasicIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
     sent.isBasic() == true
@@ -33,7 +35,11 @@ trait CLSentenceLaws extends Laws {
   def sentenceNotEqualTermIdentity: Prop = Prop.forAll { ((sent: CLSentence), (term:CLTerm) ) =>
     sent.equals(term) == false
   }
-  
+
+  def sentenceEqualsCopyWithEmptyCommentsInsertedIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
+    sent.equals(sent.insertComments(emptyComments)) == true
+  }
+
   def sentence:RuleSet = new RuleSet {
      def name = "sentence"
       def bases: Seq[(String, Laws#RuleSet)] = Seq()
@@ -42,7 +48,8 @@ trait CLSentenceLaws extends Laws {
        ("Sentence is Basic", sentenceIsBasicIdentity),    
        ("Sentence equals itself", sentenceEqualsItselfIdentity),   
        ("Sentence not equal null", sentenceNotEqualNullIdentity),   
-       ("Sentence not equal term", sentenceNotEqualTermIdentity)   
+       ("Sentence not equal term", sentenceNotEqualTermIdentity),   
+       ("Sentence equals copy with empty comments inserted", sentenceEqualsCopyWithEmptyCommentsInsertedIdentity)   
      )
   }
 
