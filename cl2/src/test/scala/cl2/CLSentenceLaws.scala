@@ -18,27 +18,28 @@ import org.typelevel.discipline._
  */
 trait CLSentenceLaws extends Laws {
 
+  def sentenceIsBasicIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
+    sent.isBasic() == true
+  }
+  
+  def sentence:RuleSet = new RuleSet {
+     def name = "sentence"
+      def bases: Seq[(String, Laws#RuleSet)] = Seq()
+      def parents: Seq[RuleSet] = Seq()
+     def props = Seq(
+       ("Sentence is Basic", sentenceIsBasicIdentity)    
+     )
+  }
+
 }
 
 object CLAtomicSentenceLaws extends CLSentenceLaws {
-  
-    val idCLCommentSequence:Function[CLCommentSequence, CLCommentSequence] = new Function[CLCommentSequence, CLCommentSequence] {
-      override def apply(a: CLCommentSequence): CLCommentSequence = a
-    }
-
-    val idCLTerm = new Function[CLTerm, CLTerm] {
-      override def apply(a: CLTerm): CLTerm = a
-    }
-    
-    val idCLTermSequence = new Function[CLTermSequence, CLTermSequence] {
-      override def apply(a: CLTermSequence): CLTermSequence = a
-    }
-    
+      
     def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>
     atom == atom.copy(
-      idCLCommentSequence,
-      idCLTerm,
-      idCLTermSequence
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s}
       )
   }
 
@@ -60,7 +61,7 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
    def atom:RuleSet = new RuleSet {
      def name = "atom"
       def bases: Seq[(String, Laws#RuleSet)] = Seq()
-      def parents: Seq[RuleSet] = Seq()
+      def parents: Seq[RuleSet] = Seq(sentence)
      def props = Seq(
        ("Identity Copy", atomIdentityIdentity)    
      )

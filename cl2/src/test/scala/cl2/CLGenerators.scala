@@ -144,7 +144,12 @@ object CLGenerators {
     } yield new CLAtomicSentence(comments, operator, args)
 
   implicit val arbCLAtomicSentence = Arbitrary(clatomgen)
-    
+
+  //TODO add more types of Sentence
+  val clsentencegen: Gen[CLSentence] = clatomgen
+
+  implicit val arbCLSentence = Arbitrary(clsentencegen)
+
   //TODO make a valid IRI generator by assembling from segments
 
   //TODO use the IRI generator to make a data generator with arbitrary IRI datatype
