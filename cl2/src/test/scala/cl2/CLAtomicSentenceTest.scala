@@ -14,6 +14,8 @@ import api4kbj.KnowledgeSourceLevel._
 import cl2a._
 import cl2array._
 
+import CLGenerators._
+
 class CLAtomicSentenceTest extends FlatSpec 
   with Matchers 
   with PropertyChecks{
@@ -42,37 +44,6 @@ class CLAtomicSentenceTest extends FlatSpec
   val testexpression5 = new CLAtomicSentence(comments1, operator3, termsequence1)
   val testexpression6 = new CLAtomicSentence(comments1, operator1, termsequence3)
 
-  val clstringsymbolgen: Gen[String] =
-    for (
-      a <- Gen listOf (
-        for (i <- Gen choose (9, Character.MAX_CODE_POINT))
-          yield String copyValueOf (Character toChars i))
-    ) yield (a mkString) replaceAll ("[\\p{Cc}&&[^\r\n\t]]", "")
-
-  val clstringinamegen: Gen[CLStringInterpretableName] =
-    for (s <- clstringsymbolgen)
-      yield new CLStringInterpretableName(s)
-
-  val clliststringinamesymbolgen: Gen[List[String]] = 
-      Gen listOf clstringsymbolgen
-
-  val clliststringinamegen: Gen[List[CLStringInterpretableName]] = 
-    Gen listOf clstringinamegen
-
-  val clstringcommentgen: Gen[CLStringComment] =
-    for (s <- clstringsymbolgen)
-      yield new CLStringComment(s)
-
-  val clliststringcommentgen: Gen[List[CLStringComment]] = 
-    Gen listOf clstringcommentgen
-
-  val clstringcommentsequencegen: Gen[CLCommentSequence] = 
-    for (a <- Gen listOf clstringcommentgen)
-      yield new CLCommentSequenceArray(a.toArray[CLStringComment]: _*)
-  
-  val cltermsequencegen: Gen[CLTermSequence] = 
-    for (a <- clliststringinamegen)
-      yield new CLTermSequenceArray(a.toArray[CLStringInterpretableName]: _*)
 
   "A CLAtomicSentence constructor call with null argument" should "throw a NullPointerException" in {
     intercept[NullPointerException]{
@@ -99,7 +70,7 @@ class CLAtomicSentenceTest extends FlatSpec
   }
 
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
-    forAll((clstringinamegen, "operator"), minSuccessful(100)) { (operator: CLStringInterpretableName) =>
+    forAll((cltermgen, "operator"), minSuccessful(100)) { (operator: CLTerm) =>
       val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)
       (testexpression operator) should be(operator)
     }
@@ -114,7 +85,7 @@ class CLAtomicSentenceTest extends FlatSpec
 
   "The term sequence of a CLAtomicSentence from a length one term sequence" should
     "be equal to the parameter passed to the term constructor 1" in {
-      forAll((clstringinamegen, "term1")) { (term1: CLStringInterpretableName) =>
+      forAll((cltermgen, "term1")) { (term1: CLTerm) =>
         val termsequence = new CLTermSequenceArray(term1)
         val testexpression = new CLAtomicSentence(comments1, operator1, termsequence)
         (testexpression args) should equal(termsequence)
@@ -123,7 +94,7 @@ class CLAtomicSentenceTest extends FlatSpec
 
   "The term sequence of a CLAtomicSentence from a length one term sequence" should
     "be equal to the parameter passed to the term constructor 2" in {
-      forAll((clstringinamegen, "operator"), minSuccessful(100)) { (operator: CLStringInterpretableName) =>
+      forAll((cltermgen, "operator"), minSuccessful(100)) { (operator: CLTerm) =>
         val termsequence = new CLTermSequenceArray(testfragment1)
         val testexpression = new CLAtomicSentence(comments1, operator, termsequence)
         val testargs = testexpression.args()
@@ -133,7 +104,7 @@ class CLAtomicSentenceTest extends FlatSpec
 
   "The term sequence of a CLAtomicSentence constructed from a length two term sequence" should
     "be equal to the parameter passed to the term constructor" in {
-      forAll((clstringinamegen, "term1"), (clstringinamegen, "term1")) { (term1: CLStringInterpretableName, term2: CLStringInterpretableName) =>
+      forAll((cltermgen, "term1"), (cltermgen, "term2")) { (term1: CLTerm, term2: CLTerm) =>
         val termsequence = new CLTermSequenceArray(term1, term2)
         val testexpression = new CLAtomicSentence(comments1, operator1, termsequence)
         (testexpression args) should equal(termsequence)
@@ -141,8 +112,8 @@ class CLAtomicSentenceTest extends FlatSpec
     }
 
   "The components of a CLAtomicSentence" should "equal the argument passed to the term constructor" in {
-    forAll((clstringcommentsequencegen, "commentsequence"), (clstringinamegen, "operator"), (cltermsequencegen, "termsequence")) {
-      (commentsequence: CLCommentSequence, operator: CLStringInterpretableName, termsequence: CLTermSequence) =>
+    forAll((clcommentsequencegen, "commentsequence"), (cltermgen, "operator"), (cltermsequencegen, "termsequence")) {
+      (commentsequence: CLCommentSequence, operator: CLTerm, termsequence: CLTermSequence) =>
         val testexpression = new CLAtomicSentence(commentsequence, operator, termsequence)
         (testexpression comments) should equal(commentsequence)
         (testexpression operator) should equal(operator)
@@ -160,20 +131,10 @@ class CLAtomicSentenceTest extends FlatSpec
   }
 
   "Equality of CLAtomicSentence" should "depend only on its fields 2" in {
-    forAll((clstringcommentsequencegen, "commentsequence"), (clstringinamegen, "operator"), (cltermsequencegen, "termsequence")) {
-      (commentsequence: CLCommentSequence, operator: CLStringInterpretableName, termsequence: CLTermSequence) =>        
-        val commentsequence2 = new CLCommentSequenceArray(commentsequence args)
+    forAll((clatomgen, "atom")) {
+      (atom: CLAtomicSentence) =>        
 
-        val operator2 = new CLStringInterpretableName(operator symbol)
-
-        val termsarray: Array[CLTermOrSequenceMarker] = (termsequence args) toArray new Array[CLTermOrSequenceMarker](0)
-        val termsequence2 = new CLTermSequenceArray(termsequence args)
-
-
-        val testexpression = new CLAtomicSentence(commentsequence, operator, termsequence)
-        val testexpression2 = new CLAtomicSentence(commentsequence2, operator2, termsequence2)
-
-        (testexpression) should equal(testexpression2)
+        (atom) should equal(atom.copy())
     }
   }
   

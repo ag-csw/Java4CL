@@ -15,17 +15,38 @@ import cl2a._
 import cl2array._
 
 object CLGenerators {
-
-  val clstringsymbolgen: Gen[String] = for (
-    a <- Gen listOf (
-      for {i <- Gen choose (9, Character MAX_CODE_POINT)}
-        yield String copyValueOf (Character toChars i))
-  ) yield (a mkString) replaceAll ("[\\p{Cc}&&[^\r\n\t]]", "")
+  
+  
+  /**
+   * generator of Strings of length 1 or 2 corresponding to a
+   * single Unicode character
+   * matching the XML 1.0, version 5 Char production 
+   */
+   val xmlcharactergen: Gen[String] = 
+     for {i <- Gen frequency (
+         (3, Gen.oneOf(Seq(0x9, 0xA, 0xD))),    
+         (0xD7FF - 0x20 + 1, Gen.choose(0x20, 0xD7FF)),    
+         (0xFFFD - 0xE000 + 1, Gen.choose(0xE000, 0xFFFD)),    
+         (0x10FFF - 0x10000 + 1, Gen.choose(0x10000, 0x10FFF))    
+       ) }
+     yield String copyValueOf (Character toChars i)
+   
+  /**
+   * generator of arbitrary length Strings of Unicode characters
+   * matching the XML 1.0, version 5 Char production 
+   */
+  val clstringsymbolgen: Gen[String] = 
+    for {a <- Gen listOf (xmlcharactergen) }
+    yield (a mkString)
 
   //CLComent
+  /**
+   * gemerator of CL comments whose comment data (symbol)
+   * is String symbol according to clstringsymbolgen
+   */
   val clstringcommentgen: Gen[CLStringComment] =
     for {s <- clstringsymbolgen}
-      yield new CLStringComment(s)
+    yield new CLStringComment(s)
 
   //TODO also need other kinds of comments
   val clcommentgen: Gen[CLComment] = clstringcommentgen
@@ -34,13 +55,21 @@ object CLGenerators {
       Gen listOf (clcommentgen)
 
  //CLCommentSequence
+  /**
+   * generator of CL comment sequences, which may be
+   * used in generators of "commentable" Cl terms and expressions    
+   */
   val clcommentsequencegen: Gen[CLCommentSequence] =
-    for {a <- cllistcommentgen}
-      yield new CLCommentSequenceArray(a.toArray[CLComment]: _*)
+    for {a <- Gen listOf (clcommentgen)}
+    yield new CLCommentSequenceArray(a.toArray[CLComment]: _*)
 
   implicit val arbCLCommentSequence = Arbitrary(clcommentsequencegen)
 
   //CLInterpretableName
+  /**
+   * generator of CL interpretable name with a
+   * String symbol, as defined for clstringsymbolgen
+   */
   val clstringinamegen: Gen[CLStringInterpretableName] = for {s <- clstringsymbolgen}
     yield new CLStringInterpretableName(s)
 
@@ -54,6 +83,10 @@ object CLGenerators {
     Gen listOf (clstringinamegen)
 
   //CLInterpretedName
+  /**
+   * generator for a Cl interpreted name with fixed interpretation
+   * as a string of Unicode characters and datatype xsd:string  
+   */
   val clstringdatagen: Gen[CLStringIriInterpretedName] = for {s <- clstringsymbolgen}
     yield CLStringIriInterpretedName.createCLStringIriInterpretedNameFromString(s)
 
@@ -61,16 +94,23 @@ object CLGenerators {
   val cldatagen: Gen[CLInterpretedName] = clstringdatagen
 
   //CLName
+  /**
+   * generator for CL names, with equal probability
+   * of interpretable and interpreted names
+   */
   val clnamegen: Gen[CLName] = Gen.frequency(
     (1, clinamegen),
     (1, cldatagen))
 
   //CLSequenceMarker
+  /**
+   * generator for CL sequence markers with string symbols  
+   */
   val clstringsequencemarkergen =
     for { s <- clstringsymbolgen }
       yield new CLStringSequenceMarker(s)
 
-  //TODO also need other sequence markers
+  //TODO also need non-string sequence markers
   val clsequencemarkergen: Gen[CLSequenceMarker] = clstringsequencemarkergen
       
  //CLFunctionalTerm
@@ -158,6 +198,18 @@ object CLGenerators {
   implicit val arbCLSentence = Arbitrary(clsentencegen)
 
   //TODO make a valid IRI generator by assembling from segments
+  //IRI            = scheme ":" ihier-part [ "?" iquery ]
+   //                         [ "#" ifragment ]
+  //val irischemegen:Gen[String] =
+    
+  // iprivate       = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD
+   val iriiprivategen: Gen[String] = 
+     for {i <- Gen frequency (
+         (0xF8FF - 0xE000 + 1, Gen.choose(0xE000, 0xF8FF)),    
+         (0xFFFFD - 0xF0000 + 1, Gen.choose(0xF0000, 0xFFFFD)),    
+         (0x10FFFD - 0x100000 + 1, Gen.choose(0x100000, 0x10FFFD))    
+       ) }
+     yield String copyValueOf (Character toChars i)
 
   //TODO use the IRI generator to make a data generator with arbitrary IRI datatype
 

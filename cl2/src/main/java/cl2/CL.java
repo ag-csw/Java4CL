@@ -1,12 +1,17 @@
 package cl2;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Function;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -134,7 +139,21 @@ public final class CL {
 	}
 	
 	public static boolean isValidStringSymbol(String symbol){
-		return symbol.replaceAll("[\\p{Cc}&&[^\r\n\t]]", "").equals(symbol);
+		
+	  Function<Integer, Boolean> bad = s -> (
+			                   (s < 0x9)         // control
+			  || ((s > 0xA) && (s < 0xD))        // control
+			  || ((s > 0xD) && (s < 0x20))       // control
+			  || ((s > 0xD7FF) && (s < 0xE000))  // surrogates
+			  || ((s > 0xFFFD) && (s < 0x10000))  // not a character
+			);
+      int[] points = toCodePointArray(symbol);
+	  for (int point :points) {
+		if (bad.apply(point)){
+			return false;
+		}
+	  }
+     return true;
 	}
 
 	public static String xmlContentEncode(String text) {
@@ -148,6 +167,19 @@ public final class CL {
 
 	public static String xmlAttributeEncodeIri(CLIRI datatype) {
 		return StringEscapeUtils.escapeXml(datatype.toString());
+	}
+	
+	// From http://www.ibm.com/developerworks/library/j-unicode/
+	static int[] toCodePointArray(String str) { // Example 1-5
+	    int len = str.length();          // the length of str
+	    int[] acp = new int[str.codePointCount(0, len)];
+	    int j = 0;                       // an index for acp
+
+	    for (int i = 0, cp; i < len; i += Character.charCount(cp)) {
+	        cp = str.codePointAt(i);
+	        acp[j++] = cp;
+	    }
+	    return acp;
 	}
 
 }

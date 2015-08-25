@@ -125,6 +125,9 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		return true;
 	}
 
+	CLAtomicSentence copy() {
+		return new CLAtomicSentence(comments(), operator, args);
+	}
 	
 	
 }
