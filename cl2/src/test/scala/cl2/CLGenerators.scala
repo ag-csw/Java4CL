@@ -51,18 +51,18 @@ object CLGenerators {
   //TODO also need other kinds of comments
   val clcommentgen: Gen[CLComment] = clstringcommentgen
 
-  val cllistcommentgen: Gen[List[CLComment]] =
-      Gen listOf (clcommentgen)
-
  //CLCommentSequence
   /**
-   * generator of CL comment sequences, which may be
+   * generator of CL comment sequences (array-based instances), which may be
    * used in generators of "commentable" Cl terms and expressions    
    */
-  val clcommentsequencegen: Gen[CLCommentSequence] =
+  val clcommentsequencearraygen: Gen[CLCommentSequence] =
     for {a <- Gen listOf (clcommentgen)}
     yield new CLCommentSequenceArray(a.toArray[CLComment]: _*)
 
+  //TODO also need other kinds of comment sequences
+  val clcommentsequencegen: Gen[CLCommentSequence] = clcommentsequencearraygen
+  
   implicit val arbCLCommentSequence = Arbitrary(clcommentsequencegen)
 
   //CLInterpretableName
@@ -75,12 +75,6 @@ object CLGenerators {
 
   //TODO also need interpretable names with non-string symbols
   val clinamegen: Gen[CLInterpretableName] = clstringinamegen
-
-  val clliststringinamesymbolgen: Gen[List[String]] =
-    Gen listOf (clstringsymbolgen)
-
-  val clliststringinamegen: Gen[List[CLStringInterpretableName]] =
-    Gen listOf (clstringinamegen)
 
   //CLInterpretedName
   /**
@@ -114,88 +108,122 @@ object CLGenerators {
   val clsequencemarkergen: Gen[CLSequenceMarker] = clstringsequencemarkergen
       
  //CLFunctionalTerm
+  val depth = 3;
+  /**
+   * generator for zero-depth functional terms,
+   * having no nested functional terms
+   */
   val clfunctionalterm0gen: Gen[CLFunctionalTerm] =
     for {
       comments <- clcommentsequencegen
       operator <- clnamegen
-      args <- cltermsequence0gen
+      args <- clnamesequencegen
     } yield new CLFunctionalTerm(comments, operator, args)
 
+  /**
+   * generator for functional terms with depth 1,
+   * possibly having nested zero-depth functional terms
+   */
   val clfunctionalterm1gen: Gen[CLFunctionalTerm] =
     for {
       comments <- clcommentsequencegen
-      operator <- clterm1gen
-      args <- cltermsequence1gen
+      operator <- clterm0gen
+      args <- clterm0sequencegen
     } yield new CLFunctionalTerm(comments, operator, args)
 
-    val clfunctionaltermgen: Gen[CLFunctionalTerm] =
-    for {
-      comments <- clcommentsequencegen
-      operator <- cltermgen
-      args <- cltermsequencegen
-    } yield new CLFunctionalTerm(comments, operator, args)
+  /**
+   * generator for recursively defined functional terms,
+   * of depth d
+   */
+    def clfunctionaltermgen(d: Int): Gen[CLFunctionalTerm] =
+      if (d<=0) clfunctionalterm0gen
+      else
+        for {
+          comments <- clcommentsequencegen
+          operator <- cltermgen(d-1)
+          args <- cltermsequencegen(d-1)
+        } yield new CLFunctionalTerm(comments, operator, args)
+
+   implicit val arbCLFunctionalTerm = Arbitrary(clfunctionaltermgen(depth))
 
  //CLTerm
-  val clterm1gen: Gen[CLTerm] = Gen.frequency(
-    (1, clnamegen),
+  val clterm0gen: Gen[CLTerm] = Gen.frequency(
+    (100, clnamegen),
     (1, clfunctionalterm0gen))
 
-  val clterm2gen: Gen[CLTerm] = Gen.frequency(
-    (1, clnamegen),
+  val clterm1gen: Gen[CLTerm] = Gen.frequency(
+    (100, clnamegen),
     (1, clfunctionalterm1gen))
 
-  val cltermgen: Gen[CLTerm] = Gen.frequency(
-    (100, clnamegen),
-    (1, clfunctionaltermgen))
+  def cltermgen(d: Int): Gen[CLTerm] = Gen.frequency(
+      (100, clnamegen),
+      (1, clfunctionaltermgen(d)))
 
-  implicit val arbCLTerm = Arbitrary(clterm2gen)
+  implicit val arbCLTerm = Arbitrary(cltermgen(depth))
     
-  val cllisttermgen: Gen[List[CLTerm]] =
-    Gen listOf (cltermgen)
-
  //CLTermOrSequenceMarker
-  val cltermorsequencemarker0gen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
+  val clnameorsequencemarkergen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
     (1, clnamegen),
     (1, clsequencemarkergen))
 
-  val cltermorsequencemarker1gen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
+  val clterm0orsequencemarkergen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
+    (1, clterm0gen),
+    (1, clsequencemarkergen))
+
+  val clterm1orsequencemarkergen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
     (1, clterm1gen),
     (1, clsequencemarkergen))
 
-  val cltermorsequencemarkergen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
-    (1, cltermgen),
+  def cltermorsequencemarkergen(d: Int): Gen[CLTermOrSequenceMarker] = Gen.frequency(
+    (1, cltermgen(d)),
     (1, clsequencemarkergen))
 
-  val cllisttermorsequencemarkergen: Gen[List[CLTermOrSequenceMarker]] =
-    Gen listOf (cltermorsequencemarkergen)
+  implicit val arbCLTermOrSequenceMarker = Arbitrary(clterm1orsequencemarkergen)
 
  //CLTermSequence
-  val cltermsequence0gen: Gen[CLTermSequence] =
-    for {a <- Gen listOf (cltermorsequencemarker0gen)}
+  /**
+   * generator for terms sequences containing no functional term
+   */
+  val clnamesequencearraygen: Gen[CLTermSequence] =
+    for {a <- Gen listOf (clnameorsequencemarkergen)}
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
 
-  val cltermsequence1gen: Gen[CLTermSequence] =
-    for {a <- Gen listOf (cltermorsequencemarker1gen)}
+  //TODO need other types of sequences
+  val clnamesequencegen = clnamesequencearraygen
+  
+  /**
+   * generator for terms sequences containing functional term of depth at most zero
+   */
+  val clterm0sequencearraygen: Gen[CLTermSequence] =
+    for {a <- Gen listOf (clterm0orsequencemarkergen)}
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
 
-  val cltermsequencegen: Gen[CLTermSequence] =
-    for {a <- cllisttermorsequencemarkergen}
+      //TODO need other types of sequences
+  val clterm0sequencegen = clterm0sequencearraygen
+
+  def cltermsequencearraygen(d: Int): Gen[CLTermSequenceArray] =
+    for {a <- Gen listOf (cltermorsequencemarkergen(d))}
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
 
+  //TODO need other types of sequences
+  def cltermsequencegen(d:Int):Gen[CLTermSequence] = cltermsequencearraygen(d)
+
+  implicit val arbCLTermSequence = Arbitrary(cltermsequencegen(depth))
       
-  val clatomgen: Gen[CLAtomicSentence] =
+      
+  def clatomgen(d: Int): Gen[CLAtomicSentence] =
     for {
       comments <- clcommentsequencegen
-      operator <- clterm1gen
-      args <- cltermsequence1gen
+      operator <- cltermgen(d)
+      args <- cltermsequencegen(d)
     } yield new CLAtomicSentence(comments, operator, args)
-
-  implicit val arbCLAtomicSentence = Arbitrary(clatomgen)
+    
+  implicit val arbCLAtomicSentence = Arbitrary(clatomgen(depth))
 
   //TODO add more types of Sentence
-  val clsentencegen: Gen[CLSentence] = clatomgen
+  def clsentencegen(d: Int): Gen[CLSentence] = clatomgen(d)
 
-  implicit val arbCLSentence = Arbitrary(clsentencegen)
+  implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
 
   //TODO make a valid IRI generator by assembling from segments
   //IRI            = scheme ":" ihier-part [ "?" iquery ]
