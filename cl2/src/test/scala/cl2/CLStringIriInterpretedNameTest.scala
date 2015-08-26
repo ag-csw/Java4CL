@@ -15,6 +15,7 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Generat
   val datatypeString1 = "http://www.w3.org/2001/XMLSchema#string"
   val datatypeString2 = "http://www.w3.org/2001/XMLSchema#string"
   val datatypeString3 = "http://www.w3.org/2001/XMLSchema#token"
+  val datatype1 = new CLIRI(datatypeString1)
   val testfragment1 = createCLStringIriInterpretedNameFromStringIRI(symbol1, datatypeString1)
   val testfragment2 = createCLStringIriInterpretedNameFromStringIRI(symbol2, datatypeString2)
   val testfragment3 = createCLStringIriInterpretedNameFromStringIRI(symbol3, datatypeString3)
@@ -24,6 +25,12 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Generat
   "A CLStringIriInterpretedName constructor call with null argument" should "throw a NullPointerException" in {
     intercept[NullPointerException]{
       val testfragment = createCLStringIriInterpretedNameFromStringIRI(null, datatypeString1)
+    }
+    intercept[NullPointerException]{
+      val testfragment = createCLStringIriInterpretedNameFromStringIRI(symbol1, null)
+    }
+    intercept[NullPointerException]{
+      val testfragment = new CLStringIriInterpretedName(null, datatype1)
     }
     intercept[NullPointerException]{
       val testfragment = new CLStringIriInterpretedName(symbol1, null)
