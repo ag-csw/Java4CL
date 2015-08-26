@@ -5,6 +5,7 @@ package cl2array;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import cl2a.CLTermOrSequenceMarker;
 import cl2a.CLTermSequence;
@@ -24,12 +25,12 @@ public class CLTermSequenceArray extends CLTermSequence {
 		this.args = args;
 	}
 
-	public <T extends CLTermOrSequenceMarker> CLTermSequenceArray(Collection<T> terms) {
+	public <T extends CLTermOrSequenceMarker> CLTermSequenceArray(List<T> terms) {
 		this(terms.toArray(new CLTermOrSequenceMarker[0]));
 	}
 
 	@Override
-	public Collection<? extends CLTermOrSequenceMarker> args() {
+	public List<? extends CLTermOrSequenceMarker> args() {
 		return Arrays.asList(args);
 	}
 

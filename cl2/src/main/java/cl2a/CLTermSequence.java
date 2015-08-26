@@ -1,16 +1,16 @@
 package cl2a;
 
-import java.util.Collection;
+import java.util.List;
 
 
 
 public abstract class CLTermSequence extends CLExpressionLike {
-
+	
 	public CLTermSequence() {
 		super();
 	}
 
-	public abstract Collection<? extends CLTermOrSequenceMarker> args();
+	public abstract List<? extends CLTermOrSequenceMarker> args();
 
 	public abstract int length();
 
