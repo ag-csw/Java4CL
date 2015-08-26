@@ -87,6 +87,8 @@ trait CLSentenceLaws extends CLExpressionLaws {
 
 }
 
+object CLSentenceLaws extends CLSentenceLaws
+
 object CLAtomicSentenceLaws extends CLSentenceLaws {
       
     def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>

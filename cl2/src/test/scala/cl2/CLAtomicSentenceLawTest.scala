@@ -20,5 +20,6 @@ class CLAtomicSentenceLawTest extends FunSuiteLike with Discipline {
   
     checkAll("CLAtomicSentence", CLAtomicSentenceLaws.atom)
 
+    checkAll("CLSentence", CLSentenceLaws.sentence)
 
 }
