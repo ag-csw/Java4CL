@@ -10,6 +10,7 @@ import functional.Functional;
 import functional.None;
 import functional.Option;
 import functional.Some;
+import api4kbj.Immutable;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLanguageEnvironment;
 import api4kbj.KnowledgeExpression;
@@ -181,6 +182,12 @@ public class HashKRRLanguageEnvironment implements
 		} else if (!translations.equals(other.translations))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Immutable copy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*

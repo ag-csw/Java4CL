@@ -50,6 +50,10 @@ public class CLImplication extends CLBooleanSentence {
 		return new CLImplication( comments().concat(incomments), 
 				antecedent, consequent);
 	}
-	
+
+	@Override
+	public CLImplication copy() {
+		return new CLImplication(comments(), antecedent, antecedent);
+	}
 	
 }

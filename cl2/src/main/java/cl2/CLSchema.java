@@ -46,6 +46,9 @@ public class CLSchema extends CLStatement {
 				bindings, body);
 	}
 
-
+	@Override
+	public CLSchema copy() {
+		return new CLSchema(comments(), bindings, body);
+	}
 
 }

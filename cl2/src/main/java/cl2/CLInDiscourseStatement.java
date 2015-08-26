@@ -28,5 +28,9 @@ public class CLInDiscourseStatement extends CLDiscourseStatement {
 				args());
 	}
 
+	@Override
+	public CLInDiscourseStatement copy() {
+		return new CLInDiscourseStatement(comments(), args());
+	}
 
 }

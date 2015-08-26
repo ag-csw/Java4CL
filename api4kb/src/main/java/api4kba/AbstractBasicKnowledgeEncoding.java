@@ -18,7 +18,7 @@ public abstract class AbstractBasicKnowledgeEncoding implements
 	}
 
 	private final KRRFormat format;
-	private final KRRFormatType<?> wrappedFormatType;
+	protected final KRRFormatType<?> wrappedFormatType;
 	protected final Object wrappedValue;
 
 	@Override

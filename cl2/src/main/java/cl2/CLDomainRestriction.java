@@ -39,6 +39,10 @@ public class CLDomainRestriction extends CLText {
 				f.apply(this));
 	}
 
+	@Override
+	public CLDomainRestriction copy() {
+		return new CLDomainRestriction(comments(), domain, body);
+	}
 
 
 }

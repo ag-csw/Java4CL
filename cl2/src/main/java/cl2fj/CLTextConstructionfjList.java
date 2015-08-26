@@ -3,6 +3,7 @@
  */
 package cl2fj;
 
+import api4kbj.Immutable;
 import cl2a.CLCommentSequence;
 import cl2a.CLExpression;
 import cl2a.CLText;
@@ -34,6 +35,14 @@ public class CLTextConstructionfjList<A extends CLExpression>
 	@Override
 	public CLTextConstructionfjList<A> insertComments(CLCommentSequence incomments) {
 		return new CLTextConstructionfjList<A>( comments().concat(incomments), 
+				texts);
+	}
+
+	@Override
+	public Immutable copy() {
+		// TODO Auto-generated method stub
+		return new CLTextConstructionfjList<A>(
+				comments(),
 				texts);
 	}
 

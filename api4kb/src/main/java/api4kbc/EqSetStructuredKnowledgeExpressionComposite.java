@@ -7,6 +7,7 @@ import fj.F;
 import functional.EqSet;
 import functional.EqSetPolyTree;
 import api4kba.AbstractBasicKnowledgeExpression;
+import api4kba.AbstractBasicKnowledgeExpressionLike;
 import api4kbj.KRRLanguage;
 import api4kbj.StructuredKnowledgeExpression;
 
@@ -22,7 +23,7 @@ public class EqSetStructuredKnowledgeExpressionComposite<E extends AbstractBasic
 
 	private EqSetStructuredKnowledgeExpressionComposite(
 			final EqSetPolyTree<E> components) {
-		this(components.map(s -> AbstractBasicKnowledgeExpression.language_(s) ).toLeftEqSet(), components);
+		this(components.map(s -> AbstractBasicKnowledgeExpressionLike.language_(s) ).toLeftEqSet(), components);
 	}
 
 	private final EqSet<KRRLanguage> languages;
@@ -55,6 +56,12 @@ public class EqSetStructuredKnowledgeExpressionComposite<E extends AbstractBasic
 	@Override
 	public EqSet<KRRLanguage> languages() {
 		return languages;
+	}
+
+	@Override
+	public EqSetStructuredKnowledgeExpressionComposite<E> copy() {
+		// TODO Auto-generated method stub
+		return new EqSetStructuredKnowledgeExpressionComposite<E>(languages, components);
 	}
 
 }

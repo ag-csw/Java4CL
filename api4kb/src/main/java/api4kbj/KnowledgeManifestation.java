@@ -2,7 +2,6 @@ package api4kbj;
 
 import elevation.Liftable;
 import elevation.Lowerable;
-import api4kb.doc.annotation.OntologyClass;
 
 /**
  * 

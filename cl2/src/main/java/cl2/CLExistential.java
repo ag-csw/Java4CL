@@ -32,6 +32,10 @@ public class CLExistential extends CLQuantifiedSentence {
 		return new CLExistential( comments().concat(incomments), 
 				bindings(), body());
 	}
-	
+
+	@Override
+	public CLExistential copy() {
+		return new CLExistential(comments(), bindings(), body());
+	}
 	
 }

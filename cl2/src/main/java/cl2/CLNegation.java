@@ -39,6 +39,10 @@ public class CLNegation extends CLBooleanSentence {
 		return new CLNegation(comments().concat(incomments), 
 				sent);
 	}
-	
+
+	@Override
+	public CLNegation copy() {
+		return new CLNegation(comments(), sent);
+	}
 	
 }

@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.function.Function;
 
 import javax.xml.parsers.DocumentBuilder;

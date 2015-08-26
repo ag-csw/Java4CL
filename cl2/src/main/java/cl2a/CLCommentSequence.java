@@ -2,8 +2,6 @@ package cl2a;
 
 import java.util.Collection;
 
-import cl2.CLStringComment;
-
 
 
 public abstract class CLCommentSequence extends CLExpressionLike {

@@ -26,5 +26,9 @@ public class CLImportation extends CLText {
 				name);
 	}
 
+	@Override
+	public CLImportation copy() {
+		return new CLImportation(comments(), name);
+	}
 
 }

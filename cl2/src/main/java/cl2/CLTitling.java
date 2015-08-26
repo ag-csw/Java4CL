@@ -46,5 +46,10 @@ public class CLTitling extends CLStatement {
 				name, text);
 	}
 
+	@Override
+	public CLTitling copy() {
+		return new CLTitling(comments(), name, text);
+	}
+
 
 }

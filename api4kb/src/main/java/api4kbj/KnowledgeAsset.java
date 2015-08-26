@@ -1,7 +1,6 @@
 package api4kbj;
 
 import elevation.Lowerable;
-import api4kb.doc.annotation.OntologyClass;
 
 /**
  * Interface for knowledge assets, which are lowerable knowledge resources in a

@@ -29,4 +29,10 @@ public class CLOutOfDiscourseStatement extends CLDiscourseStatement {
 	}
 
 
+	@Override
+	public CLOutOfDiscourseStatement copy() {
+		return new CLOutOfDiscourseStatement(comments(), args());
+	}
+
+
 }

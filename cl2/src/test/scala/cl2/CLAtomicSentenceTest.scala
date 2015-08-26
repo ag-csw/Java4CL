@@ -57,18 +57,6 @@ class CLAtomicSentenceTest extends FlatSpec
     }
   }  
   
-  "A CLAtomicSentence" should "be basic" in {
-    (testexpression1 isBasic) should be(true)
-  }
-
-  "A CLAtomicSentence" should "use language CL" in {
-    (testexpression1 language) should be(CL.LANG)
-  }
-
-  "A CLAtomicSentence" should "have knowledge source level EXPRESSION" in {
-    (testexpression1 level) should be(EXPRESSION)
-  }
-
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
     forAll("operator", minSuccessful(100)) { (operator: CLTerm) =>
       val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)

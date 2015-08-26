@@ -28,5 +28,9 @@ public class CLEquation extends CLSimpleSentence {
 				left, right);
 	}
 
+	@Override
+	public CLEquation copy() {
+		return new CLEquation(comments(), left, right);
+	}
 
 }

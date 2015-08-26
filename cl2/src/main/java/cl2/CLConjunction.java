@@ -41,5 +41,9 @@ public class CLConjunction extends CLBooleanSentence {
 				conjuncts);
 	}
 	
+	@Override
+	public CLConjunction copy() {
+		return new CLConjunction(comments(), conjuncts);
+	}
 	
 }

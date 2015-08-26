@@ -21,6 +21,18 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
+	public HashKRRDialectTypeEnvironment(HashSet<KRRDialectType<?>> dialectTypes, 
+			Option<KRRDialectType<?>> focus, 
+			Iterable<DialectTypeMapping<?, ?>> mappings, 
+			Option<EquivalenceRelation> preserves, 
+			Option<F<BasicKnowledgeExpression, ?>> lowerer) {
+		this.dialectTypes = dialectTypes;
+		this.focus = focus;
+		this.mappings = mappings;
+		this.preserves = preserves;
+		this.lowerer = lowerer;
+	}
+
 	public HashKRRDialectTypeEnvironment(final KRRDialectType<?> dialectType) {
 		this(init(dialectType));
 	}
@@ -153,6 +165,12 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 			return null;
 		}
 		return (T) apply(lowerer.value().f(e), dialectType);
+	}
+
+	@Override
+	public HashKRRDialectTypeEnvironment copy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -10,6 +10,7 @@ import functional.Some;
 import api4kba.AbstractKRRLanguage;
 import api4kba.AbstractKRRLogic;
 import api4kbj.BasicKnowledgeExpression;
+import api4kbj.Immutable;
 import api4kbj.KRRLanguage;
 import api4kbj.KnowledgeExpression;
 
@@ -105,6 +106,12 @@ class TestKE0 extends TestKE {
 		super(value.toLowerCase(), AllTests.lang0, arg);
 	}
 
+	@Override
+	public Immutable copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
 class TestKE1 extends TestKE {
@@ -115,6 +122,12 @@ class TestKE1 extends TestKE {
 
 	TestKE1(String value, Option<TestKE1> arg) {
 		super(value, AllTests.lang1, arg);
+	}
+
+	@Override
+	public Immutable copy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
@@ -128,6 +141,12 @@ class TestKE2 extends TestKE {
 
 	TestKE2(String value, Option<TestKE2> arg) {
 		super(value.toUpperCase(), AllTests.lang2, arg);
+	}
+
+	@Override
+	public Immutable copy() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

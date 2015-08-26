@@ -51,7 +51,10 @@ public class CLBiconditional extends CLBooleanSentence {
 				left, right);
 	}
 
-
+	@Override
+	public CLBiconditional copy() {
+		return new CLBiconditional(comments(), left, right);
+	}
 	
 	
 }

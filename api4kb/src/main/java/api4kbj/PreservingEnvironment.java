@@ -1,8 +1,6 @@
 package api4kbj;
 
 import functional.EquivalenceRelation;
-import functional.Option;
-import functional.Some;
 
 public interface PreservingEnvironment<T extends ClassWrapper<? extends S>, S> extends Environment<T, S> {
 

@@ -41,6 +41,10 @@ public class CLDisjunction extends CLBooleanSentence {
 				disjuncts);
 	}
 
+	@Override
+	public CLDisjunction copy() {
+		return new CLDisjunction(comments(), disjuncts);
+	}
 	
 	
 }

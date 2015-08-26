@@ -14,5 +14,11 @@ public class CLEncoding extends AbstractBasicKnowledgeEncoding {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public CLEncoding copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

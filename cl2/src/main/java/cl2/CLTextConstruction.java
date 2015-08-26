@@ -35,6 +35,12 @@ public class CLTextConstruction
 		return new CLTextConstruction( comments().concat(incomments), 
 				args);
 	}
+
+	@Override
+	public CLTextConstruction copy() {
+		return new CLTextConstruction(comments(), args);
+	}
+
 	
 }
 

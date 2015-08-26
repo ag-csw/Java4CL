@@ -1,5 +1,6 @@
 package api4kbj;
 
+
 /**
  * An interface for immutable classes.
  * All public fields must be final.
@@ -13,5 +14,10 @@ package api4kbj;
  * @api4kp.OntologyClass <a href="http://www.omg.org/spec/API4KB/API4KBTerminology/Immutable">API4KBTerminology/Immutable</a>
  */
 public interface Immutable {
+    /**
+     * Returns a copy that is equal to the original
+     * @return a copy
+     */
+	Immutable copy();
 
 }

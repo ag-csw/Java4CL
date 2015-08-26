@@ -53,6 +53,11 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		return args;
 	}
 
+	@Override
+	public CLAtomicSentence copy() {
+		return new CLAtomicSentence(comments(), operator, args);
+	}
+	
     /**
      * Returns a modified copy derived by applying functions to each of the
      * fields: comments, operator, args.
@@ -125,9 +130,5 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		return true;
 	}
 
-	CLAtomicSentence copy() {
-		return new CLAtomicSentence(comments(), operator, args);
-	}
-	
 	
 }
