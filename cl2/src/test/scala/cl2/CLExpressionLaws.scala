@@ -14,44 +14,44 @@ import CLGenerators._
 import org.typelevel.discipline._
 
 /**
- * Laws that must be obeyed by any `CL atomic sentence`.
+ * Laws that must be obeyed by any `CL expression`.
  */
 trait CLExpressionLaws extends Laws {
   
   val emptyComments = new CLCommentSetArray()
 
-  def expressionUsesCLLanguageIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    (sent language) == CL.LANG
+  def expressionUsesCLLanguageIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    (expression language) == CL.LANG
   }
   
   //TODO lift to api4kbj.Basic
-  def expressionIsBasicIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    (sent isBasic) == true
+  def expressionIsBasicIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    (expression isBasic) == true
   }
   
   //TODO lift to api4kbj.KnowledgeExpressionLike
-  def expressionHasExpressionAbstractionLevelIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    (sent level) == EXPRESSION
+  def expressionHasExpressionAbstractionLevelIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    (expression level) == EXPRESSION
   }
 
   //TODO lift to api4kbj.Immutable
-  def expressionEqualsItselfIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    sent.equals(sent) == true
+  def expressionEqualsItselfIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    expression.equals(expression) == true
   }
   
   //TODO lift to api4kbj.Immutable
-  def expressionEqualsCopyIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    sent.equals(sent.copy()) == true
+  def expressionEqualsCopyIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    expression.equals(expression.copy()) == true
   }
   
   //TODO lift to api4kbj.Immutable
-  def expressionNotEqualNullIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    sent.equals(null) == false
+  def expressionNotEqualNullIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    expression.equals(null) == false
   }
   
   //TODO lift to CLCommentable
-  def expressionEqualsCopyWithEmptyCommentsInsertedIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
-    sent.equals(sent.insertComments(emptyComments)) == true
+  def expressionEqualsCopyWithEmptyCommentsInsertedIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    expression.equals(expression.insertComments(emptyComments)) == true
   }
 
   def expression:RuleSet = new RuleSet {
@@ -63,6 +63,7 @@ trait CLExpressionLaws extends Laws {
        ("A CLExpression uses the Common Logic language", expressionUsesCLLanguageIdentity),    
        ("A CLExpression has the EXPRESSION abstraction level", expressionHasExpressionAbstractionLevelIdentity),    
        ("A CL Expression equals itself", expressionEqualsItselfIdentity),   
+       ("A CL Expression equals copy", expressionEqualsCopyIdentity),   
        ("A CL Expression is not equal null", expressionNotEqualNullIdentity),   
        ("A CL Expression equals copy with empty comments inserted", expressionEqualsCopyWithEmptyCommentsInsertedIdentity)   
      )

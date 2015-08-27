@@ -1,5 +1,8 @@
 package cl2;
 
+import api4kbj.Immutable;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLCommentSet;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
@@ -90,5 +93,11 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public CLFunctionalTerm copy() {
+		return new CLFunctionalTerm(comments(), operator, args);
+	}
+
 
 }

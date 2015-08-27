@@ -119,4 +119,9 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 		return true;
 	}
 
+	@Override
+	public CLStringIriInterpretedName copy() {
+		return new CLStringIriInterpretedName(symbol(), datatype());
+	}
+	
 }

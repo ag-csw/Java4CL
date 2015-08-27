@@ -6,6 +6,7 @@ import java.util.Set;
 
 import cl2a.CLComment;
 import cl2a.CLCommentSet;
+import cl2array.CLBindingSequenceArray;
 
 
 
@@ -39,4 +40,8 @@ public class CLCommentSetJC extends CLCommentSet {
 	}
 
 
+	@Override
+	public CLCommentSetJC copy() {
+		return new CLCommentSetJC(args());
+	}
 }

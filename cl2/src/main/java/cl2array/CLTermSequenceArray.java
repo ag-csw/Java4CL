@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import api4kbj.Immutable;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLTermOrSequenceMarker;
 import cl2a.CLTermSequence;
 
@@ -50,6 +53,11 @@ public class CLTermSequenceArray extends CLTermSequence {
         }		
         CLTermOrSequenceMarker[] c = CLArray.concatArgs(args, b);
 		return new CLTermSequenceArray(c);
+	}
+
+	@Override
+	public CLTermSequenceArray copy() {
+		return new CLTermSequenceArray(args());
 	}
 
 }

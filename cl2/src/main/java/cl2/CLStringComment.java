@@ -1,5 +1,8 @@
 package cl2;
 
+import api4kbj.Immutable;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLComment;
 
 public class CLStringComment extends CLComment  {
@@ -62,6 +65,11 @@ public class CLStringComment extends CLComment  {
 		} else if (!data().equals(other.data()))
 			return false;
 		return true;
+	}
+
+	@Override
+	public CLStringComment copy() {
+		return new CLStringComment(data());
 	}
 
 }

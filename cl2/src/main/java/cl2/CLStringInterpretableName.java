@@ -83,4 +83,9 @@ public class CLStringInterpretableName extends CLInterpretableName {
 		return true;
 	}	
 
+	@Override
+	public CLStringInterpretableName copy() {
+		return new CLStringInterpretableName(symbol());
+	}
+	
 }

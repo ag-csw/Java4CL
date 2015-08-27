@@ -3,7 +3,6 @@
  */
 package cl2fj;
 
-import java.util.Collection;
 
 import cl2a.CLExpressionSequence;
 import cl2a.CLExpression;
@@ -25,8 +24,8 @@ public class CLExpressionSequencefjList<A extends CLExpression> extends CLExpres
 	}
 
 	@Override
-	public Collection<A> args() {
-		return args.toCollection();
+	public java.util.List<A> args() {
+		return new java.util.ArrayList<A>(args.toCollection());
 	}
 
 	@Override
@@ -45,4 +44,8 @@ public class CLExpressionSequencefjList<A extends CLExpression> extends CLExpres
 		return new CLExpressionSequencefjList<CLExpression>(b);
 	}
 
+	@Override
+	public CLExpressionSequencefjList<A> copy() {
+		return new CLExpressionSequencefjList<A>(args);
+	}
 }

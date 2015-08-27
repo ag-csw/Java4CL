@@ -47,4 +47,8 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 		return new CLSentenceSequenceArray(c);
 	}
 
+	@Override
+	public CLSentenceSequenceArray copy() {
+		return new CLSentenceSequenceArray(args);
+	}
 }

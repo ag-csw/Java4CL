@@ -1,6 +1,6 @@
 package api4kbj;
 
-public interface KnowledgeExpressionLike extends KnowledgeSourceLike {
+public interface KnowledgeExpressionLike extends KnowledgeSourceLike, Immutable {
 
 	//EquivalenceRelation ID = new EquivalenceRelation();
 

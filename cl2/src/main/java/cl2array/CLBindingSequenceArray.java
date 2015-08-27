@@ -5,6 +5,7 @@ package cl2array;
 
 import java.util.Arrays;
 import java.util.Collection;
+
 import cl2a.CLInterpretableName;
 import cl2a.CLBindingSequence;
 
@@ -53,4 +54,8 @@ public class CLBindingSequenceArray extends CLBindingSequence {
         }
 	}
 
+	@Override
+	public CLBindingSequenceArray copy() {
+		return new CLBindingSequenceArray(argHead, argTail);
+	}
 }

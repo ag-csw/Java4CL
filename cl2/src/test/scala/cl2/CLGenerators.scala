@@ -42,7 +42,7 @@ object CLGenerators {
 
   //CLComent
   /**
-   * gemerator of CL comments whose comment data (symbol)
+   * generator of CL comments whose comment data (symbol)
    * is String symbol according to clstringsymbolgen
    */
   val clstringcommentgen: Gen[CLStringComment] =
@@ -52,10 +52,12 @@ object CLGenerators {
   //TODO also need other kinds of comments
   val clcommentgen: Gen[CLComment] = clstringcommentgen
 
+  implicit val arbCLComment = Arbitrary(clcommentgen)
+
  //CLCommentSet
   /**
    * generator of CL comment sets (array-based instances), which may be
-   * used in generators of "commentable" Cl terms and expressions    
+   * used in generators of "commentable" CL terms and expressions    
    */
   val clcommentsetarraygen: Gen[CLCommentSet] =
     for {a <- Gen listOf (clcommentgen)}
@@ -69,7 +71,7 @@ object CLGenerators {
     (1, clcommentsetarraygen),
     (1, clcommentsetjcgen))
   
-  implicit val arbCLCommentSequence = Arbitrary(clcommentsetgen)
+  implicit val arbCLCommentSet = Arbitrary(clcommentsetgen)
 
   //CLInterpretableName
   /**
@@ -230,7 +232,20 @@ object CLGenerators {
   def clsentencegen(d: Int): Gen[CLSentence] = clatomgen(d)
 
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
+  
+  //TODO add statements and texts also
+  def clexpressiongen(d: Int): Gen[CLExpression] = clsentencegen(d)
 
+  implicit val arbCLExpression = Arbitrary(clexpressiongen(depth))
+  
+  def clexpressionlikegen(d: Int): Gen[CLExpressionLike] = Gen.frequency(
+    (1, cltermgen(depth)),
+    (1, clsequencemarkergen),
+    (1, clcommentgen)
+    )
+
+  implicit val arbCLExpressionLike = Arbitrary(clexpressionlikegen(depth))
+  
   //TODO make a valid IRI generator by assembling from segments
   //IRI            = scheme ":" ihier-part [ "?" iquery ]
    //                         [ "#" ifragment ]

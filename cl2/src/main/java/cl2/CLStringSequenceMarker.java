@@ -84,4 +84,9 @@ public class CLStringSequenceMarker extends CLSequenceMarker {
 		return true;
 	}
 
+	@Override
+	public CLStringSequenceMarker copy() {
+		return new CLStringSequenceMarker(symbol());
+	}
+	
 }

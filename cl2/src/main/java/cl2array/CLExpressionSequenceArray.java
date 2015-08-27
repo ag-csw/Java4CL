@@ -47,4 +47,8 @@ public class CLExpressionSequenceArray extends CLExpressionSequence {
 		return new CLExpressionSequenceArray(c);
 	}
 
+	@Override
+	public CLExpressionSequenceArray copy() {
+		return new CLExpressionSequenceArray(args);
+	}
 }

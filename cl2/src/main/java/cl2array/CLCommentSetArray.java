@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import api4kbj.Immutable;
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLComment;
 import cl2a.CLCommentSet;
 
@@ -41,5 +44,10 @@ public class CLCommentSetArray extends CLCommentSet {
         CLComment[] c = CLArray.concatComments(comments, b);
 		return new CLCommentSetArray(c);
 	}
-	
+
+	@Override
+	public CLCommentSet copy() {
+		return new CLCommentSetArray(args());
+	}
+
 }
