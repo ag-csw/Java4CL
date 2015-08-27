@@ -11,7 +11,7 @@ package cl2a;
  */
 public abstract class CLStatement extends CLExpression {
 
-	public CLStatement(CLCommentSequence comments) {
+	public CLStatement(CLCommentSet comments) {
 		super(comments);
 	}
 	

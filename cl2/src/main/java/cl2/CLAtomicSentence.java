@@ -6,7 +6,7 @@ package cl2;
 import java.util.function.Function;
 import java.util.function.BiFunction;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLSimpleSentence;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
@@ -17,6 +17,7 @@ import cl2a.CLTermSequence;
  */
 public class CLAtomicSentence extends CLSimpleSentence {
 
+	//private CLCommentSet comments;
 	private final CLTerm operator;
 	private final CLTermSequence args;
 
@@ -24,7 +25,7 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	 * 
 	 */
 	public CLAtomicSentence(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLTerm operator, 
 			final CLTermSequence args) {
 		super(comments);
@@ -71,7 +72,7 @@ public class CLAtomicSentence extends CLSimpleSentence {
      * @return modified copy of this CL atomic sentence
      */
 	public CLAtomicSentence copy(
-			final Function<CLCommentSequence, ? extends CLCommentSequence> commentsOperator,
+			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
 			final Function<CLTerm, ? extends CLTerm> operatorOperator,
 			final Function<CLTermSequence, ? extends CLTermSequence> argsOperator
 			) {
@@ -85,14 +86,14 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	}
 
 	@Override
-	public CLAtomicSentence insertComments(final CLCommentSequence incomments) {
-		BiFunction<CLCommentSequence, CLCommentSequence, CLCommentSequence> F = CLCommentSequence::concat;
+	public CLAtomicSentence insertComments(final CLCommentSet incomments) {
+		BiFunction<CLCommentSet, CLCommentSet, CLCommentSet> F = CLCommentSet::concat;
 		return copy(
 				s -> F.apply(s,incomments), 
 				s -> s, 
 				s -> s);
 	}
-		
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -103,15 +104,22 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		return result;
 	}
 
+
+    public boolean canEqual(Object other) {
+        return (other instanceof CLAtomicSentence);
+    }
+    
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof CLAtomicSentence))
 			return false;
 		CLAtomicSentence other = (CLAtomicSentence) obj;
+		if (!other.canEqual(this))
+			return false;
 		if (args == null) {
 			if (other.args != null)
 				return false;
@@ -129,6 +137,5 @@ public class CLAtomicSentence extends CLSimpleSentence {
 			return false;
 		return true;
 	}
-
-	
+			
 }

@@ -1,19 +1,19 @@
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
 import cl2i.CLCommentable;
 
 public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 	
-	private final CLCommentSequence comments;
+	private final CLCommentSet comments;
 	private final CLTerm operator;
 	private final CLTermSequence args;
 
 
 	public CLFunctionalTerm(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLTerm operator, 
 			final CLTermSequence args) {
 		this.comments = comments;
@@ -23,7 +23,7 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 	}
 
 	@Override
-	public CLCommentSequence comments() {
+	public CLCommentSet comments() {
 		return comments;
 	}
 	
@@ -43,7 +43,7 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 
 
 	@Override
-	public CLFunctionalTerm insertComments(final CLCommentSequence incomments) {
+	public CLFunctionalTerm insertComments(final CLCommentSet incomments) {
 		return new CLFunctionalTerm( comments().concat(incomments), 
 				operator, args);
 	}
@@ -58,15 +58,21 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 		return result;
 	}
 
+    public boolean canEqual(Object other) {
+        return (other instanceof CLFunctionalTerm);
+    }
+    
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof CLFunctionalTerm))
 			return false;
 		CLFunctionalTerm other = (CLFunctionalTerm) obj;
+		if (!other.canEqual(this))
+			return false;
 		if (args == null) {
 			if (other.args != null)
 				return false;
@@ -84,9 +90,5 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 			return false;
 		return true;
 	}
-
-	
-	
-
 
 }

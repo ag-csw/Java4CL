@@ -13,6 +13,7 @@ import java.util.Arrays;
 import api4kbj.KnowledgeSourceLevel._
 import cl2a._
 import cl2array._
+import cl2jc._
 
 object CLGenerators {
   
@@ -51,19 +52,24 @@ object CLGenerators {
   //TODO also need other kinds of comments
   val clcommentgen: Gen[CLComment] = clstringcommentgen
 
- //CLCommentSequence
+ //CLCommentSet
   /**
-   * generator of CL comment sequences (array-based instances), which may be
+   * generator of CL comment sets (array-based instances), which may be
    * used in generators of "commentable" Cl terms and expressions    
    */
-  val clcommentsequencearraygen: Gen[CLCommentSequence] =
+  val clcommentsetarraygen: Gen[CLCommentSet] =
     for {a <- Gen listOf (clcommentgen)}
-    yield new CLCommentSequenceArray(a.toArray[CLComment]: _*)
+    yield new CLCommentSetArray(a.toArray[CLComment]: _*)
 
-  //TODO also need other kinds of comment sequences
-  val clcommentsequencegen: Gen[CLCommentSequence] = clcommentsequencearraygen
+  val clcommentsetjcgen: Gen[CLCommentSet] =
+    for {a <- Gen listOf (clcommentgen)}
+    yield new CLCommentSetJC(a.toArray[CLComment]: _*)
+
+  val clcommentsetgen: Gen[CLCommentSet] = Gen.frequency(
+    (1, clcommentsetarraygen),
+    (1, clcommentsetjcgen))
   
-  implicit val arbCLCommentSequence = Arbitrary(clcommentsequencegen)
+  implicit val arbCLCommentSequence = Arbitrary(clcommentsetgen)
 
   //CLInterpretableName
   /**
@@ -115,7 +121,7 @@ object CLGenerators {
    */
   val clfunctionalterm0gen: Gen[CLFunctionalTerm] =
     for {
-      comments <- clcommentsequencegen
+      comments <- clcommentsetgen
       operator <- clnamegen
       args <- clnamesequencegen
     } yield new CLFunctionalTerm(comments, operator, args)
@@ -126,7 +132,7 @@ object CLGenerators {
    */
   val clfunctionalterm1gen: Gen[CLFunctionalTerm] =
     for {
-      comments <- clcommentsequencegen
+      comments <- clcommentsetgen
       operator <- clterm0gen
       args <- clterm0sequencegen
     } yield new CLFunctionalTerm(comments, operator, args)
@@ -139,7 +145,7 @@ object CLGenerators {
       if (d<=0) clfunctionalterm0gen
       else
         for {
-          comments <- clcommentsequencegen
+          comments <- clcommentsetgen
           operator <- cltermgen(d-1)
           args <- cltermsequencegen(d-1)
         } yield new CLFunctionalTerm(comments, operator, args)
@@ -213,7 +219,7 @@ object CLGenerators {
       
   def clatomgen(d: Int): Gen[CLAtomicSentence] =
     for {
-      comments <- clcommentsequencegen
+      comments <- clcommentsetgen
       operator <- cltermgen(d)
       args <- cltermsequencegen(d)
     } yield new CLAtomicSentence(comments, operator, args)

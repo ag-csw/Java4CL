@@ -27,9 +27,9 @@ class CLAtomicSentenceTest extends FlatSpec
       maxSize = 20,
       workers = 1)
 
-  val comments1 = new CLCommentSequenceArray()
-  val comments2 = new CLCommentSequenceArray()
-  val comments3 = new CLCommentSequenceArray(new CLStringComment("comment"))
+  val comments1 = new CLCommentSetArray()
+  val comments2 = new CLCommentSetArray()
+  val comments3 = new CLCommentSetArray(new CLStringComment("comment"))
   val operator1 = new CLStringInterpretableName("rel")
   val operator2 = new CLStringInterpretableName("rel")
   val operator3 = new CLStringInterpretableName("otherrel")
@@ -101,7 +101,7 @@ class CLAtomicSentenceTest extends FlatSpec
 
   "The components of a CLAtomicSentence" should "equal the argument passed to the term constructor" in {
     forAll("commentsequence", "operator", "termsequence") {
-      (commentsequence: CLCommentSequence, operator: CLTerm, termsequence: CLTermSequence) =>
+      (commentsequence: CLCommentSet, operator: CLTerm, termsequence: CLTermSequence) =>
         val testexpression = new CLAtomicSentence(commentsequence, operator, termsequence)
         (testexpression comments) should equal(commentsequence)
         (testexpression operator) should equal(operator)

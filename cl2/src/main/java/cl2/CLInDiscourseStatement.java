@@ -3,7 +3,7 @@
  */
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLDiscourseStatement;
 import cl2a.CLTermSequence;
 
@@ -16,14 +16,14 @@ public class CLInDiscourseStatement extends CLDiscourseStatement {
 
 
 	public CLInDiscourseStatement(
-			CLCommentSequence comments, 
+			CLCommentSet comments, 
 			CLTermSequence args) {
 		super(comments, args);
 	}
 
 
 	@Override
-	public CLInDiscourseStatement insertComments(CLCommentSequence incomments) {
+	public CLInDiscourseStatement insertComments(CLCommentSet incomments) {
 		return new  CLInDiscourseStatement( comments().concat(incomments), 
 				args());
 	}

@@ -4,7 +4,7 @@
 package cl2;
 
 import cl2a.CLBooleanSentence;
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLSentence;
 
 /**
@@ -19,7 +19,7 @@ public class CLNegation extends CLBooleanSentence {
 	 * 
 	 */
 	public CLNegation(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLSentence sent) {
 		super(comments);
 		this.sent = sent;
@@ -35,7 +35,7 @@ public class CLNegation extends CLBooleanSentence {
 
 
 	@Override
-	public CLNegation insertComments(final CLCommentSequence incomments) {
+	public CLNegation insertComments(final CLCommentSet incomments) {
 		return new CLNegation(comments().concat(incomments), 
 				sent);
 	}

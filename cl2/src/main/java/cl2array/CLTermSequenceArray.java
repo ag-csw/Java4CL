@@ -52,26 +52,4 @@ public class CLTermSequenceArray extends CLTermSequence {
 		return new CLTermSequenceArray(c);
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(args);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CLTermSequenceArray other = (CLTermSequenceArray) obj;
-		if (!Arrays.equals(args, other.args))
-			return false;
-		return true;
-	}
-
 }

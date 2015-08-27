@@ -19,7 +19,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
       maxSize = 20,
       workers = 1)
   "A CLInDiscourseStatement" should "be basic" in {
-    val comments = new CLCommentSequenceArray()
+    val comments = new CLCommentSetArray()
 
     val termsequence = new CLTermSequenceArray()
     val testexpression = new CLInDiscourseStatement(comments, termsequence)
@@ -28,7 +28,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
 
   "A CLInDiscourseStatement" should "use language CL" in {
     val lang = CL.LANG
-    val comments = new CLCommentSequenceArray()
+    val comments = new CLCommentSetArray()
 
     val termsequence = new CLTermSequenceArray()
     val testexpression = new CLInDiscourseStatement(comments, termsequence)
@@ -36,7 +36,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
   }
 
   "A CLInDiscourseStatement" should "have knowledge source level EXPRESSION" in {
-    val comments = new CLCommentSequenceArray()
+    val comments = new CLCommentSetArray()
 
     val termsequence = new CLTermSequenceArray()
     val testexpression = new CLInDiscourseStatement(comments, termsequence)
@@ -46,7 +46,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
 
   "The term sequence of a CLInDiscourseStatement" should "be equal to the parameter passed to the term constructor" in {
     forAll("arg-string") { (argString: String) =>
-      val comments = new CLCommentSequenceArray()
+      val comments = new CLCommentSetArray()
   
       val term1 = new CLStringInterpretableName(argString)
       val termsequence = new CLTermSequenceArray(term1)
@@ -64,7 +64,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
   
    "The term sequence of a CLInDiscourseStatement constructed from a length two term sequence" should "have length two" in {
     forAll("arg-string1", "arg-string2") { (argString1: String, argString2: String) =>
-      val comments = new CLCommentSequenceArray()
+      val comments = new CLCommentSetArray()
   
       val term1 = new CLStringInterpretableName(argString1)
       val term2 = new CLStringInterpretableName(argString2)
@@ -76,7 +76,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
   } 
    "The term sequence of a CLInDiscourseStatement" should "have the same length as the one passed to the term constructor" in {
     forAll("symbols") { (symbols: List[String]) =>
-      val comments = new CLCommentSequenceArray()
+      val comments = new CLCommentSetArray()
   
       val terms:List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
       var termsequence:CLTermSequenceArray = new CLTermSequenceArray()

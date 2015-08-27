@@ -11,7 +11,7 @@ package cl2a;
 public abstract class CLSimpleSentence extends CLSentence {
 
 	public CLSimpleSentence(
-			CLCommentSequence comments) {
+			CLCommentSet comments) {
 		super(comments);
 	}
 }

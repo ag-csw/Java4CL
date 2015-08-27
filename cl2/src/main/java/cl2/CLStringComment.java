@@ -3,6 +3,8 @@ package cl2;
 import cl2a.CLComment;
 
 public class CLStringComment extends CLComment  {
+	
+	//private String data;
 
 
 	public CLStringComment(String data) {
@@ -29,6 +31,37 @@ public class CLStringComment extends CLComment  {
 	public String toString() {
 		//TODO escape data to give valid XML
 		return "<cl:Comment>" + CL.xmlContentEncode(data()) + "<\\cl:Comment>";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((data() == null) ? 0 : data().hashCode());
+		return result;
+	}
+
+    public boolean canEqual(Object other) {
+        return (other instanceof CLStringComment);
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CLStringComment))
+			return false;
+		CLStringComment other = (CLStringComment) obj;
+		if (!other.canEqual(this))
+			return false;
+		if (data() == null) {
+			if (other.data() != null)
+				return false;
+		} else if (!data().equals(other.data()))
+			return false;
+		return true;
 	}
 
 }

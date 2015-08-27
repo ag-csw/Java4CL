@@ -1,22 +1,16 @@
 package cl2a;
 
-import java.util.List;
+import java.util.Set;
 
+import cl2.CLAtomicSentence;
 
-
-public abstract class CLTermSequence extends CLExpressionLike {
+public abstract class CLCommentSet extends CLExpressionLike {
 	
-	//private List<? extends CLTermOrSequenceMarker> args;
+	public abstract Set<? extends CLComment> args();
 	
-	public CLTermSequence() {
-		super();
-	}
-
-	public abstract List<? extends CLTermOrSequenceMarker> args();
-
 	public abstract int length();
 
-	public abstract CLTermSequence concat(CLTermSequence inargs);
+	public abstract CLCommentSet concat(CLCommentSet incomments);
 
 	@Override
 	public int hashCode() {
@@ -27,7 +21,7 @@ public abstract class CLTermSequence extends CLExpressionLike {
 	}
 
     public boolean canEqual(Object other) {
-        return (other instanceof CLTermSequence);
+        return (other instanceof CLCommentSet);
     }
     
 	@Override
@@ -36,9 +30,9 @@ public abstract class CLTermSequence extends CLExpressionLike {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof CLTermSequence))
+		if (!(obj instanceof CLCommentSet))
 			return false;
-		CLTermSequence other = (CLTermSequence) obj;
+		CLCommentSet other = (CLCommentSet) obj;
 		if (!other.canEqual(this))
 			return false;
 		if (args() == null) {
@@ -48,5 +42,5 @@ public abstract class CLTermSequence extends CLExpressionLike {
 			return false;
 		return true;
 	}
-
+	
 }

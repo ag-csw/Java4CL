@@ -18,7 +18,7 @@ import org.typelevel.discipline._
  */
 trait CLExpressionLaws extends Laws {
   
-  val emptyComments = new CLCommentSequenceArray()
+  val emptyComments = new CLCommentSetArray()
 
   def expressionUsesCLLanguageIdentity: Prop = Prop.forAll { (sent: CLSentence) =>
     (sent language) == CL.LANG
@@ -106,10 +106,10 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
 
   def atomComposeIdentity(
     atom: CLAtomicSentence,
-    f1: Function[CLCommentSequence, CLCommentSequence],
+    f1: Function[CLCommentSet, CLCommentSet],
     f2: Function[CLTerm, CLTerm],
     f3: Function[CLTermSequence, CLTermSequence],
-    g1: Function[CLCommentSequence, CLCommentSequence],
+    g1: Function[CLCommentSet, CLCommentSet],
     g2: Function[CLTerm, CLTerm],
     g3: Function[CLTermSequence, CLTermSequence]): Prop = Prop.forAll { (atom: CLAtomicSentence) =>
     atom.copy(f1, f2, f3).

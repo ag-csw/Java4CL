@@ -37,43 +37,4 @@ public abstract class CLName extends CLTerm {
 		return symbol;
 	}
 
-	/**
-	 * Returns the hashcode of the CLName.
-	 * <p>
-     * The hashcode of CLNames should depend only on its symbol.
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
-		return result;
-	}
-
-	/**
-	 * Returns a boolean that is true iff the object represents the same CL name according to the CL abstract syntax.
-	 * <p>
-	 * Equality of CLNames should depend only on equality of their symbols.
-	 * 
-	 * @param obj an Object to compare
-	 * @return true if obj is essentially equal to this CLName
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CLName other = (CLName) obj;
-		if (symbol == null) {
-			if (other.symbol != null)
-				return false;
-		} else if (!symbol.equals(other.symbol))
-			return false;
-		return true;
-	}
-	
-
 }

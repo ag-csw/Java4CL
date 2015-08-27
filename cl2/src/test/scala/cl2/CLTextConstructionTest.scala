@@ -18,7 +18,7 @@ class CLTextConstructionTest extends FlatSpec with Matchers with GeneratorDriven
       minSize = 10,
       maxSize = 20,
       workers = 1)
-  val comments = new CLCommentSequenceArray()
+  val comments = new CLCommentSetArray()
   val varx = new CLStringInterpretableName("x")
   val operator = new CLStringInterpretableName("allEqual")
   val termsequence = new CLTermSequenceArray(varx, varx)
@@ -46,8 +46,7 @@ class CLTextConstructionTest extends FlatSpec with Matchers with GeneratorDriven
   "The comments of a CLTextConstruction" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray: _*)
-      val comments0 = new CLCommentSequenceArray()
+      val comments = new CLCommentSetArray(commentsarray: _*)
       val testexpression = new CLTextConstruction(comments, expressions)
       val testcomments = (testexpression comments)
       (testcomments) should be (comments)

@@ -13,7 +13,7 @@ public abstract class CLQuantifiedSentence extends CLSentence {
 	private CLSentence body;
 
 	public CLQuantifiedSentence(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLBindingSequence bindings,
 			final CLSentence body) {
 		super(comments);

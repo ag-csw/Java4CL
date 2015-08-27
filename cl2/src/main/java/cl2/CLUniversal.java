@@ -3,7 +3,7 @@
  */
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLBindingSequence;
 import cl2a.CLQuantifiedSentence;
 import cl2a.CLSentence;
@@ -18,7 +18,7 @@ public class CLUniversal extends CLQuantifiedSentence {
 	 * 
 	 */
 	public CLUniversal(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLBindingSequence bindings,
 			final CLSentence body) {
 		super(comments, bindings, body);
@@ -28,7 +28,7 @@ public class CLUniversal extends CLQuantifiedSentence {
 
 
 	@Override
-	public CLUniversal insertComments(final CLCommentSequence incomments) {
+	public CLUniversal insertComments(final CLCommentSet incomments) {
 		return new CLUniversal( comments().concat(incomments), 
 				bindings(), body());
 	}

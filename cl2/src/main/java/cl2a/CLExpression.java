@@ -7,18 +7,18 @@ import cl2i.CLCommentable;
 public abstract class CLExpression extends AbstractBasicKnowledgeExpression implements
 		CLKnowledgeResource, CLCommentable {
 
-	private CLCommentSequence comments;
+	private CLCommentSet comments;
 
 	
 	public CLExpression(
-			final CLCommentSequence comments){
+			final CLCommentSet comments){
 		super(CL.LANG);
 		this.comments = comments;
 		
 	}
 	
 	@Override
-	public CLCommentSequence comments() {
+	public CLCommentSet comments() {
 		return comments;
 	}
 

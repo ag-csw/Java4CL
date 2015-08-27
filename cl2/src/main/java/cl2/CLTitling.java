@@ -3,7 +3,7 @@
  */
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLName;
 import cl2a.CLStatement;
 import cl2a.CLText;
@@ -22,7 +22,7 @@ public class CLTitling extends CLStatement {
 	 * @param text
 	 */
 	public CLTitling(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLName name, 
 			final CLText text 
 			) {
@@ -41,7 +41,7 @@ public class CLTitling extends CLStatement {
 
 
 	@Override
-	public CLTitling insertComments(final CLCommentSequence incomments) {
+	public CLTitling insertComments(final CLCommentSet incomments) {
 		return new CLTitling(comments().concat(incomments), 
 				name, text);
 	}

@@ -4,7 +4,7 @@
 package cl2;
 
 import cl2a.CLBooleanSentence;
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLSentence;
 
 /**
@@ -20,7 +20,7 @@ public class CLBiconditional extends CLBooleanSentence {
 	 * 
 	 */
 	public CLBiconditional(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLSentence left,
 			final CLSentence right
 			) {
@@ -46,7 +46,7 @@ public class CLBiconditional extends CLBooleanSentence {
 
 
 	@Override
-	public CLBiconditional insertComments(final CLCommentSequence incomments) {
+	public CLBiconditional insertComments(final CLCommentSet incomments) {
 		return new CLBiconditional( comments().concat(incomments), 
 				left, right);
 	}

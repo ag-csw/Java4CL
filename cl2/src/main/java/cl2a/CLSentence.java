@@ -12,7 +12,7 @@ package cl2a;
 public abstract class CLSentence extends CLExpression {
 
 	public CLSentence(
-			final CLCommentSequence comments) {
+			final CLCommentSet comments) {
 		super(comments);
 	}
 

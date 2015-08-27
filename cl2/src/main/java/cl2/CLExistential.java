@@ -3,7 +3,7 @@
  */
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLBindingSequence;
 import cl2a.CLQuantifiedSentence;
 import cl2a.CLSentence;
@@ -18,7 +18,7 @@ public class CLExistential extends CLQuantifiedSentence {
 	 * 
 	 */
 	public CLExistential(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLBindingSequence declarations,
 			final CLSentence body) {
 		super(comments, declarations, body);
@@ -28,7 +28,7 @@ public class CLExistential extends CLQuantifiedSentence {
 
 
 	@Override
-	public CLExistential insertComments(final CLCommentSequence incomments) {
+	public CLExistential insertComments(final CLCommentSet incomments) {
 		return new CLExistential( comments().concat(incomments), 
 				bindings(), body());
 	}

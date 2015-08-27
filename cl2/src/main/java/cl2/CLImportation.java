@@ -1,6 +1,6 @@
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLName;
 import cl2a.CLText;
 
@@ -9,7 +9,7 @@ public class CLImportation extends CLText {
 	private final CLName name;
 
 	public CLImportation(
-			final CLCommentSequence comments, 
+			final CLCommentSet comments, 
 			final CLName name) {
 		super(comments);
 		this.name = name;
@@ -21,7 +21,7 @@ public class CLImportation extends CLText {
 	}
 
 	@Override
-	public CLImportation insertComments(CLCommentSequence incomments) {
+	public CLImportation insertComments(CLCommentSet incomments) {
 		return new CLImportation( comments().concat(incomments), 
 				name);
 	}

@@ -1,11 +1,11 @@
 package cl2i;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 
 
 public interface CLCommentable {
 	
-	public CLCommentSequence comments();
+	public CLCommentSet comments();
 
-	public CLCommentable insertComments(CLCommentSequence incomments);
+	public CLCommentable insertComments(CLCommentSet incomments);
 }

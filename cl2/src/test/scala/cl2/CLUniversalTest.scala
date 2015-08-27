@@ -18,7 +18,7 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
       minSize = 10,
       maxSize = 20,
       workers = 1)
-  val comments = new CLCommentSequenceArray()
+  val comments = new CLCommentSetArray()
   val varx = new CLStringInterpretableName("x")
   val operator = new CLStringInterpretableName("allEqual")
   val termsequence = new CLTermSequenceArray(varx, varx)
@@ -46,8 +46,8 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
   "The comments of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray: _*)
-      val comments0 = new CLCommentSequenceArray()
+      val comments = new CLCommentSetArray(commentsarray: _*)
+      val comments0 = new CLCommentSetArray()
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray(varx, varx)
       val body = new CLAtomicSentence(comments0, operator, termsequence)
@@ -61,8 +61,8 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
   "The body of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray: _*)
-      val comments0 = new CLCommentSequenceArray()
+      val comments = new CLCommentSetArray(commentsarray: _*)
+      val comments0 = new CLCommentSetArray()
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray(varx, varx)
       val body = new CLAtomicSentence(comments0, operator, termsequence)

@@ -11,6 +11,8 @@ import cl2a.CLInterpretedName;
  *
  */
 public class CLStringIriInterpretedName extends CLInterpretedName {
+	
+	//private String symbol;
 
 	/**
 	 * Creates a CL interpreted name with a string symbol and IRI-specified
@@ -84,6 +86,37 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 	public String toString() {
 		return "<cl:Data datatype=" + CL.xmlAttributeEncodeIri(datatype()) + ">" + CL.xmlContentEncode(symbol())
 				+ "<\\cl:Data>";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((symbol() == null) ? 0 : symbol().hashCode());
+		return result;
+	}
+
+    public boolean canEqual(Object other) {
+        return (other instanceof CLStringIriInterpretedName);
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CLStringIriInterpretedName))
+			return false;
+		CLStringIriInterpretedName other = (CLStringIriInterpretedName) obj;
+		if (!other.canEqual(this))
+			return false;
+		if (symbol() == null) {
+			if (other.symbol != null)
+				return false;
+		} else if (!symbol().equals(other.symbol()))
+			return false;
+		return true;
 	}
 
 }

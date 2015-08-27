@@ -10,7 +10,7 @@ package cl2a;
  */
 public abstract class CLText extends CLExpression  {
 
-	public CLText(CLCommentSequence comments) {
+	public CLText(CLCommentSet comments) {
 		super(comments);
 	}
 		

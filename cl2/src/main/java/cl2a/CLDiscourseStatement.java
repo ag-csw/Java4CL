@@ -15,7 +15,7 @@ public abstract class CLDiscourseStatement extends CLStatement {
      * @param args
      */
 	public CLDiscourseStatement(
-			final CLCommentSequence comments, 
+			final CLCommentSet comments, 
 			final CLTermSequence args) {
 		super(comments);
 		this.args = args;

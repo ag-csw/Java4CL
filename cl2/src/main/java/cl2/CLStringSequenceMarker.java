@@ -15,6 +15,8 @@ import cl2a.CLSequenceMarker;
  * 
  */
 public class CLStringSequenceMarker extends CLSequenceMarker {
+	
+	//private String symbol;
 
     /**
      * Creates a CL sequence marker with a string symbol that can be used in CLExpressions.
@@ -47,8 +49,39 @@ public class CLStringSequenceMarker extends CLSequenceMarker {
      */
 	@Override
 	public String toString() {
-		//TODO escape symbol to give valid XML
 		return "<cl:Marker>" + CL.xmlContentEncode(symbol()) + "<\\cl:Marker>";
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((symbol() == null) ? 0 : symbol().hashCode());
+		return result;
+	}
+
+    public boolean canEqual(Object other) {
+        return (other instanceof CLStringSequenceMarker);
+    }
+
+    @Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CLStringSequenceMarker))
+			return false;
+		CLStringSequenceMarker other = (CLStringSequenceMarker) obj;
+		if (!other.canEqual(this))
+			return false;
+		if (symbol() == null) {
+			if (other.symbol() != null)
+				return false;
+		} else if (!symbol().equals(other.symbol()))
+			return false;
+		return true;
 	}
 
 }

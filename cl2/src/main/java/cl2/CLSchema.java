@@ -3,7 +3,7 @@
  */
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLSentence;
 import cl2a.CLSequenceMarkerSequence;
 import cl2a.CLStatement;
@@ -18,7 +18,7 @@ public class CLSchema extends CLStatement {
 	private CLSentence body;
 
 	public CLSchema(
-			final CLCommentSequence comments,
+			final CLCommentSet comments,
 			final CLSequenceMarkerSequence bindings,
 			final CLSentence body) {
 		super(comments);
@@ -41,7 +41,7 @@ public class CLSchema extends CLStatement {
 	}
 	
 	@Override
-	public CLSchema insertComments(final CLCommentSequence incomments) {
+	public CLSchema insertComments(final CLCommentSet incomments) {
 		return new CLSchema(comments().concat(incomments), 
 				bindings, body);
 	}

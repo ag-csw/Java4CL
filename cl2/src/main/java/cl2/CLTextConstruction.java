@@ -3,7 +3,7 @@
  */
 package cl2;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLText;
 import cl2a.CLExpressionSequence;
 
@@ -15,7 +15,7 @@ public class CLTextConstruction
 		extends CLText {
 
     public CLTextConstruction(
-			CLCommentSequence comments,
+			CLCommentSet comments,
 			CLExpressionSequence args) {
 		super(comments);
 		this.args = args;
@@ -31,7 +31,7 @@ public class CLTextConstruction
 
 
 	@Override
-	public CLTextConstruction insertComments(CLCommentSequence incomments) {
+	public CLTextConstruction insertComments(CLCommentSet incomments) {
 		return new CLTextConstruction( comments().concat(incomments), 
 				args);
 	}

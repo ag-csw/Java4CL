@@ -2,7 +2,7 @@ package cl2;
 
 import java.util.function.Function;
 
-import cl2a.CLCommentSequence;
+import cl2a.CLCommentSet;
 import cl2a.CLTerm;
 import cl2a.CLText;
 
@@ -12,7 +12,7 @@ public class CLDomainRestriction extends CLText {
 	private final CLText body;
 
 	public CLDomainRestriction(
-			final CLCommentSequence comments, 
+			final CLCommentSet comments, 
 			final CLTerm domain,
 			final CLText body) {
 		super(comments);
@@ -29,7 +29,7 @@ public class CLDomainRestriction extends CLText {
 	}
 
 	@Override
-	public CLDomainRestriction insertComments(CLCommentSequence incomments) {
+	public CLDomainRestriction insertComments(CLCommentSet incomments) {
 		return new CLDomainRestriction( comments().concat(incomments), 
 				domain, body);
 	}

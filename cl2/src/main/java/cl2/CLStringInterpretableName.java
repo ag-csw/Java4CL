@@ -15,6 +15,8 @@ import cl2a.CLInterpretableName;
  *
  */
 public class CLStringInterpretableName extends CLInterpretableName {
+	
+	//private String symbol;
 
     /**
      * Creates a CL interpretable name with a string symbol that can be used in CLExpressions.
@@ -48,6 +50,37 @@ public class CLStringInterpretableName extends CLInterpretableName {
 	public String toString() {
 		//TODO escape symbol to give valid XML
 		return "<cl:Name>" + CL.xmlContentEncode(symbol()) + "<\\cl:Name>";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((symbol() == null) ? 0 : symbol().hashCode());
+		return result;
+	}
+
+    public boolean canEqual(Object other) {
+        return (other instanceof CLStringInterpretableName);
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CLStringInterpretableName))
+			return false;
+		CLStringInterpretableName other = (CLStringInterpretableName) obj;
+		if (!other.canEqual(this))
+			return false;
+		if (symbol() == null) {
+			if (other.symbol() != null)
+				return false;
+		} else if (!symbol().equals(other.symbol()))
+			return false;
+		return true;
 	}	
 
 }

@@ -19,9 +19,9 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
       maxSize = 20,
       workers = 1)
 
-  val comments1 = new CLCommentSequenceArray()
-  val comments2 = new CLCommentSequenceArray()
-  val comments3 = new CLCommentSequenceArray(new CLStringComment("comment"))
+  val comments1 = new CLCommentSetArray()
+  val comments2 = new CLCommentSetArray()
+  val comments3 = new CLCommentSetArray(new CLStringComment("comment"))
     val operator1 = new CLStringInterpretableName("rel")
     val operator2 = new CLStringInterpretableName("rel")
     val operator3 = new CLStringInterpretableName("otherrel")
@@ -131,7 +131,7 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
     forAll("comment-symbols", "operator-symbols", "arg-symbols") { 
       (commentSymbols: List[String], operatorSymbol: String, argsymbols: List[String]) =>
       val commentsarray = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray: _*)
+      val comments = new CLCommentSetArray(commentsarray: _*)
       val operator = new CLStringInterpretableName(operatorSymbol)
       val termsarray = argsymbols.map(s => new CLStringInterpretableName(s).asInstanceOf[CLTermOrSequenceMarker]).toArray[CLTermOrSequenceMarker]
       val termsequence = new CLTermSequenceArray(termsarray: _*)
@@ -155,13 +155,13 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPr
     forAll("comment-symbols", "operator-symbols", "arg-symbols") { 
       (commentSymbols: List[String], operatorSymbol: String, argsymbols: List[String]) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments = new CLCommentSequenceArray(commentsarray: _*)
+      val comments = new CLCommentSetArray(commentsarray: _*)
       val operator = new CLStringInterpretableName(operatorSymbol)
       val termsarray: Array[CLTermOrSequenceMarker] = argsymbols.map(s => new CLStringInterpretableName(s).asInstanceOf[CLTermOrSequenceMarker]).toArray[CLTermOrSequenceMarker]
       val termsequence:CLTermSequenceArray = new CLTermSequenceArray(termsarray: _*)
       val testfragment = new CLFunctionalTerm(comments, operator, termsequence)
       val commentsarray2: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
-      val comments2 = new CLCommentSequenceArray(commentsarray: _*)
+      val comments2 = new CLCommentSetArray(commentsarray: _*)
       val operator2 = new CLStringInterpretableName(operatorSymbol)
       val termsarray2 = argsymbols.map(s => new CLStringInterpretableName(s).asInstanceOf[CLTermOrSequenceMarker]).toArray[CLTermOrSequenceMarker]
       val termsequence2 = new CLTermSequenceArray(termsarray: _*)
