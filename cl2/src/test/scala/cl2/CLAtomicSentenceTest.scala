@@ -1,3 +1,4 @@
+
 package cl2
 
 import org.scalacheck.Gen
@@ -17,9 +18,9 @@ import cl2array._
 import CLGenerators._
 import scala.language.postfixOps
 
-class CLAtomicSentenceTest extends FlatSpec 
-  with Matchers 
-  with PropertyChecks{
+class CLAtomicSentenceTest extends FlatSpec
+    with Matchers
+    with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(
       minSuccessful = 200,
@@ -45,19 +46,18 @@ class CLAtomicSentenceTest extends FlatSpec
   val testexpression5 = new CLAtomicSentence(comments1, operator3, termsequence1)
   val testexpression6 = new CLAtomicSentence(comments1, operator1, termsequence3)
 
-
   "A CLAtomicSentence constructor call with null argument" should "throw a NullPointerException" in {
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = new CLAtomicSentence(comments1, null, termsequence1)
     }
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = new CLAtomicSentence(comments1, operator1, null)
     }
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = new CLAtomicSentence(comments1, null, null)
     }
-  }  
-  
+  }
+
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
     forAll("operator", minSuccessful(100)) { (operator: CLTerm) =>
       val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)
@@ -117,6 +117,6 @@ class CLAtomicSentenceTest extends FlatSpec
     (testexpression1) should not equal (testexpression5)
     (testexpression1) should not equal (testexpression6)
     (testexpression1) should not equal (null)
-  }  
+  }
 
 }

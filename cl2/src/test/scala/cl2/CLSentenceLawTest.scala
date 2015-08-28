@@ -16,42 +16,29 @@
 
 package cl2
 
-import org.scalatest.prop.TableDrivenPropertyChecks._
+import org.scalatest.FunSuite
 
-object CLTables {
-  val badcodepoints = 
-    Table(
-      ("int"),
-      (0),
-      (1),
-      (2),
-      (3),
-      (4),
-      (5),
-      (6),
-      (7),
-      (8),
-      (11),
-      (12),
-      (14),
-      (15),
-      (16),
-      (17),
-      (18),
-      (18),
-      (20),
-      (21),
-      (22),
-      (22),
-      (23),
-      (24),
-      (25),
-      (26),
-      (27),
-      (28),
-      (29),
-      (30),
-      (31)
-    ) 
-   
+import org.scalatest._
+import org.scalatest.FunSuite
+import org.scalatest.matchers._
+
+import org.typelevel.discipline.scalatest._
+
+import collection.JavaConversions._
+
+import api4kbj.KnowledgeSourceLevel._
+
+import cl2a._
+
+import cl2array._
+import scala.language.postfixOps
+
+class CLSentenceLawTest extends FunSuiteLike with Discipline {
+  
+    checkAll("CLAtomicSentence", CLAtomicSentenceLaws.atom)
+
+    checkAll("CLBiconditional", CLBiconditionalLaws.bicond)
+
+    checkAll("CLSentence", CLSentenceLaws.sentence)
+
 }

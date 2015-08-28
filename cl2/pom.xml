@@ -20,7 +20,7 @@
 					<suites>
 						TestAll,
 						cl2.CLAtomicSentenceTest,
-						cl2.CLAtomicSentenceLawTest,
+						cl2.CLSentenceLawTest,
 						<!--cl2.CLConjunctionTest, cl2.CLFunctionalTermTest, cl2.CLInDiscourseStatementTest, -->
 						cl2.CLStringCommentTest,
 						cl2.CLStringInterpretableNameTest,
@@ -66,7 +66,27 @@
 					<additionalparam>-Xdoclint:none</additionalparam>
 				</configuration>
 			</plugin>
-
+      <plugin>
+        <groupId>org.scalastyle</groupId>
+        <artifactId>scalastyle-maven-plugin</artifactId>
+        <version>0.7.0</version>
+        <configuration>
+          <verbose>false</verbose>
+          <failOnViolation>true</failOnViolation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <failOnWarning>false</failOnWarning>
+          <sourceDirectory>${basedir}/src/main/scala</sourceDirectory>
+          <testSourceDirectory>${basedir}/src/test/scala</testSourceDirectory>
+          <configLocation>${basedir}/lib/scalastyle_config.xml</configLocation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -110,5 +130,11 @@
 			<artifactId>scala-java8-compat_2.11</artifactId>
 			<version>0.5.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.scalastyle</groupId>
+			<artifactId>scalastyle-maven-plugin</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+
 	</dependencies>
 </project>
