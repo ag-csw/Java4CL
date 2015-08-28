@@ -98,3 +98,39 @@ trait CLCommentLaws extends CLExpressionLikeLaws {
 }
 
 object CLCommentLaws extends CLCommentLaws
+
+trait CLTermLaws extends CLExpressionLikeLaws {
+
+  def termNotEqualCommentIdentity: Prop = Prop.forAll { ((term: CLTerm), (comment: CLComment)) =>
+    term.equals(comment) == false
+  }
+
+  def term: RuleSet = new RuleSet {
+    def name = "term"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expressionlike)
+    def props = Seq(
+      ("CL Comments are Disjoint from CL Terms", termNotEqualCommentIdentity))
+  }
+
+}
+
+object CLTermLaws extends CLTermLaws
+
+trait CLNameLaws extends CLTermLaws {
+
+  def nameNotEqualFunctionalTermIdentity: Prop = Prop.forAll { ((name: CLName), (fterm: CLFunctionalTerm)) =>
+    name.equals(fterm) == false
+  }
+
+  def name: RuleSet = new RuleSet {
+    def name = "name"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expressionlike)
+    def props = Seq(
+      ("CL Comments are Disjoint from CL Terms", nameNotEqualFunctionalTermIdentity))
+  }
+
+}
+
+object CLNameLaws extends CLNameLaws

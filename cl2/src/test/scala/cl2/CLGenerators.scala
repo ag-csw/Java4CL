@@ -100,6 +100,8 @@ object CLGenerators {
   //TODO also need interpretable names with non-string symbols
   val clinamegen: Gen[CLInterpretableName] = clstringinamegen
 
+  implicit val arbCLInterpretableName = Arbitrary(clinamegen)
+
   //CLInterpretedName
   /**
    * generator for a Cl interpreted name with fixed interpretation
@@ -111,6 +113,8 @@ object CLGenerators {
   //TODO also need other interpreted names from other datatypes
   val cldatagen: Gen[CLInterpretedName] = clstringdatagen
 
+  implicit val arbCLData = Arbitrary(cldatagen)
+
   //CLName
   /**
    * generator for CL names, with equal probability
@@ -119,6 +123,8 @@ object CLGenerators {
   val clnamegen: Gen[CLName] = Gen.frequency(
     (1, clinamegen),
     (1, cldatagen))
+
+  implicit val arbCLName = Arbitrary(clnamegen)
 
   //CLSequenceMarker
   /**
