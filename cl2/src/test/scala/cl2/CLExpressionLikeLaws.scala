@@ -110,7 +110,7 @@ trait CLTermLaws extends CLExpressionLikeLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
     def props = Seq(
-      ("CL Comments are Disjoint from CL Terms", termNotEqualCommentIdentity))
+      ("CL Terms are Disjoint from CL Comments", termNotEqualCommentIdentity))
   }
 
 }
@@ -128,7 +128,7 @@ trait CLNameLaws extends CLTermLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
     def props = Seq(
-      ("CL Comments are Disjoint from CL Terms", nameNotEqualFunctionalTermIdentity))
+      ("CL Names are Disjoint from CL Functional Terms", nameNotEqualFunctionalTermIdentity))
   }
 
 }

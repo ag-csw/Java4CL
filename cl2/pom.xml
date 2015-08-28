@@ -20,6 +20,7 @@
 					<suites>
 						TestAll,
 						cl2.CLAtomicSentenceTest,
+						cl2.CLExpressionLikeLawTest,
 						cl2.CLSentenceLawTest,
 						<!--cl2.CLConjunctionTest, cl2.CLFunctionalTermTest, cl2.CLInDiscourseStatementTest, -->
 						cl2.CLStringCommentTest,
