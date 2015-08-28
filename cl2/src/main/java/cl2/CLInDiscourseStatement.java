@@ -41,7 +41,7 @@ public class CLInDiscourseStatement extends CLDiscourseStatement {
 	public String toString() {
 		return "<cl:In>" + 
 	            comments().toString() +
-	            args().toString() + "<\\cl:In>";
+	            args().toString() + "</cl:In>";
 	}
 
 

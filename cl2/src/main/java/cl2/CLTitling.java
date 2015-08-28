@@ -60,7 +60,7 @@ public class CLTitling extends CLStatement {
 		return "<cl:Titling>" + 
 	            comments().toString() +
 	            name.toString() +
-	            text.toString() + "<\\cl:Titling>";
+	            text.toString() + "</cl:Titling>";
 	}
 
 

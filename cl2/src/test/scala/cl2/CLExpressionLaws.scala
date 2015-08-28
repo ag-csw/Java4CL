@@ -93,22 +93,20 @@ object CLSentenceLaws extends CLSentenceLaws
 
 object CLAtomicSentenceLaws extends CLSentenceLaws {
       
-    def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>
+    def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>{
+    //val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
+    //val f2:Function[CLTerm, CLTerm] = {s:CLTerm => s}
+    //val f3:Function[CLTermSequence, CLTermSequence] = {s:CLTermSequence => s}
     atom == atom.copy(
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s}
+      {s:CLCommentSet => s}, {s:CLTerm => s}, {s:CLTermSequence => s}
       ) &&
     atom.hashCode() == atom.copy(
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s}
+      {s:CLCommentSet => s}, {s:CLTerm => s}, {s:CLTermSequence => s}
       ).hashCode() &&
     atom.toString() == atom.copy(
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s}
+      {s:CLCommentSet => s}, {s:CLTerm => s}, {s:CLTermSequence => s}
       ).toString()
+    }
   }
 
   def atomComposeIdentity(
@@ -139,20 +137,17 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
 object CLBiconditionalLaws extends CLSentenceLaws {
       
     def biconditionalIdentityIdentity: Prop = Prop.forAll { (bicond: CLBiconditional) =>
+    //val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
+    //val f2:Function[CLSentence, CLSentence] = {s:CLSentence => s}
+    bicond.equals(bicond.copy()) &&  
     bicond == bicond.copy(
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s}
+      {s:CLCommentSet => s}, {s:CLSentence => s}, {s:CLSentence => s}
       ) &&
     bicond.hashCode() == bicond.copy(
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s}
+      {s:CLCommentSet => s}, {s:CLSentence => s}, {s:CLSentence => s}
       ).hashCode() &&
     bicond.toString() == bicond.copy(
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s},
-      cl2.toJavaFunction {s => s}
+      {s:CLCommentSet => s}, {s:CLSentence => s}, {s:CLSentence => s}
       ).toString()
   }
 

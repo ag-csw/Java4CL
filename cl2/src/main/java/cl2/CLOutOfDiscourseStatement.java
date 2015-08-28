@@ -43,7 +43,7 @@ public class CLOutOfDiscourseStatement extends CLDiscourseStatement {
 	public String toString() {
 		return "<cl:Out>" + 
 	            comments().toString() +
-	            args().toString() + "<\\cl:Out>";
+	            args().toString() + "</cl:Out>";
 	}
 
 }

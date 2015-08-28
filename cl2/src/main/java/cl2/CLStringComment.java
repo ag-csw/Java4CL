@@ -34,7 +34,7 @@ public class CLStringComment extends CLComment  {
      */
 	@Override
 	public String toString() {
-		return "<cl:Comment>" + CL.xmlContentEncode(data()) + "<\\cl:Comment>";
+		return "<cl:Comment>" + CL.xmlContentEncode(data()) + "</cl:Comment>";
 	}
 
 	@Override

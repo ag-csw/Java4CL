@@ -121,11 +121,11 @@ class CLStringSequenceMarkerTest extends FlatSpec with Matchers with PropertyChe
   
   "A CLStringSequenceMarker's string representation" should 
     "be the XML element cl:Marker with symbol as content, with appropriate escaping" in {
-    (testfragment1 toString) should equal("<cl:Marker>test<\\cl:Marker>")
+    (testfragment1 toString) should equal("<cl:Marker>test</cl:Marker>")
     forAll((CLGenerators.clstringsymbolgen, "symbol")) { (symbol: String) =>
       {
         val testfragment = new CLStringSequenceMarker(symbol)
-       (testfragment1 toString) should equal("<cl:Marker>" + CL.xmlContentEncode(testfragment1 symbol) + "<\\cl:Marker>")
+       (testfragment1 toString) should equal("<cl:Marker>" + CL.xmlContentEncode(testfragment1 symbol) + "</cl:Marker>")
       }
     }
   }

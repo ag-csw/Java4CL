@@ -42,7 +42,7 @@ public class CLEquation extends CLSimpleSentence {
 		return "<cl:Equal>" + 
 	            comments().toString() +
 	            left.toString() +
-	            right.toString() + "<\\cl:Equal>";
+	            right.toString() + "</cl:Equal>";
 	}
 
 	

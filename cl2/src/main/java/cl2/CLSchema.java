@@ -60,7 +60,7 @@ public class CLSchema extends CLStatement {
 		return "<cl:Schema>" + 
 	            comments().toString() +
 	            bindings.toString() +
-	            body.toString() + "<\\cl:Schema>";
+	            body.toString() + "</cl:Schema>";
 	}
 
 }

@@ -49,7 +49,7 @@ public class CLTextConstruction
 	public String toString() {
 		return "<cl:Construct>" + 
 	            comments().toString() +
-	            args.toString() + "<\\cl:Construct>";
+	            args.toString() + "</cl:Construct>";
 	}	
 }
 

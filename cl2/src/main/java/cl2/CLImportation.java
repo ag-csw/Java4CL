@@ -39,7 +39,7 @@ public class CLImportation extends CLText {
 	public String toString() {
 		return "<cl:Import>" + 
 	            comments().toString() +
-	            name.toString() + "<\\cl:Import>";
+	            name.toString() + "</cl:Import>";
 	}
 
 	

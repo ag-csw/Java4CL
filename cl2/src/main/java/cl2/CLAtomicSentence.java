@@ -30,10 +30,10 @@ public class CLAtomicSentence extends CLSimpleSentence {
 			final CLTermSequence args) {
 		super(comments);
 		if(operator==null)
-			throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
+			throw new NullPointerException("Operator of a CLAtomicSentence should not be null.");
 	    this.operator = operator;
 		if(args==null)
-			throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
+			throw new NullPointerException("Argument sequence of a CLAtomicSentence should not be null.");
 		this.args = args;
 
 	}
@@ -92,7 +92,7 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		return "<cl:Atom>" + 
 	            comments().toString() +
 	            operator.toString() +
-	            args.toString() + "<\\cl:Atom>";
+	            args.toString() + "</cl:Atom>";
 	}
 
 	@Override

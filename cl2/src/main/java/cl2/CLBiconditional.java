@@ -98,7 +98,7 @@ public class CLBiconditional extends CLBooleanSentence {
 		return "<cl:Biconditional>" + 
 	            comments().toString() +
 	            left.toString() +
-	            right.toString() + "<\\cl:Biconditional>";
+	            right.toString() + "</cl:Biconditional>";
 	}
 
 	@Override

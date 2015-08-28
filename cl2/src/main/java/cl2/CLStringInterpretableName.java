@@ -49,7 +49,7 @@ public class CLStringInterpretableName extends CLInterpretableName {
 	@Override
 	public String toString() {
 		//TODO escape symbol to give valid XML
-		return "<cl:Name>" + CL.xmlContentEncode(symbol()) + "<\\cl:Name>";
+		return "<cl:Name>" + CL.xmlContentEncode(symbol()) + "</cl:Name>";
 	}
 
 	@Override

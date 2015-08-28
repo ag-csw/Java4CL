@@ -49,7 +49,7 @@ public class CLDisjunction extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Or>" + 
 	            comments().toString() +
-	            disjuncts.toString() + "<\\cl:Or>";
+	            disjuncts.toString() + "</cl:Or>";
 	}
 
 	@Override

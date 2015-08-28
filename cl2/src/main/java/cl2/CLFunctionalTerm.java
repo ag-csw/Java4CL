@@ -105,7 +105,7 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 		return "<cl:Apply>" + 
 	            comments().toString() +
 	            operator.toString() +
-	            args.toString() + "<\\cl:Apply>";
+	            args.toString() + "</cl:Apply>";
 	}
 
 

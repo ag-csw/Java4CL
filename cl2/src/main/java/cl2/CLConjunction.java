@@ -49,7 +49,7 @@ public class CLConjunction extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:And>" + 
 	            comments().toString() +
-	            conjuncts.toString() + "<\\cl:And>";
+	            conjuncts.toString() + "</cl:And>";
 	}
 
 	@Override

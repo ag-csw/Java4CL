@@ -49,7 +49,7 @@ public class CLUniversal extends CLQuantifiedSentence {
 		return "<cl:Forall>" + 
 	            comments().toString() +
 	            bindings().toString() +
-	            body().toString() + "<\\cl:Forall>";
+	            body().toString() + "</cl:Forall>";
 	}
 	
 }

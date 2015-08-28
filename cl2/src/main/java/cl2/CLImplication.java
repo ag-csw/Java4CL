@@ -65,7 +65,7 @@ public class CLImplication extends CLBooleanSentence {
 		return "<cl:Implies>" + 
 	            comments().toString() +
 	            antecedent.toString() +
-	            consequent.toString() + "<\\cl:Implies>";
+	            consequent.toString() + "</cl:Implies>";
 	}
 	
 }

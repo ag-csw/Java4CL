@@ -13,6 +13,8 @@ public abstract class CLExpression extends AbstractBasicKnowledgeExpression impl
 	public CLExpression(
 			final CLCommentSet comments){
 		super(CL.LANG);
+		if(comments==null)
+			throw new NullPointerException("Comments of a CLExpression should not be null.");
 		this.comments = comments;
 		
 	}

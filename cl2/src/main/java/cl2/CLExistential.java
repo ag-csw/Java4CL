@@ -47,7 +47,7 @@ public class CLExistential extends CLQuantifiedSentence {
 		return "<cl:Exists>" + 
 	            comments().toString() +
 	            bindings().toString() +
-	            body().toString() + "<\\cl:Exists>";
+	            body().toString() + "</cl:Exists>";
 	}
 
 

@@ -49,7 +49,7 @@ public class CLStringSequenceMarker extends CLSequenceMarker {
      */
 	@Override
 	public String toString() {
-		return "<cl:Marker>" + CL.xmlContentEncode(symbol()) + "<\\cl:Marker>";
+		return "<cl:Marker>" + CL.xmlContentEncode(symbol()) + "</cl:Marker>";
 	}
 
 

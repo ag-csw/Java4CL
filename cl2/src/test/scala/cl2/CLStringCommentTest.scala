@@ -62,11 +62,11 @@ class CLStringCommentTest extends FlatSpec with Matchers with GeneratorDrivenPro
 
   "A CLStringComment's string representation" should
     "be the XML element cl:Comment with data as content, with appropriate escaping" in {
-    (testfragment1 toString) should equal("<cl:Comment>test<\\cl:Comment>")
+    (testfragment1 toString) should equal("<cl:Comment>test</cl:Comment>")
     forAll((CLGenerators.clstringsymbolgen, "data")) { (data: String) =>
       {
         val testfragment = new CLStringComment(data)
-       (testfragment1 toString) should equal("<cl:Comment>" + CL.xmlContentEncode(testfragment1 data) + "<\\cl:Comment>")
+       (testfragment1 toString) should equal("<cl:Comment>" + CL.xmlContentEncode(testfragment1 data) + "</cl:Comment>")
       }
     }
   }

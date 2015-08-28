@@ -114,11 +114,11 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
   
   "A CLStringInterpretableName's string representation" should
     "be the XML element cl:Name with symbol as content, with appropriate escaping" in {
-    (testfragment1 toString) should equal("<cl:Name>test<\\cl:Name>")
+    (testfragment1 toString) should equal("<cl:Name>test</cl:Name>")
     forAll((CLGenerators.clstringsymbolgen, "symbol")) { (symbol: String) =>
       {
         val testfragment = new CLStringInterpretableName(symbol)
-       (testfragment toString) should equal("<cl:Name>" + CL.xmlContentEncode(testfragment symbol) + "<\\cl:Name>")
+       (testfragment toString) should equal("<cl:Name>" + CL.xmlContentEncode(testfragment symbol) + "</cl:Name>")
       }
     }
   }

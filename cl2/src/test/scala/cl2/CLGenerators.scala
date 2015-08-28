@@ -117,7 +117,7 @@ object CLGenerators {
   val clsequencemarkergen: Gen[CLSequenceMarker] = clstringsequencemarkergen
       
  //CLFunctionalTerm
-  val depth = 3;
+  val depth = 4;
   /**
    * generator for zero-depth functional terms,
    * having no nested functional terms
@@ -229,18 +229,36 @@ object CLGenerators {
     
   implicit val arbCLAtomicSentence = Arbitrary(clatomgen(depth))
 
-  def clbicondgen(d: Int): Gen[CLBiconditional] =
+  // CLBiconditional
+  def clbicond0gen: Gen[CLBiconditional] =
     for {
       comments <- clcommentsetgen
-      left <- clsentencegen(d)
-      right <- clsentencegen(d)
+      left <- clatomgen(0)
+      right <- clatomgen(0)
     } yield new CLBiconditional(comments, left, right)
-    
+
+  /**
+   * generator for recursively defined functional terms,
+   * of depth d
+   */
+    def clbicondgen(d: Int): Gen[CLBiconditional] =
+      if (d<=0) clbicond0gen
+      else
+        for {
+          comments <- clcommentsetgen
+          left <- clsentencegen(d-1)
+          right <- clsentencegen(d-1)
+        } yield new CLBiconditional(comments, left, right)
+
+        
   implicit val arbCLBiconditional = Arbitrary(clbicondgen(depth))
   
   //TODO add more types of Sentence
-  def clsentencegen(d: Int): Gen[CLSentence] = clatomgen(d)
-
+  def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
+    (1, clatomgen(d)),
+    (1, clbicondgen(d))
+    ) 
+    
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
   
   //TODO add statements and texts also
@@ -249,7 +267,7 @@ object CLGenerators {
   implicit val arbCLExpression = Arbitrary(clexpressiongen(depth))
   
   def clexpressionlikegen(d: Int): Gen[CLExpressionLike] = Gen.frequency(
-    (1, cltermgen(depth)),
+    (1, cltermgen(d)),
     (1, clsequencemarkergen),
     (1, clcommentgen)
     )

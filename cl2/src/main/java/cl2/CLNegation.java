@@ -53,7 +53,7 @@ public class CLNegation extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Not>" + 
 	            comments().toString() +
-	            sent.toString() + "<\\cl:Not>";
+	            sent.toString() + "</cl:Not>";
 	}
 	
 }
