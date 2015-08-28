@@ -20,11 +20,9 @@ public abstract class CLInterpretedName extends CLName {
      */
 	public CLInterpretedName(Object symbol, Object datatype) {
 		super(symbol);
-		if(datatype!=null)
-			  this.datatype = datatype;
-			else
-				throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
-		
+		if(datatype==null)
+			throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
+        this.datatype = datatype;			
 	}
 
 	protected final Object datatype;

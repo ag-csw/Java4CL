@@ -21,7 +21,7 @@ class CLAtomicSentenceLawTest extends FunSuiteLike with Discipline {
   
     checkAll("CLAtomicSentence", CLAtomicSentenceLaws.atom)
 
-    checkAll("CLBiconditional", CLAtomicSentenceLaws.atom)
+    checkAll("CLBiconditional", CLBiconditionalLaws.bicond)
 
     checkAll("CLSentence", CLSentenceLaws.sentence)
 

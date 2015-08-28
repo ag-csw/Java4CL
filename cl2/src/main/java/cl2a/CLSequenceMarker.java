@@ -22,10 +22,9 @@ public abstract class CLSequenceMarker extends CLTermOrSequenceMarker {
 	     */
 		public CLSequenceMarker(Object symbol) {
 			super();
-			if(symbol!=null)
-			  this.symbol = symbol;
-			else
+			if(symbol==null)
 				throw new NullPointerException("Symbol of a CLSequenceMarker should not be null.");
+			  this.symbol = symbol;
 		}
 
 		protected final Object symbol;

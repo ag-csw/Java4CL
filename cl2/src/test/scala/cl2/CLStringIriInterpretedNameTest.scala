@@ -95,7 +95,7 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Generat
       {
         val testfragmenta = createCLStringIriInterpretedNameFromStringIRI(symbola, datatypeString1)
         val testfragmentb = createCLStringIriInterpretedNameFromStringIRI(symbolb, datatypeString1)
-        if (symbola.equals(symbolb))
+        if ((symbola.equals(symbolb)) && (datatypeString1.equals(datatypeString2)))
           (testfragmenta) should equal(testfragmentb)
         else
           (testfragmenta) should not equal (testfragmentb)

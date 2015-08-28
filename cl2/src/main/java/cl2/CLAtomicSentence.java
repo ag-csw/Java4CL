@@ -29,14 +29,12 @@ public class CLAtomicSentence extends CLSimpleSentence {
 			final CLTerm operator, 
 			final CLTermSequence args) {
 		super(comments);
-		if(operator!=null)
-			this.operator = operator;
-			else
-				throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
-		if(args!=null)
-			this.args = args;
-			else
-				throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
+		if(operator==null)
+			throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
+	    this.operator = operator;
+		if(args==null)
+			throw new NullPointerException("Symbol of a CLStringInterpretableName should not be null.");
+		this.args = args;
 
 	}
 

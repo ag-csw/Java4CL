@@ -28,7 +28,11 @@ public class CLBiconditional extends CLBooleanSentence {
 			final CLSentence right
 			) {
 		super(comments);
+		if(left==null)
+			throw new NullPointerException("Left argument of a CLBiconditional should not be null.");
 		this.left = left;
+		if(right==null)
+			throw new NullPointerException("Right argument of a CLBiconditional should not be null.");
 		this.right = right;
 
 	}
@@ -108,7 +112,7 @@ public class CLBiconditional extends CLBooleanSentence {
 	}
 
 	public boolean canEqual(Object other) {
-        return (other instanceof CLAtomicSentence);
+        return (other instanceof CLBiconditional);
     }
     
 

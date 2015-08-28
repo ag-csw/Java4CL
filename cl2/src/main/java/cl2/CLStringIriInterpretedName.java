@@ -13,6 +13,7 @@ import cl2a.CLInterpretedName;
 public class CLStringIriInterpretedName extends CLInterpretedName {
 	
 	//private String symbol;
+	//private CLIRI datatype;
 
 	/**
 	 * Creates a CL interpreted name with a string symbol and IRI-specified
@@ -46,10 +47,8 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 			String datatypestring) {
 		if ((symbol == null) || (datatypestring == null))
 			throw new NullPointerException("arguments may not be null ");
-		else {
-			  CLIRI datatype = new CLIRI(datatypestring);
-			  return new CLStringIriInterpretedName(symbol, datatype);
-		}
+        CLIRI datatype = new CLIRI(datatypestring);
+		return new CLStringIriInterpretedName(symbol, datatype);
 	}
 
 	public static CLStringIriInterpretedName createCLStringIriInterpretedNameFromString(String symbol){
@@ -78,6 +77,11 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 		return (CLIRI) super.datatype();
 	}
 
+	@Override
+	public CLStringIriInterpretedName copy() {
+		return new CLStringIriInterpretedName(symbol(), datatype());
+	}
+	
 	/**
 	 * Returns the XCL2 sour syntax for the CL interpreted name, as a string,
 	 * using the prefix cl: to indicate the XCL2 namespace.
@@ -92,6 +96,7 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((datatype() == null) ? 0 : datatype().hashCode());
 		result = prime * result + ((symbol() == null) ? 0 : symbol().hashCode());
 		return result;
 	}
@@ -111,17 +116,19 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 		CLStringIriInterpretedName other = (CLStringIriInterpretedName) obj;
 		if (!other.canEqual(this))
 			return false;
+		if (datatype() == null) {
+			if (other.datatype() != null)
+				return false;
+		} else if (!datatype().equals(other.datatype()))
+			return false;
 		if (symbol() == null) {
-			if (other.symbol != null)
+			if (other.symbol() != null)
 				return false;
 		} else if (!symbol().equals(other.symbol()))
 			return false;
 		return true;
 	}
 
-	@Override
-	public CLStringIriInterpretedName copy() {
-		return new CLStringIriInterpretedName(symbol(), datatype());
-	}
-	
+
+
 }

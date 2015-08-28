@@ -20,10 +20,9 @@ public abstract class CLName extends CLTerm {
      */
 	public CLName(Object symbol) {
 		super();
-		if(symbol!=null)
-		  this.symbol = symbol;
-		else
+		if(symbol==null)
 			throw new NullPointerException("Symbol of a CLName should not be null.");
+        this.symbol = symbol;
 	}
 
 	protected final Object symbol;
