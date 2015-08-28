@@ -52,7 +52,7 @@ class CLConjunctionTest extends FlatSpec with Matchers with PropertyChecks {
   }
 
   "The conjuncts of a CLConjunction" should "be equal to the parameter passed to the constructor" in {
-    forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
+    forAll("comment-symbols", "operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
       val comments = new CLCommentSetArray(commentsarray: _*)
       val comments0 = new CLCommentSetArray()

@@ -62,7 +62,7 @@ class CLAtomicSentenceTest extends FlatSpec
   }
 
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
-    forAll("operator", minSuccessful(100)) { (operator: CLTerm) =>
+    forAll("operator", minSuccessful(MIN_SUCCESSFUL / 2)) { (operator: CLTerm) =>
       val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)
       (testexpression operator) should be(operator)
     }
@@ -86,7 +86,7 @@ class CLAtomicSentenceTest extends FlatSpec
 
   "The term sequence of a CLAtomicSentence from a length one term sequence" should
     "be equal to the parameter passed to the term constructor 2" in {
-      forAll("operator", minSuccessful(100)) { (operator: CLTerm) =>
+      forAll("operator", minSuccessful(MIN_SUCCESSFUL / 2)) { (operator: CLTerm) =>
         val termsequence = new CLTermSequenceArray(testfragment1)
         val testexpression = new CLAtomicSentence(comments1, operator, termsequence)
         val testargs = testexpression.args()

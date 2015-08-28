@@ -80,8 +80,9 @@ class CLStringSequenceMarkerTest extends FlatSpec with Matchers with PropertyChe
           val testfragmenta = new CLStringSequenceMarker(symbola)
           val testfragmentb = new CLStringSequenceMarker(symbolb)
           val testfragmenta2 = new CLStringSequenceMarker(symbola)
-          if (symbola.equals(symbolb))
+          if (symbola.equals(symbolb)) {
             (testfragmenta hashCode) should equal(testfragmentb hashCode)
+          }
           (testfragmenta hashCode) should equal(testfragmenta2 hashCode)
         }
     }
@@ -91,8 +92,9 @@ class CLStringSequenceMarkerTest extends FlatSpec with Matchers with PropertyChe
     forAll((CLGenerators.clstringsequencemarkergen, "markera"), (CLGenerators.clstringsequencemarkergen, "markerb")) {
       (markera: CLStringSequenceMarker, markerb: CLStringSequenceMarker) =>
         {
-          if (markera.equals(markerb))
+          if (markera.equals(markerb)) {
             (markera hashCode) should equal(markerb hashCode)
+          }
         }
     }
     (testfragment1 hashCode) should equal(testfragment2 hashCode)
@@ -107,10 +109,11 @@ class CLStringSequenceMarkerTest extends FlatSpec with Matchers with PropertyChe
         val testfragmenta = new CLStringSequenceMarker(symbola)
         val testfragmentb = new CLStringSequenceMarker(symbolb)
         val testfragmenta2 = new CLStringSequenceMarker(symbola)
-        if (symbola.equals(symbolb))
+        if (symbola.equals(symbolb)) {
           (testfragmenta) should equal(testfragmentb)
-        else
+        } else {
           (testfragmenta) should not equal (testfragmentb)
+        }
         (testfragmenta) should equal(testfragmenta2)
       }
     }
@@ -121,11 +124,11 @@ class CLStringSequenceMarkerTest extends FlatSpec with Matchers with PropertyChe
     forAll((CLGenerators.clstringsequencemarkergen, "markera"), (CLGenerators.clstringsequencemarkergen, "markerb")) {
       (markera: CLStringSequenceMarker, markerb: CLStringSequenceMarker) =>
         {
-          if ((markera symbol).equals(markerb symbol))
+          if ((markera symbol).equals(markerb symbol)) {
             (markera) should equal(markerb)
-          else {
+          } else {
             (markera) should not equal (markerb)
-            //println("Duplicate generators do not produce identical results")
+            // println("Duplicate generators do not produce identical results")
           }
           (markera) should equal(new CLStringSequenceMarker(markera symbol))
         }

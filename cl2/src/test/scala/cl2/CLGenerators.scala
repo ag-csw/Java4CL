@@ -22,6 +22,16 @@ import scala.language.postfixOps
 
 object CLGenerators {
 
+  val CODE_POINT_TAB = 0x9;
+  val CODE_POINT_LF = 0xA;
+  val CODE_POINT_CF = 0xD;
+  val CODE_POINT_MIN_C1 = 0x20;
+  val MIN_SURROGATE = Character.MIN_SURROGATE
+  val MAX_SURROGATE = Character.MAX_SURROGATE
+  val MAX_XML_BMP = Character.MIN_SUPPLEMENTARY_CODE_POINT - 3
+  val MIN_SUPPLEMENTARY_CODE_POINT = Character.MIN_SUPPLEMENTARY_CODE_POINT
+  val MAX_XML_SUPPLEMENTARY_CODE_POINT = 0x10FFF
+
   /**
    * generator of Strings of length 1 or 2 corresponding to a
    * single Unicode character
@@ -30,10 +40,11 @@ object CLGenerators {
   val xmlcharactergen: Gen[String] =
     for {
       i <- Gen frequency (
-        (3, Gen.oneOf(Seq(0x9, 0xA, 0xD))),
-        (0xD7FF - 0x20 + 1, Gen.choose(0x20, 0xD7FF)),
-        (0xFFFD - 0xE000 + 1, Gen.choose(0xE000, 0xFFFD)),
-        (0x10FFF - 0x10000 + 1, Gen.choose(0x10000, 0x10FFF)))
+        (3, Gen.oneOf(Seq(CODE_POINT_TAB, CODE_POINT_LF, CODE_POINT_CF))),
+        (MIN_SURROGATE - CODE_POINT_MIN_C1, Gen.choose(CODE_POINT_MIN_C1, MIN_SURROGATE - 1)),
+        (MAX_XML_BMP - MAX_SURROGATE, Gen.choose(MAX_SURROGATE + 1, MAX_XML_BMP)),
+        (MAX_XML_SUPPLEMENTARY_CODE_POINT - MIN_SUPPLEMENTARY_CODE_POINT + 1,
+          Gen.choose(MIN_SUPPLEMENTARY_CODE_POINT, MAX_XML_SUPPLEMENTARY_CODE_POINT)))
     } yield String copyValueOf (Character toChars i)
 
   /**
@@ -44,7 +55,7 @@ object CLGenerators {
     for { a <- Gen listOf (xmlcharactergen) }
       yield (a mkString)
 
-  //CLComent
+  // CLComent
   /**
    * generator of CL comments whose comment data (symbol)
    * is String symbol according to clstringsymbolgen
@@ -53,12 +64,12 @@ object CLGenerators {
     for { s <- clstringsymbolgen }
       yield new CLStringComment(s)
 
-  //TODO also need other kinds of comments
+  // TODO also need other kinds of comments
   val clcommentgen: Gen[CLComment] = clstringcommentgen
 
   implicit val arbCLComment = Arbitrary(clcommentgen)
 
-  //CLCommentSet
+  // CLCommentSet
   /**
    * generator of CL comment sets (array-based instances), which may be
    * used in generators of "commentable" CL terms and expressions
@@ -77,7 +88,7 @@ object CLGenerators {
 
   implicit val arbCLCommentSet = Arbitrary(clcommentsetgen)
 
-  //CLInterpretableName
+  // CLInterpretableName
   /**
    * generator of CL interpretable name with a
    * String symbol, as defined for clstringsymbolgen
@@ -85,12 +96,12 @@ object CLGenerators {
   val clstringinamegen: Gen[CLStringInterpretableName] = for { s <- clstringsymbolgen }
     yield new CLStringInterpretableName(s)
 
-  //TODO also need interpretable names with non-string symbols
+  // TODO also need interpretable names with non-string symbols
   val clinamegen: Gen[CLInterpretableName] = clstringinamegen
 
   implicit val arbCLInterpretableName = Arbitrary(clinamegen)
 
-  //CLInterpretedName
+  // CLInterpretedName
   /**
    * generator for a Cl interpreted name with fixed interpretation
    * as a string of Unicode characters and datatype xsd:string
@@ -98,12 +109,12 @@ object CLGenerators {
   val clstringdatagen: Gen[CLStringIriInterpretedName] = for { s <- clstringsymbolgen }
     yield CLStringIriInterpretedName.createCLStringIriInterpretedNameFromString(s)
 
-  //TODO also need other interpreted names from other datatypes
+  // TODO also need other interpreted names from other datatypes
   val cldatagen: Gen[CLInterpretedName] = clstringdatagen
 
   implicit val arbCLData = Arbitrary(cldatagen)
 
-  //CLName
+  // CLName
   /**
    * generator for CL names, with equal probability
    * of interpretable and interpreted names
@@ -114,7 +125,7 @@ object CLGenerators {
 
   implicit val arbCLName = Arbitrary(clnamegen)
 
-  //CLSequenceMarker
+  // CLSequenceMarker
   /**
    * generator for CL sequence markers with string symbols
    */
@@ -122,10 +133,10 @@ object CLGenerators {
     for { s <- clstringsymbolgen }
       yield new CLStringSequenceMarker(s)
 
-  //TODO also need non-string sequence markers
+  // TODO also need non-string sequence markers
   val clsequencemarkergen: Gen[CLSequenceMarker] = clstringsequencemarkergen
 
-  //CLFunctionalTerm
+  // CLFunctionalTerm
   val depth = 4;
   /**
    * generator for zero-depth functional terms,
@@ -154,17 +165,18 @@ object CLGenerators {
    * of depth d
    */
   def clfunctionaltermgen(d: Int): Gen[CLFunctionalTerm] =
-    if (d <= 0) clfunctionalterm0gen
-    else
+    if (d <= 0) { clfunctionalterm0gen }
+    else {
       for {
         comments <- clcommentsetgen
         operator <- cltermgen(d - 1)
         args <- cltermsequencegen(d - 1)
       } yield new CLFunctionalTerm(comments, operator, args)
+    }
 
   implicit val arbCLFunctionalTerm = Arbitrary(clfunctionaltermgen(depth))
 
-  //CLTerm
+  // CLTerm
   val clterm0gen: Gen[CLTerm] = Gen.frequency(
     (100, clnamegen),
     (1, clfunctionalterm0gen))
@@ -179,7 +191,7 @@ object CLGenerators {
 
   implicit val arbCLTerm = Arbitrary(cltermgen(depth))
 
-  //CLTermOrSequenceMarker
+  // CLTermOrSequenceMarker
   val clnameorsequencemarkergen: Gen[CLTermOrSequenceMarker] = Gen.frequency(
     (1, clnamegen),
     (1, clsequencemarkergen))
@@ -198,7 +210,7 @@ object CLGenerators {
 
   implicit val arbCLTermOrSequenceMarker = Arbitrary(clterm1orsequencemarkergen)
 
-  //CLTermSequence
+  // CLTermSequence
   /**
    * generator for terms sequences containing no functional term
    */
@@ -206,7 +218,7 @@ object CLGenerators {
     for { a <- Gen listOf (clnameorsequencemarkergen) }
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
 
-  //TODO need other types of sequences
+  // TODO need other types of sequences
   val clnamesequencegen = clnamesequencearraygen
 
   /**
@@ -216,14 +228,14 @@ object CLGenerators {
     for { a <- Gen listOf (clterm0orsequencemarkergen) }
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
 
-  //TODO need other types of sequences
+  // TODO need other types of sequences
   val clterm0sequencegen = clterm0sequencearraygen
 
   def cltermsequencearraygen(d: Int): Gen[CLTermSequenceArray] =
     for { a <- Gen listOf (cltermorsequencemarkergen(d)) }
       yield new CLTermSequenceArray(a.toArray[CLTermOrSequenceMarker]: _*)
 
-  //TODO need other types of sequences
+  // TODO need other types of sequences
   def cltermsequencegen(d: Int): Gen[CLTermSequence] = cltermsequencearraygen(d)
 
   implicit val arbCLTermSequence = Arbitrary(cltermsequencegen(depth))
@@ -250,24 +262,25 @@ object CLGenerators {
    * of depth d
    */
   def clbicondgen(d: Int): Gen[CLBiconditional] =
-    if (d <= 0) clbicond0gen
-    else
+    if (d <= 0) { clbicond0gen }
+    else {
       for {
         comments <- clcommentsetgen
         left <- clsentencegen(d - 1)
         right <- clsentencegen(d - 1)
       } yield new CLBiconditional(comments, left, right)
+    }
 
   implicit val arbCLBiconditional = Arbitrary(clbicondgen(depth))
 
-  //TODO add more types of Sentence
+  // TODO add more types of Sentence
   def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
     (1, clatomgen(d)),
     (1, clbicondgen(d)))
 
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
 
-  //TODO add statements and texts also
+  // TODO add statements and texts also
   def clexpressiongen(d: Int): Gen[CLExpression] = clsentencegen(d)
 
   implicit val arbCLExpression = Arbitrary(clexpressiongen(depth))
@@ -279,22 +292,29 @@ object CLGenerators {
 
   implicit val arbCLExpressionLike = Arbitrary(clexpressionlikegen(depth))
 
-  //TODO make a valid IRI generator by assembling from segments
+  // TODO make a valid IRI generator by assembling from segments
   //IRI            = scheme ":" ihier-part [ "?" iquery ]
   //                         [ "#" ifragment ]
   //val irischemegen:Gen[String] =
 
   // iprivate       = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD
+  val MAX_PRIVATE_BMP = 0xF8FF
+  val MIN_SPUAA = 0xF0000
+  val MAX_SPUAA = 0xFFFFD
+  val MIN_SPUAB = 0x100000
+  val MAX_SPUAB = Character.MAX_CODE_POINT - 2
+
   val iriiprivategen: Gen[String] =
     for {
       i <- Gen frequency (
-        (0xF8FF - 0xE000 + 1, Gen.choose(0xE000, 0xF8FF)),
-        (0xFFFFD - 0xF0000 + 1, Gen.choose(0xF0000, 0xFFFFD)),
-        (0x10FFFD - 0x100000 + 1, Gen.choose(0x100000, 0x10FFFD)))
+        (MAX_PRIVATE_BMP - MAX_SURROGATE, Gen.choose(MAX_SURROGATE + 1, MAX_PRIVATE_BMP)),
+        (MAX_SPUAA - MIN_SPUAA + 1, Gen.choose(MIN_SPUAA, MAX_SPUAA)),
+        (MAX_SPUAB - MIN_SPUAB + 1,
+          Gen.choose(MIN_SPUAB, MAX_SPUAB)))
     } yield String copyValueOf (Character toChars i)
 
-  //TODO use the IRI generator to make a data generator with arbitrary IRI datatype
+  // TODO use the IRI generator to make a data generator with arbitrary IRI datatype
 
-  //TODO make generators for other kinds of symbols - Image, objects as XML serializations (JAXB?)
+  // TODO make generators for other kinds of symbols - Image, objects as XML serializations (JAXB?)
 
 }

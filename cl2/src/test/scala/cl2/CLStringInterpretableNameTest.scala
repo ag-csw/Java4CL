@@ -79,16 +79,18 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
           val testfragmenta = new CLStringInterpretableName(symbola)
           val testfragmentb = new CLStringInterpretableName(symbolb)
           val testfragmenta2 = new CLStringInterpretableName(symbola)
-          if (symbola.equals(symbolb))
+          if (symbola.equals(symbolb)) {
             (testfragmenta hashCode) should equal(testfragmentb hashCode)
+          }
           (testfragmenta hashCode) should equal(testfragmenta2 hashCode)
         }
     }
     forAll((CLGenerators.clstringinamegen, "namea"), (CLGenerators.clstringinamegen, "nameb")) {
       (namea: CLStringInterpretableName, nameb: CLStringInterpretableName) =>
         {
-          if (namea.equals(nameb))
+          if (namea.equals(nameb)) {
             (namea hashCode) should equal(nameb hashCode)
+          }
         }
     }
     (testfragment1 hashCode) should equal(testfragment2 hashCode)
@@ -103,21 +105,22 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
         val testfragmenta = new CLStringInterpretableName(symbola)
         val testfragmentb = new CLStringInterpretableName(symbolb)
         val testfragmenta2 = new CLStringInterpretableName(symbola)
-        if (symbola.equals(symbolb))
+        if (symbola.equals(symbolb)) {
           (testfragmenta) should equal(testfragmentb)
-        else
+        } else {
           (testfragmenta) should not equal (testfragmentb)
+        }
         (testfragmenta) should equal(testfragmenta2)
       }
     }
     forAll((CLGenerators.clstringinamegen, "namea"), (CLGenerators.clstringinamegen, "nameb")) {
       (namea: CLStringInterpretableName, nameb: CLStringInterpretableName) =>
         {
-          if ((namea symbol).equals(nameb symbol))
+          if ((namea symbol).equals(nameb symbol)) {
             (namea) should equal(nameb)
-          else {
+          } else {
             (namea) should not equal (nameb)
-            //println("Duplicate generators do not produce identical results")
+            // println("Duplicate generators do not produce identical results")
           }
           (namea) should equal(new CLStringInterpretableName(namea symbol))
         }

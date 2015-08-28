@@ -31,32 +31,32 @@ trait CLExpressionLaws extends Laws {
     (expression language) == CL.LANG
   }
 
-  //TODO lift to api4kbj.Basic
+  // TODO lift to api4kbj.Basic
   def expressionIsBasicIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
     (expression isBasic)
   }
 
-  //TODO lift to api4kbj.KnowledgeExpressionLike
+  // TODO lift to api4kbj.KnowledgeExpressionLike
   def expressionHasExpressionAbstractionLevelIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
     (expression level) == EXPRESSION
   }
 
-  //TODO lift to api4kbj.Immutable
+  // TODO lift to api4kbj.Immutable
   def expressionEqualsItselfIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
     expression.equals(expression)
   }
 
-  //TODO lift to api4kbj.Immutable
+  // TODO lift to api4kbj.Immutable
   def expressionEqualsCopyIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
     expression.equals(expression.copy())
   }
 
-  //TODO lift to api4kbj.Immutable
+  // TODO lift to api4kbj.Immutable
   def expressionNotEqualNullIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
     !(expression.equals(null))
   }
 
-  //TODO lift to CLCommentable
+  // TODO lift to CLCommentable
   def expressionEqualsCopyWithEmptyCommentsInsertedIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
     expression.equals(expression.insertComments(emptyComments))
   }
@@ -99,9 +99,9 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
 
   def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>
     {
-      //val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
-      //val f2:Function[CLTerm, CLTerm] = {s:CLTerm => s}
-      //val f3:Function[CLTermSequence, CLTermSequence] = {s:CLTermSequence => s}
+      // val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
+      // val f2:Function[CLTerm, CLTerm] = {s:CLTerm => s}
+      // val f3:Function[CLTermSequence, CLTermSequence] = {s:CLTermSequence => s}
       atom == atom.copy(
         { s: CLCommentSet => s }, { s: CLTerm => s }, { s: CLTermSequence => s }) &&
         atom.hashCode() == atom.copy(
@@ -138,8 +138,8 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
 object CLBiconditionalLaws extends CLSentenceLaws {
 
   def biconditionalIdentityIdentity: Prop = Prop.forAll { (bicond: CLBiconditional) =>
-    //val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
-    //val f2:Function[CLSentence, CLSentence] = {s:CLSentence => s}
+    // val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
+    // val f2:Function[CLSentence, CLSentence] = {s:CLSentence => s}
     bicond.equals(bicond.copy()) &&
       bicond == bicond.copy(
         { s: CLCommentSet => s }, { s: CLSentence => s }, { s: CLSentence => s }) &&

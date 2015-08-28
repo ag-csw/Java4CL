@@ -80,10 +80,11 @@ class CLStringCommentTest extends FlatSpec with Matchers with PropertyChecks {
         {
           val testfragmenta = new CLStringComment(dataa)
           val testfragmentb = new CLStringComment(datab)
-          if (dataa.equals(datab))
+          if (dataa.equals(datab)) {
             (testfragmenta) should equal(testfragmentb)
-          else
+          } else {
             (testfragmenta) should not equal (testfragmentb)
+          }
         }
       }
   }

@@ -90,7 +90,7 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with PropertyChe
 
       val terms: List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
       var termsequence: CLTermSequenceArray = new CLTermSequenceArray()
-      for (term <- terms) {
+      for { term <- terms } {
         termsequence = termsequence.concat(new CLTermSequenceArray(term))
       }
       val testexpression = new CLInDiscourseStatement(comments, termsequence)

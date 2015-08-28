@@ -20,8 +20,10 @@ import scala.language.postfixOps
 
 class CLExpressionLikeLawTest extends FunSuiteLike with Discipline {
 
-  checkAll("CLName", CLNameLaws.name)
+  checkAll("CLComment", CLCommentLaws.comment)
 
   checkAll("CLTerm", CLTermLaws.term)
+
+  checkAll("CLName", CLNameLaws.name)
 
 }

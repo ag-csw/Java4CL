@@ -16,15 +16,9 @@
 
 package cl2
 
-import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
-import cl2a._
-import api4kbj.KnowledgeSourceLevel._
-import cl2array._
-import collection.JavaConversions._
-import scala.collection.immutable.List
-import java.util.Arrays;
+import CLGenerators._
 import scala.language.postfixOps
 
 class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
@@ -66,7 +60,7 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
   }
 
   "The operator of a CLFunctionalTerm" should "be equal to the parameter passed to the term constructor 1" in {
-    forAll("operator-string", minSuccessful(100)) { (operatorString: String) =>
+    forAll("operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (operatorString: String) =>
       val operator = new CLStringInterpretableName(operatorString)
       val testfragment = new CLFunctionalTerm(comments1, operator, termsequence1)
       (testfragment operator) should equal(operator)
@@ -74,7 +68,7 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
   }
 
   "The operator of a CLFunctionalTerm" should "be equal to the parameter passed to the term constructor 2" in {
-    forAll("operator-string", minSuccessful(100)) { (operatorString: String) =>
+    forAll("operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (operatorString: String) =>
       val operator = new CLFunctionalTerm(comments1, new CLStringInterpretableName(operatorString), termsequence1)
       val testfragment = new CLFunctionalTerm(comments1, operator, termsequence1)
       (testfragment operator) should equal(operator)
@@ -173,7 +167,10 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
         val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
         val comments = new CLCommentSetArray(commentsarray: _*)
         val operator = new CLStringInterpretableName(operatorSymbol)
-        val termsarray: Array[CLTermOrSequenceMarker] = argsymbols.map(s => new CLStringInterpretableName(s).asInstanceOf[CLTermOrSequenceMarker]).toArray[CLTermOrSequenceMarker]
+        val termsarray: Array[CLTermOrSequenceMarker] =
+          argsymbols.
+            map(s => new CLStringInterpretableName(s).asInstanceOf[CLTermOrSequenceMarker]).
+            toArray[CLTermOrSequenceMarker]
         val termsequence: CLTermSequenceArray = new CLTermSequenceArray(termsarray: _*)
         val testfragment = new CLFunctionalTerm(comments, operator, termsequence)
         val commentsarray2: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]

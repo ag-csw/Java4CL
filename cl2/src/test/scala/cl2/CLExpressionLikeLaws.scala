@@ -16,7 +16,7 @@
 
 package cl2
 
-import cl2.functionconversions._
+import cl2.functionconversions.toJavaFunction
 import CLGenerators._
 import scala.language.postfixOps
 
@@ -31,29 +31,29 @@ trait CLExpressionLikeLaws extends Laws {
     (clentity language) == CL.LANG
   }
 
-  //TODO lift to api4kbj.Basic
+  // TODO lift to api4kbj.Basic
   def expressionlikeIsBasicIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    (clentity isBasic) == true
+    (clentity isBasic)
   }
 
-  //TODO lift to api4kbj.KnowledgeExpressionLike
+  // TODO lift to api4kbj.KnowledgeExpressionLike
   def expressionlikeHasExpressionAbstractionLevelIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
     (clentity level) == EXPRESSION
   }
 
-  //TODO lift to api4kbj.Immutable
+  // TODO lift to api4kbj.Immutable
   def expressionlikeEqualsItselfIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    clentity.equals(clentity) == true
+    clentity.equals(clentity)
   }
 
-  //TODO lift to api4kbj.Immutable
+  // TODO lift to api4kbj.Immutable
   def expressionlikeEqualsCopyIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    clentity.equals(clentity.copy()) == true
+    clentity.equals(clentity.copy())
   }
 
-  //TODO lift to api4kbj.Immutable
+  // TODO lift to api4kbj.Immutable
   def expressionlikeNotEqualNullIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    clentity.equals(null) == false
+    !(clentity.equals(null))
   }
 
   def expressionlike: RuleSet = new RuleSet {
@@ -74,7 +74,7 @@ trait CLExpressionLikeLaws extends Laws {
 trait CLCommentLaws extends CLExpressionLikeLaws {
 
   def commentNotEqualTermIdentity: Prop = Prop.forAll { ((comment: CLComment), (term: CLTerm)) =>
-    comment.equals(term) == false
+    !(comment.equals(term))
   }
 
   def comment: RuleSet = new RuleSet {
@@ -92,7 +92,7 @@ object CLCommentLaws extends CLCommentLaws
 trait CLTermLaws extends CLExpressionLikeLaws {
 
   def termNotEqualCommentIdentity: Prop = Prop.forAll { ((term: CLTerm), (comment: CLComment)) =>
-    term.equals(comment) == false
+    !(term.equals(comment))
   }
 
   def term: RuleSet = new RuleSet {
@@ -110,7 +110,7 @@ object CLTermLaws extends CLTermLaws
 trait CLNameLaws extends CLTermLaws {
 
   def nameNotEqualFunctionalTermIdentity: Prop = Prop.forAll { ((name: CLName), (fterm: CLFunctionalTerm)) =>
-    name.equals(fterm) == false
+    !(name.equals(fterm))
   }
 
   def name: RuleSet = new RuleSet {

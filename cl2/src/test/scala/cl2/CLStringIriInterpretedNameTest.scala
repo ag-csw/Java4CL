@@ -83,8 +83,8 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Propert
     ((testfragment1 datatype) toString) should be(datatypeString1)
     ((testfragment2 datatype) toString) should be(datatypeString2)
     ((testfragment3 datatype) toString) should be(datatypeString3)
-    //TODO generate random XSD datatype and valid lexical item
-    /*forAll("datatypeString") { (datatypeString: String) =>
+    // TODO generate random XSD datatype and valid lexical item
+    /* forAll("datatypeString") { (datatypeString: String) =>
       {
         val testfragment = createCLStringIriInterpretedNameFromStringIRI(symbol1, datatypeString)
         ((testfragment datatype) toString) should be(datatypeString)
@@ -94,13 +94,14 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Propert
 
   "The hashcode of CLStringIriInterpretedNames" should "depend only on its symbol" in {
     (testfragment1.hashCode().equals(testfragment2.hashCode())) should be(true)
-    //TODO generate random XSD datatype and valid lexical item
+    // TODO generate random XSD datatype and valid lexical item
     forAll("symbola", "symbolb") { (symbola: String, symbolb: String) =>
       {
         val testfragmenta = createCLStringIriInterpretedNameFromStringIRI(symbola, datatypeString1)
         val testfragmentb = createCLStringIriInterpretedNameFromStringIRI(symbolb, datatypeString1)
-        if (symbola.equals(symbolb))
+        if (symbola.equals(symbolb)) {
           (testfragmenta hashCode) should equal(testfragmentb hashCode)
+        }
       }
     }
   }
@@ -109,15 +110,16 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Propert
     (testfragment1.equals(testfragment2)) should be(true)
     (testfragment1) should not equal (testfragment3)
     (testfragment1) should not equal (null)
-    //TODO generate random XSD datatype and valid lexical item
+    // TODO generate random XSD datatype and valid lexical item
     forAll("symbola", "symbolb") { (symbola: String, symbolb: String) =>
       {
         val testfragmenta = createCLStringIriInterpretedNameFromStringIRI(symbola, datatypeString1)
         val testfragmentb = createCLStringIriInterpretedNameFromStringIRI(symbolb, datatypeString1)
-        if ((symbola.equals(symbolb)) && (datatypeString1.equals(datatypeString2)))
+        if ((symbola.equals(symbolb)) && (datatypeString1.equals(datatypeString2))) {
           (testfragmenta) should equal(testfragmentb)
-        else
+        } else {
           (testfragmenta) should not equal (testfragmentb)
+        }
       }
     }
   }
@@ -126,6 +128,6 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Propert
     "be the XML element cl:Data with datatypeString as an attribute and symbol as content, with appropriate escaping" in {
       (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">test</cl:Data>")
       (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">" + CL.xmlContentEncode(symbol1) + "</cl:Data>")
-      //TODO generate random XSD datatype and valid lexical item
+      // TODO generate random XSD datatype and valid lexical item
     }
 }
