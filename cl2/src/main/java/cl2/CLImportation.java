@@ -31,4 +31,16 @@ public class CLImportation extends CLText {
 		return new CLImportation(comments(), name);
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the importation text, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Import>" + 
+	            comments().toString() +
+	            name.toString() + "<\\cl:Import>";
+	}
+
+	
 }

@@ -5,6 +5,7 @@ import org.scalatest.matchers._
 import cl2a._
 import api4kbj.KnowledgeSourceLevel._
 import prop.GeneratorDrivenPropertyChecks
+import scala.language.postfixOps
 
 class CLStringCommentTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   val data = "test"

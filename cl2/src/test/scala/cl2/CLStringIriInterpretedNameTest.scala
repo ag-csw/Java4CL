@@ -7,6 +7,7 @@ import prop.GeneratorDrivenPropertyChecks
 import cl2a._
 import api4kbj.KnowledgeSourceLevel._
 import CLStringIriInterpretedName._
+import scala.language.postfixOps
 
 class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   val symbol1 = "test"

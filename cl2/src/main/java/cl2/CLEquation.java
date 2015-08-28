@@ -33,4 +33,17 @@ public class CLEquation extends CLSimpleSentence {
 		return new CLEquation(comments(), left, right);
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the equation sentence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Equal>" + 
+	            comments().toString() +
+	            left.toString() +
+	            right.toString() + "<\\cl:Equal>";
+	}
+
+	
 }

@@ -4,12 +4,8 @@
 package cl2array;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
-import api4kbj.Immutable;
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLTermOrSequenceMarker;
 import cl2a.CLTermSequence;
 

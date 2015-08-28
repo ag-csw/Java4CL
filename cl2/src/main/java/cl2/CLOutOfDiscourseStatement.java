@@ -35,4 +35,15 @@ public class CLOutOfDiscourseStatement extends CLDiscourseStatement {
 	}
 
 
+	/**
+     * Returns the XCL2 sour syntax for the out-of-discourse statement, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Out>" + 
+	            comments().toString() +
+	            args().toString() + "<\\cl:Out>";
+	}
+
 }

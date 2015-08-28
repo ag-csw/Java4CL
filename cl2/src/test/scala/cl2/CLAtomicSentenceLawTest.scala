@@ -15,10 +15,13 @@ import api4kbj.KnowledgeSourceLevel._
 import cl2a._
 
 import cl2array._
+import scala.language.postfixOps
 
 class CLAtomicSentenceLawTest extends FunSuiteLike with Discipline {
   
     checkAll("CLAtomicSentence", CLAtomicSentenceLaws.atom)
+
+    checkAll("CLBiconditional", CLAtomicSentenceLaws.atom)
 
     checkAll("CLSentence", CLSentenceLaws.sentence)
 

@@ -14,6 +14,7 @@ import api4kbj.KnowledgeSourceLevel._
 import cl2a._
 import cl2array._
 import cl2jc._
+import scala.language.postfixOps
 
 object CLGenerators {
   
@@ -228,6 +229,15 @@ object CLGenerators {
     
   implicit val arbCLAtomicSentence = Arbitrary(clatomgen(depth))
 
+  def clbicondgen(d: Int): Gen[CLBiconditional] =
+    for {
+      comments <- clcommentsetgen
+      left <- clsentencegen(d)
+      right <- clsentencegen(d)
+    } yield new CLBiconditional(comments, left, right)
+    
+  implicit val arbCLBiconditional = Arbitrary(clbicondgen(depth))
+  
   //TODO add more types of Sentence
   def clsentencegen(d: Int): Gen[CLSentence] = clatomgen(d)
 

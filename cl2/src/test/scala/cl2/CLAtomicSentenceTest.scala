@@ -15,6 +15,7 @@ import cl2a._
 import cl2array._
 
 import CLGenerators._
+import scala.language.postfixOps
 
 class CLAtomicSentenceTest extends FlatSpec 
   with Matchers 
@@ -116,15 +117,6 @@ class CLAtomicSentenceTest extends FlatSpec
     (testexpression1) should not equal (testexpression5)
     (testexpression1) should not equal (testexpression6)
     (testexpression1) should not equal (null)
-  }
-
-  "Equality of CLAtomicSentence" should "depend only on its fields 2" in {
-    forAll("atom") {
-      (atom: CLAtomicSentence) =>        
-
-        (atom) should equal(atom.copy())
-    }
-  }
-  
+  }  
 
 }

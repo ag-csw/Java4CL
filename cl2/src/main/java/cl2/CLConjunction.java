@@ -41,6 +41,17 @@ public class CLConjunction extends CLBooleanSentence {
 				conjuncts);
 	}
 	
+	/**
+     * Returns the XCL2 sour syntax for the conjunction sentence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:And>" + 
+	            comments().toString() +
+	            conjuncts.toString() + "<\\cl:And>";
+	}
+
 	@Override
 	public CLConjunction copy() {
 		return new CLConjunction(comments(), conjuncts);

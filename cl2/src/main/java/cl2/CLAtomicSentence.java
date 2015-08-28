@@ -85,6 +85,18 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the atomic sentence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Atom>" + 
+	            comments().toString() +
+	            operator.toString() +
+	            args.toString() + "<\\cl:Atom>";
+	}
+
 	@Override
 	public CLAtomicSentence insertComments(final CLCommentSet incomments) {
 		BiFunction<CLCommentSet, CLCommentSet, CLCommentSet> F = CLCommentSet::concat;

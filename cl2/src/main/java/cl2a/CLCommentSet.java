@@ -2,8 +2,6 @@ package cl2a;
 
 import java.util.Set;
 
-import cl2.CLAtomicSentence;
-
 public abstract class CLCommentSet extends CLExpressionLike {
 	
 	public abstract Set<? extends CLComment> args();
@@ -11,6 +9,17 @@ public abstract class CLCommentSet extends CLExpressionLike {
 	public abstract int length();
 
 	public abstract CLCommentSet concat(CLCommentSet incomments);
+
+	/**
+     * Returns the XCL2 sour syntax for the comment set, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		String result = "";
+		for (CLComment s : args() ) result = result + s.toString();
+		return result;
+	}
 
 	@Override
 	public int hashCode() {

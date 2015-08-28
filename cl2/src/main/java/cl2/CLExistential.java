@@ -37,5 +37,18 @@ public class CLExistential extends CLQuantifiedSentence {
 	public CLExistential copy() {
 		return new CLExistential(comments(), bindings(), body());
 	}
-	
+
+	/**
+     * Returns the XCL2 sour syntax for the existential quantification sentence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Exists>" + 
+	            comments().toString() +
+	            bindings().toString() +
+	            body().toString() + "<\\cl:Exists>";
+	}
+
+
 }

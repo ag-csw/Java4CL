@@ -41,6 +41,17 @@ public class CLDisjunction extends CLBooleanSentence {
 				disjuncts);
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the disjunction sentence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Or>" + 
+	            comments().toString() +
+	            disjuncts.toString() + "<\\cl:Or>";
+	}
+
 	@Override
 	public CLDisjunction copy() {
 		return new CLDisjunction(comments(), disjuncts);

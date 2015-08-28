@@ -1,6 +1,7 @@
 package cl2
 
 import java.util.function.{ Function ⇒ JFunction, Predicate ⇒ JPredicate, BiPredicate }
+import scala.language.implicitConversions
 
 /**
  * @author taraathan

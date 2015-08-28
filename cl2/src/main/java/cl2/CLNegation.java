@@ -44,5 +44,16 @@ public class CLNegation extends CLBooleanSentence {
 	public CLNegation copy() {
 		return new CLNegation(comments(), sent);
 	}
+
+	/**
+     * Returns the XCL2 sour syntax for the conjunction sentence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Not>" + 
+	            comments().toString() +
+	            sent.toString() + "<\\cl:Not>";
+	}
 	
 }

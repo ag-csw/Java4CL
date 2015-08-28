@@ -2,7 +2,6 @@ package cl2;
 
 import java.awt.Image;
 
-import api4kbj.Immutable;
 import cl2a.CLComment;
 
 public class CLImageComment extends CLComment  {

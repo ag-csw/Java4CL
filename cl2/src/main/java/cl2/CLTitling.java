@@ -51,5 +51,17 @@ public class CLTitling extends CLStatement {
 		return new CLTitling(comments(), name, text);
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the titling statement, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Titling>" + 
+	            comments().toString() +
+	            name.toString() +
+	            text.toString() + "<\\cl:Titling>";
+	}
+
 
 }

@@ -12,6 +12,7 @@ import cl2a._
 import cl2array._
 import CLGenerators._
 import org.typelevel.discipline._
+import scala.language.postfixOps
 
 /**
  * Laws that must be obeyed by any `CL expression-like entity`.

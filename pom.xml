@@ -37,6 +37,12 @@
 				<artifactId>scala-maven-plugin</artifactId>
 				<version>3.2.1</version>
 				<!--configuration> <recompileMode>incremental</recompileMode> </configuration -->
+				<configuration>
+					<args>
+						<arg>-deprecation</arg>
+						<arg>-feature</arg>
+					</args>
+				</configuration>
 				<executions>
 					<execution>
 						<id>compile</id>

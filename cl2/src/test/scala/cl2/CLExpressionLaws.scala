@@ -12,6 +12,7 @@ import cl2a._
 import cl2array._
 import CLGenerators._
 import org.typelevel.discipline._
+import scala.language.postfixOps
 
 /**
  * Laws that must be obeyed by any `CL expression`.
@@ -102,7 +103,12 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
       cl2.toJavaFunction {s => s},
       cl2.toJavaFunction {s => s},
       cl2.toJavaFunction {s => s}
-      ).hashCode()
+      ).hashCode() &&
+    atom.toString() == atom.copy(
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s}
+      ).toString()
   }
 
   def atomComposeIdentity(
@@ -120,6 +126,7 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
         (f2 compose g2),
         (f3 compose g3))
   }
+  
    def atom:RuleSet = new RuleSet {
      def name = "atom"
       def bases: Seq[(String, Laws#RuleSet)] = Seq()
@@ -128,5 +135,34 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
        ("Identity Copy", atomIdentityIdentity)    
      )
   }
+}
+object CLBiconditionalLaws extends CLSentenceLaws {
+      
+    def biconditionalIdentityIdentity: Prop = Prop.forAll { (bicond: CLBiconditional) =>
+    bicond == bicond.copy(
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s}
+      ) &&
+    bicond.hashCode() == bicond.copy(
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s}
+      ).hashCode() &&
+    bicond.toString() == bicond.copy(
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s},
+      cl2.toJavaFunction {s => s}
+      ).toString()
+  }
 
+   def bicond:RuleSet = new RuleSet {
+     def name = "bicond"
+      def bases: Seq[(String, Laws#RuleSet)] = Seq()
+      def parents: Seq[RuleSet] = Seq(sentence)
+     def props = Seq(
+       ("Identity Copy", biconditionalIdentityIdentity)    
+     )
+  }
+   
 }

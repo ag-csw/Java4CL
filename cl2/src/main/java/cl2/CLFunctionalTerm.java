@@ -1,8 +1,5 @@
 package cl2;
 
-import api4kbj.Immutable;
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLCommentSet;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
@@ -97,6 +94,18 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 	@Override
 	public CLFunctionalTerm copy() {
 		return new CLFunctionalTerm(comments(), operator, args);
+	}
+
+	/**
+     * Returns the XCL2 sour syntax for the functional term, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Apply>" + 
+	            comments().toString() +
+	            operator.toString() +
+	            args.toString() + "<\\cl:Apply>";
 	}
 
 

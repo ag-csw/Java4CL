@@ -11,6 +11,7 @@ import java.util.Arrays._
 
 import api4kbj.KnowledgeSourceLevel._
 import cl2a._
+import scala.language.postfixOps
 
 class CLStringInterpretableNameTest extends FlatSpec with Matchers with PropertyChecks {
   val symbol1 = "test"

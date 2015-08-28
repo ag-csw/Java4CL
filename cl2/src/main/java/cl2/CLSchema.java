@@ -51,4 +51,16 @@ public class CLSchema extends CLStatement {
 		return new CLSchema(comments(), bindings, body);
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the schema statement, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:Schema>" + 
+	            comments().toString() +
+	            bindings.toString() +
+	            body.toString() + "<\\cl:Schema>";
+	}
+
 }

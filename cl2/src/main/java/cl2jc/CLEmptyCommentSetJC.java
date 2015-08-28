@@ -5,7 +5,6 @@ import java.util.Set;
 
 import cl2.CLStringComment;
 import cl2a.CLCommentSet;
-import cl2array.CLBindingSequenceArray;
 
 
 

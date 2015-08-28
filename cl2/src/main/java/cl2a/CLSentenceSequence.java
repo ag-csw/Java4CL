@@ -16,4 +16,15 @@ public abstract class CLSentenceSequence extends CLExpressionLike {
 
 	public abstract CLSentenceSequence concat(CLSentenceSequence inargs);
 
+	/**
+     * Returns the XCL2 sour syntax for the sentence sequence, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		String result = "";
+		for (CLSentence s : args() ) result = result + s.toString();
+		return result;
+	}
+	
 }

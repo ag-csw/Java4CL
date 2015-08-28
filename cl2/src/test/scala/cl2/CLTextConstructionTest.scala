@@ -9,6 +9,7 @@ import cl2array._
 import collection.JavaConversions._
 import scala.collection.immutable.List
 import java.util.Arrays;
+import scala.language.postfixOps
 
 class CLTextConstructionTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
   implicit override val generatorDrivenConfig =

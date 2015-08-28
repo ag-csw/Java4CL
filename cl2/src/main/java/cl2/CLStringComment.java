@@ -1,8 +1,5 @@
 package cl2;
 
-import api4kbj.Immutable;
-import api4kbj.KRRLanguage;
-import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLComment;
 
 public class CLStringComment extends CLComment  {
@@ -26,13 +23,17 @@ public class CLStringComment extends CLComment  {
 		return (String) super.data();
 	}
 
-    /**
+	@Override
+	public CLStringComment copy() {
+		return new CLStringComment(data());
+	}
+
+	/**
      * Returns the XCL2 sour syntax for the comment, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.
      */
 	@Override
 	public String toString() {
-		//TODO escape data to give valid XML
 		return "<cl:Comment>" + CL.xmlContentEncode(data()) + "<\\cl:Comment>";
 	}
 
@@ -67,9 +68,5 @@ public class CLStringComment extends CLComment  {
 		return true;
 	}
 
-	@Override
-	public CLStringComment copy() {
-		return new CLStringComment(data());
-	}
 
 }

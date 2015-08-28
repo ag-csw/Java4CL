@@ -33,4 +33,16 @@ public class CLInDiscourseStatement extends CLDiscourseStatement {
 		return new CLInDiscourseStatement(comments(), args());
 	}
 
+	/**
+     * Returns the XCL2 sour syntax for the in-discourse statement, as a string,
+     * using the prefix cl: to indicate the XCL2 namespace.
+     */
+	@Override
+	public String toString() {
+		return "<cl:In>" + 
+	            comments().toString() +
+	            args().toString() + "<\\cl:In>";
+	}
+
+
 }
