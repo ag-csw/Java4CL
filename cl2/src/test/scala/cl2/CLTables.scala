@@ -16,10 +16,10 @@
 
 package cl2
 
-import org.scalatest.prop.TableDrivenPropertyChecks._
+import org.scalatest.prop.TableDrivenPropertyChecks.Table
 
 object CLTables {
-  val badcodepoints = 
+  val badcodepoints =
     Table(
       ("int"),
       (0),
@@ -51,7 +51,6 @@ object CLTables {
       (28),
       (29),
       (30),
-      (31)
-    ) 
-   
+      (31))
+
 }

@@ -16,25 +16,19 @@
 
 package cl2
 
-import org.scalatest._
-import org.scalatest.matchers._
-import cl2a._
-import api4kbj.KnowledgeSourceLevel._
-import prop.GeneratorDrivenPropertyChecks
-import cl2array._
-import collection.JavaConversions._
-import scala.collection.immutable.List
+import org.scalatest.prop.PropertyChecks
+import org.scalatest.{ FlatSpec, Matchers }
 import java.util.Arrays;
 import scala.language.postfixOps
 
-class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class CLUniversalTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(
-      minSuccessful = 200,
-      maxDiscarded = 1000,
-      minSize = 10,
-      maxSize = 20,
-      workers = 1)
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
   val comments = new CLCommentSetArray()
   val varx = new CLStringInterpretableName("x")
   val operator = new CLStringInterpretableName("allEqual")
@@ -43,25 +37,12 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
   val bindings = new CLBindingSequenceArray(varx)
   val testexpression = new CLUniversal(comments, bindings, body)
 
-  "A CLUniversal" should "be basic" in {
-    (testexpression isBasic) should be (true)
+  "The binding sequence of a CLUniversal" should "be equal to the bindings parameter passed to the constructor" in {
+    (testexpression bindings) should be(bindings)
   }
 
-  "A CLUniversal" should "use language CL" in {
-    val lang = CL.LANG
-    (testexpression language) should be (lang)
-  }
-
-  "A CLUniversal" should "have knowledge source level EXPRESSION" in {
-    (testexpression level) should be (EXPRESSION)
-  }
-
-  "The binding sequence of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
-    (testexpression bindings) should be (bindings)
-  }
-    
-  "The comments of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
-    forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
+  "The comments of a CLUniversal" should "be equal to the comments parameter passed to the constructor" in {
+    forAll("comment-symbols", "operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
       val comments = new CLCommentSetArray(commentsarray: _*)
       val comments0 = new CLCommentSetArray()
@@ -71,12 +52,12 @@ class CLUniversalTest extends FlatSpec with Matchers with GeneratorDrivenPropert
       val bindings = new CLBindingSequenceArray(varx)
       val testexpression = new CLUniversal(comments, bindings, body)
       val testcomments = (testexpression comments)
-      (testcomments) should be (comments)
+      (testcomments) should be(comments)
     }
   }
 
-  "The body of a CLUniversal" should "be equal to the parameter passed to the constructor" in {
-    forAll("comment-symbols", "operator-string", minSuccessful(100)) { (commentSymbols: List[String], operatorString: String) =>
+  "The body of a CLUniversal" should "be equal to the body parameter passed to the constructor" in {
+    forAll("comment-symbols", "operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]
       val comments = new CLCommentSetArray(commentsarray: _*)
       val comments0 = new CLCommentSetArray()

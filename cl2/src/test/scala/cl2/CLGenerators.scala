@@ -17,19 +17,7 @@
 package cl2
 
 import org.scalacheck.Gen
-import org.scalatest._
-import org.scalatest.matchers._
-import prop.PropertyChecks
-import scala.collection.immutable.List
 import org.scalacheck.Arbitrary
-
-import collection.JavaConversions._
-import java.util.Arrays;
-
-import api4kbj.KnowledgeSourceLevel._
-import cl2a._
-import cl2array._
-import cl2jc._
 import scala.language.postfixOps
 
 object CLGenerators {

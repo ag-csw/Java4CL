@@ -16,25 +16,19 @@
 
 package cl2
 
-import org.scalatest._
-import org.scalatest.matchers._
-import cl2a._
-import api4kbj.KnowledgeSourceLevel._
-import prop.GeneratorDrivenPropertyChecks
-import cl2array._
 import collection.JavaConversions._
-import scala.collection.immutable.List
-import java.util.Arrays;
+import org.scalatest.prop.PropertyChecks
+import org.scalatest.{ FlatSpec, Matchers }
 import scala.language.postfixOps
 
-class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class CLInDiscourseStatementTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
-  PropertyCheckConfig(
-      minSuccessful = 200,
-      maxDiscarded = 1000,
-      minSize = 10, 
-      maxSize = 20,
-      workers = 1)
+    PropertyCheckConfig(
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
   "A CLInDiscourseStatement" should "be basic" in {
     val comments = new CLCommentSetArray()
 
@@ -60,11 +54,10 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
     (testexpression.level()) should be(EXPRESSION)
   }
 
-
   "The term sequence of a CLInDiscourseStatement" should "be equal to the parameter passed to the term constructor" in {
     forAll("arg-string") { (argString: String) =>
       val comments = new CLCommentSetArray()
-  
+
       val term1 = new CLStringInterpretableName(argString)
       val termsequence = new CLTermSequenceArray(term1)
       val testexpression = new CLInDiscourseStatement(comments, termsequence)
@@ -73,16 +66,16 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
       val statementargsscala: Iterable[CLTermOrSequenceMarker] = statementargs.args()
       val statementnameterm1 = statementargsscala.head match {
         case statementargsname: CLName => statementargsname
-        case _                    => throw new ClassCastException
+        case _ => throw new ClassCastException
       }
       (statementnameterm1.symbol()) should be(argString)
     }
   }
-  
-   "The term sequence of a CLInDiscourseStatement constructed from a length two term sequence" should "have length two" in {
+
+  "The term sequence of a CLInDiscourseStatement constructed from a length two term sequence" should "have length two" in {
     forAll("arg-string1", "arg-string2") { (argString1: String, argString2: String) =>
       val comments = new CLCommentSetArray()
-  
+
       val term1 = new CLStringInterpretableName(argString1)
       val term2 = new CLStringInterpretableName(argString2)
       val termsequence = new CLTermSequenceArray(term1, term2)
@@ -90,18 +83,18 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with GeneratorDr
       val statementargs = testexpression.args()
       (statementargs.length()) should be(termsequence.length())
     }
-  } 
-   "The term sequence of a CLInDiscourseStatement" should "have the same length as the one passed to the term constructor" in {
+  }
+  "The term sequence of a CLInDiscourseStatement" should "have the same length as the one passed to the term constructor" in {
     forAll("symbols") { (symbols: List[String]) =>
       val comments = new CLCommentSetArray()
-  
-      val terms:List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
-      var termsequence:CLTermSequenceArray = new CLTermSequenceArray()
-      for (term <- terms){
+
+      val terms: List[CLTermOrSequenceMarker] = symbols.map(s => new CLStringInterpretableName(s))
+      var termsequence: CLTermSequenceArray = new CLTermSequenceArray()
+      for (term <- terms) {
         termsequence = termsequence.concat(new CLTermSequenceArray(term))
       }
       val testexpression = new CLInDiscourseStatement(comments, termsequence)
-      ((testexpression args) length) should be (termsequence length)
+      ((testexpression args) length) should be(termsequence length)
     }
   }
 }

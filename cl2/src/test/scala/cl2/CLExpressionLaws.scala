@@ -16,18 +16,8 @@
 
 package cl2
 
-import cl2._
-import java.util.function._
-import scala.compat.java8._
-import org.scalatest._
-import org.scalatest.matchers._
-import org.scalacheck.Prop
-import collection.JavaConversions._
-import api4kbj.KnowledgeSourceLevel._
-import cl2a._
-import cl2array._
+import cl2.functionconversions._
 import CLGenerators._
-import org.typelevel.discipline._
 import scala.language.postfixOps
 
 /**
@@ -43,7 +33,7 @@ trait CLExpressionLaws extends Laws {
 
   //TODO lift to api4kbj.Basic
   def expressionIsBasicIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    (expression isBasic) == true
+    (expression isBasic)
   }
 
   //TODO lift to api4kbj.KnowledgeExpressionLike
@@ -53,22 +43,22 @@ trait CLExpressionLaws extends Laws {
 
   //TODO lift to api4kbj.Immutable
   def expressionEqualsItselfIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    expression.equals(expression) == true
+    expression.equals(expression)
   }
 
   //TODO lift to api4kbj.Immutable
   def expressionEqualsCopyIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    expression.equals(expression.copy()) == true
+    expression.equals(expression.copy())
   }
 
   //TODO lift to api4kbj.Immutable
   def expressionNotEqualNullIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    expression.equals(null) == false
+    !(expression.equals(null))
   }
 
   //TODO lift to CLCommentable
   def expressionEqualsCopyWithEmptyCommentsInsertedIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    expression.equals(expression.insertComments(emptyComments)) == true
+    expression.equals(expression.insertComments(emptyComments))
   }
 
   def expression: RuleSet = new RuleSet {
@@ -90,7 +80,7 @@ trait CLExpressionLaws extends Laws {
 trait CLSentenceLaws extends CLExpressionLaws {
 
   def sentenceNotEqualTermIdentity: Prop = Prop.forAll { ((sent: CLSentence), (term: CLTerm)) =>
-    sent.equals(term) == false
+    !(sent.equals(term))
   }
 
   def sentence: RuleSet = new RuleSet {

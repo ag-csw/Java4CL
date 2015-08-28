@@ -16,18 +16,8 @@
 
 package cl2
 
-import cl2._
-import java.util.function._
-import scala.compat.java8._
-import org.scalatest._
-import org.scalatest.matchers._
-import org.scalacheck.Prop
-import collection.JavaConversions._
-import api4kbj.KnowledgeSourceLevel._
-import cl2a._
-import cl2array._
+import cl2.functionconversions._
 import CLGenerators._
-import org.typelevel.discipline._
 import scala.language.postfixOps
 
 /**

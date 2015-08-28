@@ -14,30 +14,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package cl2
-
-import java.util.function.{ Function ⇒ JFunction, Predicate ⇒ JPredicate, BiPredicate }
-import scala.language.implicitConversions
-
 /**
  * @author taraathan
- * From http://www.michaelpollmeier.com/2014/10/12/calling-java-8-functions-from-scala/
  */
 package object cl2 {
+  val MIN_SUCCESSFUL = 200
+  val MAX_DISCARDED = 1000
+  val MIN_SIZE = 10
+  val MAX_SIZE = 20
+  val WORKERS = 1
 
-//usage example: `i: Int ⇒ 42`
-implicit def toJavaFunction[A, B](f: Function1[A, B]) = new JFunction[A, B] {
-  override def apply(a: A): B = f(a)
-}
+  val EXPRESSION = api4kbj.KnowledgeSourceLevel.EXPRESSION
+  val Prop = org.scalacheck.Prop
 
-//usage example: `i: Int ⇒ true`
-implicit def toJavaPredicate[A](f: Function1[A, Boolean]) = new JPredicate[A] {
-  override def test(a: A): Boolean = f(a)
-}
+  type CLBindingSequence = cl2a.CLComment
+  type CLBooleanSentence = cl2a.CLComment
+  type CLComment = cl2a.CLComment
+  type CLCommentSet = cl2a.CLCommentSet
+  type CLDiscourseStatement = cl2a.CLDiscourseStatement
+  type CLExpression = cl2a.CLExpression
+  type CLExpressionLike = cl2a.CLExpressionLike
+  type CLInterpretableName = cl2a.CLInterpretableName
+  type CLInterpretedName = cl2a.CLInterpretedName
+  type CLName = cl2a.CLName
+  type CLQuantifiedSentence = cl2a.CLQuantifiedSentence
+  type CLSentence = cl2a.CLSentence
+  type CLSentenceSequence = cl2a.CLSentenceSequence
+  type CLSequenceMarker = cl2a.CLSequenceMarker
+  type CLSequenceMarkerSequence = cl2a.CLSequenceMarkerSequence
+  type CLSimpleSentence = cl2a.CLSimpleSentence
+  type CLStatement = cl2a.CLText
+  type CLTerm = cl2a.CLTerm
+  type CLTermOrSequenceMarker = cl2a.CLTermOrSequenceMarker
+  type CLTermSequence = cl2a.CLTermSequence
+  type CLText = cl2a.CLText
 
-//usage example: `(i: Int, s: String) ⇒ true`
-implicit def toJavaBiPredicate[A, B](predicate: (A, B) ⇒ Boolean) =
-  new BiPredicate[A, B] {
-    def test(a: A, b: B) = predicate(a, b)
-  }
+  type CLBindingSequenceArray = cl2array.CLBindingSequenceArray
+  type CLCommentSetArray = cl2array.CLCommentSetArray
+  type CLExpressionSequenceArray = cl2array.CLExpressionSequenceArray
+  type CLSentenceSequenceArray = cl2array.CLSentenceSequenceArray
+  type CLTermSequenceArray = cl2array.CLTermSequenceArray
+
+  type CLCommentSetJC = cl2jc.CLCommentSetJC
+  type CLEmptyCommentSetJC = cl2jc.CLEmptyCommentSetJC
+
+  type Discipline = org.typelevel.discipline.scalatest.Discipline
+  type Laws = org.typelevel.discipline.Laws
+  type FunSuiteLike = org.scalatest.FunSuiteLike
+  type Prop = org.scalacheck.Prop
+
 }

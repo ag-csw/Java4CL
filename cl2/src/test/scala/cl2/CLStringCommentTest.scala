@@ -16,14 +16,18 @@
 
 package cl2
 
-import org.scalatest._
-import org.scalatest.matchers._
-import cl2a._
-import api4kbj.KnowledgeSourceLevel._
-import prop.GeneratorDrivenPropertyChecks
+import org.scalatest.prop.PropertyChecks
+import org.scalatest.{ FlatSpec, Matchers }
 import scala.language.postfixOps
 
-class CLStringCommentTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class CLStringCommentTest extends FlatSpec with Matchers with PropertyChecks {
+  implicit override val generatorDrivenConfig =
+    PropertyCheckConfig(
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
   val data = "test"
   val data2 = "test"
   val data3 = "other"
@@ -32,11 +36,19 @@ class CLStringCommentTest extends FlatSpec with Matchers with GeneratorDrivenPro
   val testfragment3 = new CLStringComment(data3)
 
   "A CLStringComment constructor call with null argument" should "throw a NullPointerException" in {
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment4 = new CLStringComment(null)
     }
   }
-  
+
+  "A CLStringComment constructor call with argument containg banned characters" should
+    "throw an IllegalArgumentException" in {
+      forAll(CLTables.badcodepoints) { (i: Int) =>
+        an[IllegalArgumentException] should be thrownBy
+          new CLStringComment(new String(Character.toChars(i)))
+      }
+    }
+
   "A CLComment is basic" should "be true" in {
     (testfragment1 isBasic) should be(true)
   }
@@ -63,28 +75,28 @@ class CLStringCommentTest extends FlatSpec with Matchers with GeneratorDrivenPro
     (testfragment1) should equal(testfragment2)
     (testfragment1) should not equal (testfragment3)
     (testfragment1) should not equal (null)
-    forAll((CLGenerators.clstringsymbolgen, "dataa"), 
-        (CLGenerators.clstringsymbolgen, "datab")) { (dataa: String, datab: String) =>
-      {
-        val testfragmenta = new CLStringComment(dataa)
-        val testfragmentb = new CLStringComment(datab)
-        if (dataa.equals(datab))
-          (testfragmenta) should equal(testfragmentb)
-        else
-          (testfragmenta) should not equal (testfragmentb)
+    forAll((CLGenerators.clstringsymbolgen, "dataa"),
+      (CLGenerators.clstringsymbolgen, "datab")) { (dataa: String, datab: String) =>
+        {
+          val testfragmenta = new CLStringComment(dataa)
+          val testfragmentb = new CLStringComment(datab)
+          if (dataa.equals(datab))
+            (testfragmenta) should equal(testfragmentb)
+          else
+            (testfragmenta) should not equal (testfragmentb)
+        }
       }
-    }
   }
 
   "A CLStringComment's string representation" should
     "be the XML element cl:Comment with data as content, with appropriate escaping" in {
-    (testfragment1 toString) should equal("<cl:Comment>test</cl:Comment>")
-    forAll((CLGenerators.clstringsymbolgen, "data")) { (data: String) =>
-      {
-        val testfragment = new CLStringComment(data)
-       (testfragment1 toString) should equal("<cl:Comment>" + CL.xmlContentEncode(testfragment1 data) + "</cl:Comment>")
+      (testfragment1 toString) should equal("<cl:Comment>test</cl:Comment>")
+      forAll((CLGenerators.clstringsymbolgen, "data")) { (data: String) =>
+        {
+          val testfragment = new CLStringComment(data)
+          (testfragment1 toString) should equal("<cl:Comment>" + CL.xmlContentEncode(testfragment1 data) + "</cl:Comment>")
+        }
       }
     }
-  }
-    
+
 }

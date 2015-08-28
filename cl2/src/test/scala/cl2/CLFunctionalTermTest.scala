@@ -16,25 +16,25 @@
 
 package cl2
 
-import org.scalatest._
-import org.scalatest.matchers._
+import org.scalacheck.Gen
+import org.scalatest.prop.PropertyChecks
+import org.scalatest.{ FlatSpec, Matchers }
 import cl2a._
 import api4kbj.KnowledgeSourceLevel._
-import prop.GeneratorDrivenPropertyChecks
 import cl2array._
 import collection.JavaConversions._
 import scala.collection.immutable.List
 import java.util.Arrays;
 import scala.language.postfixOps
 
-class CLFunctionalTermTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(
-      minSuccessful = 200,
-      maxDiscarded = 1000,
-      minSize = 10,
-      maxSize = 20,
-      workers = 1)
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
 
   val comments1 = new CLCommentSetArray()
   val comments2 = new CLCommentSetArray()

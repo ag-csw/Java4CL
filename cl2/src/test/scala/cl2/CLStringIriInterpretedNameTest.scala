@@ -16,16 +16,19 @@
 
 package cl2
 
-import org.scalatest._
-import org.scalatest.matchers._
-import prop.GeneratorDrivenPropertyChecks
-
-import cl2a._
-import api4kbj.KnowledgeSourceLevel._
-import CLStringIriInterpretedName._
+import org.scalatest.prop.PropertyChecks
+import org.scalatest.{ FlatSpec, Matchers }
+import CLStringIriInterpretedName.createCLStringIriInterpretedNameFromStringIRI
 import scala.language.postfixOps
 
-class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with PropertyChecks {
+  implicit override val generatorDrivenConfig =
+    PropertyCheckConfig(
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
   val symbol1 = "test"
   val symbol2 = "test"
   val symbol3 = "other"
@@ -40,20 +43,20 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Generat
   val testfragment5 = createCLStringIriInterpretedNameFromStringIRI(symbol1, datatypeString3)
 
   "A CLStringIriInterpretedName constructor call with null argument" should "throw a NullPointerException" in {
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = createCLStringIriInterpretedNameFromStringIRI(null, datatypeString1)
     }
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = createCLStringIriInterpretedNameFromStringIRI(symbol1, null)
     }
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = new CLStringIriInterpretedName(null, datatype1)
     }
-    intercept[NullPointerException]{
+    intercept[NullPointerException] {
       val testfragment = new CLStringIriInterpretedName(symbol1, null)
     }
   }
-  
+
   "A CLStringName is basic" should "be true" in {
     (testfragment1 isBasic) should be(true)
   }
@@ -101,7 +104,7 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Generat
       }
     }
   }
-  
+
   "Equality of CLStringIriInterpretedNames" should "depend only on equality of their symbols" in {
     (testfragment1.equals(testfragment2)) should be(true)
     (testfragment1) should not equal (testfragment3)
@@ -119,10 +122,10 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Generat
     }
   }
 
-  "A CLStringIriInterpretedName's string representation" should 
+  "A CLStringIriInterpretedName's string representation" should
     "be the XML element cl:Data with datatypeString as an attribute and symbol as content, with appropriate escaping" in {
-    (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">test</cl:Data>")
-    (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">" + CL.xmlContentEncode(symbol1) + "</cl:Data>")
-    //TODO generate random XSD datatype and valid lexical item
-  }
+      (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">test</cl:Data>")
+      (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">" + CL.xmlContentEncode(symbol1) + "</cl:Data>")
+      //TODO generate random XSD datatype and valid lexical item
+    }
 }
