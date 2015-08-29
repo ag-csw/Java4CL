@@ -53,6 +53,15 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	}
 
 	@Override
+	public CLAtomicSentence insertComments(final CLCommentSet incomments) {
+		BiFunction<CLCommentSet, CLCommentSet, CLCommentSet> F = CLCommentSet::concat;
+		return copy(
+				s -> F.apply(s,incomments), 
+				s -> s, 
+				s -> s);
+	}
+
+	@Override
 	public CLAtomicSentence copy() {
 		return new CLAtomicSentence(comments().copy(), operator.copy(), args.copy());
 	}
@@ -93,15 +102,6 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	            comments().toString() +
 	            operator.toString() +
 	            args.toString() + "</cl:Atom>";
-	}
-
-	@Override
-	public CLAtomicSentence insertComments(final CLCommentSet incomments) {
-		BiFunction<CLCommentSet, CLCommentSet, CLCommentSet> F = CLCommentSet::concat;
-		return copy(
-				s -> F.apply(s,incomments), 
-				s -> s, 
-				s -> s);
 	}
 
 	@Override

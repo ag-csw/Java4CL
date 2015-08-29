@@ -4,9 +4,13 @@
 package cl2fj;
 
 
+import java.util.HashSet;
+
 import cl2a.CLExpressionSequence;
 import cl2a.CLExpression;
-import fj.data.List;
+import fj.data.Set;
+import fj.F;
+import fj.Ord;
 
 /**
  * @author ralph
@@ -14,38 +18,47 @@ import fj.data.List;
  */
 public class CLExpressionSequencefjList<A extends CLExpression> extends CLExpressionSequence {
 
-	private final List<A> args;
+	private final Set<A> args;
 	
 	/**
 	 * 
 	 */
-	public CLExpressionSequencefjList(List<A> args) {
+	public CLExpressionSequencefjList(Set<A> args) {
 		this.args = args;
 	}
 
 	@Override
-	public java.util.List<A> args() {
-		return new java.util.ArrayList<A>(args.toCollection());
+	public java.util.Set<A> args() {
+		HashSet<A> result = new HashSet<A>();
+		for (A e:args){
+			result.add(e);
+		}
+		return result;
 	}
 
 	@Override
 	public int length(){
-		return args.length();
+		return args.size();
 	}
 
 	@Override
 	public CLExpressionSequencefjList<CLExpression> concat(CLExpressionSequence inargs) {
-		List<CLExpression> b = List.nil();
-        for (final CLExpression inarg : inargs.args())
-        {
-            b = b.cons(inarg);
-        }		
-        b = b.reverse();
-		return new CLExpressionSequencefjList<CLExpression>(b);
+		Ord<CLExpression> ord = Ord.hashEqualsOrd();
+		Set<CLExpression> result = fj.data.Set.empty(ord);
+		for (CLExpression e:args()){
+			result.insert(e);
+		}
+		for (CLExpression e:inargs.args()){
+			result.insert(e);
+		}
+		return new CLExpressionSequencefjList<CLExpression>(result);
 	}
 
 	@Override
 	public CLExpressionSequencefjList<A> copy() {
-		return new CLExpressionSequencefjList<A>(args);
+		Ord<A> ordA = Ord.hashEqualsOrd();
+		@SuppressWarnings("unchecked")
+		F<A, A> f = s -> (A) s.copy();
+		return new CLExpressionSequencefjList<A>(args.map(ordA, f));
 	}
 }

@@ -53,7 +53,7 @@ public class CLTermSequenceArray extends CLTermSequence {
 
 	@Override
 	public CLTermSequenceArray copy() {
-		return new CLTermSequenceArray(args());
+		return new CLTermSequenceArray(CLArray.copyArgs(args));
 	}
 
 }

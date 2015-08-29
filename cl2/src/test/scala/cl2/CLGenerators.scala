@@ -323,11 +323,52 @@ object CLGenerators {
 
   implicit val arbCLSentenceSequence = Arbitrary(clsentencesequencegen(depth))
 
+  // CLTextConstruction
+  def clconstruct0gen: Gen[CLTextConstruction] =
+    for {
+      comments <- clcommentsetgen
+      sentences <- clsentencesequencegen(0)
+    } yield new CLTextConstruction(comments, sentences)
+
+  /**
+   * generator for recursively defined text constructions,
+   * of depth d
+   */
+  def clconstructgen(d: Int): Gen[CLTextConstruction] =
+    if (d <= 0) { clconstruct0gen }
+    else {
+      for {
+        comments <- clcommentsetgen
+        expressions <- clexpressionsequencegen(d - 1)
+      } yield new CLTextConstruction(comments, expressions)
+    }
+
+  implicit val arbCLTextConstruction = Arbitrary(clconstructgen(depth))
+
+  // CLText
+
+  // TODO add other kinds of texts: imports, domain restrictions
+  def cltextgen(d: Int): Gen[CLText] = clconstructgen(d)
+
+  implicit val arbCLText = Arbitrary(cltextgen(depth))
+
   // CLExpression
-  // TODO add statements and texts also
-  def clexpressiongen(d: Int): Gen[CLExpression] = clsentencegen(d)
+  // TODO add statements also
+  def clexpressiongen(d: Int): Gen[CLExpression] = Gen.frequency(
+    (MAX_SIZE * MAX_SIZE, clsentencegen(d)),
+    (1, cltextgen(d)))
 
   implicit val arbCLExpression = Arbitrary(clexpressiongen(depth))
+
+  // CLExpressionSequence
+  def clexpressionsequencearraygen(d: Int): Gen[CLExpressionSequenceArray] =
+    for { a <- Gen listOf (clexpressiongen(d)) }
+      yield new CLExpressionSequenceArray(a.toArray[CLExpression]: _*)
+
+  // TODO need other types of sequences
+  def clexpressionsequencegen(d: Int): Gen[CLExpressionSequence] = clexpressionsequencearraygen(d)
+
+  implicit val arbCLExpressionSequence = Arbitrary(clexpressionsequencegen(depth))
 
   // CLExpressionLike
   // TODO add sequences and sets also?

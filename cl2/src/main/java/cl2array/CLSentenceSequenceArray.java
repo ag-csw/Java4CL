@@ -4,12 +4,13 @@
 package cl2array;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import cl2a.CLExpression;
 import cl2a.CLSentence;
 import cl2a.CLSentenceSequence;
-import cl2a.CLTermOrSequenceMarker;
+import cl2a.CLExpressionSequence;
 
 /**
  * @author ralph
@@ -26,13 +27,13 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 		this.args = args;
 	}
 
-	public <T extends CLSentence> CLSentenceSequenceArray(List<T> args) {
+	public <T extends CLSentence> CLSentenceSequenceArray(Set<T> args) {
 		this(args.toArray(new CLSentence[0]));
 	}
 
 	@Override
-	public List<? extends CLSentence> args() {
-		return Arrays.asList(args);
+	public Set<? extends CLSentence> args() {
+		return new HashSet<CLSentence>(Arrays.asList(args));
 	}
 
 	@Override
@@ -41,7 +42,20 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 	}
 
 	@Override
-	public CLSentenceSequenceArray concat(CLSentenceSequence inargs) {
+	public CLExpressionSequence concat(CLExpressionSequence inargs) {
+		int bLen = inargs.length();
+		CLExpression[] b= new CLSentence[bLen];
+		int i = 0;
+        for (final CLExpression inarg : inargs.args())
+        {
+            b[i++] = inarg;
+        }		
+        CLExpression[] c = CLArray.concatExpressions(args, b);
+		return new CLExpressionSequenceArray(c);
+	}
+
+	@Override
+	public CLSentenceSequence concatSentences(CLSentenceSequence inargs) {
 		int bLen = inargs.length();
 		CLSentence[] b= new CLSentence[bLen];
 		int i = 0;
@@ -55,7 +69,7 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 
 	@Override
 	public CLSentenceSequenceArray copy() {
-		return new CLSentenceSequenceArray(args);
+		return new CLSentenceSequenceArray(CLArray.copySentences(args));
 	}
 
 }

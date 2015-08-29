@@ -3,32 +3,23 @@
  */
 package cl2fj;
 
-import api4kbj.Immutable;
 import cl2a.CLCommentSet;
 import cl2a.CLExpression;
-import cl2a.CLText;
-import cl2a.CLExpressionSequence;
+import cl2.CLTextConstruction;
 
 /**
  * @author tara
  *
  */
 public class CLTextConstructionfjList<A extends CLExpression>
-		extends CLText {
+		extends CLTextConstruction {
+	
+	private CLExpressionSequencefjList<A> texts;
 
     public CLTextConstructionfjList(
 			CLCommentSet comments,
-			CLExpressionSequence texts) {
-		super(comments);
-		this.texts = texts;
-	}
-
-
-	private final CLExpressionSequence texts;
-
-
-	public CLExpressionSequence texts() {
-		return texts;
+			CLExpressionSequencefjList<A> texts) {
+		super(comments, texts);
 	}
 
 

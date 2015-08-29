@@ -1,22 +1,18 @@
 package cl2a;
 
-import java.util.Collection;
+import java.util.Set;
 
-import cl2array.CLSentenceSequenceArray;
-
-
-
-public abstract class CLSentenceSequence extends CLExpressionLike {
+public abstract class CLSentenceSequence extends CLExpressionSequence {
 
 	public CLSentenceSequence() {
 		super();
 	}
 
-	public abstract Collection<? extends CLSentence> args();
+	public abstract Set<? extends CLSentence> args();
 
 	public abstract int length();
 
-	public abstract CLSentenceSequence concat(CLSentenceSequence inargs);
+	public abstract CLSentenceSequence concatSentences(CLSentenceSequence inargs);
 
 	@Override
 	public abstract CLSentenceSequence copy();
@@ -31,6 +27,7 @@ public abstract class CLSentenceSequence extends CLExpressionLike {
 		for (CLSentence s : args() ) result = result + s.toString();
 		return result;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

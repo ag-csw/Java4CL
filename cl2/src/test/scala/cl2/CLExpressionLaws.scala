@@ -140,15 +140,13 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
 object CLBiconditionalLaws extends CLSentenceLaws {
 
   def biconditionalIdentityIdentity: Prop = Prop.forAll { (bicond: CLBiconditional) =>
-    // val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
-    // val f2:Function[CLSentence, CLSentence] = {s:CLSentence => s}
     bicond.equals(bicond.copy()) &&
       bicond == bicond.copy(
-        { s: CLCommentSet => s }, { s: CLSentence => s }, { s: CLSentence => s }) &&
+        { s: CLCommentSet => s }, { s: CLSentenceSequence => s }) &&
         bicond.hashCode() == bicond.copy(
-          { s: CLCommentSet => s }, { s: CLSentence => s }, { s: CLSentence => s }).hashCode() &&
+          { s: CLCommentSet => s }, { s: CLSentenceSequence => s }).hashCode() &&
           bicond.toString() == bicond.copy(
-            { s: CLCommentSet => s }, { s: CLSentence => s }, { s: CLSentence => s }).toString()
+            { s: CLCommentSet => s }, { s: CLSentenceSequence => s }).toString()
   }
 
   def bicond: RuleSet = new RuleSet {

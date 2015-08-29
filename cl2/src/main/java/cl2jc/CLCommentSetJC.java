@@ -41,6 +41,10 @@ public class CLCommentSetJC extends CLCommentSet {
 
 	@Override
 	public CLCommentSetJC copy() {
-		return new CLCommentSetJC(args());
+		Set<CLComment> newcomments = new HashSet<CLComment>();
+		for(CLComment c :comments){
+			newcomments.add(c.copy());
+		}
+		return new CLCommentSetJC(newcomments);
 	}
 }

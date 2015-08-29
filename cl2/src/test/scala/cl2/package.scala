@@ -34,6 +34,7 @@ package object cl2 {
   type CLDiscourseStatement = cl2a.CLDiscourseStatement
   type CLExpression = cl2a.CLExpression
   type CLExpressionLike = cl2a.CLExpressionLike
+  type CLExpressionSequence = cl2a.CLExpressionSequence
   type CLInterpretableName = cl2a.CLInterpretableName
   type CLInterpretedName = cl2a.CLInterpretedName
   type CLName = cl2a.CLName

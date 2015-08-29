@@ -54,6 +54,6 @@ public class CLBindingSequenceArray extends CLBindingSequence {
 
 	@Override
 	public CLBindingSequenceArray copy() {
-		return new CLBindingSequenceArray(argHead, argTail);
+		return new CLBindingSequenceArray(argHead.copy(), CLArray.copyBindings(argTail));
 	}
 }

@@ -126,15 +126,10 @@ public class CLBiconditional extends CLBooleanSentence {
 				return false;
 		} else if (!comments().equals(other.comments()))
 			return false;
-		if (left == null) {
-			if (other.left != null)
+		if (args == null) {
+			if (other.args != null)
 				return false;
-		} else if (!left.equals(other.left))
-			return false;
-		if (right == null) {
-			if (other.right != null)
-				return false;
-		} else if (!right.equals(other.right))
+		} else if (!args.equals(other.args))
 			return false;
 		return true;
 	}

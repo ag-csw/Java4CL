@@ -63,4 +63,53 @@ public final class CLArray {
 		return c;
 	}
 	
+	public static CLComment[] copyComments(
+			final CLComment[] a) {
+		int aLen = a.length;
+		CLComment[] c= new CLComment[aLen];
+		for (int i = 0; i < aLen; i++){
+			c[i] = a[i].copy();
+		}
+		return c;
+	}
+
+	public static CLTermOrSequenceMarker[] copyArgs(
+			final CLTermOrSequenceMarker[] a) {
+		int aLen = a.length;
+		CLTermOrSequenceMarker[] c= new CLTermOrSequenceMarker[aLen];
+		for (int i = 0; i < aLen; i++){
+			c[i] = a[i].copy();
+		}
+		return c;
+	}
+
+	public static CLInterpretableName[] copyBindings(
+			final CLInterpretableName[] a) {
+		int aLen = a.length;
+		CLInterpretableName[] c= new CLInterpretableName[aLen];
+		for (int i = 0; i < aLen; i++){
+			c[i] = a[i].copy();
+		}
+		return c;
+	}
+
+	public static CLSentence[] copySentences(
+			final CLSentence[] a) {
+		int aLen = a.length;
+		CLSentence[] c= new CLSentence[aLen];
+		for (int i = 0; i < aLen; i++){
+			c[i] = a[i].copy();
+		}
+		return c;
+	}
+
+	public static CLExpression[] copyExpressions(
+			final CLExpression[] a) {
+		int aLen = a.length;
+		CLExpression[] c= new CLExpression[aLen];
+		for (int i = 0; i < aLen; i++){
+			c[i] = a[i].copy();
+		}
+		return c;
+	}
 }

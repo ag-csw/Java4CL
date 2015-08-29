@@ -44,7 +44,7 @@ public class CLCommentSetArray extends CLCommentSet {
 
 	@Override
 	public CLCommentSet copy() {
-		return new CLCommentSetArray(args());
+		return new CLCommentSetArray(CLArray.copyComments(comments));
 	}
 
 	

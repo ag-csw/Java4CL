@@ -4,7 +4,8 @@
 package cl2array;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import cl2a.CLExpressionSequence;
 import cl2a.CLExpression;
@@ -25,8 +26,8 @@ public class CLExpressionSequenceArray extends CLExpressionSequence {
 	}
 
 	@Override
-	public Collection<? extends CLExpression> args() {
-		return Arrays.asList(args);
+	public Set<CLExpression> args() {
+		return new HashSet<CLExpression>(Arrays.asList(args));
 	}
 
 	@Override
