@@ -24,5 +24,8 @@ public abstract class CLExpression extends AbstractBasicKnowledgeExpression impl
 		return comments;
 	}
 
+	@Override
+	public abstract CLExpression copy();
+
 
 }

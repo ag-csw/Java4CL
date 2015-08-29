@@ -28,4 +28,5 @@ class CLSentenceLawTest extends FunSuiteLike with Discipline {
 
   checkAll("CLBiconditional", CLBiconditionalLaws.bicond)
 
+  checkAll("CLConjunction", CLConjunctionLaws.and)
 }

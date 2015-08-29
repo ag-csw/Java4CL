@@ -158,5 +158,28 @@ object CLBiconditionalLaws extends CLSentenceLaws {
     def props = Seq(
       ("Identity Copy", biconditionalIdentityIdentity))
   }
+}
+
+object CLConjunctionLaws extends CLSentenceLaws {
+
+  def conjunctionIdentityIdentity: Prop = Prop.forAll { (and: CLConjunction) =>
+    // val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
+    // val f2:Function[CLSentence, CLSentence] = {s:CLSentence => s}
+    and.equals(and.copy()) &&
+      and == and.copy(
+        { s: CLCommentSet => s }, { s: CLSentenceSequence => s }) &&
+        and.hashCode() == and.copy(
+          { s: CLCommentSet => s }, { s: CLSentenceSequence => s }).hashCode() &&
+          and.toString() == and.copy(
+            { s: CLCommentSet => s }, { s: CLSentenceSequence => s }).toString()
+  }
+
+  def and: RuleSet = new RuleSet {
+    def name = "and"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq(
+      ("Identity Copy", conjunctionIdentityIdentity))
+  }
 
 }

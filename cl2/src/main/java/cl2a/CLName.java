@@ -36,4 +36,7 @@ public abstract class CLName extends CLTerm {
 		return symbol;
 	}
 
+	@Override
+	public abstract CLName copy();
+
 }

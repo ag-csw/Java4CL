@@ -1,8 +1,9 @@
 package cl2;
 
 import org.apache.abdera.i18n.iri.IRI;
+import api4kbj.Immutable;
 
-public class CLIRI {
+public class CLIRI implements Immutable {
 
 	private final IRI iri;
 
@@ -10,10 +11,19 @@ public class CLIRI {
 		this.iri = new IRI(datatypestring);
 	}
 
-	public IRI getIri() {
+	public static CLIRI createCLIRI(IRI datatype) {
+		return new CLIRI(datatype.toString());
+	}
+
+	public IRI iri() {
 		return iri;
 	}
 	
+	@Override
+	public CLIRI copy() {
+		return createCLIRI(iri);
+	}
+
 	@Override
 	public String toString(){
 		return iri.toString();

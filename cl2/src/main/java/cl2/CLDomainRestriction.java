@@ -39,6 +39,11 @@ public class CLDomainRestriction extends CLText {
 				f.apply(this));
 	}
 
+	@Override
+	public CLDomainRestriction copy() {
+		return new CLDomainRestriction(comments().copy(), domain.copy(), body.copy());
+	}
+
 	/**
      * Returns the XCL2 sour syntax for the domain restriction text, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.
@@ -50,11 +55,5 @@ public class CLDomainRestriction extends CLText {
 	            domain.toString() +
 	            body.toString() + "<\\cl:Restrict>";
 	}
-
-	@Override
-	public CLDomainRestriction copy() {
-		return new CLDomainRestriction(comments(), domain, body);
-	}
-
 
 }

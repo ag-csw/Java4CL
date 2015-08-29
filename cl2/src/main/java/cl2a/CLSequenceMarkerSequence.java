@@ -23,5 +23,8 @@ public abstract class CLSequenceMarkerSequence extends CLExpressionLike {
 		for (CLSequenceMarker s : args() ) result = result + s.toString();
 		return result;
 	}
-	
+
+	@Override
+	public abstract CLSequenceMarkerSequence copy();
+
 }

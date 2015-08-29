@@ -16,4 +16,7 @@ public abstract class CLBooleanSentence extends CLSentence {
 		super( comments);
 	}
 
+	@Override
+	public abstract CLBooleanSentence copy();
+
 }

@@ -15,5 +15,7 @@ public abstract class CLStatement extends CLExpression {
 		super(comments);
 	}
 	
+	@Override
+	public abstract CLStatement copy();
 	
 }

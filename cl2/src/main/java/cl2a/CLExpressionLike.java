@@ -9,6 +9,8 @@ public abstract class CLExpressionLike extends AbstractBasicKnowledgeExpressionL
 		super(CL.LANG);
 	}
 	
+	@Override
+	public abstract CLExpressionLike copy();
 	
 
 }

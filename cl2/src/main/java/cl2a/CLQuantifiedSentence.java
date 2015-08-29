@@ -35,4 +35,7 @@ public abstract class CLQuantifiedSentence extends CLSentence {
 		return body;
 	}
 
+	@Override
+	public abstract CLQuantifiedSentence copy();
+	
 }

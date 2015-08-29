@@ -28,7 +28,7 @@ public class CLImportation extends CLText {
 
 	@Override
 	public CLImportation copy() {
-		return new CLImportation(comments(), name);
+		return new CLImportation(comments().copy(), name.copy());
 	}
 
 	/**

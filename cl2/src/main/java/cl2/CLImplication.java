@@ -53,7 +53,7 @@ public class CLImplication extends CLBooleanSentence {
 
 	@Override
 	public CLImplication copy() {
-		return new CLImplication(comments(), antecedent, consequent);
+		return new CLImplication(comments().copy(), antecedent.copy(), consequent.copy());
 	}
 
 	/**

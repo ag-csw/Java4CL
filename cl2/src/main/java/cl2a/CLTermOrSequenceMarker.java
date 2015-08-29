@@ -10,4 +10,7 @@ package cl2a;
  */
 public abstract class CLTermOrSequenceMarker extends CLExpressionLike {
 
+	@Override
+	public abstract CLTermOrSequenceMarker copy();
+
 }

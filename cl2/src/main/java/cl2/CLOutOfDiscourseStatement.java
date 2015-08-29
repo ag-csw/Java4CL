@@ -31,7 +31,7 @@ public class CLOutOfDiscourseStatement extends CLDiscourseStatement {
 
 	@Override
 	public CLOutOfDiscourseStatement copy() {
-		return new CLOutOfDiscourseStatement(comments(), args());
+		return new CLOutOfDiscourseStatement(comments().copy(), args().copy());
 	}
 
 

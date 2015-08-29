@@ -36,4 +36,7 @@ public abstract class CLComment extends CLExpressionLike  {
 		return data;
 	}
 
+	@Override
+	public abstract CLComment copy();
+
 }

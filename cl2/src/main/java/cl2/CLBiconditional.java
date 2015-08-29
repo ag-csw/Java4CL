@@ -8,6 +8,8 @@ import java.util.function.Function;
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSet;
 import cl2a.CLSentence;
+import cl2a.CLSentenceSequence;
+import cl2array.CLSentenceSequenceArray;
 
 /**
  * @author ralph
@@ -16,8 +18,7 @@ import cl2a.CLSentence;
 public class CLBiconditional extends CLBooleanSentence {
 
 	// private CLCommentSet comments;
-	private final CLSentence left;
-	private final CLSentence right;
+	private final CLSentenceSequence args;
 
 	/**
 	 * 
@@ -27,40 +28,37 @@ public class CLBiconditional extends CLBooleanSentence {
 			final CLSentence left,
 			final CLSentence right
 			) {
+		this(comments, new CLSentenceSequenceArray(left, right));
+	}
+
+	public CLBiconditional( 
+			final CLCommentSet comments, 
+			final CLSentenceSequence args){
 		super(comments);
-		if(left==null)
-			throw new NullPointerException("Left argument of a CLBiconditional should not be null.");
-		this.left = left;
-		if(right==null)
-			throw new NullPointerException("Right argument of a CLBiconditional should not be null.");
-		this.right = right;
-
+		if (args==null)
+			throw new NullPointerException("Arguments of a CLBiconditional should not be null.");
+		if((args.length()<1) || (args.length()>2))
+			throw new IllegalArgumentException(
+					"The size of the sentence sequence of a CLBiconditional should be 1 or 2 ");
+		this.args = args;
 	}
-
 	/**
-	 * @return the left condition
+	 * @return the sentences
 	 */
-	public CLSentence left() {
-		return left;
-	}
-
-	/**
-	 * @return the right condition
-	 */
-	public CLSentence right() {
-		return right;
+	public CLSentenceSequence args() {
+		return args;
 	}
 
 
 	@Override
 	public CLBiconditional insertComments(final CLCommentSet incomments) {
 		return new CLBiconditional( comments().concat(incomments), 
-				left, right);
+				args);
 	}
 
 	@Override
 	public CLBiconditional copy() {
-		return new CLBiconditional(comments(), left, right);
+		return new CLBiconditional(comments().copy(), args.copy());
 	}
 
     /**
@@ -77,14 +75,12 @@ public class CLBiconditional extends CLBooleanSentence {
      */
 	public CLBiconditional copy(
 			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
-			final Function<CLSentence, ? extends CLSentence> leftOperator,
-			final Function<CLSentence, ? extends CLSentence> rightOperator
+			final Function<CLSentenceSequence, ? extends CLSentenceSequence> argsOperator
 			) {
 				return 
 						new CLBiconditional(
 								commentsOperator.apply(comments()),
-								leftOperator.apply(left),
-								rightOperator.apply(right)
+								argsOperator.apply(args)
 								);
 		
 	}
@@ -97,8 +93,7 @@ public class CLBiconditional extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Biconditional>" + 
 	            comments().toString() +
-	            left.toString() +
-	            right.toString() + "</cl:Biconditional>";
+	            args.toString() + "</cl:Biconditional>";
 	}
 
 	@Override
@@ -106,8 +101,7 @@ public class CLBiconditional extends CLBooleanSentence {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((comments() == null) ? 0 : comments().hashCode());
-		result = prime * result + ((left == null) ? 0 : left.hashCode());
-		result = prime * result + ((right == null) ? 0 : right.hashCode());
+		result = prime * result + ((args == null) ? 0 : args.hashCode());
 		return result;
 	}
 

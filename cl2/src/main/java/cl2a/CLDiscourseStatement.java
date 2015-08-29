@@ -25,4 +25,7 @@ public abstract class CLDiscourseStatement extends CLStatement {
 		return args;
 	}
 
+	@Override
+	public abstract CLDiscourseStatement copy();
+
 }

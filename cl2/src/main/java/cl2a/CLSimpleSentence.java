@@ -14,4 +14,8 @@ public abstract class CLSimpleSentence extends CLSentence {
 			CLCommentSet comments) {
 		super(comments);
 	}
+	
+	@Override
+	public abstract CLSimpleSentence copy();
+	
 }

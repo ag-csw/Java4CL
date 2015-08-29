@@ -18,6 +18,9 @@ public abstract class CLTermSequence extends CLExpressionLike {
 
 	public abstract CLTermSequence concat(CLTermSequence inargs);
 
+	@Override
+	public abstract CLTermSequence copy();
+
 	/**
      * Returns the XCL2 sour syntax for the term sequence, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.

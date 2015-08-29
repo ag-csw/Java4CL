@@ -10,4 +10,7 @@ package cl2a;
  */
 public abstract class CLTerm extends CLTermOrSequenceMarker {
 
+	@Override
+	public abstract CLTerm copy();
+
 }

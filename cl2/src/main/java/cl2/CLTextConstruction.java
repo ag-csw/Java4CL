@@ -38,7 +38,7 @@ public class CLTextConstruction
 
 	@Override
 	public CLTextConstruction copy() {
-		return new CLTextConstruction(comments(), args);
+		return new CLTextConstruction(comments().copy(), args.copy());
 	}
 
 	/**

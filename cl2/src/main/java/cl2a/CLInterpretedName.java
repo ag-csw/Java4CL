@@ -31,4 +31,7 @@ public abstract class CLInterpretedName extends CLName {
 		return datatype;
 	}
 
+	@Override
+	public abstract CLInterpretedName copy();
+	
 }

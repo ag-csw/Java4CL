@@ -30,7 +30,7 @@ public class CLInDiscourseStatement extends CLDiscourseStatement {
 
 	@Override
 	public CLInDiscourseStatement copy() {
-		return new CLInDiscourseStatement(comments(), args());
+		return new CLInDiscourseStatement(comments().copy(), args().copy());
 	}
 
 	/**

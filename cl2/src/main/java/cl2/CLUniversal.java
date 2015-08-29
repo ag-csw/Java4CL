@@ -37,7 +37,7 @@ public class CLUniversal extends CLQuantifiedSentence {
 
 	@Override
 	public CLUniversal copy() {
-		return new CLUniversal(comments(), bindings(), body());
+		return new CLUniversal(comments().copy(), bindings().copy(), body().copy());
 	}
 
 	/**

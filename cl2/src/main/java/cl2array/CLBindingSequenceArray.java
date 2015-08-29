@@ -49,9 +49,7 @@ public class CLBindingSequenceArray extends CLBindingSequence {
           CLInterpretableName[] c = CLArray.concatBindings(argTail, b);
     	  return new CLBindingSequenceArray(argHead, c);
     	}
-    	else  {
-    	  return new CLBindingSequenceArray(argHead, b);	  
-        }
+		return new CLBindingSequenceArray(argHead, b);
 	}
 
 	@Override

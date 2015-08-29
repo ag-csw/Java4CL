@@ -57,4 +57,5 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 	public CLSentenceSequenceArray copy() {
 		return new CLSentenceSequenceArray(args);
 	}
+
 }

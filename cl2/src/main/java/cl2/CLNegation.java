@@ -42,7 +42,7 @@ public class CLNegation extends CLBooleanSentence {
 
 	@Override
 	public CLNegation copy() {
-		return new CLNegation(comments(), sent);
+		return new CLNegation(comments().copy(), sent.copy());
 	}
 
 	/**

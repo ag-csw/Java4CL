@@ -3,6 +3,8 @@
  */
 package cl2;
 
+import java.util.function.Function;
+
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSet;
 import cl2a.CLSentenceSequence;
@@ -46,9 +48,32 @@ public class CLConjunction extends CLBooleanSentence {
 
 	@Override
 	public CLConjunction copy() {
-		return new CLConjunction(comments(), conjuncts);
+		return new CLConjunction(comments().copy(), conjuncts.copy());
 	}
 	
+    /**
+     * Returns a modified copy derived by applying functions to each of the
+     * fields: comments, conjuncts.
+     * Law: when the passed operators are the identity operators, then the
+     * copy is equal to the original.
+     * Law: copy is composable.
+     * 
+     * @param commentsOperator function that modifies a CL comment sequence
+     * @param conjunctsOperator function that modifies a CL sentence sequence
+     * @return modified copy of this CL conjunction
+     */
+	public CLConjunction copy(
+			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
+			final Function<CLSentenceSequence, ? extends CLSentenceSequence> conjunctsOperator
+			) {
+				return 
+						new CLConjunction(
+								commentsOperator.apply(comments()),
+								conjunctsOperator.apply(conjuncts)
+								);
+		
+	}
+
 	/**
      * Returns the XCL2 sour syntax for the conjunction sentence, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.

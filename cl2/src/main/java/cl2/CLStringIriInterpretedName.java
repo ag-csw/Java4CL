@@ -33,6 +33,8 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 	 */
 	public CLStringIriInterpretedName(String symbol, CLIRI datatype) {
 		super(symbol, datatype);
+		if ((symbol == null) || (datatype == null))
+			throw new NullPointerException("arguments may not be null ");
 	}
 	
 	/**
@@ -79,7 +81,7 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 
 	@Override
 	public CLStringIriInterpretedName copy() {
-		return new CLStringIriInterpretedName(symbol(), datatype());
+		return new CLStringIriInterpretedName(symbol(), datatype().copy());
 	}
 	
 	/**

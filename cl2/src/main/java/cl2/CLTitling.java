@@ -48,7 +48,7 @@ public class CLTitling extends CLStatement {
 
 	@Override
 	public CLTitling copy() {
-		return new CLTitling(comments(), name, text);
+		return new CLTitling(comments().copy(), name.copy(), text.copy());
 	}
 
 	/**

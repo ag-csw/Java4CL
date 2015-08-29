@@ -16,4 +16,7 @@ public abstract class CLSentence extends CLExpression {
 		super(comments);
 	}
 
+	@Override
+	public abstract CLSentence copy();
+
 }

@@ -28,4 +28,8 @@ public abstract class CLInterpretableName extends CLName {
 	public CLInterpretableName(Object symbol) {
 		super(symbol);
 	}
+	
+	@Override
+	public abstract CLInterpretableName copy();
+	
 }

@@ -9,6 +9,9 @@ public abstract class CLCommentSet extends CLExpressionLike {
 	public abstract int length();
 
 	public abstract CLCommentSet concat(CLCommentSet incomments);
+	
+	@Override
+	public abstract CLCommentSet copy();
 
 	/**
      * Returns the XCL2 sour syntax for the comment set, as a string,

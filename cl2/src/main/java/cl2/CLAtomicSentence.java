@@ -54,7 +54,7 @@ public class CLAtomicSentence extends CLSimpleSentence {
 
 	@Override
 	public CLAtomicSentence copy() {
-		return new CLAtomicSentence(comments(), operator, args);
+		return new CLAtomicSentence(comments().copy(), operator.copy(), args.copy());
 	}
 	
     /**

@@ -38,4 +38,7 @@ public abstract class CLSequenceMarker extends CLTermOrSequenceMarker {
 			return symbol;
 		}
 
+		@Override
+		public abstract CLSequenceMarker copy();
+
 }

@@ -42,6 +42,11 @@ public class CLStringInterpretableName extends CLInterpretableName {
 		return (String) super.symbol();
 	}
 
+	@Override
+	public CLStringInterpretableName copy() {
+		return new CLStringInterpretableName(symbol());
+	}
+	
     /**
      * Returns the XCL2 sour syntax for the CL name, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.
@@ -83,9 +88,4 @@ public class CLStringInterpretableName extends CLInterpretableName {
 		return true;
 	}	
 
-	@Override
-	public CLStringInterpretableName copy() {
-		return new CLStringInterpretableName(symbol());
-	}
-	
 }

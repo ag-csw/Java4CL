@@ -48,7 +48,7 @@ public class CLSchema extends CLStatement {
 
 	@Override
 	public CLSchema copy() {
-		return new CLSchema(comments(), bindings, body);
+		return new CLSchema(comments().copy(), bindings.copy(), body.copy());
 	}
 
 	/**

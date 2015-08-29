@@ -15,6 +15,9 @@ public abstract class CLBindingSequence extends CLExpressionLike {
 
 	public abstract CLBindingSequence concat(CLBindingSequence inargs);
 
+	@Override
+	public abstract CLBindingSequence copy();
+
 	/**
      * Returns the XCL2 sour syntax for the binding sequence, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.

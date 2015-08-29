@@ -43,6 +43,11 @@ public class CLStringSequenceMarker extends CLSequenceMarker {
 		return (String) super.symbol();
 	}
 
+	@Override
+	public CLStringSequenceMarker copy() {
+		return new CLStringSequenceMarker(symbol());
+	}
+	
     /**
      * Returns the XCL2 sour syntax for the CL sequence marker, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.
@@ -84,9 +89,4 @@ public class CLStringSequenceMarker extends CLSequenceMarker {
 		return true;
 	}
 
-	@Override
-	public CLStringSequenceMarker copy() {
-		return new CLStringSequenceMarker(symbol());
-	}
-	
 }

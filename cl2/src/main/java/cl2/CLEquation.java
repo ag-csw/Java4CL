@@ -30,7 +30,7 @@ public class CLEquation extends CLSimpleSentence {
 
 	@Override
 	public CLEquation copy() {
-		return new CLEquation(comments(), left, right);
+		return new CLEquation(comments().copy(), left.copy(), right.copy());
 	}
 
 	/**

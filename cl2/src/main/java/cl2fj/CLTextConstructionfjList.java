@@ -39,11 +39,10 @@ public class CLTextConstructionfjList<A extends CLExpression>
 	}
 
 	@Override
-	public Immutable copy() {
-		// TODO Auto-generated method stub
+	public CLTextConstructionfjList<A> copy() {
 		return new CLTextConstructionfjList<A>(
-				comments(),
-				texts);
+				comments().copy(),
+				texts.copy());
 	}
 
 
