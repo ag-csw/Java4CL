@@ -47,18 +47,6 @@ class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
   val testfragment6 = new CLFunctionalTerm(comments1, operator1, termsequence3)
   val testfragment7 = new CLFunctionalTerm(comments1, null, termsequence3)
 
-  "A CLFunctionalTerm" should "be basic" in {
-    (testfragment1 isBasic) should be(true)
-  }
-
-  "A CLFunctionalTerm" should "use language CL" in {
-    (testfragment1 language) should be(CL.LANG)
-  }
-
-  "A CLFunctionalTerm" should "have knowledge source level EXPRESSION" in {
-    (testfragment1 level) should be(EXPRESSION)
-  }
-
   "The operator of a CLFunctionalTerm" should "be equal to the parameter passed to the term constructor 1" in {
     forAll("operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (operatorString: String) =>
       val operator = new CLStringInterpretableName(operatorString)

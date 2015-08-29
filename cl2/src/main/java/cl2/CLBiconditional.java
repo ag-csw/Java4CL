@@ -15,7 +15,7 @@ import cl2a.CLSentence;
  */
 public class CLBiconditional extends CLBooleanSentence {
 
-	//private CLCommentSet comments;
+	// private CLCommentSet comments;
 	private final CLSentence left;
 	private final CLSentence right;
 

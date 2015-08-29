@@ -29,30 +29,6 @@ class CLInDiscourseStatementTest extends FlatSpec with Matchers with PropertyChe
       minSize = MIN_SIZE,
       maxSize = MAX_SIZE,
       workers = WORKERS)
-  "A CLInDiscourseStatement" should "be basic" in {
-    val comments = new CLCommentSetArray()
-
-    val termsequence = new CLTermSequenceArray()
-    val testexpression = new CLInDiscourseStatement(comments, termsequence)
-    (testexpression.isBasic()) should be(true)
-  }
-
-  "A CLInDiscourseStatement" should "use language CL" in {
-    val lang = CL.LANG
-    val comments = new CLCommentSetArray()
-
-    val termsequence = new CLTermSequenceArray()
-    val testexpression = new CLInDiscourseStatement(comments, termsequence)
-    (testexpression.language()) should be(lang)
-  }
-
-  "A CLInDiscourseStatement" should "have knowledge source level EXPRESSION" in {
-    val comments = new CLCommentSetArray()
-
-    val termsequence = new CLTermSequenceArray()
-    val testexpression = new CLInDiscourseStatement(comments, termsequence)
-    (testexpression.level()) should be(EXPRESSION)
-  }
 
   "The term sequence of a CLInDiscourseStatement" should "be equal to the parameter passed to the term constructor" in {
     forAll("arg-string") { (argString: String) =>

@@ -49,18 +49,6 @@ class CLStringCommentTest extends FlatSpec with Matchers with PropertyChecks {
       }
     }
 
-  "A CLComment is basic" should "be true" in {
-    (testfragment1 isBasic) should be(true)
-  }
-
-  "A CLComment's language" should "be CL" in {
-    (testfragment1 language) should be(CL.LANG)
-  }
-
-  "A CLComment's knowledge source level" should "be EXPRESSION" in {
-    (testfragment1 level) should be(EXPRESSION)
-  }
-
   "The data of a CLComment" should "be equal to the parameter passed to the constructor" in {
     (testfragment1 data) should be(data)
     forAll((CLGenerators.clstringsymbolgen, "data")) { (data: String) =>

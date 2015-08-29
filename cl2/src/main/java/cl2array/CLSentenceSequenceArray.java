@@ -5,9 +5,11 @@ package cl2array;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import cl2a.CLSentence;
 import cl2a.CLSentenceSequence;
+import cl2a.CLTermOrSequenceMarker;
 
 /**
  * @author ralph
@@ -24,8 +26,12 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 		this.args = args;
 	}
 
+	public <T extends CLSentence> CLSentenceSequenceArray(List<T> args) {
+		this(args.toArray(new CLSentence[0]));
+	}
+
 	@Override
-	public Collection<? extends CLSentence> args() {
+	public List<? extends CLSentence> args() {
 		return Arrays.asList(args);
 	}
 

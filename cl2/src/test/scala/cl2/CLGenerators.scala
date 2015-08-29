@@ -136,6 +136,8 @@ object CLGenerators {
   // TODO also need non-string sequence markers
   val clsequencemarkergen: Gen[CLSequenceMarker] = clstringsequencemarkergen
 
+  implicit val arbCLSequenceMarker = Arbitrary(clsequencemarkergen)
+
   // CLFunctionalTerm
   val depth = 4;
   /**
@@ -240,6 +242,7 @@ object CLGenerators {
 
   implicit val arbCLTermSequence = Arbitrary(cltermsequencegen(depth))
 
+  // CLAtomicSentence
   def clatomgen(d: Int): Gen[CLAtomicSentence] =
     for {
       comments <- clcommentsetgen
@@ -258,7 +261,7 @@ object CLGenerators {
     } yield new CLBiconditional(comments, left, right)
 
   /**
-   * generator for recursively defined functional terms,
+   * generator for recursively defined biconditional sentences,
    * of depth d
    */
   def clbicondgen(d: Int): Gen[CLBiconditional] =
@@ -273,18 +276,61 @@ object CLGenerators {
 
   implicit val arbCLBiconditional = Arbitrary(clbicondgen(depth))
 
+  // CLConjunction
+  def cland0gen: Gen[CLConjunction] =
+    for {
+      comments <- clcommentsetgen
+      sentences <- clatomsequencegen(0)
+    } yield new CLConjunction(comments, sentences)
+
+  /**
+   * generator for recursively defined conjunction sentences,
+   * of depth d
+   */
+  def clandgen(d: Int): Gen[CLConjunction] =
+    if (d <= 0) { cland0gen }
+    else {
+      for {
+        comments <- clcommentsetgen
+        sentences <- clsentencesequencegen(d - 1)
+      } yield new CLConjunction(comments, sentences)
+    }
+
+  implicit val arbCLConjunction = Arbitrary(clandgen(depth))
+
   // TODO add more types of Sentence
   def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
-    (1, clatomgen(d)),
-    (1, clbicondgen(d)))
+    (MAX_SIZE, clatomgen(d)),
+    (MAX_SIZE, clbicondgen(d)),
+    (1, clandgen(d)))
 
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
 
+  // CLSentenceSequence
+  def clatomsequencearraygen(d: Int): Gen[CLSentenceSequenceArray] =
+    for { a <- Gen listOf (clatomgen(d)) }
+      yield new CLSentenceSequenceArray(a.toArray[CLSentence]: _*)
+
+  // TODO need other types of sequences
+  def clatomsequencegen(d: Int): Gen[CLSentenceSequence] = clatomsequencearraygen(d)
+
+  def clsentencesequencearraygen(d: Int): Gen[CLSentenceSequenceArray] =
+    for { a <- Gen listOf (clsentencegen(d)) }
+      yield new CLSentenceSequenceArray(a.toArray[CLSentence]: _*)
+
+  // TODO need other types of sequences
+  def clsentencesequencegen(d: Int): Gen[CLSentenceSequence] = clsentencesequencearraygen(d)
+
+  implicit val arbCLSentenceSequence = Arbitrary(clsentencesequencegen(depth))
+
+  // CLExpression
   // TODO add statements and texts also
   def clexpressiongen(d: Int): Gen[CLExpression] = clsentencegen(d)
 
   implicit val arbCLExpression = Arbitrary(clexpressiongen(depth))
 
+  // CLExpressionLike
+  // TODO add sequences and sets also?
   def clexpressionlikegen(d: Int): Gen[CLExpressionLike] = Gen.frequency(
     (1, cltermgen(d)),
     (1, clsequencemarkergen),

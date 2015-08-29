@@ -71,10 +71,12 @@ trait CLExpressionLikeLaws extends Laws {
 
 }
 
+object CLExpressionLikeLaws extends CLExpressionLikeLaws
+
 trait CLCommentLaws extends CLExpressionLikeLaws {
 
-  def commentNotEqualTermIdentity: Prop = Prop.forAll { ((comment: CLComment), (term: CLTerm)) =>
-    !(comment.equals(term))
+  def commentDisjointTermOrSequenceMarkerIdentity: Prop = Prop.forAll { ((comment: CLComment), (tosm: CLTermOrSequenceMarker)) =>
+    !(comment.equals(tosm)) && !(tosm.equals(comment))
   }
 
   def comment: RuleSet = new RuleSet {
@@ -82,17 +84,34 @@ trait CLCommentLaws extends CLExpressionLikeLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
     def props = Seq(
-      ("CL Comments are Disjoint from CL Terms", commentNotEqualTermIdentity))
+      ("CL Comments are Disjoint from CL Terms and Sequence Markers", commentDisjointTermOrSequenceMarkerIdentity))
   }
 
 }
 
 object CLCommentLaws extends CLCommentLaws
 
-trait CLTermLaws extends CLExpressionLikeLaws {
+trait CLTermOrSequenceMarkerLaws extends CLExpressionLikeLaws {
 
-  def termNotEqualCommentIdentity: Prop = Prop.forAll { ((term: CLTerm), (comment: CLComment)) =>
-    !(term.equals(comment))
+  def tosmNotEqualSentenceIdentity: Prop = Prop.forAll {
+    ((tosm: CLTermOrSequenceMarker), (expression: CLExpression)) =>
+      !(tosm.equals(expression)) && !(expression.equals(tosm))
+  }
+
+  def tosm: RuleSet = new RuleSet {
+    def name = "tosm"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expressionlike)
+    def props = Seq(
+      ("CL Terms and Sequence Markers are Disjoint from CL Expressions", tosmNotEqualSentenceIdentity))
+  }
+}
+object CLTermOrSequenceMarkerLaws extends CLTermOrSequenceMarkerLaws
+
+trait CLTermLaws extends CLTermOrSequenceMarkerLaws {
+
+  def termDisjointSequenceMarkerIdentity: Prop = Prop.forAll { ((term: CLTerm), (marker: CLSequenceMarker)) =>
+    !(term.equals(marker))
   }
 
   def term: RuleSet = new RuleSet {
@@ -100,7 +119,7 @@ trait CLTermLaws extends CLExpressionLikeLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
     def props = Seq(
-      ("CL Terms are Disjoint from CL Comments", termNotEqualCommentIdentity))
+      ("CL Terms are Disjoint from CL Comments", termDisjointSequenceMarkerIdentity))
   }
 
 }
@@ -109,7 +128,7 @@ object CLTermLaws extends CLTermLaws
 
 trait CLNameLaws extends CLTermLaws {
 
-  def nameNotEqualFunctionalTermIdentity: Prop = Prop.forAll { ((name: CLName), (fterm: CLFunctionalTerm)) =>
+  def nameDisjointFunctionalTermIdentity: Prop = Prop.forAll { ((name: CLName), (fterm: CLFunctionalTerm)) =>
     !(name.equals(fterm))
   }
 
@@ -118,9 +137,28 @@ trait CLNameLaws extends CLTermLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
     def props = Seq(
-      ("CL Names are Disjoint from CL Functional Terms", nameNotEqualFunctionalTermIdentity))
+      ("CL Names are Disjoint from CL Functional Terms", nameDisjointFunctionalTermIdentity))
   }
 
 }
 
 object CLNameLaws extends CLNameLaws
+
+trait CLSequenceMarkerLaws extends CLTermOrSequenceMarkerLaws {
+
+  def markerDisjointNameIdentity: Prop = Prop.forAll { ((marker: CLSequenceMarker), (name: CLName)) =>
+    !(marker.equals(name)) &&
+      !(name.equals(marker))
+  }
+
+  def marker: RuleSet = new RuleSet {
+    def name = "marker"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expressionlike)
+    def props = Seq(
+      ("CL Sequence Markers are Disjoint from CL Names", markerDisjointNameIdentity))
+  }
+
+}
+
+object CLSequenceMarkerLaws extends CLSequenceMarkerLaws

@@ -38,19 +38,6 @@ class CLConjunctionTest extends FlatSpec with Matchers with PropertyChecks {
   val conjunct2 = new CLAtomicSentence(comments, operator2, termsequence2)
   val testexpression = new CLConjunction(comments, new CLSentenceSequenceArray(conjunct1, conjunct2))
 
-  "A CLConjunction" should "be basic" in {
-    (testexpression.isBasic()) should be(true)
-  }
-
-  "A CLConjunction" should "use language CL" in {
-    val lang = CL.LANG
-    (testexpression.language()) should be(lang)
-  }
-
-  "A CLConjunction" should "have knowledge source level EXPRESSION" in {
-    (testexpression.level()) should be(EXPRESSION)
-  }
-
   "The conjuncts of a CLConjunction" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (commentSymbols: List[String], operatorString: String) =>
       val commentsarray: Array[CLComment] = commentSymbols.map(s => new CLStringComment(s).asInstanceOf[CLComment]).toArray[CLComment]

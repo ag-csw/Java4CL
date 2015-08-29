@@ -49,18 +49,6 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
       }
     }
 
-  "A CLStringName is basic" should "be true" in {
-    (testfragment1 isBasic) should be(true)
-  }
-
-  "A CLStringInterpretableName's language" should "be CL" in {
-    (testfragment1 language) should be(CL.LANG)
-  }
-
-  "A CLStringInterpretableName's knowledge source level" should "be EXPRESSION" in {
-    (testfragment1 level) should be(EXPRESSION)
-  }
-
   "The symbol of a CLStringInterpretableName" should "be equal to the parameter passed to the constructor" in {
     (testfragment1 symbol) should be(symbol1)
     forAll((CLGenerators.clstringsymbolgen, "symbol")) { (symbol: String) =>

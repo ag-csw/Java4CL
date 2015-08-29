@@ -19,11 +19,24 @@ package cl2
 import scala.language.postfixOps
 
 class CLExpressionLikeLawTest extends FunSuiteLike with Discipline {
+  implicit override val generatorDrivenConfig =
+    PropertyCheckConfig(
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
+
+  checkAll("CLExpressionLike", CLExpressionLikeLaws.expressionlike)
 
   checkAll("CLComment", CLCommentLaws.comment)
+
+  checkAll("CLTermOrSequence Marker", CLTermOrSequenceMarkerLaws.tosm)
 
   checkAll("CLTerm", CLTermLaws.term)
 
   checkAll("CLName", CLNameLaws.name)
+
+  checkAll("CLSequenceMarker", CLSequenceMarkerLaws.marker)
 
 }

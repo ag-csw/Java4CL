@@ -36,19 +36,6 @@ class CLTextConstructionTest extends FlatSpec with Matchers with PropertyChecks 
   val expressions = new CLExpressionSequenceArray(atom)
   val testexpression = new CLTextConstruction(comments, expressions)
 
-  "A CLTextConstruction" should "be basic" in {
-    (testexpression isBasic) should be(true)
-  }
-
-  "A CLTextConstruction" should "use language CL" in {
-    val lang = CL.LANG
-    (testexpression language) should be(lang)
-  }
-
-  "A CLTextConstruction" should "have knowledge source level EXPRESSION" in {
-    (testexpression level) should be(EXPRESSION)
-  }
-
   "The expression sequence of a CLTextConstruction" should "be equal to the parameter passed to the constructor" in {
     (testexpression expressions) should be(expressions)
   }

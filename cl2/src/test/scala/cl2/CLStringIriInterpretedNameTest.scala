@@ -57,18 +57,6 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Propert
     }
   }
 
-  "A CLStringName is basic" should "be true" in {
-    (testfragment1 isBasic) should be(true)
-  }
-
-  "A CLStringIriInterpretedName's language" should "be CL" in {
-    (testfragment1 language) should be(CL.LANG)
-  }
-
-  "A CLStringIriInterpretedName's knowledge source level" should "be EXPRESSION" in {
-    (testfragment1 level) should be(EXPRESSION)
-  }
-
   "The symbol of a CLStringIriInterpretedName" should "be equal to the parameter passed to the constructor" in {
     (testfragment1 symbol) should be(symbol1)
     forAll("symbol") { (symbol: String) =>

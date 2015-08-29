@@ -77,6 +77,8 @@ trait CLExpressionLaws extends Laws {
 
 }
 
+object CLExpressionLaws extends CLExpressionLaws
+
 trait CLSentenceLaws extends CLExpressionLaws {
 
   def sentenceNotEqualTermIdentity: Prop = Prop.forAll { ((sent: CLSentence), (term: CLTerm)) =>

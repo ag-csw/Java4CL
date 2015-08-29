@@ -20,10 +20,12 @@ import scala.language.postfixOps
 
 class CLSentenceLawTest extends FunSuiteLike with Discipline {
 
+  checkAll("CLExpression", CLExpressionLaws.expression)
+
+  checkAll("CLSentence", CLSentenceLaws.sentence)
+
   checkAll("CLAtomicSentence", CLAtomicSentenceLaws.atom)
 
   checkAll("CLBiconditional", CLBiconditionalLaws.bicond)
-
-  checkAll("CLSentence", CLSentenceLaws.sentence)
 
 }
