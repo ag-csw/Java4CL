@@ -180,15 +180,15 @@ object CLGenerators {
 
   // CLTerm
   val clterm0gen: Gen[CLTerm] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, clnamegen),
+    (MAX_SIZE, clnamegen),
     (1, clfunctionalterm0gen))
 
   val clterm1gen: Gen[CLTerm] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, clnamegen),
+    (MAX_SIZE, clnamegen),
     (1, clfunctionalterm1gen))
 
   def cltermgen(d: Int): Gen[CLTerm] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, clnamegen),
+    (MAX_SIZE, clnamegen),
     (1, clfunctionaltermgen(d)))
 
   implicit val arbCLTerm = Arbitrary(cltermgen(depth))
