@@ -18,10 +18,10 @@
  * @author taraathan
  */
 package object cl2 {
-  val MIN_SUCCESSFUL = 200
-  val MAX_DISCARDED = 1000
-  val MIN_SIZE = 10
-  val MAX_SIZE = 20
+  val MIN_SUCCESSFUL = 1000
+  val MAX_DISCARDED = 5000
+  val MIN_SIZE = 5
+  val MAX_SIZE = 10
   val WORKERS = 1
 
   val EXPRESSION = api4kbj.KnowledgeSourceLevel.EXPRESSION

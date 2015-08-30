@@ -61,6 +61,10 @@ trait CLExpressionLaws extends Laws {
     expression.equals(expression.insertComments(emptyComments))
   }
 
+  def expressionNotEqualTOSMIdentity: Prop = Prop.forAll { ((expression: CLExpression), (tosm: CLTermOrSequenceMarker)) =>
+    !(expression.equals(tosm))
+  }
+
   def expression: RuleSet = new RuleSet {
     def name = "expression"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
@@ -72,17 +76,36 @@ trait CLExpressionLaws extends Laws {
       ("A CL Expression equals itself", expressionEqualsItselfIdentity),
       ("A CL Expression equals copy", expressionEqualsCopyIdentity),
       ("A CL Expression is not equal null", expressionNotEqualNullIdentity),
-      ("A CL Expression equals copy with empty comments inserted", expressionEqualsCopyWithEmptyCommentsInsertedIdentity))
+      ("A CL Expression equals copy with empty comments inserted", expressionEqualsCopyWithEmptyCommentsInsertedIdentity),
+      ("CL Expressions are Disjoint from CL Terms", expressionNotEqualTOSMIdentity))
   }
 
 }
 
 object CLExpressionLaws extends CLExpressionLaws
 
+trait CLTextLaws extends CLExpressionLaws {
+
+  def textNotEqualSentenceIdentity: Prop = Prop.forAll { ((text: CLText), (sentence: CLSentence)) =>
+    !(text.equals(sentence))
+  }
+
+  def text: RuleSet = new RuleSet {
+    def name = "text"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expression)
+    def props = Seq(
+      ("CL Texts  are Disjoint from CL Sentences", textNotEqualSentenceIdentity))
+  }
+
+}
+
+object CLTextLaws extends CLTextLaws
+
 trait CLSentenceLaws extends CLExpressionLaws {
 
-  def sentenceNotEqualTermIdentity: Prop = Prop.forAll { ((sent: CLSentence), (term: CLTerm)) =>
-    !(sent.equals(term))
+  def sentenceNotEqualTextIdentity: Prop = Prop.forAll { ((sent: CLSentence), (text: CLText)) =>
+    !(sent.equals(text))
   }
 
   def sentence: RuleSet = new RuleSet {
@@ -90,7 +113,7 @@ trait CLSentenceLaws extends CLExpressionLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expression)
     def props = Seq(
-      ("CL Sentences are Disjoint from CL Terms", sentenceNotEqualTermIdentity))
+      ("CL Sentences are Disjoint from CL Texts", sentenceNotEqualTextIdentity))
   }
 
 }

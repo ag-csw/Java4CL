@@ -18,7 +18,14 @@ package cl2
 
 import scala.language.postfixOps
 
-class CLSentenceLawTest extends FunSuiteLike with Discipline {
+class CLExpressionLawTest extends FunSuiteLike with Discipline {
+  implicit override val generatorDrivenConfig =
+    PropertyCheckConfig(
+      minSuccessful = MIN_SUCCESSFUL,
+      maxDiscarded = MAX_DISCARDED,
+      minSize = MIN_SIZE,
+      maxSize = MAX_SIZE,
+      workers = WORKERS)
 
   checkAll("CLExpression", CLExpressionLaws.expression)
 

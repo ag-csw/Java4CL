@@ -180,15 +180,15 @@ object CLGenerators {
 
   // CLTerm
   val clterm0gen: Gen[CLTerm] = Gen.frequency(
-    (100, clnamegen),
+    (MAX_SIZE * MAX_SIZE, clnamegen),
     (1, clfunctionalterm0gen))
 
   val clterm1gen: Gen[CLTerm] = Gen.frequency(
-    (100, clnamegen),
+    (MAX_SIZE * MAX_SIZE, clnamegen),
     (1, clfunctionalterm1gen))
 
   def cltermgen(d: Int): Gen[CLTerm] = Gen.frequency(
-    (100, clnamegen),
+    (MAX_SIZE * MAX_SIZE, clnamegen),
     (1, clfunctionaltermgen(d)))
 
   implicit val arbCLTerm = Arbitrary(cltermgen(depth))
@@ -300,7 +300,7 @@ object CLGenerators {
 
   // TODO add more types of Sentence
   def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
-    (MAX_SIZE, clatomgen(d)),
+    (MAX_SIZE * MAX_SIZE, clatomgen(d)),
     (MAX_SIZE, clbicondgen(d)),
     (1, clandgen(d)))
 
