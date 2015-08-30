@@ -26,7 +26,7 @@ public class CLIRI implements Immutable {
 
 	@Override
 	public String toString(){
-		return iri.toString();
+		return iri().toString();
 	}
 
     public boolean canEqual(Object other) {

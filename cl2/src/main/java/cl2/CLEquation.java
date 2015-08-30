@@ -20,17 +20,24 @@ public class CLEquation extends CLSimpleSentence {
 		this.left = left;
 		this.right = right;
 	}
+	
+	public CLTerm left() {
+		return left;
+	}
 
+	public CLTerm right() {
+		return right;
+	}
 	
 	@Override
 	public CLEquation insertComments(CLCommentSet incomments) {
 		return new CLEquation(comments().concat(incomments), 
-				left, right);
+				left(), right());
 	}
 
 	@Override
 	public CLEquation copy() {
-		return new CLEquation(comments().copy(), left.copy(), right.copy());
+		return new CLEquation(comments().copy(), left().copy(), right().copy());
 	}
 
 	/**
@@ -41,8 +48,8 @@ public class CLEquation extends CLSimpleSentence {
 	public String toString() {
 		return "<cl:Equal>" + 
 	            comments().toString() +
-	            left.toString() +
-	            right.toString() + "</cl:Equal>";
+	            left().toString() +
+	            right().toString() + "</cl:Equal>";
 	}
 
 	

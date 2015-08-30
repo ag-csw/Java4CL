@@ -43,12 +43,12 @@ public class CLSchema extends CLStatement {
 	@Override
 	public CLSchema insertComments(final CLCommentSet incomments) {
 		return new CLSchema(comments().concat(incomments), 
-				bindings, body);
+				declarations(), body());
 	}
 
 	@Override
 	public CLSchema copy() {
-		return new CLSchema(comments().copy(), bindings.copy(), body.copy());
+		return new CLSchema(comments().copy(), declarations().copy(), body().copy());
 	}
 
 	/**
@@ -59,8 +59,8 @@ public class CLSchema extends CLStatement {
 	public String toString() {
 		return "<cl:Schema>" + 
 	            comments().toString() +
-	            bindings.toString() +
-	            body.toString() + "</cl:Schema>";
+	            declarations().toString() +
+	            body().toString() + "</cl:Schema>";
 	}
 
 }

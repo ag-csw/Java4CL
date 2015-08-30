@@ -20,28 +20,28 @@ public class CLDomainRestriction extends CLText {
 		this.body = body;
 	}
 
-	public CLTerm term(){
+	public CLTerm domain(){
 		return domain;
 	}
 
-	public CLText text(){
+	public CLText body(){
 		return body;
 	}
 
 	@Override
 	public CLDomainRestriction insertComments(CLCommentSet incomments) {
 		return new CLDomainRestriction( comments().concat(incomments), 
-				domain, body);
+				domain(), body());
 	}
 	
 	public CLDomainRestriction mapText(Function<CLText, CLText> f){
-		return new CLDomainRestriction(comments(), domain,
+		return new CLDomainRestriction(comments(), domain(),
 				f.apply(this));
 	}
 
 	@Override
 	public CLDomainRestriction copy() {
-		return new CLDomainRestriction(comments().copy(), domain.copy(), body.copy());
+		return new CLDomainRestriction(comments().copy(), domain().copy(), body().copy());
 	}
 
 	/**
@@ -52,8 +52,8 @@ public class CLDomainRestriction extends CLText {
 	public String toString() {
 		return "<cl:Restrict>" + 
 	            comments().toString() +
-	            domain.toString() +
-	            body.toString() + "<\\cl:Restrict>";
+	            domain().toString() +
+	            body().toString() + "<\\cl:Restrict>";
 	}
 
 }

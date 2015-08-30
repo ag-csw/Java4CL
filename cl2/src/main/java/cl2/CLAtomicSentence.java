@@ -63,12 +63,15 @@ public class CLAtomicSentence extends CLSimpleSentence {
 
 	@Override
 	public CLAtomicSentence copy() {
-		return new CLAtomicSentence(comments().copy(), operator.copy(), args.copy());
+		return copy(
+				s -> s.copy(), 
+				s -> s.copy(), 
+				s -> s.copy());
 	}
 	
     /**
      * Returns a modified copy derived by applying functions to each of the
-     * fields: comments, operator, args.
+     * fields: comments, operator(), args().
      * Law: when the passed operators are the identity operators, then the
      * copy is equal to the original.
      * Law: copy is composable.
@@ -86,8 +89,8 @@ public class CLAtomicSentence extends CLSimpleSentence {
 				return 
 						new CLAtomicSentence(
 								commentsOperator.apply(comments()),
-								operatorOperator.apply(operator),
-								argsOperator.apply(args)
+								operatorOperator.apply(operator()),
+								argsOperator.apply(args())
 								);
 		
 	}
@@ -100,17 +103,17 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	public String toString() {
 		return "<cl:Atom>" + 
 	            comments().toString() +
-	            operator.toString() +
-	            args.toString() + "</cl:Atom>";
+	            operator().toString() +
+	            args().toString() + "</cl:Atom>";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((args == null) ? 0 : args.hashCode());
+		result = prime * result + ((args() == null) ? 0 : args().hashCode());
 		result = prime * result + ((comments() == null) ? 0 : comments().hashCode());
-		result = prime * result + ((operator == null) ? 0 : operator.hashCode());
+		result = prime * result + ((operator() == null) ? 0 : operator().hashCode());
 		return result;
 	}
 
@@ -130,20 +133,20 @@ public class CLAtomicSentence extends CLSimpleSentence {
 		CLAtomicSentence other = (CLAtomicSentence) obj;
 		if (!other.canEqual(this))
 			return false;
-		if (args == null) {
-			if (other.args != null)
+		if (args() == null) {
+			if (other.args() != null)
 				return false;
-		} else if (!args.equals(other.args))
+		} else if (!args().equals(other.args()))
 			return false;
 		if (comments() == null) {
 			if (other.comments() != null)
 				return false;
 		} else if (!comments().equals(other.comments()))
 			return false;
-		if (operator == null) {
-			if (other.operator != null)
+		if (operator() == null) {
+			if (other.operator() != null)
 				return false;
-		} else if (!operator.equals(other.operator))
+		} else if (!operator().equals(other.operator()))
 			return false;
 		return true;
 	}

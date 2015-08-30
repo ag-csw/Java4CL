@@ -53,24 +53,23 @@ public class CLBiconditional extends CLBooleanSentence {
 	@Override
 	public CLBiconditional insertComments(final CLCommentSet incomments) {
 		return new CLBiconditional( comments().concat(incomments), 
-				args);
+				args());
 	}
 
 	@Override
 	public CLBiconditional copy() {
-		return new CLBiconditional(comments().copy(), args.copy());
+		return new CLBiconditional(comments().copy(), args().copy());
 	}
 
     /**
      * Returns a modified copy derived by applying functions to each of the
-     * fields: comments, left, right.
+     * accessor methods: comments(), args().
      * Law: when the passed operators are the identity operators, then the
      * copy is equal to the original.
      * Law: copy is composable.
      * 
      * @param commentsOperator function that modifies a CL comment sequence
-     * @param leftOperator function that modifies a CL sentence
-     * @param rightOperator  function that modifies a CL sentence
+     * @param argsOperator function that modifies a CL sentence sequence
      * @return modified copy of this CL biconditional
      */
 	public CLBiconditional copy(
@@ -80,7 +79,7 @@ public class CLBiconditional extends CLBooleanSentence {
 				return 
 						new CLBiconditional(
 								commentsOperator.apply(comments()),
-								argsOperator.apply(args)
+								argsOperator.apply(args())
 								);
 		
 	}
@@ -93,7 +92,7 @@ public class CLBiconditional extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Biconditional>" + 
 	            comments().toString() +
-	            args.toString() + "</cl:Biconditional>";
+	            args().toString() + "</cl:Biconditional>";
 	}
 
 	@Override
@@ -101,7 +100,7 @@ public class CLBiconditional extends CLBooleanSentence {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((comments() == null) ? 0 : comments().hashCode());
-		result = prime * result + ((args == null) ? 0 : args.hashCode());
+		result = prime * result + ((args() == null) ? 0 : args().hashCode());
 		return result;
 	}
 
@@ -126,10 +125,10 @@ public class CLBiconditional extends CLBooleanSentence {
 				return false;
 		} else if (!comments().equals(other.comments()))
 			return false;
-		if (args == null) {
-			if (other.args != null)
+		if (args() == null) {
+			if (other.args() != null)
 				return false;
-		} else if (!args.equals(other.args))
+		} else if (!args().equals(other.args()))
 			return false;
 		return true;
 	}

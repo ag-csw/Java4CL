@@ -48,12 +48,12 @@ public class CLImplication extends CLBooleanSentence {
 	@Override
 	public CLImplication insertComments(final CLCommentSet incomments) {
 		return new CLImplication( comments().concat(incomments), 
-				antecedent, consequent);
+				antecedent(), consequent());
 	}
 
 	@Override
 	public CLImplication copy() {
-		return new CLImplication(comments().copy(), antecedent.copy(), consequent.copy());
+		return new CLImplication(comments().copy(), antecedent().copy(), consequent().copy());
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class CLImplication extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Implies>" + 
 	            comments().toString() +
-	            antecedent.toString() +
-	            consequent.toString() + "</cl:Implies>";
+	            antecedent().toString() +
+	            consequent().toString() + "</cl:Implies>";
 	}
 	
 }

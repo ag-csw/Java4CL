@@ -45,12 +45,12 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 	@Override
 	public CLFunctionalTerm insertComments(final CLCommentSet incomments) {
 		return new CLFunctionalTerm( comments().concat(incomments), 
-				operator, args);
+				operator(), args());
 	}
 
 	@Override
 	public CLFunctionalTerm copy() {
-		return new CLFunctionalTerm(comments().copy(), operator.copy(), args.copy());
+		return new CLFunctionalTerm(comments().copy(), operator().copy(), args().copy());
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 	public String toString() {
 		return "<cl:Apply>" + 
 	            comments().toString() +
-	            operator.toString() +
-	            args.toString() + "</cl:Apply>";
+	            operator().toString() +
+	            args().toString() + "</cl:Apply>";
 	}
 
 
@@ -70,9 +70,9 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((args == null) ? 0 : args.hashCode());
+		result = prime * result + ((args() == null) ? 0 : args().hashCode());
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + ((operator == null) ? 0 : operator.hashCode());
+		result = prime * result + ((operator() == null) ? 0 : operator().hashCode());
 		return result;
 	}
 
@@ -91,20 +91,20 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 		CLFunctionalTerm other = (CLFunctionalTerm) obj;
 		if (!other.canEqual(this))
 			return false;
-		if (args == null) {
-			if (other.args != null)
+		if (args() == null) {
+			if (other.args() != null)
 				return false;
-		} else if (!args.equals(other.args))
+		} else if (!args().equals(other.args()))
 			return false;
 		if (comments == null) {
 			if (other.comments != null)
 				return false;
 		} else if (!comments.equals(other.comments))
 			return false;
-		if (operator == null) {
-			if (other.operator != null)
+		if (operator() == null) {
+			if (other.operator() != null)
 				return false;
-		} else if (!operator.equals(other.operator))
+		} else if (!operator().equals(other.operator()))
 			return false;
 		return true;
 	}

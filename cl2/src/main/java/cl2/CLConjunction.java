@@ -43,17 +43,17 @@ public class CLConjunction extends CLBooleanSentence {
 	@Override
 	public CLConjunction insertComments(final CLCommentSet incomments) {
 		return new CLConjunction( comments().concat(incomments), 
-				conjuncts);
+				conjuncts());
 	}
 
 	@Override
 	public CLConjunction copy() {
-		return new CLConjunction(comments().copy(), conjuncts.copy());
+		return new CLConjunction(comments().copy(), conjuncts().copy());
 	}
 	
     /**
      * Returns a modified copy derived by applying functions to each of the
-     * fields: comments, conjuncts.
+     * accessor methods: comments(), conjuncts().
      * Law: when the passed operators are the identity operators, then the
      * copy is equal to the original.
      * Law: copy is composable.
@@ -69,7 +69,7 @@ public class CLConjunction extends CLBooleanSentence {
 				return 
 						new CLConjunction(
 								commentsOperator.apply(comments()),
-								conjunctsOperator.apply(conjuncts)
+								conjunctsOperator.apply(conjuncts())
 								);
 		
 	}
@@ -82,7 +82,7 @@ public class CLConjunction extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:And>" + 
 	            comments().toString() +
-	            conjuncts.toString() + "</cl:And>";
+	            conjuncts().toString() + "</cl:And>";
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class CLConjunction extends CLBooleanSentence {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((comments() == null) ? 0 : comments().hashCode());
-		result = prime * result + ((conjuncts == null) ? 0 : conjuncts.hashCode());
+		result = prime * result + ((conjuncts() == null) ? 0 : conjuncts().hashCode());
 		return result;
 	}
 
@@ -114,10 +114,10 @@ public class CLConjunction extends CLBooleanSentence {
 				return false;
 		} else if (!comments().equals(other.comments()))
 			return false;
-		if (conjuncts == null) {
-			if (other.conjuncts != null)
+		if (conjuncts() == null) {
+			if (other.conjuncts() != null)
 				return false;
-		} else if (!conjuncts.equals(other.conjuncts))
+		} else if (!conjuncts().equals(other.conjuncts()))
 			return false;
 		return true;
 	}

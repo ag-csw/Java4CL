@@ -37,12 +37,12 @@ public class CLNegation extends CLBooleanSentence {
 	@Override
 	public CLNegation insertComments(final CLCommentSet incomments) {
 		return new CLNegation(comments().concat(incomments), 
-				sent);
+				sent());
 	}
 
 	@Override
 	public CLNegation copy() {
-		return new CLNegation(comments().copy(), sent.copy());
+		return new CLNegation(comments().copy(), sent().copy());
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class CLNegation extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Not>" + 
 	            comments().toString() +
-	            sent.toString() + "</cl:Not>";
+	            sent().toString() + "</cl:Not>";
 	}
 	
 }

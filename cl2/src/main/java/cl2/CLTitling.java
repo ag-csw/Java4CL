@@ -43,12 +43,12 @@ public class CLTitling extends CLStatement {
 	@Override
 	public CLTitling insertComments(final CLCommentSet incomments) {
 		return new CLTitling(comments().concat(incomments), 
-				name, text);
+				name(), text());
 	}
 
 	@Override
 	public CLTitling copy() {
-		return new CLTitling(comments().copy(), name.copy(), text.copy());
+		return new CLTitling(comments().copy(), name().copy(), text().copy());
 	}
 
 	/**
@@ -59,8 +59,8 @@ public class CLTitling extends CLStatement {
 	public String toString() {
 		return "<cl:Titling>" + 
 	            comments().toString() +
-	            name.toString() +
-	            text.toString() + "</cl:Titling>";
+	            name().toString() +
+	            text().toString() + "</cl:Titling>";
 	}
 
 

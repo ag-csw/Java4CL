@@ -23,12 +23,12 @@ public class CLImportation extends CLText {
 	@Override
 	public CLImportation insertComments(CLCommentSet incomments) {
 		return new CLImportation( comments().concat(incomments), 
-				name);
+				name());
 	}
 
 	@Override
 	public CLImportation copy() {
-		return new CLImportation(comments().copy(), name.copy());
+		return new CLImportation(comments().copy(), name().copy());
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class CLImportation extends CLText {
 	public String toString() {
 		return "<cl:Import>" + 
 	            comments().toString() +
-	            name.toString() + "</cl:Import>";
+	            name().toString() + "</cl:Import>";
 	}
 
 	
