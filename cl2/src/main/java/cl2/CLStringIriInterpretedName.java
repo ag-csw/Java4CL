@@ -90,7 +90,7 @@ public class CLStringIriInterpretedName extends CLInterpretedName {
 	 */
 	@Override
 	public String toString() {
-		return "<cl:Data datatype=" + CL.xmlAttributeEncodeIri(datatype()) + ">" + CL.xmlContentEncode(symbol())
+		return "<cl:Data datatype=\"" + CL.xmlAttributeEncodeIri(datatype()) + "\">" + CL.xmlContentEncode(symbol())
 				+ "</cl:Data>";
 	}
 

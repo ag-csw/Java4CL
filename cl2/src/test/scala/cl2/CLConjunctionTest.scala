@@ -37,6 +37,11 @@ class CLConjunctionTest extends FlatSpec with Matchers with PropertyChecks {
   val conjunct1 = new CLAtomicSentence(comments, operator1, termsequence1)
   val conjunct2 = new CLAtomicSentence(comments, operator2, termsequence2)
   val testexpression = new CLConjunction(comments, new CLSentenceSequenceArray(conjunct1, conjunct2))
+  val testexpression2 = new CLDisjunction(comments, new CLSentenceSequenceArray(conjunct1, conjunct2))
+
+  "Conjunctions and Disjunctions" should "be disjoint" in {
+    (testexpression) should not be (testexpression2)
+  }
 
   "The conjuncts of a CLConjunction" should "be equal to the parameter passed to the constructor" in {
     forAll("comment-symbols", "operator-string", minSuccessful(MIN_SUCCESSFUL / 2)) { (commentSymbols: List[String], operatorString: String) =>
@@ -49,8 +54,10 @@ class CLConjunctionTest extends FlatSpec with Matchers with PropertyChecks {
       val bindings = new CLBindingSequenceArray(varx)
       val conjuncts = new CLSentenceSequenceArray(conjunct1, conjunct2)
       val testexpression = new CLConjunction(comments, conjuncts)
+      val testexpression2 = new CLDisjunction(comments, conjuncts)
       val testconjuncts = (testexpression conjuncts)
       (testconjuncts) should be(conjuncts)
+      (testexpression) should not be (testexpression2)
     }
   }
 }

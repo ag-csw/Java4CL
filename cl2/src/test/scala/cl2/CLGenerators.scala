@@ -22,6 +22,7 @@ import scala.language.postfixOps
 
 object CLGenerators {
 
+  val CODE_POINT_NULL = 0x0;
   val CODE_POINT_TAB = 0x9;
   val CODE_POINT_LF = 0xA;
   val CODE_POINT_CF = 0xD;
@@ -30,18 +31,18 @@ object CLGenerators {
   val MAX_SURROGATE = Character.MAX_SURROGATE
   val MAX_XML_BMP = Character.MIN_SUPPLEMENTARY_CODE_POINT - 3
   val MIN_SUPPLEMENTARY_CODE_POINT = Character.MIN_SUPPLEMENTARY_CODE_POINT
-  val MAX_XML_SUPPLEMENTARY_CODE_POINT = 0x10FFF
+  val MAX_XML_SUPPLEMENTARY_CODE_POINT = 0x10FFFF
 
   /**
    * generator of Strings of length 1 or 2 corresponding to a
    * single Unicode character
-   * matching the XML 1.0, version 5 Char production
+   * matching the XML 1.1, Char production
+   * Note that some of these characters must be escaped before they can be used in XML.
    */
   val xmlcharactergen: Gen[String] =
     for {
       i <- Gen frequency (
-        (3, Gen.oneOf(Seq(CODE_POINT_TAB, CODE_POINT_LF, CODE_POINT_CF))),
-        (MIN_SURROGATE - CODE_POINT_MIN_C1, Gen.choose(CODE_POINT_MIN_C1, MIN_SURROGATE - 1)),
+        (MIN_SURROGATE - 1 - CODE_POINT_NULL, Gen.choose(CODE_POINT_NULL + 1, MIN_SURROGATE - 1)),
         (MAX_XML_BMP - MAX_SURROGATE, Gen.choose(MAX_SURROGATE + 1, MAX_XML_BMP)),
         (MAX_XML_SUPPLEMENTARY_CODE_POINT - MIN_SUPPLEMENTARY_CODE_POINT + 1,
           Gen.choose(MIN_SUPPLEMENTARY_CODE_POINT, MAX_XML_SUPPLEMENTARY_CODE_POINT)))
@@ -298,11 +299,34 @@ object CLGenerators {
 
   implicit val arbCLConjunction = Arbitrary(clandgen(depth))
 
+  // CLDisjunction
+  def clor0gen: Gen[CLDisjunction] =
+    for {
+      comments <- clcommentsetgen
+      sentences <- clatomsequencegen(0)
+    } yield new CLDisjunction(comments, sentences)
+
+  /**
+   * generator for recursively defined conjunction sentences,
+   * of depth d
+   */
+  def clorgen(d: Int): Gen[CLDisjunction] =
+    if (d <= 0) { clor0gen }
+    else {
+      for {
+        comments <- clcommentsetgen
+        sentences <- clsentencesequencegen(d - 1)
+      } yield new CLDisjunction(comments, sentences)
+    }
+
+  implicit val arbCLDisjunction = Arbitrary(clorgen(depth))
+
   // TODO add more types of Sentence
   def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
     (MAX_SIZE * MAX_SIZE, clatomgen(d)),
     (MAX_SIZE, clbicondgen(d)),
-    (1, clandgen(d)))
+    (1, clandgen(d)),
+    (1, clorgen(d)))
 
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
 
@@ -380,9 +404,9 @@ object CLGenerators {
   implicit val arbCLExpressionLike = Arbitrary(clexpressionlikegen(depth))
 
   // TODO make a valid IRI generator by assembling from segments
-  //IRI            = scheme ":" ihier-part [ "?" iquery ]
+  // IRI            = scheme ":" ihier-part [ "?" iquery ]
   //                         [ "#" ifragment ]
-  //val irischemegen:Gen[String] =
+  // val irischemegen:Gen[String] =
 
   // iprivate       = %xE000-F8FF / %xF0000-FFFFD / %x100000-10FFFD
   val MAX_PRIVATE_BMP = 0xF8FF

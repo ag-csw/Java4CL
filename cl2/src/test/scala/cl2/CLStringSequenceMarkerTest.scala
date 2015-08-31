@@ -116,7 +116,6 @@ class CLStringSequenceMarkerTest extends FlatSpec with Matchers with PropertyChe
             (markera) should equal(markerb)
           } else {
             (markera) should not equal (markerb)
-            // println("Duplicate generators do not produce identical results")
           }
           (markera) should equal(new CLStringSequenceMarker(markera symbol))
         }

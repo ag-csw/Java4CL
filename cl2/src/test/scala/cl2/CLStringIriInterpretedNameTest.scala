@@ -114,8 +114,10 @@ class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with Propert
 
   "A CLStringIriInterpretedName's string representation" should
     "be the XML element cl:Data with datatypeString as an attribute and symbol as content, with appropriate escaping" in {
-      (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">test</cl:Data>")
-      (testfragment1 toString) should equal("<cl:Data datatype=" + CL.xmlAttributeEncode(datatypeString1) + ">" + CL.xmlContentEncode(symbol1) + "</cl:Data>")
-      // TODO generate random XSD datatype and valid lexical item
+      (testfragment1 toString) should equal("<cl:Data datatype=\"" +
+        CL.xmlAttributeEncode(datatypeString1) + "\">test</cl:Data>")
+      (testfragment2 toString) should equal("<cl:Data datatype=\"" +
+        CL.xmlAttributeEncode(datatypeString2) + "\">" + CL.xmlContentEncode(symbol2) + "</cl:Data>")
+      // TODO generate random XSD datatypes and valid lexical item
     }
 }

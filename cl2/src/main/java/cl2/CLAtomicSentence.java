@@ -106,7 +106,7 @@ public class CLAtomicSentence extends CLSimpleSentence {
 	            operator().toString() +
 	            args().toString() + "</cl:Atom>";
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

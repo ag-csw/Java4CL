@@ -108,7 +108,6 @@ class CLStringInterpretableNameTest extends FlatSpec with Matchers with Property
             (namea) should equal(nameb)
           } else {
             (namea) should not equal (nameb)
-            // println("Duplicate generators do not produce identical results")
           }
           (namea) should equal(new CLStringInterpretableName(namea symbol))
         }

@@ -17,6 +17,7 @@
 package cl2
 
 import cl2.functionconversions._
+import cl2.xcl2.WellFormedXMLValidator._
 import CLGenerators._
 import scala.language.postfixOps
 
@@ -71,6 +72,17 @@ trait CLExpressionLaws extends Laws {
     !(expression equals tosm)
   }
 
+  def expressionToStringIsWellFormedXMLIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
+    {
+      val xmlDeclaration = "<?xml version=\"1.1\"?>"
+      val xmlBody = ((expression toString) replaceFirst (">", " xmlns:cl=\"" + CL.URI_XCL2 + "\">"))
+      val testxml = xmlDeclaration + xmlBody
+      validate(testxml)
+      true
+    }
+
+  }
+
   def expression: RuleSet = new RuleSet {
     def name = "expression"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
@@ -83,7 +95,8 @@ trait CLExpressionLaws extends Laws {
       ("A CL Expression equals copy", expressionEqualsCopyIdentity),
       ("A CL Expression is not equal null", expressionNotEqualNullIdentity),
       ("A CL Expression equals copy with empty comments inserted", expressionEqualsCopyWithEmptyCommentsInsertedIdentity),
-      ("CL Expressions are Disjoint from CL Terms", expressionNotEqualTOSMIdentity))
+      ("CL Expressions are Disjoint from CL Terms", expressionNotEqualTOSMIdentity),
+      ("CL Expressions to String gives Well-formed XML", expressionToStringIsWellFormedXMLIdentity))
   }
 
 }
@@ -130,7 +143,6 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
 
   def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>
     {
-      // println(atom)
       // val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
       // val f2:Function[CLTerm, CLTerm] = {s:CLTerm => s}
       // val f3:Function[CLTermSequence, CLTermSequence] = {s:CLTermSequence => s}
@@ -183,11 +195,16 @@ object CLBiconditionalLaws extends CLSentenceLaws {
     }
   }
 
+  def bicondNotEqualAtomIdentity: Prop = Prop.forAll { ((bicond: CLBiconditional), (atom: CLAtomicSentence)) =>
+    !(bicond equals atom)
+  }
+
   def bicond: RuleSet = new RuleSet {
     def name = "bicond"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
+      ("Biconditional Disjoint with Atom", bicondNotEqualAtomIdentity),
       ("Identity Copy", biconditionalIdentityIdentity))
   }
 }
@@ -202,12 +219,56 @@ object CLConjunctionLaws extends CLSentenceLaws {
       ((and hashCode) equals (and2 hashCode))
   }
 
+  def conjunctionNotEqualAtomIdentity: Prop = Prop.forAll { ((and: CLConjunction), (atom: CLAtomicSentence)) =>
+    !(and equals atom)
+  }
+
+  def conjunctionNotEqualBiconditionalIdentity: Prop = Prop.forAll { ((and: CLConjunction), (bicond: CLBiconditional)) =>
+    !(and equals bicond)
+  }
+
   def and: RuleSet = new RuleSet {
     def name = "and"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
+      ("Conjunction Disjoint with Atom", conjunctionNotEqualAtomIdentity),
+      ("Conjunction Disjoint with Biconditional", conjunctionNotEqualBiconditionalIdentity),
       ("Identity Copy", conjunctionIdentityIdentity))
+  }
+}
+
+object CLDisjunctionLaws extends CLSentenceLaws {
+
+  def disjunctionNotEqualAtomIdentity: Prop = Prop.forAll { ((or: CLDisjunction), (atom: CLAtomicSentence)) =>
+    !(or equals atom)
+  }
+
+  def disjunctionNotEqualBiconditionalIdentity: Prop = Prop.forAll { ((or: CLDisjunction), (bicond: CLBiconditional)) =>
+    !(or equals bicond)
+  }
+
+  def disjunctionNotEqualConjunctionIdentity: Prop = Prop.forAll { ((or: CLDisjunction), (and: CLConjunction)) =>
+    !(or equals and)
+  }
+
+  def disjunctionIdentityIdentity: Prop = Prop.forAll { (or: CLDisjunction) =>
+    val or2 = or.copy(
+      { s: CLCommentSet => s }, { s: CLSentenceSequence => s })
+
+    (or equals or2) &&
+      ((or hashCode) equals (or2 hashCode))
+  }
+
+  def or: RuleSet = new RuleSet {
+    def name = "or"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq(
+      ("Disjunction Disjoint with Atom", disjunctionNotEqualBiconditionalIdentity),
+      ("Disjunction Disjoint with Biconditional", disjunctionNotEqualBiconditionalIdentity),
+      ("Disjunction Disjoint with Conjunction", disjunctionNotEqualConjunctionIdentity),
+      ("Identity Copy", disjunctionIdentityIdentity))
   }
 
 }

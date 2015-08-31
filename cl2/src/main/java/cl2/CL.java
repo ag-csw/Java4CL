@@ -1,7 +1,6 @@
 package cl2;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import java.io.IOException;
@@ -138,9 +137,7 @@ public final class CL {
 	public static boolean isValidStringSymbol(String symbol){
 		
 	  Function<Integer, Boolean> bad = s -> (
-			                   (s < 0x9)         // control
-			  || ((s > 0xA) && (s < 0xD))        // control
-			  || ((s > 0xD) && (s < 0x20))       // control
+			                   (s < 0x1)         // null
 			  || ((s > 0xD7FF) && (s < 0xE000))  // surrogates
 			  || ((s > 0xFFFD) && (s < 0x10000))  // not a character
 			);
@@ -154,16 +151,15 @@ public final class CL {
 	}
 
 	public static String xmlContentEncode(String text) {
-		// TODO implement escaping
-		return text;
+		return StringEscapeUtils.escapeXml11(text);
 	}
 
 	public static String xmlAttributeEncode(String value) {
-		return StringEscapeUtils.escapeXml(value);
+		return StringEscapeUtils.escapeXml11(value);
 	}
 
 	public static String xmlAttributeEncodeIri(CLIRI datatype) {
-		return StringEscapeUtils.escapeXml(datatype.toString());
+		return StringEscapeUtils.escapeXml11(datatype.toString());
 	}
 	
 	// From http://www.ibm.com/developerworks/library/j-unicode/

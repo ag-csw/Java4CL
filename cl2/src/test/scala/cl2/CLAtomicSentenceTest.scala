@@ -20,8 +20,9 @@ import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import CLGenerators._
 import scala.language.postfixOps
+import com.typesafe.scalalogging._
 
-class CLAtomicSentenceTest extends FlatSpec
+class CLAtomicSentenceTest extends FlatSpec with LazyLogging
     with Matchers
     with PropertyChecks {
   implicit override val generatorDrivenConfig =
@@ -64,6 +65,7 @@ class CLAtomicSentenceTest extends FlatSpec
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
     forAll("operator", minSuccessful(MIN_SUCCESSFUL / 2)) { (operator: CLTerm) =>
       val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)
+      logger.debug(s"Test Expression $testexpression")
       (testexpression operator) should be(operator)
     }
   }

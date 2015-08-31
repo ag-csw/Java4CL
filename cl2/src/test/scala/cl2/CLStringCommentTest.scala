@@ -19,6 +19,7 @@ package cl2
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import scala.language.postfixOps
+import cl2.xcl2.WellFormedXMLValidator._
 
 class CLStringCommentTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
@@ -34,10 +35,18 @@ class CLStringCommentTest extends FlatSpec with Matchers with PropertyChecks {
   val testfragment1 = new CLStringComment(data)
   val testfragment2 = new CLStringComment(data2)
   val testfragment3 = new CLStringComment(data3)
+  val CODE_POINT_NULL = 0x0;
 
   "A CLStringComment constructor call with null argument" should "throw a NullPointerException" in {
     intercept[NullPointerException] {
-      val testfragment4 = new CLStringComment(null)
+      val testfragment = new CLStringComment(null)
+    }
+  }
+
+  "Construction of a CLStringComment with forbidden character" should "throw an IllegalArgumentException" in {
+    val data = String copyValueOf (Character toChars CODE_POINT_NULL)
+    intercept[IllegalArgumentException] {
+      val testfragment = new CLStringComment(data)
     }
   }
 

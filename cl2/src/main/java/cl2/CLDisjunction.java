@@ -15,6 +15,7 @@ import cl2a.CLSentenceSequence;
  */
 public class CLDisjunction extends CLBooleanSentence {
 
+	private CLCommentSet comments;
 	private final CLSentenceSequence disjuncts;
 
 	/**
@@ -25,12 +26,14 @@ public class CLDisjunction extends CLBooleanSentence {
 			final CLSentenceSequence disjuncts
 			) {
 		super(comments);
+		if(disjuncts==null)
+			throw new NullPointerException("Conjuncts of a CLDisjunction should not be null.");
 		this.disjuncts = disjuncts;
 
 	}
 
 	/**
-	 * @return the left condition
+	 * @return the disjuncts
 	 */
 	public CLSentenceSequence disjuncts() {
 		return disjuncts;
@@ -40,12 +43,12 @@ public class CLDisjunction extends CLBooleanSentence {
 	@Override
 	public CLDisjunction insertComments(final CLCommentSet incomments) {
 		return new CLDisjunction( comments().concat(incomments), 
-				disjuncts);
+				disjuncts());
 	}
 
 	@Override
 	public CLDisjunction copy() {
-		return new CLDisjunction(comments().copy(), disjuncts.copy());
+		return new CLDisjunction(comments().copy(), disjuncts().copy());
 	}
 	
     /**
@@ -61,12 +64,12 @@ public class CLDisjunction extends CLBooleanSentence {
      */
 	public CLDisjunction copy(
 			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
-			final Function<CLSentenceSequence, ? extends CLSentenceSequence> conjunctsOperator
+			final Function<CLSentenceSequence, ? extends CLSentenceSequence> disjunctsOperator
 			) {
 				return 
 						new CLDisjunction(
 								commentsOperator.apply(comments()),
-								conjunctsOperator.apply(disjuncts)
+								disjunctsOperator.apply(disjuncts)
 								);
 		
 	}
@@ -79,7 +82,44 @@ public class CLDisjunction extends CLBooleanSentence {
 	public String toString() {
 		return "<cl:Or>" + 
 	            comments().toString() +
-	            disjuncts.toString() + "</cl:Or>";
+	            disjuncts().toString() + "</cl:Or>";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((comments() == null) ? 0 : comments().hashCode());
+		result = prime * result + ((disjuncts() == null) ? 0 : disjuncts().hashCode());
+		return result;
+	}
+
+	public boolean canEqual(Object other) {
+        return (other instanceof CLDisjunction);
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CLDisjunction))
+			return false;
+		CLDisjunction other = (CLDisjunction) obj;
+		if (!other.canEqual(this))
+			return false;
+		if (comments() == null) {
+			if (other.comments() != null)
+				return false;
+		} else if (!comments().equals(other.comments()))
+			return false;
+		if (disjuncts() == null) {
+			if (other.disjuncts() != null)
+				return false;
+		} else if (!disjuncts().equals(other.disjuncts()))
+			return false;
+		return true;
 	}	
 	
 }
