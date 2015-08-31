@@ -4,8 +4,11 @@ import java.util.Set;
 
 public abstract class CLSentenceSet extends CLExpressionSet {
 
-	public CLSentenceSet() {
-		super();
+	public CLSentenceSet(CLSentence... sentences){
+		for (CLSentence sentence:sentences){
+		if (sentence == null)
+			throw new NullPointerException("Arguments to CLSentenceSet constructor should not be null");
+		}
 	}
 
 	public abstract Set<? extends CLSentence> args();
@@ -24,7 +27,7 @@ public abstract class CLSentenceSet extends CLExpressionSet {
 	@Override
 	public String toString() {
 		String result = "";
-		for (CLSentence s : args() ) result = result + s.toString();
+		for (CLSentence s : args() ) result += s.toString();
 		return result;
 	}
 	

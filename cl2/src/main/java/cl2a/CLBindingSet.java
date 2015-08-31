@@ -1,7 +1,7 @@
 package cl2a;
 
 
-import java.util.Collection;
+import java.util.Set;
 
 import cl2array.CLBindingSetArray;
 
@@ -14,7 +14,7 @@ public abstract class CLBindingSet extends CLExpressionLike {
 			}
 		}
 
-	public abstract Collection<? extends CLInterpretableName> args();
+	public abstract Set<? extends CLInterpretableName> args();
 
 	public abstract int length();
 
@@ -30,7 +30,7 @@ public abstract class CLBindingSet extends CLExpressionLike {
 	@Override
 	public String toString() {
 		String result = "";
-		for (CLInterpretableName s : args() ) result = result + s.toString();
+		for (CLInterpretableName s : args() ) result += s.toString();
 		return result;
 	}
 	

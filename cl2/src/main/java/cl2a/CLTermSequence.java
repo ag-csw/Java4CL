@@ -8,8 +8,11 @@ public abstract class CLTermSequence extends CLExpressionLike {
 	
 	//private List<? extends CLTermOrSequenceMarker> args;
 	
-	public CLTermSequence() {
-		super();
+	public CLTermSequence(CLTermOrSequenceMarker... args){
+		for (CLTermOrSequenceMarker arg:args){
+		if (arg == null)
+			throw new NullPointerException("Arguments to CLTermSequence constructor should not be null");
+		}
 	}
 
 	public abstract List<? extends CLTermOrSequenceMarker> args();

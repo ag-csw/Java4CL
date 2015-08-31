@@ -27,7 +27,7 @@ public abstract class CLCommentSet extends CLExpressionLike {
 	@Override
 	public String toString() {
 		String result = "";
-		for (CLComment s : args() ) result = result + s.toString();
+		for (CLComment s : args() ) result += s.toString();
 		return result;
 	}
 

@@ -22,6 +22,7 @@ public class CLExpressionSetArray extends CLExpressionSet {
 	 * 
 	 */
 	public CLExpressionSetArray(CLExpression... args) {
+		super(args);
 		this.args = args;
 	}
 

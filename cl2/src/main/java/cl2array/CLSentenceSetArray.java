@@ -24,6 +24,7 @@ public class CLSentenceSetArray extends CLSentenceSet {
 	 * 
 	 */
 	public CLSentenceSetArray(CLSentence... args) {
+		super(args);
 		this.args = args;
 	}
 

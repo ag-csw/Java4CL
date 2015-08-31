@@ -21,6 +21,7 @@ public class CLTermSequenceArray extends CLTermSequence {
 	 * 
 	 */
 	public CLTermSequenceArray(CLTermOrSequenceMarker... args) {
+		super(args);
 		this.args = args;
 	}
 

@@ -132,6 +132,32 @@ trait CLTermOrSequenceMarkerLaws extends CLExpressionLikeLaws {
 }
 object CLTermOrSequenceMarkerLaws extends CLTermOrSequenceMarkerLaws
 
+// CLTermSequence
+trait CLTermSequenceLaws extends CLExpressionLikeLaws {
+
+  def expressionLikeArgumentShouldNotBeNull: Prop = Prop.forAll { (tosm: CLTermOrSequenceMarker) =>
+    {
+      Prop.throws(classOf[NullPointerException]) {
+        val set = new CLTermSequenceArray(null, tosm)
+      }
+      Prop.throws(classOf[NullPointerException]) {
+        val set = new CLTermSequenceArray(tosm, null)
+      }
+    }
+  }
+
+  def terms: RuleSet = new RuleSet {
+    def name = "term sequence"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expressionlike)
+    def props = Seq(("Null Constructor Argument Exception", expressionLikeArgumentShouldNotBeNull))
+  }
+
+}
+
+// TODO add to laws test
+object CLTermSequenceLaws extends CLTermSequenceLaws
+
 trait CLTermLaws extends CLTermOrSequenceMarkerLaws {
 
   def termDisjointSequenceMarkerIdentity: Prop = Prop.forAll { ((term: CLTerm), (marker: CLSequenceMarker)) =>
@@ -168,6 +194,8 @@ trait CLNameLaws extends CLTermLaws {
 
 object CLNameLaws extends CLNameLaws
 
+// TODO CLBindingSet
+
 trait CLSequenceMarkerLaws extends CLTermOrSequenceMarkerLaws {
 
   def markerDisjointNameIdentity: Prop = Prop.forAll { ((marker: CLSequenceMarker), (name: CLName)) =>
@@ -186,3 +214,8 @@ trait CLSequenceMarkerLaws extends CLTermOrSequenceMarkerLaws {
 }
 
 object CLSequenceMarkerLaws extends CLSequenceMarkerLaws
+
+// TODO CLSequenceMarkerSet
+
+// TODO CLSentenceSet
+// TODO CLExpressionSet

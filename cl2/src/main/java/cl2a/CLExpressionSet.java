@@ -5,8 +5,11 @@ import java.util.Set;
 
 public abstract class CLExpressionSet extends CLExpressionLike {
 
-	public CLExpressionSet() {
-		super();
+	public CLExpressionSet(CLExpression... expressions){
+		for (CLExpression expression:expressions){
+		if (expression == null)
+			throw new NullPointerException("Arguments to CLExpressionSet constructor should not be null");
+		}
 	}
 
 	public abstract Set<? extends CLExpression> args();
@@ -25,7 +28,7 @@ public abstract class CLExpressionSet extends CLExpressionLike {
 	@Override
 	public String toString() {
 		String result = "";
-		for (CLExpression s : args() ) result = result + s.toString();
+		for (CLExpression s : args() ) result += s.toString();
 		return result;
 	}
 

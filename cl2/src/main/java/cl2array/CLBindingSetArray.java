@@ -23,11 +23,12 @@ public class CLBindingSetArray extends CLBindingSet {
 	 * 
 	 */
 	public CLBindingSetArray(CLInterpretableName... names) {
+		super(names);
 		this.names = names;
 	}
 
 	@Override
-	public Collection<? extends CLInterpretableName> args() {
+	public Set<? extends CLInterpretableName> args() {
 		return Arrays.asList(names);
 	}
 
