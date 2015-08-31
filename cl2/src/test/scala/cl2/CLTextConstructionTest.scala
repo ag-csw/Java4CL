@@ -33,7 +33,7 @@ class CLTextConstructionTest extends FlatSpec with Matchers with PropertyChecks 
   val operator = new CLStringInterpretableName("allEqual")
   val termsequence = new CLTermSequenceArray(varx, varx)
   val atom = new CLAtomicSentence(comments, operator, termsequence)
-  val expressions = new CLExpressionSequenceArray(atom)
+  val expressions = new CLExpressionSetArray(atom)
   val testexpression = new CLTextConstruction(comments, expressions)
 
   "The expression sequence of a CLTextConstruction" should "be equal to the parameter passed to the constructor" in {

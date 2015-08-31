@@ -207,7 +207,7 @@ object CLBiconditionalLaws extends CLSentenceLaws {
   def biconditionalIdentityIdentity: Prop = Prop.forAll { (bicond: CLBiconditional) =>
     {
       val bicond2 = bicond.copy(
-        { s: CLCommentSet => s }, { s: CLSentenceSequence => s })
+        { s: CLCommentSet => s }, { s: CLSentenceSet => s })
 
       (bicond equals bicond2) &&
         ((bicond hashCode) equals (bicond2 hashCode))
@@ -232,7 +232,7 @@ object CLConjunctionLaws extends CLSentenceLaws {
 
   def conjunctionIdentityIdentity: Prop = Prop.forAll { (and: CLConjunction) =>
     val and2 = and.copy(
-      { s: CLCommentSet => s }, { s: CLSentenceSequence => s })
+      { s: CLCommentSet => s }, { s: CLSentenceSet => s })
 
     (and equals and2) &&
       ((and hashCode) equals (and2 hashCode))
@@ -273,7 +273,7 @@ object CLDisjunctionLaws extends CLSentenceLaws {
 
   def disjunctionIdentityIdentity: Prop = Prop.forAll { (or: CLDisjunction) =>
     val or2 = or.copy(
-      { s: CLCommentSet => s }, { s: CLSentenceSequence => s })
+      { s: CLCommentSet => s }, { s: CLSentenceSet => s })
 
     (or equals or2) &&
       ((or hashCode) equals (or2 hashCode))

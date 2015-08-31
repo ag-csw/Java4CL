@@ -8,8 +8,8 @@ import java.util.function.Function;
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSet;
 import cl2a.CLSentence;
-import cl2a.CLSentenceSequence;
-import cl2array.CLSentenceSequenceArray;
+import cl2a.CLSentenceSet;
+import cl2array.CLSentenceSetArray;
 
 /**
  * @author ralph
@@ -18,7 +18,7 @@ import cl2array.CLSentenceSequenceArray;
 public class CLBiconditional extends CLBooleanSentence {
 
 	// private CLCommentSet comments;
-	private final CLSentenceSequence args;
+	private final CLSentenceSet args;
 
 	/**
 	 * 
@@ -28,12 +28,12 @@ public class CLBiconditional extends CLBooleanSentence {
 			final CLSentence left,
 			final CLSentence right
 			) {
-		this(comments, new CLSentenceSequenceArray(left, right));
+		this(comments, new CLSentenceSetArray(left, right));
 	}
 
 	public CLBiconditional( 
 			final CLCommentSet comments, 
-			final CLSentenceSequence args){
+			final CLSentenceSet args){
 		super(comments);
 		if (args==null)
 			throw new NullPointerException("Arguments of a CLBiconditional should not be null.");
@@ -45,7 +45,7 @@ public class CLBiconditional extends CLBooleanSentence {
 	/**
 	 * @return the sentences
 	 */
-	public CLSentenceSequence args() {
+	public CLSentenceSet args() {
 		return args;
 	}
 
@@ -74,7 +74,7 @@ public class CLBiconditional extends CLBooleanSentence {
      */
 	public CLBiconditional copy(
 			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
-			final Function<CLSentenceSequence, ? extends CLSentenceSequence> argsOperator
+			final Function<CLSentenceSet, ? extends CLSentenceSet> argsOperator
 			) {
 				return 
 						new CLBiconditional(

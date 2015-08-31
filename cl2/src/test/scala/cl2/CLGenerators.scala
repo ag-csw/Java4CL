@@ -281,7 +281,7 @@ object CLGenerators {
   def cland0gen: Gen[CLConjunction] =
     for {
       comments <- clcommentsetgen
-      sentences <- clatomsequencegen(0)
+      sentences <- clatomsetgen(0)
     } yield new CLConjunction(comments, sentences)
 
   /**
@@ -293,7 +293,7 @@ object CLGenerators {
     else {
       for {
         comments <- clcommentsetgen
-        sentences <- clsentencesequencegen(d - 1)
+        sentences <- clsentencesetgen(d - 1)
       } yield new CLConjunction(comments, sentences)
     }
 
@@ -303,7 +303,7 @@ object CLGenerators {
   def clor0gen: Gen[CLDisjunction] =
     for {
       comments <- clcommentsetgen
-      sentences <- clatomsequencegen(0)
+      sentences <- clatomsetgen(0)
     } yield new CLDisjunction(comments, sentences)
 
   /**
@@ -315,7 +315,7 @@ object CLGenerators {
     else {
       for {
         comments <- clcommentsetgen
-        sentences <- clsentencesequencegen(d - 1)
+        sentences <- clsentencesetgen(d - 1)
       } yield new CLDisjunction(comments, sentences)
     }
 
@@ -330,28 +330,28 @@ object CLGenerators {
 
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
 
-  // CLSentenceSequence
-  def clatomsequencearraygen(d: Int): Gen[CLSentenceSequenceArray] =
+  // CLSentenceSet
+  def clatomsetarraygen(d: Int): Gen[CLSentenceSetArray] =
     for { a <- Gen listOf (clatomgen(d)) }
-      yield new CLSentenceSequenceArray(a.toArray[CLSentence]: _*)
+      yield new CLSentenceSetArray(a.toArray[CLSentence]: _*)
 
   // TODO need other types of sequences
-  def clatomsequencegen(d: Int): Gen[CLSentenceSequence] = clatomsequencearraygen(d)
+  def clatomsetgen(d: Int): Gen[CLSentenceSet] = clatomsetarraygen(d)
 
-  def clsentencesequencearraygen(d: Int): Gen[CLSentenceSequenceArray] =
+  def clsentencesetarraygen(d: Int): Gen[CLSentenceSetArray] =
     for { a <- Gen listOf (clsentencegen(d)) }
-      yield new CLSentenceSequenceArray(a.toArray[CLSentence]: _*)
+      yield new CLSentenceSetArray(a.toArray[CLSentence]: _*)
 
-  // TODO need other types of sequences
-  def clsentencesequencegen(d: Int): Gen[CLSentenceSequence] = clsentencesequencearraygen(d)
+  // TODO need other types of sets
+  def clsentencesetgen(d: Int): Gen[CLSentenceSet] = clsentencesetarraygen(d)
 
-  implicit val arbCLSentenceSequence = Arbitrary(clsentencesequencegen(depth))
+  implicit val arbCLSentenceSet = Arbitrary(clsentencesetgen(depth))
 
   // CLTextConstruction
   def clconstruct0gen: Gen[CLTextConstruction] =
     for {
       comments <- clcommentsetgen
-      sentences <- clsentencesequencegen(0)
+      sentences <- clsentencesetgen(0)
     } yield new CLTextConstruction(comments, sentences)
 
   /**
@@ -363,7 +363,7 @@ object CLGenerators {
     else {
       for {
         comments <- clcommentsetgen
-        expressions <- clexpressionsequencegen(d - 1)
+        expressions <- clexpressionsetgen(d - 1)
       } yield new CLTextConstruction(comments, expressions)
     }
 
@@ -384,15 +384,15 @@ object CLGenerators {
 
   implicit val arbCLExpression = Arbitrary(clexpressiongen(depth))
 
-  // CLExpressionSequence
-  def clexpressionsequencearraygen(d: Int): Gen[CLExpressionSequenceArray] =
+  // CLExpressionSet
+  def clexpressionsetarraygen(d: Int): Gen[CLExpressionSetArray] =
     for { a <- Gen listOf (clexpressiongen(d)) }
-      yield new CLExpressionSequenceArray(a.toArray[CLExpression]: _*)
+      yield new CLExpressionSetArray(a.toArray[CLExpression]: _*)
 
-  // TODO need other types of sequences
-  def clexpressionsequencegen(d: Int): Gen[CLExpressionSequence] = clexpressionsequencearraygen(d)
+  // TODO need other types of sets
+  def clexpressionsetgen(d: Int): Gen[CLExpressionSet] = clexpressionsetarraygen(d)
 
-  implicit val arbCLExpressionSequence = Arbitrary(clexpressionsequencegen(depth))
+  implicit val arbCLExpressionSet = Arbitrary(clexpressionsetgen(depth))
 
   // CLExpressionLike
   // TODO add sequences and sets also?
@@ -401,7 +401,7 @@ object CLGenerators {
     (MAX_SIZE, clsequencemarkergen),
     (MAX_SIZE, clcommentgen),
     (1, cltermsequencegen(d)),
-    (1, clexpressionsequencegen(d)),
+    (1, clexpressionsetgen(d)),
     (1, clcommentsetgen))
 
   implicit val arbCLExpressionLike = Arbitrary(clexpressionlikegen(depth))

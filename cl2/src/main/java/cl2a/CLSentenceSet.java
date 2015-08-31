@@ -2,9 +2,9 @@ package cl2a;
 
 import java.util.Set;
 
-public abstract class CLSentenceSequence extends CLExpressionSequence {
+public abstract class CLSentenceSet extends CLExpressionSet {
 
-	public CLSentenceSequence() {
+	public CLSentenceSet() {
 		super();
 	}
 
@@ -12,10 +12,10 @@ public abstract class CLSentenceSequence extends CLExpressionSequence {
 
 	public abstract int length();
 
-	public abstract CLSentenceSequence concatSentences(CLSentenceSequence inargs);
+	public abstract CLSentenceSet concatSentences(CLSentenceSet inargs);
 
 	@Override
-	public abstract CLSentenceSequence copy();
+	public abstract CLSentenceSet copy();
 
 	/**
      * Returns the XCL2 sour syntax for the sentence sequence, as a string,
@@ -37,7 +37,7 @@ public abstract class CLSentenceSequence extends CLExpressionSequence {
 	}
 
     public boolean canEqual(Object other) {
-        return (other instanceof CLSentenceSequence);
+        return (other instanceof CLSentenceSet);
     }
     
 	@Override
@@ -46,9 +46,9 @@ public abstract class CLSentenceSequence extends CLExpressionSequence {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof CLSentenceSequence))
+		if (!(obj instanceof CLSentenceSet))
 			return false;
-		CLSentenceSequence other = (CLSentenceSequence) obj;
+		CLSentenceSet other = (CLSentenceSet) obj;
 		if (!other.canEqual(this))
 			return false;
 		if (args() == null) {

@@ -4,7 +4,7 @@
 package cl2;
 
 import cl2a.CLCommentSet;
-import cl2a.CLBindingSequence;
+import cl2a.CLBindingSet;
 import cl2a.CLQuantifiedSentence;
 import cl2a.CLSentence;
 
@@ -19,7 +19,7 @@ public class CLUniversal extends CLQuantifiedSentence {
 	 */
 	public CLUniversal(
 			final CLCommentSet comments,
-			final CLBindingSequence bindings,
+			final CLBindingSet bindings,
 			final CLSentence body) {
 		super(comments, bindings, body);
 

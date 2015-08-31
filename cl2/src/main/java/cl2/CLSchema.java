@@ -5,7 +5,7 @@ package cl2;
 
 import cl2a.CLCommentSet;
 import cl2a.CLSentence;
-import cl2a.CLSequenceMarkerSequence;
+import cl2a.CLSequenceMarkerSet;
 import cl2a.CLStatement;
 
 /**
@@ -14,12 +14,12 @@ import cl2a.CLStatement;
  */
 public class CLSchema extends CLStatement {
 
-	private CLSequenceMarkerSequence bindings;
+	private CLSequenceMarkerSet bindings;
 	private CLSentence body;
 
 	public CLSchema(
 			final CLCommentSet comments,
-			final CLSequenceMarkerSequence bindings,
+			final CLSequenceMarkerSet bindings,
 			final CLSentence body) {
 		super(comments);
 		this.bindings = bindings;
@@ -29,7 +29,7 @@ public class CLSchema extends CLStatement {
 	/**
 	 * @return the declarations
 	 */
-	public CLSequenceMarkerSequence declarations() {
+	public CLSequenceMarkerSet declarations() {
 		return bindings;
 	}
 

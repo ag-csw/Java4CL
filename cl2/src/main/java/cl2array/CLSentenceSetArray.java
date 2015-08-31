@@ -9,25 +9,25 @@ import java.util.Set;
 
 import cl2a.CLExpression;
 import cl2a.CLSentence;
-import cl2a.CLSentenceSequence;
-import cl2a.CLExpressionSequence;
+import cl2a.CLSentenceSet;
+import cl2a.CLExpressionSet;
 
 /**
  * @author ralph
  *
  */
-public class CLSentenceSequenceArray extends CLSentenceSequence {
+public class CLSentenceSetArray extends CLSentenceSet {
 
 	private final CLSentence[] args;
 	
 	/**
 	 * 
 	 */
-	public CLSentenceSequenceArray(CLSentence... args) {
+	public CLSentenceSetArray(CLSentence... args) {
 		this.args = args;
 	}
 
-	public <T extends CLSentence> CLSentenceSequenceArray(Set<T> args) {
+	public <T extends CLSentence> CLSentenceSetArray(Set<T> args) {
 		this(args.toArray(new CLSentence[0]));
 	}
 
@@ -42,7 +42,7 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
 	}
 
 	@Override
-	public CLExpressionSequence concat(CLExpressionSequence inargs) {
+	public CLExpressionSet concat(CLExpressionSet inargs) {
 		int bLen = inargs.length();
 		CLExpression[] b= new CLSentence[bLen];
 		int i = 0;
@@ -51,11 +51,11 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
             b[i++] = inarg;
         }		
         CLExpression[] c = CLArray.concatExpressions(args, b);
-		return new CLExpressionSequenceArray(c);
+		return new CLExpressionSetArray(c);
 	}
 
 	@Override
-	public CLSentenceSequence concatSentences(CLSentenceSequence inargs) {
+	public CLSentenceSet concatSentences(CLSentenceSet inargs) {
 		int bLen = inargs.length();
 		CLSentence[] b= new CLSentence[bLen];
 		int i = 0;
@@ -64,12 +64,12 @@ public class CLSentenceSequenceArray extends CLSentenceSequence {
             b[i++] = inarg;
         }		
         CLSentence[] c = CLArray.concatSentences(args, b);
-		return new CLSentenceSequenceArray(c);
+		return new CLSentenceSetArray(c);
 	}
 
 	@Override
-	public CLSentenceSequenceArray copy() {
-		return new CLSentenceSequenceArray(CLArray.copySentences(args));
+	public CLSentenceSetArray copy() {
+		return new CLSentenceSetArray(CLArray.copySentences(args));
 	}
 
 }

@@ -34,7 +34,7 @@ class CLUniversalTest extends FlatSpec with Matchers with PropertyChecks {
   val operator = new CLStringInterpretableName("allEqual")
   val termsequence = new CLTermSequenceArray(varx, varx)
   val body = new CLAtomicSentence(comments, operator, termsequence)
-  val bindings = new CLBindingSequenceArray(varx)
+  val bindings = new CLBindingSetArray(varx)
   val testexpression = new CLUniversal(comments, bindings, body)
 
   "The binding sequence of a CLUniversal" should "be equal to the bindings parameter passed to the constructor" in {
@@ -49,7 +49,7 @@ class CLUniversalTest extends FlatSpec with Matchers with PropertyChecks {
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray(varx, varx)
       val body = new CLAtomicSentence(comments0, operator, termsequence)
-      val bindings = new CLBindingSequenceArray(varx)
+      val bindings = new CLBindingSetArray(varx)
       val testexpression = new CLUniversal(comments, bindings, body)
       val testcomments = (testexpression comments)
       (testcomments) should be(comments)
@@ -64,7 +64,7 @@ class CLUniversalTest extends FlatSpec with Matchers with PropertyChecks {
       val operator = new CLStringInterpretableName(operatorString)
       val termsequence = new CLTermSequenceArray(varx, varx)
       val body = new CLAtomicSentence(comments0, operator, termsequence)
-      val bindings = new CLBindingSequenceArray(varx)
+      val bindings = new CLBindingSetArray(varx)
       val testexpression = new CLUniversal(comments, bindings, body)
       val testbody = (testexpression body)
       (testbody) should be(body)

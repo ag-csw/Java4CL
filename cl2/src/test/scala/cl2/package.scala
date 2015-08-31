@@ -28,22 +28,22 @@ package object cl2 {
   val EXPRESSION = api4kbj.KnowledgeSourceLevel.EXPRESSION
   val Prop = org.scalacheck.Prop
 
-  type CLBindingSequence = cl2a.CLComment
-  type CLBooleanSentence = cl2a.CLComment
+  type CLBindingSet = cl2a.CLBindingSet
+  type CLBooleanSentence = cl2a.CLBooleanSentence
   type CLComment = cl2a.CLComment
   type CLCommentSet = cl2a.CLCommentSet
   type CLDiscourseStatement = cl2a.CLDiscourseStatement
   type CLExpression = cl2a.CLExpression
   type CLExpressionLike = cl2a.CLExpressionLike
-  type CLExpressionSequence = cl2a.CLExpressionSequence
+  type CLExpressionSet = cl2a.CLExpressionSet
   type CLInterpretableName = cl2a.CLInterpretableName
   type CLInterpretedName = cl2a.CLInterpretedName
   type CLName = cl2a.CLName
   type CLQuantifiedSentence = cl2a.CLQuantifiedSentence
   type CLSentence = cl2a.CLSentence
-  type CLSentenceSequence = cl2a.CLSentenceSequence
+  type CLSentenceSet = cl2a.CLSentenceSet
   type CLSequenceMarker = cl2a.CLSequenceMarker
-  type CLSequenceMarkerSequence = cl2a.CLSequenceMarkerSequence
+  type CLSequenceMarkerSet = cl2a.CLSequenceMarkerSet
   type CLSimpleSentence = cl2a.CLSimpleSentence
   type CLStatement = cl2a.CLText
   type CLTerm = cl2a.CLTerm
@@ -51,10 +51,10 @@ package object cl2 {
   type CLTermSequence = cl2a.CLTermSequence
   type CLText = cl2a.CLText
 
-  type CLBindingSequenceArray = cl2array.CLBindingSequenceArray
+  type CLBindingSetArray = cl2array.CLBindingSetArray
   type CLCommentSetArray = cl2array.CLCommentSetArray
-  type CLExpressionSequenceArray = cl2array.CLExpressionSequenceArray
-  type CLSentenceSequenceArray = cl2array.CLSentenceSequenceArray
+  type CLExpressionSetArray = cl2array.CLExpressionSetArray
+  type CLSentenceSetArray = cl2array.CLSentenceSetArray
   type CLTermSequenceArray = cl2array.CLTermSequenceArray
 
   type CLCommentSetJC = cl2jc.CLCommentSetJC

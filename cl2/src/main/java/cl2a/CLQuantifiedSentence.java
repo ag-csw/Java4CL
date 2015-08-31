@@ -9,12 +9,12 @@ package cl2a;
  */
 public abstract class CLQuantifiedSentence extends CLSentence {
 
-	private CLBindingSequence bindings;
+	private CLBindingSet bindings;
 	private CLSentence body;
 
 	public CLQuantifiedSentence(
 			final CLCommentSet comments,
-			final CLBindingSequence bindings,
+			final CLBindingSet bindings,
 			final CLSentence body) {
 		super(comments);
 		this.bindings = bindings;
@@ -24,7 +24,7 @@ public abstract class CLQuantifiedSentence extends CLSentence {
 	/**
 	 * @return the declarations
 	 */
-	public CLBindingSequence bindings() {
+	public CLBindingSet bindings() {
 		return bindings;
 	}
 

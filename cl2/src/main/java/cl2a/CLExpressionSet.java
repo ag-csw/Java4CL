@@ -3,9 +3,9 @@ package cl2a;
 import java.util.Set;
 
 
-public abstract class CLExpressionSequence extends CLExpressionLike {
+public abstract class CLExpressionSet extends CLExpressionLike {
 
-	public CLExpressionSequence() {
+	public CLExpressionSet() {
 		super();
 	}
 
@@ -13,10 +13,10 @@ public abstract class CLExpressionSequence extends CLExpressionLike {
 	
 	public abstract int length();
 
-	public abstract CLExpressionSequence concat(CLExpressionSequence inargs);
+	public abstract CLExpressionSet concat(CLExpressionSet inargs);
 
 	@Override
-	public abstract CLExpressionSequence copy();
+	public abstract CLExpressionSet copy();
 
 	/**
      * Returns the XCL2 sour syntax for the expression sequence, as a string,
@@ -38,7 +38,7 @@ public abstract class CLExpressionSequence extends CLExpressionLike {
 	}
 
     public boolean canEqual(Object other) {
-        return (other instanceof CLExpressionSequence);
+        return (other instanceof CLExpressionSet);
     }
     
 	@Override
@@ -47,9 +47,9 @@ public abstract class CLExpressionSequence extends CLExpressionLike {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof CLExpressionSequence))
+		if (!(obj instanceof CLExpressionSet))
 			return false;
-		CLExpressionSequence other = (CLExpressionSequence) obj;
+		CLExpressionSet other = (CLExpressionSet) obj;
 		if (!other.canEqual(this))
 			return false;
 		if (args() == null) {

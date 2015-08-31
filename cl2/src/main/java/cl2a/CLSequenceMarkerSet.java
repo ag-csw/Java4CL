@@ -1,9 +1,9 @@
 package cl2a;
 
 
-public abstract class CLSequenceMarkerSequence extends CLExpressionLike {
+public abstract class CLSequenceMarkerSet extends CLExpressionLike {
 
-	public CLSequenceMarkerSequence() {
+	public CLSequenceMarkerSet() {
 		super();
 	}
 
@@ -11,7 +11,7 @@ public abstract class CLSequenceMarkerSequence extends CLExpressionLike {
 
 	public abstract int length();
 
-	public abstract CLSequenceMarkerSequence concat(CLSequenceMarkerSequence inargs);
+	public abstract CLSequenceMarkerSet concat(CLSequenceMarkerSet inargs);
 
 	/**
      * Returns the XCL2 sour syntax for the sentence sequence, as a string,
@@ -25,6 +25,6 @@ public abstract class CLSequenceMarkerSequence extends CLExpressionLike {
 	}
 
 	@Override
-	public abstract CLSequenceMarkerSequence copy();
+	public abstract CLSequenceMarkerSet copy();
 
 }

@@ -9,7 +9,7 @@ import cl2a.CLCommentSet;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
 import cl2a.CLText;
-import cl2a.CLExpressionSequence;
+import cl2a.CLExpressionSet;
 
 /**
  * @author tara
@@ -18,12 +18,12 @@ import cl2a.CLExpressionSequence;
 public class CLTextConstruction
 		extends CLText {
     // private CLCommentSet comments;
-	private final CLExpressionSequence expressions;
+	private final CLExpressionSet expressions;
 
 	
     public CLTextConstruction(
 			CLCommentSet comments,
-			CLExpressionSequence expressions) {
+			CLExpressionSet expressions) {
 		super(comments);
 		this.expressions = expressions;
 	}
@@ -31,7 +31,7 @@ public class CLTextConstruction
 
 
 
-	public CLExpressionSequence expressions() {
+	public CLExpressionSet expressions() {
 		return expressions;
 	}
 
@@ -60,7 +60,7 @@ public class CLTextConstruction
      */
 	public CLTextConstruction copy(
 			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
-			final Function<CLExpressionSequence, ? extends CLExpressionSequence> expressionsOperator
+			final Function<CLExpressionSet, ? extends CLExpressionSet> expressionsOperator
 			) {
 				return 
 						new CLTextConstruction(

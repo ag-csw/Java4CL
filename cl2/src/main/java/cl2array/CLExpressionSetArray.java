@@ -7,21 +7,21 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import cl2a.CLExpressionSequence;
+import cl2a.CLExpressionSet;
 import cl2a.CLExpression;
 
 /**
  * @author ralph
  *
  */
-public class CLExpressionSequenceArray extends CLExpressionSequence {
+public class CLExpressionSetArray extends CLExpressionSet {
 
 	private final CLExpression[] args;
 	
 	/**
 	 * 
 	 */
-	public CLExpressionSequenceArray(CLExpression... args) {
+	public CLExpressionSetArray(CLExpression... args) {
 		this.args = args;
 	}
 
@@ -36,7 +36,7 @@ public class CLExpressionSequenceArray extends CLExpressionSequence {
 	}
 
 	@Override
-	public CLExpressionSequence concat(CLExpressionSequence inargs) {
+	public CLExpressionSet concat(CLExpressionSet inargs) {
 		int bLen = inargs.length();
 		CLExpression[] b= new CLExpression[bLen];
 		int i = 0;
@@ -45,11 +45,11 @@ public class CLExpressionSequenceArray extends CLExpressionSequence {
             b[i++] = inarg;
         }		
         CLExpression[] c = CLArray.concatExpressions(args, b);
-		return new CLExpressionSequenceArray(c);
+		return new CLExpressionSetArray(c);
 	}
 
 	@Override
-	public CLExpressionSequenceArray copy() {
-		return new CLExpressionSequenceArray(args);
+	public CLExpressionSetArray copy() {
+		return new CLExpressionSetArray(args);
 	}
 }

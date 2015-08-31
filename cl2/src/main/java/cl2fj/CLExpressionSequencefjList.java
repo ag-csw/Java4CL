@@ -6,7 +6,7 @@ package cl2fj;
 
 import java.util.HashSet;
 
-import cl2a.CLExpressionSequence;
+import cl2a.CLExpressionSet;
 import cl2a.CLExpression;
 import fj.data.Set;
 import fj.F;
@@ -16,7 +16,7 @@ import fj.Ord;
  * @author ralph
  *
  */
-public class CLExpressionSequencefjList<A extends CLExpression> extends CLExpressionSequence {
+public class CLExpressionSequencefjList<A extends CLExpression> extends CLExpressionSet {
 
 	private final Set<A> args;
 	
@@ -42,7 +42,7 @@ public class CLExpressionSequencefjList<A extends CLExpression> extends CLExpres
 	}
 
 	@Override
-	public CLExpressionSequencefjList<CLExpression> concat(CLExpressionSequence inargs) {
+	public CLExpressionSequencefjList<CLExpression> concat(CLExpressionSet inargs) {
 		Ord<CLExpression> ord = Ord.hashEqualsOrd();
 		Set<CLExpression> result = fj.data.Set.empty(ord);
 		for (CLExpression e:args()){

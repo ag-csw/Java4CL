@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import cl2a.CLBooleanSentence;
 import cl2a.CLCommentSet;
-import cl2a.CLSentenceSequence;
+import cl2a.CLSentenceSet;
 
 /**
  * @author ralph
@@ -16,14 +16,14 @@ import cl2a.CLSentenceSequence;
 public class CLConjunction extends CLBooleanSentence {
 
 	// private CLCommentSet comments;
-	private final CLSentenceSequence conjuncts;
+	private final CLSentenceSet conjuncts;
 
 	/**
 	 * 
 	 */
 	public CLConjunction(
 			final CLCommentSet comments,
-			final CLSentenceSequence conjuncts
+			final CLSentenceSet conjuncts
 			) {
 		super(comments);
 		if(conjuncts==null)
@@ -35,7 +35,7 @@ public class CLConjunction extends CLBooleanSentence {
 	/**
 	 * @return the conjuncts
 	 */
-	public CLSentenceSequence conjuncts() {
+	public CLSentenceSet conjuncts() {
 		return conjuncts;
 	}
 
@@ -64,7 +64,7 @@ public class CLConjunction extends CLBooleanSentence {
      */
 	public CLConjunction copy(
 			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
-			final Function<CLSentenceSequence, ? extends CLSentenceSequence> conjunctsOperator
+			final Function<CLSentenceSet, ? extends CLSentenceSet> conjunctsOperator
 			) {
 				return 
 						new CLConjunction(
