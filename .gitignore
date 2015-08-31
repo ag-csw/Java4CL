@@ -8,3 +8,4 @@ owl2/target
 doc
 .cache-main
 .cache-tests
+cl2/src/test/logs
