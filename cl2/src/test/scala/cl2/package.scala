@@ -18,9 +18,9 @@
  * @author taraathan
  */
 package object cl2 {
-  
-  val MIN_SUCCESSFUL = 1000
-  val MAX_DISCARDED = 5000
+
+  val MIN_SUCCESSFUL = 100
+  val MAX_DISCARDED = 500
   val MIN_SIZE = 5
   val MAX_SIZE = 10
   val WORKERS = 1
@@ -64,5 +64,5 @@ package object cl2 {
   type Laws = org.typelevel.discipline.Laws
   type FunSuiteLike = org.scalatest.FunSuiteLike
   type Prop = org.scalacheck.Prop
-  
+
 }

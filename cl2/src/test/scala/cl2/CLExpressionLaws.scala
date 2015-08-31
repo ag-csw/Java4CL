@@ -17,6 +17,7 @@
 package cl2
 
 import cl2.functionconversions._
+import org.scalatest.{ FunSuite, Matchers }
 import cl2.xcl2.WellFormedXMLValidator._
 import CLGenerators._
 import scala.language.postfixOps
@@ -24,7 +25,7 @@ import scala.language.postfixOps
 /**
  * Laws that must be obeyed by any `CL expression`.
  */
-trait CLExpressionLaws extends Laws {
+trait CLExpressionLaws extends Laws with Matchers {
 
   val emptyComments = new CLCommentSetArray()
 
@@ -141,6 +142,14 @@ object CLSentenceLaws extends CLSentenceLaws
 
 object CLAtomicSentenceLaws extends CLSentenceLaws {
 
+  def expressionCommentsShouldNotBeNull: Prop = Prop.forAll { ((operator: CLTerm), (terms: CLTermSequence)) =>
+    {
+      Prop.throws(classOf[NullPointerException]) {
+        val testfragment = new CLAtomicSentence(null, operator, terms)
+      }
+    }
+  }
+
   def atomIdentityIdentity: Prop = Prop.forAll { (atom: CLAtomicSentence) =>
     {
       // val f1:Function[CLCommentSet, CLCommentSet] = {s:CLCommentSet => s}
@@ -179,6 +188,7 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
+      ("Null Comments Exception", expressionCommentsShouldNotBeNull),
       ("Identity Copy", atomIdentityIdentity))
   }
 }

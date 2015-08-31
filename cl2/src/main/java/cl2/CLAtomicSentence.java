@@ -11,12 +11,17 @@ import cl2a.CLSimpleSentence;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author ralph
  *
  */
 public class CLAtomicSentence extends CLSimpleSentence {
 
+	protected final Logger LOG = LoggerFactory.getLogger(getClass());
+	
 	//private CLCommentSet comments;
 	private final CLTerm operator;
 	private final CLTermSequence args;
