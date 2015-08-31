@@ -142,10 +142,19 @@ object CLSentenceLaws extends CLSentenceLaws
 
 object CLAtomicSentenceLaws extends CLSentenceLaws {
 
-  def expressionCommentsShouldNotBeNull: Prop = Prop.forAll { ((operator: CLTerm), (terms: CLTermSequence)) =>
+  def expressionArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: CLCommentSet), (operator: CLTerm), (terms: CLTermSequence)) =>
     {
       Prop.throws(classOf[NullPointerException]) {
-        val testfragment = new CLAtomicSentence(null, operator, terms)
+        val atom = new CLAtomicSentence(null, operator, terms)
+      }
+      Prop.throws(classOf[NullPointerException]) {
+        val atom = new CLAtomicSentence(comments, null, terms)
+      }
+      Prop.throws(classOf[NullPointerException]) {
+        val atom = new CLAtomicSentence(comments, operator, null)
+      }
+      !Prop.throws(classOf[NullPointerException]) {
+        val atom = new CLAtomicSentence(comments, operator, terms)
       }
     }
   }
@@ -188,7 +197,7 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
-      ("Null Comments Exception", expressionCommentsShouldNotBeNull),
+      ("Null Constructor Argument Exception", expressionArgumentShouldNotBeNull),
       ("Identity Copy", atomIdentityIdentity))
   }
 }

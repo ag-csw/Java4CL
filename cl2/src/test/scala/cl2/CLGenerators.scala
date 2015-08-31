@@ -397,9 +397,12 @@ object CLGenerators {
   // CLExpressionLike
   // TODO add sequences and sets also?
   def clexpressionlikegen(d: Int): Gen[CLExpressionLike] = Gen.frequency(
-    (1, cltermgen(d)),
-    (1, clsequencemarkergen),
-    (1, clcommentgen))
+    (MAX_SIZE, cltermgen(d)),
+    (MAX_SIZE, clsequencemarkergen),
+    (MAX_SIZE, clcommentgen),
+    (1, cltermsequencegen(d)),
+    (1, clexpressionsequencegen(d)),
+    (1, clcommentsetgen))
 
   implicit val arbCLExpressionLike = Arbitrary(clexpressionlikegen(depth))
 

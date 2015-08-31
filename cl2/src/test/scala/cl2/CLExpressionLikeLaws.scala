@@ -91,6 +91,19 @@ trait CLCommentLaws extends CLExpressionLikeLaws {
 
 object CLCommentLaws extends CLCommentLaws
 
+trait CLCommentSetLaws extends CLExpressionLikeLaws {
+
+  def comment: RuleSet = new RuleSet {
+    def name = "comment set"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expressionlike)
+    def props = Seq()
+  }
+
+}
+
+object CLCommentSetLaws extends CLCommentSetLaws
+
 trait CLTermOrSequenceMarkerLaws extends CLExpressionLikeLaws {
 
   def tosmNotEqualSentenceIdentity: Prop = Prop.forAll {
