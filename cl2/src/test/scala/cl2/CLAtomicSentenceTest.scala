@@ -65,7 +65,6 @@ class CLAtomicSentenceTest extends FlatSpec with LazyLogging
   "The operator symbol of a CLAtomicSentence" should "be equal to the parameter passed to the operator constructor" in {
     forAll("operator", minSuccessful(MIN_SUCCESSFUL / 2)) { (operator: CLTerm) =>
       val testexpression = new CLAtomicSentence(comments1, operator, termsequence1)
-      logger.debug(s"Test Expression $testexpression")
       (testexpression operator) should be(operator)
     }
   }

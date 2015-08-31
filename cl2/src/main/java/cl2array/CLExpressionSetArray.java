@@ -10,24 +10,21 @@ import java.util.Set;
 import cl2a.CLExpressionSet;
 import cl2a.CLExpression;
 
-/**
- * @author ralph
- *
- */
 public class CLExpressionSetArray extends CLExpressionSet {
 
 	private final CLExpression[] args;
 	
-	/**
-	 * 
-	 */
 	public CLExpressionSetArray(CLExpression... args) {
 		super(args);
 		this.args = args;
 	}
 
+	public <T extends CLExpression> CLExpressionSetArray(Set<T> args) {
+		this(args.toArray(new CLExpression[args.size()]));
+	}
+
 	@Override
-	public Set<CLExpression> args() {
+	public Set<? extends CLExpression> args() {
 		return new HashSet<CLExpression>(Arrays.asList(args));
 	}
 
@@ -37,7 +34,7 @@ public class CLExpressionSetArray extends CLExpressionSet {
 	}
 
 	@Override
-	public CLExpressionSet concat(CLExpressionSet inargs) {
+	public CLExpressionSetArray concat(CLExpressionSet inargs) {
 		int bLen = inargs.length();
 		CLExpression[] b= new CLExpression[bLen];
 		int i = 0;
@@ -51,6 +48,6 @@ public class CLExpressionSetArray extends CLExpressionSet {
 
 	@Override
 	public CLExpressionSetArray copy() {
-		return new CLExpressionSetArray(args);
+		return new CLExpressionSetArray(CLArray.copyExpressions(args));
 	}
 }

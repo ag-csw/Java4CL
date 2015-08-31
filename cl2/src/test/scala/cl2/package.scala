@@ -60,6 +60,8 @@ package object cl2 {
   type CLCommentSetJC = cl2jc.CLCommentSetJC
   type CLEmptyCommentSetJC = cl2jc.CLEmptyCommentSetJC
 
+  type CLExpressionSetfj[A <: cl2a.CLExpression] = cl2fj.CLExpressionSetfj[A]
+
   type Discipline = org.typelevel.discipline.scalatest.Discipline
   type Laws = org.typelevel.discipline.Laws
   type FunSuiteLike = org.scalatest.FunSuiteLike

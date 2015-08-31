@@ -21,16 +21,19 @@ import org.scalatest.{ FunSuite, Matchers }
 import cl2.xcl2.WellFormedXMLValidator._
 import CLGenerators._
 import scala.language.postfixOps
+import com.typesafe.scalalogging.LazyLogging
 
 /**
  * Laws that must be obeyed by any `CL expression`.
  */
-trait CLExpressionLaws extends Laws with Matchers {
+trait CLExpressionLaws extends Laws with Matchers with LazyLogging {
 
   val emptyComments = new CLCommentSetArray()
 
   def expressionUsesCLLanguageIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    (expression language) == (CL LANG)
+    {
+      (expression language) == (CL LANG)
+    }
   }
 
   // TODO lift to api4kbj.Basic
@@ -45,7 +48,7 @@ trait CLExpressionLaws extends Laws with Matchers {
 
   // TODO lift to api4kbj.Immutable
   def expressionEqualsItselfIdentity: Prop = Prop.forAll { (expression: CLExpression) =>
-    (expression equals expression)
+    (expression.equals(expression))
   }
 
   // TODO lift to api4kbj.Immutable

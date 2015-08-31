@@ -11,27 +11,27 @@ import cl2.CLTextConstruction;
  * @author tara
  *
  */
-public class CLTextConstructionfjList<A extends CLExpression>
+public class CLTextConstructionfj<A extends CLExpression>
 		extends CLTextConstruction {
 	
-	private CLExpressionSequencefjList<A> texts;
+	private CLExpressionSetfj<A> texts;
 
-    public CLTextConstructionfjList(
+    public CLTextConstructionfj(
 			CLCommentSet comments,
-			CLExpressionSequencefjList<A> texts) {
+			CLExpressionSetfj<A> texts) {
 		super(comments, texts);
 	}
 
 
 	@Override
-	public CLTextConstructionfjList<A> insertComments(CLCommentSet incomments) {
-		return new CLTextConstructionfjList<A>( comments().concat(incomments), 
+	public CLTextConstructionfj<A> insertComments(CLCommentSet incomments) {
+		return new CLTextConstructionfj<A>( comments().concat(incomments), 
 				texts);
 	}
 
 	@Override
-	public CLTextConstructionfjList<A> copy() {
-		return new CLTextConstructionfjList<A>(
+	public CLTextConstructionfj<A> copy() {
+		return new CLTextConstructionfj<A>(
 				comments().copy(),
 				texts.copy());
 	}

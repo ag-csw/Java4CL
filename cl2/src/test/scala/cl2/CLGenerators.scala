@@ -18,9 +18,10 @@ package cl2
 
 import org.scalacheck.Gen
 import org.scalacheck.Arbitrary
+import com.typesafe.scalalogging._
 import scala.language.postfixOps
 
-object CLGenerators {
+object CLGenerators extends LazyLogging {
 
   val CODE_POINT_NULL = 0x0;
   val CODE_POINT_TAB = 0x9;
@@ -390,12 +391,13 @@ object CLGenerators {
       yield new CLExpressionSetArray(a.toArray[CLExpression]: _*)
 
   // TODO need other types of sets
-  def clexpressionsetgen(d: Int): Gen[CLExpressionSet] = clexpressionsetarraygen(d)
+  def clexpressionsetgen(d: Int): Gen[CLExpressionSet] = Gen.frequency(
+    (1, clexpressionsetarraygen(d)))
 
   implicit val arbCLExpressionSet = Arbitrary(clexpressionsetgen(depth))
 
   // CLExpressionLike
-  // TODO add sequences and sets also?
+  // TODO add binding sets also
   def clexpressionlikegen(d: Int): Gen[CLExpressionLike] = Gen.frequency(
     (MAX_SIZE, cltermgen(d)),
     (MAX_SIZE, clsequencemarkergen),

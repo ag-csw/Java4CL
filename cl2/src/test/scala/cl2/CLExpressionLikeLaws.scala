@@ -19,16 +19,19 @@ package cl2
 import cl2.functionconversions.toJavaFunction
 import CLGenerators._
 import scala.language.postfixOps
+import com.typesafe.scalalogging.LazyLogging
 
 /**
  * Laws that must be obeyed by any `CL expression-like entity`.
  */
-trait CLExpressionLikeLaws extends Laws {
+trait CLExpressionLikeLaws extends Laws with LazyLogging {
 
   val emptyComments = new CLCommentSetArray()
 
   def expressionlikeUsesCLLanguageIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    (clentity language) == CL.LANG
+    {
+      (clentity language) == CL.LANG
+    }
   }
 
   // TODO lift to api4kbj.Basic

@@ -12,11 +12,12 @@ public class CLCommentSetArray extends CLCommentSet {
 	private final CLComment[] comments;
 
 	public CLCommentSetArray(CLComment... comments) {
+		super(comments);
 		this.comments = comments;
 	}
 
 	public <T extends CLComment> CLCommentSetArray(Set<T> comments) {
-		this(comments.toArray(new CLComment[0]));
+		this(comments.toArray(new CLComment[comments.size()]));
 	}
 
 	@Override
