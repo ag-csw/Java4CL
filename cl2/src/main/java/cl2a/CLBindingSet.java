@@ -3,22 +3,21 @@ package cl2a;
 
 import java.util.Set;
 
-import cl2array.CLBindingSetArray;
 
 public abstract class CLBindingSet extends CLExpressionLike {
 
-		public CLBindingSet(CLInterpretableName... names){
-			for (CLInterpretableName name:names){
+		public CLBindingSet(CLInterpretableName... bindings){
+			for (CLInterpretableName name:bindings){
 			if (name == null)
 				throw new NullPointerException("Arguments to CLBindingSequence constructor should not be null");
 			}
 		}
 
-	public abstract Set<? extends CLInterpretableName> args();
+	public abstract Set<? extends CLInterpretableName> bindings();
 
 	public abstract int length();
 
-	public abstract CLBindingSet concat(CLBindingSet inargs);
+	public abstract CLBindingSet concat(CLBindingSet inbindings);
 
 	@Override
 	public abstract CLBindingSet copy();
@@ -30,7 +29,7 @@ public abstract class CLBindingSet extends CLExpressionLike {
 	@Override
 	public String toString() {
 		String result = "";
-		for (CLInterpretableName s : args() ) result += s.toString();
+		for (CLInterpretableName s : bindings() ) result += s.toString();
 		return result;
 	}
 	

@@ -4,10 +4,12 @@
 package cl2array;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import cl2a.CLComment;
 import cl2a.CLCommentSet;
+import cl2a.CLExpression;
 import cl2a.CLInterpretableName;
 import cl2a.CLBindingSet;
 
@@ -17,41 +19,41 @@ import cl2a.CLBindingSet;
  */
 public class CLBindingSetArray extends CLBindingSet {
 
-	private final CLInterpretableName[] names;
+	private final CLInterpretableName[] bindings;
 	
 	/**
 	 * 
 	 */
 	public CLBindingSetArray(CLInterpretableName... names) {
 		super(names);
-		this.names = names;
+		this.bindings = names;
 	}
 
 	@Override
-	public Set<? extends CLInterpretableName> args() {
-		return Arrays.asList(names);
+	public Set<? extends CLInterpretableName> bindings() {
+		return new HashSet<CLInterpretableName>(Arrays.asList(bindings));
 	}
 
 	@Override
 	public int length(){
-		return names.length;
+		return bindings.length;
 	}
 
 	@Override
-	public CLBindingSetArray concat(CLBindingSet innames) {
-		int bLen = innames.length();
+	public CLBindingSetArray concat(CLBindingSet inbindings) {
+		int bLen = inbindings.length();
 		CLInterpretableName[] b= new CLInterpretableName[bLen];
 		int i = 0;
-        for (final CLInterpretableName incomment : innames.args())
+        for (final CLInterpretableName incomment : inbindings.bindings())
         {
             b[i++] = incomment;
         }		
-        CLInterpretableName[] c = CLArray.concatBindings(names, b);
+        CLInterpretableName[] c = CLArray.concatBindings(bindings, b);
 		return new CLBindingSetArray(c);
 	}
 
 	@Override
 	public CLBindingSetArray copy() {
-		return new CLBindingSetArray( CLArray.copyBindings(names));
+		return new CLBindingSetArray( CLArray.copyBindings(bindings));
 	}
 }
