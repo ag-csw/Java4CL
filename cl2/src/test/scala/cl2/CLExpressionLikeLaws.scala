@@ -93,11 +93,22 @@ object CLCommentLaws extends CLCommentLaws
 
 trait CLCommentSetLaws extends CLExpressionLikeLaws {
 
+  def expressionLikeArgumentShouldNotBeNull: Prop = Prop.forAll { (comment: CLComment) =>
+    {
+      Prop.throws(classOf[NullPointerException]) {
+        val set = new CLCommentSetArray(null, comment)
+      }
+      Prop.throws(classOf[NullPointerException]) {
+        val set = new CLCommentSetArray(comment, null)
+      }
+    }
+  }
+
   def comment: RuleSet = new RuleSet {
     def name = "comment set"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
-    def props = Seq()
+    def props = Seq(("Null Constructor Argument Exception", expressionLikeArgumentShouldNotBeNull))
   }
 
 }

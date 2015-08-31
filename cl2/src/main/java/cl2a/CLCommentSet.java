@@ -4,6 +4,13 @@ import java.util.Set;
 
 public abstract class CLCommentSet extends CLExpressionLike {
 	
+	public CLCommentSet(CLComment... comments){
+		for (CLComment comment:comments){
+		if (comment == null)
+			throw new NullPointerException("Arguments to CLCommentSet constructor should not be null");
+		}
+	}
+	
 	public abstract Set<? extends CLComment> args();
 	
 	public abstract int length();
