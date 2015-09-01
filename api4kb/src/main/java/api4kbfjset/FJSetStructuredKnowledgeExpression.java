@@ -103,9 +103,4 @@ public class FJSetStructuredKnowledgeExpression extends FJSetKnowledgeExpression
 		return curry((f, as) -> as.map(f));
 	}
 
-	@Override
-	public FJSetStructuredKnowledgeExpression copy() {
-		return new FJSetStructuredKnowledgeExpression(languages(), components);
-	}
-
 }

@@ -1,9 +1,9 @@
 package cl2;
 
 import org.apache.abdera.i18n.iri.IRI;
-import api4kbj.Immutable;
+import cl2i.CLImmutable;
 
-public class CLIRI implements Immutable {
+public class CLIRI implements CLImmutable {
 
 	private final IRI iri;
 

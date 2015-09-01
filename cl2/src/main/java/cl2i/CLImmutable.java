@@ -1,5 +1,6 @@
-package api4kbj;
+package cl2i;
 
+import api4kbj.Immutable;
 
 /**
  * An interface for immutable classes.
@@ -13,6 +14,11 @@ package api4kbj;
  * @author taraathan
  * @api4kp.OntologyClass <a href="http://www.omg.org/spec/API4KB/API4KBTerminology/Immutable">API4KBTerminology/Immutable</a>
  */
-public interface Immutable {
+public interface CLImmutable extends Immutable {
+    /**
+     * Returns a copy that is equal to the original
+     * @return a copy
+     */
+	CLImmutable copy();
 
 }

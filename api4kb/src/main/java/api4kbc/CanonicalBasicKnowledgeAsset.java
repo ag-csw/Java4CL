@@ -38,9 +38,4 @@ public class CanonicalBasicKnowledgeAsset extends CanonicalKnowledgeAsset
 		return false;
 	}
 
-	@Override
-	public CanonicalBasicKnowledgeAsset copy() {
-		return new CanonicalBasicKnowledgeAsset(environment, canonicalExpression());
-	}
-
 }

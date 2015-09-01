@@ -167,10 +167,4 @@ public class HashKRRDialectTypeEnvironment implements DialectTypeEnvironment {
 		return (T) apply(lowerer.value().f(e), dialectType);
 	}
 
-	@Override
-	public HashKRRDialectTypeEnvironment copy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

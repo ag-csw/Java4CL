@@ -58,10 +58,4 @@ public class EqSetStructuredKnowledgeExpressionComposite<E extends AbstractBasic
 		return languages;
 	}
 
-	@Override
-	public EqSetStructuredKnowledgeExpressionComposite<E> copy() {
-		// TODO Auto-generated method stub
-		return new EqSetStructuredKnowledgeExpressionComposite<E>(languages, components);
-	}
-
 }

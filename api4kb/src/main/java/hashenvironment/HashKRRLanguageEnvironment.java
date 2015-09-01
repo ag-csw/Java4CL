@@ -184,12 +184,6 @@ public class HashKRRLanguageEnvironment implements
 		return true;
 	}
 
-	@Override
-	public Immutable copy() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/*
 	 * @Override public boolean isCompatibleWith(Class<?> clazz) { if (clazz ==
 	 * null) return false; for (KRRLanguage member: members()){ if

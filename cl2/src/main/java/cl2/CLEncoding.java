@@ -1,8 +1,9 @@
 package cl2;
 
+import cl2i.CLImmutable;
 import api4kba.AbstractBasicKnowledgeEncoding;
 
-public class CLEncoding extends AbstractBasicKnowledgeEncoding {
+public class CLEncoding extends AbstractBasicKnowledgeEncoding implements CLImmutable {
 
 	public <T> CLEncoding(T value, CLFormatType<T> formatType) {
 		super(value, formatType);

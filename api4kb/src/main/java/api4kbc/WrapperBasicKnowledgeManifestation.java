@@ -63,10 +63,4 @@ public class WrapperBasicKnowledgeManifestation implements
 				+ dialectType + " is not supporte");
 	}
 
-	@Override
-	public WrapperBasicKnowledgeManifestation copy() {
-		return new WrapperBasicKnowledgeManifestation(dialect, expression, environment);
-	}
-
-
 }

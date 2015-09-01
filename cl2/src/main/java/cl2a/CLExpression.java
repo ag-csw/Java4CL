@@ -3,9 +3,10 @@ package cl2a;
 import api4kba.AbstractBasicKnowledgeExpression;
 import cl2.CL;
 import cl2i.CLCommentable;
+import cl2i.CLImmutable;
 
 public abstract class CLExpression extends AbstractBasicKnowledgeExpression implements
-		CLKnowledgeResource, CLCommentable {
+		CLKnowledgeResource, CLCommentable, CLImmutable {
 
 	private CLCommentSet comments;
 
