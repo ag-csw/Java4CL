@@ -39,4 +39,5 @@ class CLExpressionLikeLawTest extends FunSuiteLike with Discipline {
 
   checkAll("CLSequenceMarker", CLSequenceMarkerLaws.marker)
 
+  checkAll("CLFunctionalTerm", CLFunctionalTermLaws.fterm)
 }

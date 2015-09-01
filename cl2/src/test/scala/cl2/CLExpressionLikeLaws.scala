@@ -46,17 +46,20 @@ trait CLExpressionLikeLaws extends Laws with LazyLogging {
 
   // TODO lift to api4kbj.Immutable
   def expressionlikeEqualsItselfIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    clentity.equals(clentity)
+    (clentity equals clentity)
   }
 
   // TODO lift to api4kbj.Immutable
   def expressionlikeEqualsCopyIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    clentity.equals(clentity.copy())
+    {
+      val clentity2 = (clentity copy)
+      (clentity equals clentity2) && ((clentity hashCode) equals (clentity2 hashCode))
+    }
   }
 
   // TODO lift to api4kbj.Immutable
   def expressionlikeNotEqualNullIdentity: Prop = Prop.forAll { (clentity: CLExpressionLike) =>
-    !(clentity.equals(null))
+    !(clentity equals null)
   }
 
   def expressionlike: RuleSet = new RuleSet {
@@ -78,8 +81,12 @@ object CLExpressionLikeLaws extends CLExpressionLikeLaws
 
 trait CLCommentLaws extends CLExpressionLikeLaws {
 
+  def commentEqualityByMembersIdentity: Prop = Prop.forAll { ((comment: CLComment), (comment2: CLComment)) =>
+    (comment equals comment2) || !((comment data) equals (comment2 data))
+  }
+
   def commentDisjointTermOrSequenceMarkerIdentity: Prop = Prop.forAll { ((comment: CLComment), (tosm: CLTermOrSequenceMarker)) =>
-    !(comment.equals(tosm)) && !(tosm.equals(comment))
+    !(comment equals tosm) && !(tosm equals comment)
   }
 
   def comment: RuleSet = new RuleSet {
@@ -87,6 +94,7 @@ trait CLCommentLaws extends CLExpressionLikeLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expressionlike)
     def props = Seq(
+      ("CL Comment Equality is Based on its Members", commentEqualityByMembersIdentity),
       ("CL Comments are Disjoint from CL Terms and Sequence Markers", commentDisjointTermOrSequenceMarkerIdentity))
   }
 
@@ -217,6 +225,70 @@ trait CLSequenceMarkerLaws extends CLTermOrSequenceMarkerLaws {
 }
 
 object CLSequenceMarkerLaws extends CLSequenceMarkerLaws
+
+object CLFunctionalTermLaws extends CLTermLaws {
+
+  def expressionLikeArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: CLCommentSet), (operator: CLTerm), (terms: CLTermSequence)) =>
+    {
+      Prop.throws(classOf[NullPointerException]) {
+        val term = new CLFunctionalTerm(null, operator, terms)
+      }
+      Prop.throws(classOf[NullPointerException]) {
+        val term = new CLFunctionalTerm(comments, null, terms)
+      }
+      Prop.throws(classOf[NullPointerException]) {
+        val term = new CLFunctionalTerm(comments, operator, null)
+      }
+      !Prop.throws(classOf[NullPointerException]) {
+        val term = new CLFunctionalTerm(comments, operator, terms)
+      }
+    }
+  }
+
+  def functionalTermEqualityByMembersIdentity: Prop = Prop.forAll { ((term: CLFunctionalTerm), (term2: CLFunctionalTerm)) =>
+    (term equals term2) || !((term comments) equals (term2 comments)) || !((term operator) equals (term2 operator)) || !((term args) equals (term2 args))
+  }
+
+  def termIdentityIdentity: Prop = Prop.forAll { (term: CLFunctionalTerm) =>
+    {
+      val term2 = term.copy(
+        { s: CLCommentSet => s }, { s: CLTerm => s }, { s: CLTermSequence => s })
+
+      (term equals term2) &&
+        ((term hashCode) equals (term2 hashCode))
+    }
+  }
+
+  def termComposeIdentity(
+    term: CLFunctionalTerm,
+    f1: Function[CLCommentSet, CLCommentSet],
+    f2: Function[CLTerm, CLTerm],
+    f3: Function[CLTermSequence, CLTermSequence],
+    g1: Function[CLCommentSet, CLCommentSet],
+    g2: Function[CLTerm, CLTerm],
+    g3: Function[CLTermSequence, CLTermSequence]): Prop = Prop.forAll { (atom: CLAtomicSentence) =>
+    {
+      val term1 = term.copy(f1, f2, f3).copy(g1, g2, g3)
+
+      val term2 = term.copy(
+        (f1 compose g1),
+        (f2 compose g2),
+        (f3 compose g3))
+
+      (term1 equals term2)
+    }
+  }
+
+  def fterm: RuleSet = new RuleSet {
+    def name = "fterm"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(term)
+    def props = Seq(
+      ("CL Functional Term Equality is Based on its Members", functionalTermEqualityByMembersIdentity),
+      ("Null Constructor Argument Exception", expressionLikeArgumentShouldNotBeNull),
+      ("Identity Copy", termIdentityIdentity))
+  }
+}
 
 // TODO CLSequenceMarkerSet
 

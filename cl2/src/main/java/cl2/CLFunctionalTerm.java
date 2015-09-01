@@ -1,5 +1,7 @@
 package cl2;
 
+import java.util.function.Function;
+
 import cl2a.CLCommentSet;
 import cl2a.CLTerm;
 import cl2a.CLTermSequence;
@@ -53,6 +55,32 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 		return new CLFunctionalTerm(comments().copy(), operator().copy(), args().copy());
 	}
 
+    /**
+     * Returns a modified copy derived by applying functions to each of the
+     * fields: comments, operator(), args().
+     * Law: when the passed operators are the identity operators, then the
+     * copy is equal to the original.
+     * Law: copy is composable.
+     * 
+     * @param commentsOperator function that modifies a CL comment sequence
+     * @param operatorOperator function that modifies a CL term
+     * @param argsOperator  function that modifies a CL term sequence
+     * @return modified copy of this CL functional term
+     */
+	public CLFunctionalTerm copy(
+			final Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
+			final Function<CLTerm, ? extends CLTerm> operatorOperator,
+			final Function<CLTermSequence, ? extends CLTermSequence> argsOperator
+			) {
+				return 
+						new CLFunctionalTerm(
+								commentsOperator.apply(comments()),
+								operatorOperator.apply(operator()),
+								argsOperator.apply(args())
+								);
+		
+	}
+
 	/**
      * Returns the XCL2 sour syntax for the functional term, as a string,
      * using the prefix cl: to indicate the XCL2 namespace.
@@ -71,7 +99,7 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((args() == null) ? 0 : args().hashCode());
-		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+		result = prime * result + ((comments() == null) ? 0 : comments().hashCode());
 		result = prime * result + ((operator() == null) ? 0 : operator().hashCode());
 		return result;
 	}
@@ -96,10 +124,10 @@ public class CLFunctionalTerm extends CLTerm implements CLCommentable {
 				return false;
 		} else if (!args().equals(other.args()))
 			return false;
-		if (comments == null) {
-			if (other.comments != null)
+		if (comments() == null) {
+			if (other.comments() != null)
 				return false;
-		} else if (!comments.equals(other.comments))
+		} else if (!comments().equals(other.comments()))
 			return false;
 		if (operator() == null) {
 			if (other.operator() != null)

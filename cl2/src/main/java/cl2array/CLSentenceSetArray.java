@@ -29,7 +29,7 @@ public class CLSentenceSetArray extends CLSentenceSet {
 	}
 
 	public <T extends CLSentence> CLSentenceSetArray(Set<T> args) {
-		this(args.toArray(new CLSentence[0]));
+		this(args.toArray(new CLSentence[args.size()]));
 	}
 
 	@Override

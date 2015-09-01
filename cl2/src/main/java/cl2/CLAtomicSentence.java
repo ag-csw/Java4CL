@@ -14,10 +14,6 @@ import cl2a.CLTermSequence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author ralph
- *
- */
 public class CLAtomicSentence extends CLSimpleSentence {
 
 	protected final Logger LOG = LoggerFactory.getLogger(getClass());

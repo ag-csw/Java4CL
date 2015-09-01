@@ -20,9 +20,13 @@ public class CLBindingSetArray extends CLBindingSet {
 	/**
 	 * 
 	 */
-	public CLBindingSetArray(CLInterpretableName... names) {
-		super(names);
-		this.bindings = names;
+	public CLBindingSetArray(CLInterpretableName... bindings) {
+		super(bindings);
+		this.bindings = bindings;
+	}
+
+	public <T extends CLInterpretableName> CLBindingSetArray(Set<T> bindings) {
+		this(bindings.toArray(new CLInterpretableName[bindings.size()]));
 	}
 
 	@Override
