@@ -11,25 +11,10 @@ import cl2a.CLSentence;
 import cl2a.CLSentenceSet;
 import cl2array.CLSentenceSetArray;
 
-/**
- * @author ralph
- *
- */
 public class CLBiconditional extends CLBooleanSentence {
 
 	// private CLCommentSet comments;
 	private final CLSentenceSet args;
-
-	/**
-	 * 
-	 */
-	public CLBiconditional(
-			final CLCommentSet comments,
-			final CLSentence left,
-			final CLSentence right
-			) {
-		this(comments, new CLSentenceSetArray(left, right));
-	}
 
 	public CLBiconditional( 
 			final CLCommentSet comments, 
@@ -42,6 +27,16 @@ public class CLBiconditional extends CLBooleanSentence {
 					"The size of the sentence sequence of a CLBiconditional should be 1 or 2 ");
 		this.args = args;
 	}
+
+	public CLBiconditional(
+			final CLCommentSet comments,
+			final CLSentence left,
+			final CLSentence right
+			) {
+		this(comments, new CLSentenceSetArray(left, right));
+	}
+
+
 	/**
 	 * @return the sentences
 	 */

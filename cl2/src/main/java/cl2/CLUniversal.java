@@ -3,6 +3,10 @@
  */
 package cl2;
 
+import java.util.function.Function;
+
+import api4kbj.KRRLanguage;
+import api4kbj.KnowledgeSourceLevel;
 import cl2a.CLCommentSet;
 import cl2a.CLBindingSet;
 import cl2a.CLQuantifiedSentence;
@@ -50,6 +54,40 @@ public class CLUniversal extends CLQuantifiedSentence {
 	            comments().toString() +
 	            bindings().toString() +
 	            body().toString() + "</cl:Forall>";
+	}
+
+
+
+	@Override
+	public boolean isBasic() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public KnowledgeSourceLevel level() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public boolean usesLanguage(KRRLanguage language) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	@Override
+	public CLQuantifiedSentence copy(Function<CLCommentSet, ? extends CLCommentSet> commentsOperator,
+			Function<CLBindingSet, ? extends CLBindingSet> bindingsOperator,
+			Function<CLSentence, ? extends CLSentence> bodyOperator) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

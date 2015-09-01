@@ -308,7 +308,7 @@ object CLGenerators extends LazyLogging {
     } yield new CLDisjunction(comments, sentences)
 
   /**
-   * generator for recursively defined conjunction sentences,
+   * generator for recursively defined disjunction sentences,
    * of depth d
    */
   def clorgen(d: Int): Gen[CLDisjunction] =
@@ -322,12 +322,58 @@ object CLGenerators extends LazyLogging {
 
   implicit val arbCLDisjunction = Arbitrary(clorgen(depth))
 
-  // TODO add more types of Sentence
-  def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, clatomgen(d)),
-    (MAX_SIZE, clbicondgen(d)),
+  // CLExistential
+  def clexists0gen: Gen[CLExistential] =
+    for {
+      comments <- clcommentsetgen
+      bindings <- clbindingsetgen
+      body <- clatomgen(0)
+    } yield new CLExistential(comments, bindings, body)
+
+  /**
+   * generator for recursively defined existential sentences,
+   * of depth d
+   */
+  def clexistsgen(d: Int): Gen[CLExistential] =
+    if (d <= 0) { clexists0gen }
+    else {
+      for {
+        comments <- clcommentsetgen
+        bindings <- clbindingsetgen
+        body <- clsentencegen(d - 1)
+      } yield new CLExistential(comments, bindings, body)
+    }
+
+  implicit val arbCLExistential = Arbitrary(clexistsgen(depth))
+
+  // CLSimpleSentence
+  // TODO add equations
+  def clsimplesentencegen(d: Int): Gen[CLSimpleSentence] = Gen.frequency(
+    (1, clatomgen(d)))
+
+  implicit val arbCLSimpleSentence = Arbitrary(clsimplesentencegen(depth))
+
+  // CLQuantifiedSentence
+  // TODO add universal
+  def clquantifiedsentencegen(d: Int): Gen[CLQuantifiedSentence] = Gen.frequency(
+    (1, clexistsgen(d)))
+
+  implicit val arbCLQuantifiedSentence = Arbitrary(clquantifiedsentencegen(depth))
+
+  // CLBooleanSentence
+  // TODO add more types of Sentence (implies and equivalence and negation)
+  def clbooleansentencegen(d: Int): Gen[CLBooleanSentence] = Gen.frequency(
+    (MAX_SIZE / 2, clbicondgen(d)),
+    (MAX_SIZE, clquantifiedsentencegen(d)),
     (1, clandgen(d)),
     (1, clorgen(d)))
+
+  implicit val arbCLBooleanSentence = Arbitrary(clbooleansentencegen(depth))
+
+  // CLSentence
+  def clsentencegen(d: Int): Gen[CLSentence] = Gen.frequency(
+    (MAX_SIZE, clsimplesentencegen(d)),
+    (1, clbooleansentencegen(d)))
 
   implicit val arbCLSentence = Arbitrary(clsentencegen(depth))
 
@@ -396,6 +442,17 @@ object CLGenerators extends LazyLogging {
 
   implicit val arbCLExpressionSet = Arbitrary(clexpressionsetgen(depth))
 
+  // CLBindingSet
+  def clbindingsetarraygen: Gen[CLBindingSetArray] =
+    for { a <- Gen listOf (clinamegen) }
+      yield new CLBindingSetArray(a.toArray[CLInterpretableName]: _*)
+
+  // TODO need other types of sets
+  def clbindingsetgen: Gen[CLBindingSet] = Gen.frequency(
+    (1, clbindingsetarraygen))
+
+  implicit val arbCLBindingSet = Arbitrary(clbindingsetgen)
+
   // CLExpressionLike
   // TODO add binding sets also
   def clexpressionlikegen(d: Int): Gen[CLExpressionLike] = Gen.frequency(
@@ -404,6 +461,7 @@ object CLGenerators extends LazyLogging {
     (MAX_SIZE, clcommentgen),
     (1, cltermsequencegen(d)),
     (1, clexpressionsetgen(d)),
+    (1, clbindingsetgen),
     (1, clcommentsetgen))
 
   implicit val arbCLExpressionLike = Arbitrary(clexpressionlikegen(depth))

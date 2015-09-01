@@ -33,9 +33,15 @@ class CLExpressionLawTest extends FunSuiteLike with Discipline {
 
   checkAll("CLAtomicSentence", CLAtomicSentenceLaws.atom)
 
+  checkAll("CLBooleanSentence", CLBooleanSentenceLaws.bool)
+
   checkAll("CLBiconditional", CLBiconditionalLaws.bicond)
 
   checkAll("CLConjunction", CLConjunctionLaws.and)
 
   checkAll("CLDisjunction", CLDisjunctionLaws.or)
+
+  checkAll("CLQuantifiedSentence", CLQuantifiedSentenceLaws.quant)
+
+  checkAll("CLExistential", CLExistentialLaws.exists)
 }

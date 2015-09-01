@@ -5,6 +5,8 @@ import java.util.Set;
 
 
 public abstract class CLBindingSet extends CLExpressionLike {
+	
+	private Set<? extends CLInterpretableName> bindings;
 
 		public CLBindingSet(CLInterpretableName... bindings){
 			for (CLInterpretableName name:bindings){
@@ -31,6 +33,37 @@ public abstract class CLBindingSet extends CLExpressionLike {
 		String result = "";
 		for (CLInterpretableName s : bindings() ) result += s.toString();
 		return result;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bindings() == null) ? 0 : bindings().hashCode());
+		return result;
+	}
+
+    public boolean canEqual(Object other) {
+        return (other instanceof CLBindingSet);
+    }
+    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CLBindingSet))
+			return false;
+		CLBindingSet other = (CLBindingSet) obj;
+		if (!other.canEqual(this))
+			return false;
+		if (bindings() == null) {
+			if (other.bindings() != null)
+				return false;
+		} else if (!bindings().equals(other.bindings()))
+			return false;
+		return true;
 	}
 	
 }

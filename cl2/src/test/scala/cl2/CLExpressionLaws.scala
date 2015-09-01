@@ -205,7 +205,25 @@ object CLAtomicSentenceLaws extends CLSentenceLaws {
   }
 }
 
-object CLBiconditionalLaws extends CLSentenceLaws {
+trait CLBooleanSentenceLaws extends CLSentenceLaws {
+
+  def booleanSentenceNotEqualAtomIdentity: Prop = Prop.forAll { ((sent: CLBooleanSentence), (atom: CLAtomicSentence)) =>
+    !(sent equals atom) && !(atom equals sent)
+  }
+
+  def bool: RuleSet = new RuleSet {
+    def name = "bool"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq(
+      ("Boolean Sentence Disjoint with Atom", booleanSentenceNotEqualAtomIdentity))
+  }
+
+}
+
+object CLBooleanSentenceLaws extends CLBooleanSentenceLaws
+
+object CLBiconditionalLaws extends CLBooleanSentenceLaws {
 
   def biconditionalIdentityIdentity: Prop = Prop.forAll { (bicond: CLBiconditional) =>
     {
@@ -217,21 +235,16 @@ object CLBiconditionalLaws extends CLSentenceLaws {
     }
   }
 
-  def bicondNotEqualAtomIdentity: Prop = Prop.forAll { ((bicond: CLBiconditional), (atom: CLAtomicSentence)) =>
-    !(bicond equals atom)
-  }
-
   def bicond: RuleSet = new RuleSet {
     def name = "bicond"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
-      ("Biconditional Disjoint with Atom", bicondNotEqualAtomIdentity),
       ("Identity Copy", biconditionalIdentityIdentity))
   }
 }
 
-object CLConjunctionLaws extends CLSentenceLaws {
+object CLConjunctionLaws extends CLBooleanSentenceLaws {
 
   def conjunctionIdentityIdentity: Prop = Prop.forAll { (and: CLConjunction) =>
     val and2 = and.copy(
@@ -239,10 +252,6 @@ object CLConjunctionLaws extends CLSentenceLaws {
 
     (and equals and2) &&
       ((and hashCode) equals (and2 hashCode))
-  }
-
-  def conjunctionNotEqualAtomIdentity: Prop = Prop.forAll { ((and: CLConjunction), (atom: CLAtomicSentence)) =>
-    !(and equals atom)
   }
 
   def conjunctionNotEqualBiconditionalIdentity: Prop = Prop.forAll { ((and: CLConjunction), (bicond: CLBiconditional)) =>
@@ -254,17 +263,12 @@ object CLConjunctionLaws extends CLSentenceLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
-      ("Conjunction Disjoint with Atom", conjunctionNotEqualAtomIdentity),
       ("Conjunction Disjoint with Biconditional", conjunctionNotEqualBiconditionalIdentity),
       ("Identity Copy", conjunctionIdentityIdentity))
   }
 }
 
-object CLDisjunctionLaws extends CLSentenceLaws {
-
-  def disjunctionNotEqualAtomIdentity: Prop = Prop.forAll { ((or: CLDisjunction), (atom: CLAtomicSentence)) =>
-    !(or equals atom)
-  }
+object CLDisjunctionLaws extends CLBooleanSentenceLaws {
 
   def disjunctionNotEqualBiconditionalIdentity: Prop = Prop.forAll { ((or: CLDisjunction), (bicond: CLBiconditional)) =>
     !(or equals bicond)
@@ -287,10 +291,59 @@ object CLDisjunctionLaws extends CLSentenceLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
-      ("Disjunction Disjoint with Atom", disjunctionNotEqualBiconditionalIdentity),
       ("Disjunction Disjoint with Biconditional", disjunctionNotEqualBiconditionalIdentity),
       ("Disjunction Disjoint with Conjunction", disjunctionNotEqualConjunctionIdentity),
       ("Identity Copy", disjunctionIdentityIdentity))
   }
+}
 
+trait CLQuantifiedSentenceLaws extends CLBooleanSentenceLaws {
+
+  def quantifiedNotEqualBiconditionalIdentity: Prop = Prop.forAll {
+    ((quant: CLQuantifiedSentence), (bicond: CLBiconditional)) =>
+      !(quant equals bicond) && !(bicond equals quant)
+  }
+
+  def quantifiedNotEqualConjunctionIdentity: Prop = Prop.forAll {
+    ((quant: CLQuantifiedSentence), (and: CLConjunction)) =>
+      !(quant equals and) && !(and equals quant)
+  }
+
+  def quantifiedNotEqualDisjunctionIdentity: Prop = Prop.forAll {
+    ((quant: CLQuantifiedSentence), (or: CLDisjunction)) =>
+      !(quant equals or) && !(or equals quant)
+  }
+
+  def quantIdentityIdentity: Prop = Prop.forAll { (quant: CLQuantifiedSentence) =>
+    {
+      val quant2 = quant.copy(
+        { s: CLCommentSet => s }, { s: CLBindingSet => s }, { s: CLSentence => s })
+
+      (quant equals quant2) &&
+        ((quant hashCode) equals (quant2 hashCode))
+    }
+  }
+
+  def quant: RuleSet = new RuleSet {
+    def name = "quant"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq(
+      ("Quantified Disjoint with Biconditional", quantifiedNotEqualBiconditionalIdentity),
+      ("Quantified Disjoint with Conjunction", quantifiedNotEqualConjunctionIdentity),
+      ("Quantified Disjoint with Disjunction", quantifiedNotEqualDisjunctionIdentity),
+      ("Identity Copy", quantIdentityIdentity))
+  }
+}
+
+object CLQuantifiedSentenceLaws extends CLQuantifiedSentenceLaws
+
+object CLExistentialLaws extends CLQuantifiedSentenceLaws {
+
+  def exists: RuleSet = new RuleSet {
+    def name = "exists"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(quant)
+    def props = Seq()
+  }
 }

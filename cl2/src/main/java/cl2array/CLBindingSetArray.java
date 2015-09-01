@@ -13,10 +13,6 @@ import cl2a.CLExpression;
 import cl2a.CLInterpretableName;
 import cl2a.CLBindingSet;
 
-/**
- * @author ralph
- *
- */
 public class CLBindingSetArray extends CLBindingSet {
 
 	private final CLInterpretableName[] bindings;
