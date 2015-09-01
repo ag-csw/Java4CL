@@ -2,10 +2,12 @@ package sclcc
 
 import scala.language.postfixOps
 import com.typesafe.scalalogging._
+import api4kbj.KnowledgeExpressionLike
 import api4kbj.BasicKnowledgeExpressionLike
 import api4kba.AbstractKRRLanguage
 import api4kba.AbstractKRRLogic
 import api4kbj.KnowledgeSourceLevel.EXPRESSION
+
 /**
  * @author taraathan
  */
@@ -14,15 +16,40 @@ object SCL {
   val LANG = AbstractKRRLanguage.language(
     "Common Logic 2", classOf[ExpressionLike], COMPLETE_CL_LOGIC)
 }
-sealed trait ExpressionLike extends BasicKnowledgeExpressionLike with LazyLogging {
-  def isBasic() = true
+sealed trait ExpressionLike extends KnowledgeExpressionLike with LazyLogging
+sealed trait BasicExpressionLike extends BasicKnowledgeExpressionLike with LazyLogging {
   def language() = SCL.LANG
-  def level() = EXPRESSION
 }
-sealed trait Fragment extends ExpressionLike
+sealed trait Fragment extends BasicExpressionLike
 sealed trait TermOrSequenceMarker extends Fragment
 sealed trait Term extends TermOrSequenceMarker
-sealed trait Name extends Term
+sealed trait NameOrSequenceMarker extends TermOrSequenceMarker {
+  def symbol: Object
+}
+object NameOrSequenceMarker {
+  def unapply(e: NameOrSequenceMarker): Option[(Object)] =
+    Option(e) map { e =>
+      (e.symbol)
+    }
+}
+sealed trait Name extends NameOrSequenceMarker with Term {
+  def symbol: Object
+}
+object Name {
+  def unapply(e: Name): Option[(Object)] =
+    Option(e) map { e =>
+      (e.symbol)
+    }
+}
+trait Commentable {
+  def comments: Set[Comment]
+}
+object Commentable {
+  def unapply(e: Commentable): Option[(Set[Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
 
 case class Comment(data: Object) extends Fragment
 case class InterpretableName(symbol: Object) extends Name
@@ -32,17 +59,79 @@ class StringIriInterpretedName(symbol: String, datatype: String) extends Interpr
 case class SequenceMarker(symbol: Object) extends TermOrSequenceMarker
 class StringSequenceMarker(symbol: String) extends SequenceMarker(symbol)
 case class FunctionalTerm(comments: Set[Comment], operator: Term,
-  args: List[TermOrSequenceMarker]) extends Term
+  args: List[TermOrSequenceMarker]) extends Term with Commentable
 
 sealed trait Expression extends ExpressionLike
-sealed trait Sentence extends Expression
-sealed trait SimpleSentence extends Sentence
-sealed trait BooleanSentence extends Sentence
-sealed trait QuantifiedSentence extends BooleanSentence
+sealed trait BasicExpression extends BasicExpressionLike with Expression with Commentable {
+  def comments: Set[Comment]
+}
+sealed trait Sentence extends BasicExpression {
+  def comments: Set[Comment]
+}
+object Sentence {
+  def unapply(e: Sentence): Option[(Set[Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
+sealed trait SimpleSentence extends Sentence {
+  def comments: Set[Comment]
+}
+object SimpleSentence {
+  def unapply(e: SimpleSentence): Option[(Set[Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
+sealed trait BooleanSentence extends Sentence {
+  def comments: Set[Comment]
+}
+object BooleanSentence {
+  def unapply(e: BooleanSentence): Option[(Set[Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
+sealed trait QuantifiedSentence extends BooleanSentence {
+  def comments: Set[Comment]
+  def bindings: Set[InterpretableName]
+  def body: Sentence
+}
+object QuantifiedSentence {
+  def unapply(e: QuantifiedSentence): Option[(Set[Comment], Set[InterpretableName], Sentence)] =
+    Option(e) map { e =>
+      (e.comments, e.bindings, e.body)
+    }
+}
 
-sealed trait Statement extends Expression
-sealed trait DiscourseStatement extends Statement
-sealed trait Text extends Expression
+sealed trait Statement extends BasicExpression {
+  def comments: Set[Comment]
+}
+object Statement {
+  def unapply(e: Statement): Option[(Set[Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
+sealed trait DiscourseStatement extends Statement {
+  def comments: Set[Comment]
+  def terms: Set[Term]
+}
+object DiscourseStatement {
+  def unapply(e: DiscourseStatement): Option[(Set[Comment], Set[Term])] =
+    Option(e) map { e =>
+      (e.comments, e.terms)
+    }
+}
+sealed trait Text extends BasicExpression {
+  def comments: Set[Comment]
+}
+object Text {
+  def unapply(e: Text): Option[(Set[Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
 
 case class AtomicSentence(comments: Set[Comment], operator: Term,
   args: List[TermOrSequenceMarker]) extends SimpleSentence
@@ -66,7 +155,7 @@ case class InDiscourseStatement(comments: Set[Comment], terms: Set[Term]) extend
 case class OutDiscourseStatement(comments: Set[Comment], terms: Set[Term]) extends DiscourseStatement
 case class Titling(comments: Set[Comment], title: Name, body: Text) extends Statement
 case class Schema(comments: Set[Comment], seqbindings: Set[SequenceMarker],
-  body: Sentence) extends QuantifiedSentence
+  body: Sentence) extends Statement
 
 case class TextConstruction(comments: Set[Comment],
   expressions: Set[Expression]) extends Text
