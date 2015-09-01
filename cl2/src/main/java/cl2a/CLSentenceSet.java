@@ -11,8 +11,10 @@ public abstract class CLSentenceSet extends CLExpressionSet {
 		}
 	}
 
+	@Override
 	public abstract Set<? extends CLSentence> args();
 
+	@Override
 	public abstract int length();
 
 	public abstract CLSentenceSet concatSentences(CLSentenceSet inargs);
@@ -39,7 +41,8 @@ public abstract class CLSentenceSet extends CLExpressionSet {
 		return result;
 	}
 
-    public boolean canEqual(Object other) {
+    @Override
+	public boolean canEqual(Object other) {
         return (other instanceof CLSentenceSet);
     }
     

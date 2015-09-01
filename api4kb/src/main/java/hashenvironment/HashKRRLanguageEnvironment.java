@@ -10,7 +10,6 @@ import functional.Functional;
 import functional.None;
 import functional.Option;
 import functional.Some;
-import api4kbj.Immutable;
 import api4kbj.KRRLanguage;
 import api4kbj.KRRLanguageEnvironment;
 import api4kbj.KnowledgeExpression;

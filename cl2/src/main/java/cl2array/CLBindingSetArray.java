@@ -7,9 +7,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import cl2a.CLComment;
-import cl2a.CLCommentSet;
-import cl2a.CLExpression;
 import cl2a.CLInterpretableName;
 import cl2a.CLBindingSet;
 

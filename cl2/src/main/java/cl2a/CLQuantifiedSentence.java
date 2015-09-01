@@ -5,8 +5,6 @@ package cl2a;
 
 import java.util.function.Function;
 
-import cl2.CLExistential;
-
 /**
  * @author ralph
  *

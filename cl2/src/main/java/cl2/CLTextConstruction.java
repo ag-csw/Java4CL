@@ -6,8 +6,6 @@ package cl2;
 import java.util.function.Function;
 
 import cl2a.CLCommentSet;
-import cl2a.CLTerm;
-import cl2a.CLTermSequence;
 import cl2a.CLText;
 import cl2a.CLExpressionSet;
 
