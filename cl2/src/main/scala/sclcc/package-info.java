@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author taraathan
- *
- */
-package sclcc;

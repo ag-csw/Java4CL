@@ -138,8 +138,7 @@
 		<dependency>
 			<groupId>org.scalatest</groupId>
 			<artifactId>scalatest_${scala.version.tools}</artifactId>
-			<version>2.2.4</version>
-			<scope>test</scope>
+			<version>2.2.5</version>
 		</dependency>
 	</dependencies>
 	<groupId>de.fuberlin.csw.cl</groupId>

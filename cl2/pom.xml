@@ -7,6 +7,9 @@
 		<artifactId>java4cl</artifactId>
 	</parent>
 	<artifactId>cl2</artifactId>
+	<properties>
+			<scala.version.tools>2.11</scala.version.tools>	
+	</properties>
 	<build>
 		<plugins>
 			<!-- enable scalatest -->
@@ -19,6 +22,8 @@
 						<junitxml>.</junitxml> <filereports>WDF TestSuite.txt</filereports -->
 					<suites>
 						TestAll,
+						scl.ExpressionLawTest,
+						scl.ExpressionLikeLawTest,
 						cl2.CLAtomicSentenceTest,
 						cl2.CLExpressionLawTest,
 						cl2.CLExpressionLikeLawTest,
@@ -116,19 +121,24 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>org.scalacheck</groupId>
+            <artifactId>scalacheck_2.11</artifactId>
+            <version>1.12.2</version>
+        </dependency>
+        <dependency>
 			<groupId>org.typelevel</groupId>
-			<artifactId>discipline_2.11</artifactId>
+			<artifactId>discipline_${scala.version.tools}</artifactId>
 			<version>0.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.spire-math</groupId>
-			<artifactId>algebra_2.11</artifactId>
+			<artifactId>algebra_${scala.version.tools}</artifactId>
 			<version>0.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.scala-lang.modules</groupId>
-			<artifactId>scala-java8-compat_2.11</artifactId>
+			<artifactId>scala-java8-compat_${scala.version.tools}</artifactId>
 			<version>0.5.0</version>
 		</dependency>
 		<dependency>
@@ -138,7 +148,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.typesafe.scala-logging</groupId>
-			<artifactId>scala-logging_2.11</artifactId>
+			<artifactId>scala-logging_${scala.version.tools}</artifactId>
 			<version>3.1.0</version>
 		</dependency>
 		<dependency>
