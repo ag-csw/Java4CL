@@ -456,16 +456,51 @@ object Generators extends LazyLogging {
 
   implicit val arbInDiscourseStatement = Arbitrary(indisgen(depth))
 
+  // OutDiscourseStatement
+  def outdisgen(d: Int): Gen[OutDiscourseStatement] =
+    for {
+      comments <- commentsetgen
+      tosms <- tosmsetgen(d)
+    } yield new OutDiscourseStatement(comments, tosms)
+
+  implicit val arbOutDiscourseStatement = Arbitrary(outdisgen(depth))
+
   // DiscourseStatement
 
   def discoursegen(d: Int): Gen[DiscourseStatement] = Gen.frequency(
-    (1, indisgen(d)))
+    (1, indisgen(d)),
+    (1, outdisgen(d)))
+
+  // Schema
+  def forallm0gen: Gen[Schema] =
+    for {
+      comments <- commentsetgen
+      seqbindings <- seqbindingsetgen
+      body <- simplesentencegen(0)
+    } yield new Schema(comments, seqbindings, body)
+
+  /**
+   * generator for recursively defined Schema statements,
+   * of depth d
+   */
+  def forallmgen(d: Int): Gen[Schema] =
+    if (d <= 0) { forallm0gen }
+    else {
+      for {
+        comments <- commentsetgen
+        seqbindings <- seqbindingsetgen
+        body <- Gen.oneOf(sentencegen(d - 1), forallmgen(d - 1))
+      } yield new Schema(comments, seqbindings, body)
+    }
+
+  implicit val arbSchema = Arbitrary(forallmgen(depth))
 
   // Statement
 
   def statementgen(d: Int): Gen[Statement] = Gen.frequency(
     (MAX_SIZE, discoursegen(d)),
-    (1, titlinggen(d)))
+    (1, titlinggen(d)),
+    (1, forallmgen(d)))
 
   implicit val arbStatement = Arbitrary(statementgen(depth))
 
@@ -527,8 +562,8 @@ object Generators extends LazyLogging {
   // Text
 
   def textgen(d: Int): Gen[Text] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, importgen),
-    (MAX_SIZE, restrictgen(d)),
+    (MAX_SIZE, importgen),
+    (1, restrictgen(d)),
     (1, constructgen(d)))
 
   implicit val arbText = Arbitrary(textgen(depth))
@@ -536,7 +571,7 @@ object Generators extends LazyLogging {
   // BasicExpression
   // TODO add statements also
   def bexpressiongen(d: Int): Gen[BasicExpression] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, sentencegen(d)),
+    (MAX_SIZE, sentencegen(d)),
     (1, textgen(d)))
 
   implicit val arbBasicExpression = Arbitrary(bexpressiongen(depth))
@@ -582,6 +617,17 @@ object Generators extends LazyLogging {
     (1, bindingsetlistgen))
 
   implicit val arbbindingset = Arbitrary(bindingsetgen)
+
+  // Set[SequenceMarker]
+  def seqbindingsetlistgen: Gen[Set[_ <: SequenceMarker]] =
+    for { a <- Gen listOf (sequencemarkergen) }
+      yield a.toSet[SequenceMarker]
+
+  // TODO need other types of sets
+  def seqbindingsetgen: Gen[Set[_ <: SequenceMarker]] = Gen.frequency(
+    (1, seqbindingsetlistgen))
+
+  implicit val arbseqbindingset = Arbitrary(seqbindingsetgen)
 
   // Set[TermOrSequenceMarker]
   def tosmsetlistgen(d: Int): Gen[Set[_ <: TermOrSequenceMarker]] =

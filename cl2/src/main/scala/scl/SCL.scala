@@ -81,7 +81,16 @@ object BasicExpression {
       (e.comments)
     }
 }
-sealed trait Sentence extends BasicExpression {
+sealed trait SentenceOrSchema extends BasicExpression {
+  def comments: Set[_ <: Comment]
+}
+object SentenceOrSchema {
+  def unapply(e: SentenceOrSchema): Option[(Set[_ <: Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
+}
+sealed trait Sentence extends SentenceOrSchema {
   def comments: Set[_ <: Comment]
 }
 object Sentence {
@@ -190,7 +199,7 @@ case class Titling(comments: Set[_ <: Comment], title: Name, body: Text) extends
 case class Schema(
   comments: Set[_ <: Comment],
   seqbindings: Set[_ <: SequenceMarker],
-  body: Sentence) extends Statement
+  body: SentenceOrSchema) extends Statement with SentenceOrSchema
 
 case class TextConstruction(
   comments: Set[_ <: Comment],
