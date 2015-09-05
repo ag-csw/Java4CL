@@ -22,6 +22,7 @@ import cl2.xcl2.WellFormedXMLValidator._
 import Generators._
 import scala.language.postfixOps
 import com.typesafe.scalalogging.LazyLogging
+import XMLHelper._
 
 /**
  * Laws that must be obeyed by any `SCL.expression`.
@@ -75,6 +76,33 @@ trait BasicExpressionLaws extends ExpressionLaws {
   def basicExpressionNotEqualTOSMIdentity: Prop = Prop.forAll { ((bexpression: BasicExpression), (tosm: TermOrSequenceMarker)) =>
     !(bexpression equals tosm)
   }
+
+  def basicExpressionEqualityDependsOnCommentsIdentity: Prop = Prop.forAll { ((bexpression1: BasicExpression), (bexpression2: BasicExpression)) =>
+    (((bexpression1 comments) equals (bexpression2 comments)) || !(bexpression1 equals bexpression2))
+  }
+
+  def basicExpressionIsEqualToItsCopyIdentity: Prop = Prop.forAll { (bexpression1: BasicExpression) =>
+    val bexpression2 = bexpression1 match {
+      case a: AtomicSentence => a.copy(comments = a.comments, operator = a.operator, args = a.args)
+      case b: Biconditional => b.copy(comments = b.comments, sentences = b.sentences)
+      case c: Conjunction => c.copy(comments = c.comments, conjuncts = c.conjuncts)
+      case d: Disjunction => d.copy(comments = d.comments, disjuncts = d.disjuncts)
+      case e: Equation => e.copy(comments = e.comments, terms = e.terms)
+      case n: Implication => n.copy(comments = n.comments, antecedent = n.antecedent, consequent = n.consequent)
+      case n: Negation => n.copy(comments = n.comments, body = n.body)
+      case u: Universal => u.copy(comments = u.comments, bindings = u.bindings, body = u.body)
+      case x: Existential => x.copy(comments = x.comments, bindings = x.bindings, body = x.body)
+      case s: InDiscourseStatement => s.copy(comments = s.comments, terms = s.terms)
+      case s: OutDiscourseStatement => s.copy(comments = s.comments, terms = s.terms)
+      case s: Titling => s.copy(comments = s.comments, title = s.title, body = s.body)
+      case x: Schema => x.copy(comments = x.comments, seqbindings = x.seqbindings, body = x.body)
+      case t: TextConstruction => t.copy(comments = t.comments, expressions = t.expressions)
+      case s: DomainRestriction => s.copy(comments = s.comments, domain = s.domain, body = s.body)
+      case s: Importation => s.copy(comments = s.comments, title = s.title)
+    }
+    ((bexpression1 equals bexpression2) && (bexpression2 equals bexpression1))
+  }
+
   /*
   def basicEexpressionToStringIsWellFormedXMLIdentity: Prop = Prop.forAll { (bexpression: BasicExpression) =>
     {
@@ -93,6 +121,8 @@ trait BasicExpressionLaws extends ExpressionLaws {
     def parents: Seq[RuleSet] = Seq()
     def props = Seq(
       ("A SCL.BasicExpression is basic (has no structure)", basicExpressionIsBasicIdentity),
+      ("SCL.BasicExpression Equality Depends on Comments", basicExpressionEqualityDependsOnCommentsIdentity),
+      ("A SCL.BasicExpression Equals its Copy", basicExpressionEqualityDependsOnCommentsIdentity),
       // ("SCL.BasicExpressions to String gives Well-formed XML", basicEexpressionToStringIsWellFormedXMLIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }
@@ -127,7 +157,20 @@ trait SentenceLaws extends ExpressionLaws {
 
 object SentenceLaws extends SentenceLaws
 
-object AtomicSentenceLaws extends SentenceLaws {
+trait SimpleSentenceLaws extends SentenceLaws {
+
+  def simple: RuleSet = new RuleSet {
+    def name = "simple"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq()
+  }
+
+}
+
+object SimpleSentenceLaws extends SimpleSentenceLaws
+
+object AtomicSentenceLaws extends SimpleSentenceLaws {
 
   def atomArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: Set[_ <: Comment]), (operator: Term), (terms: List[TermOrSequenceMarker])) =>
     {
@@ -146,12 +189,38 @@ object AtomicSentenceLaws extends SentenceLaws {
     }
   }
 
+  def atomXMLIdentity: Prop = Prop.forAll { (atom: AtomicSentence) =>
+    !Prop.throws(classOf[Exception]) {
+      val x = (atom toXML)
+    }
+  }
+
   def atom: RuleSet = new RuleSet {
     def name = "atom"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
-    def parents: Seq[RuleSet] = Seq(sentence)
+    def parents: Seq[RuleSet] = Seq(simple)
     def props = Seq(
       ("Null Constructor Argument Exception", atomArgumentShouldNotBeNull))
+  }
+}
+
+object EquationLaws extends SimpleSentenceLaws {
+
+  def equalUnorientedIdentity: Prop = Prop.forAll {
+    (
+    (comments: Set[_ <: Comment]),
+    (left: Term),
+    (right: Term)) =>
+      (new Equation(comments, left, right) equals new Equation(comments, right, left))
+
+  }
+
+  def equals: RuleSet = new RuleSet {
+    def name = "equals"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq(
+      ("A SCL.Equation is unoriented with respect to its term arguments", equalUnorientedIdentity))
   }
 }
 
@@ -170,8 +239,27 @@ object BooleanSentenceLaws extends BooleanSentenceLaws
 
 object BiconditionalLaws extends BooleanSentenceLaws {
 
+  def bicondUnorientedIdentity: Prop = Prop.forAll {
+    (
+    (comments: Set[_ <: Comment]),
+    (left: Sentence),
+    (right: Sentence)) =>
+      (new Biconditional(comments, left, right) equals new Biconditional(comments, right, left))
+  }
+
   def bicond: RuleSet = new RuleSet {
     def name = "bicond"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq(
+      ("A SCL.Biconditional is unoriented with respect to its sentence arguments", bicondUnorientedIdentity))
+  }
+}
+
+object ImplicationLaws extends BooleanSentenceLaws {
+
+  def implies: RuleSet = new RuleSet {
+    def name = "implies"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq()
@@ -198,6 +286,16 @@ object DisjunctionLaws extends BooleanSentenceLaws {
   }
 }
 
+object NegationLaws extends BooleanSentenceLaws {
+
+  def neg: RuleSet = new RuleSet {
+    def name = "neg"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(sentence)
+    def props = Seq()
+  }
+}
+
 trait QuantifiedSentenceLaws extends BooleanSentenceLaws {
 
   def quant: RuleSet = new RuleSet {
@@ -210,10 +308,20 @@ trait QuantifiedSentenceLaws extends BooleanSentenceLaws {
 
 object QuantifiedSentenceLaws extends QuantifiedSentenceLaws
 
+object UniversalLaws extends QuantifiedSentenceLaws {
+
+  def forall: RuleSet = new RuleSet {
+    def name = "forall"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(quant)
+    def props = Seq()
+  }
+}
+
 object ExistentialLaws extends QuantifiedSentenceLaws {
 
-  def exists: RuleSet = new RuleSet {
-    def name = "exists"
+  def eggsist: RuleSet = new RuleSet {
+    def name = "eggsist"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(quant)
     def props = Seq()

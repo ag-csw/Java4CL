@@ -33,17 +33,27 @@ class ExpressionLawTest extends FunSuiteLike with Discipline {
 
   checkAll("Sentence", SentenceLaws.sentence)
 
+  checkAll("SimpleSentence", SimpleSentenceLaws.simple)
+
+  checkAll("Equation", EquationLaws.equals)
+
   checkAll("AtomicSentence", AtomicSentenceLaws.atom)
 
   checkAll("BooleanSentence", BooleanSentenceLaws.bool)
 
   checkAll("Biconditional", BiconditionalLaws.bicond)
 
+  checkAll("Implication", ImplicationLaws.implies)
+
   checkAll("Conjunction", ConjunctionLaws.and)
 
   checkAll("Disjunction", DisjunctionLaws.or)
 
+  checkAll("Negation", NegationLaws.neg)
+
   checkAll("QuantifiedSentence", QuantifiedSentenceLaws.quant)
 
-  checkAll("Existential", ExistentialLaws.exists)
+  checkAll("Universal", UniversalLaws.forall)
+
+  checkAll("Existential", ExistentialLaws.eggsist)
 }

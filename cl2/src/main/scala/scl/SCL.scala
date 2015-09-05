@@ -7,6 +7,10 @@ import api4kbj.BasicKnowledgeExpressionLike
 import api4kba.AbstractKRRLanguage
 import api4kba.AbstractKRRLogic
 import language.existentials
+import org.apache.commons.lang3.StringEscapeUtils
+import XMLHelper._
+import scala.xml.Elem
+import scala.xml.NodeSeq
 
 /**
  * @author taraathan
@@ -16,6 +20,69 @@ object SCL {
   val LANG = AbstractKRRLanguage.language(
     "Common Logic 2", classOf[BasicExpressionLike], COMPLETE_CL_LOGIC)
   val URI_XCL2 = "http://purl.org/xcl/2.0/"
+}
+object XMLHelper {
+  implicit class StringCommentXMLHelper(x: StringComment) {
+    def toXML: Elem = <cl:Comment xmlns:cl="{URI_XCL2}">{ StringEscapeUtils escapeXml11 ((x data) toString) }</cl:Comment>
+  }
+  implicit class CommentXMLHelper(x: Comment) {
+    def toXML: Elem = x match {
+      case a: StringComment => (a toXML)
+    }
+  }
+  implicit class StringInterpretableNameXMLHelper(x: StringInterpretableName) {
+    def toXML: Elem = <cl:Name xmlns:cl="{URI_XCL2}">{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Name>
+  }
+  implicit class StringIriInterpretedNameXMLHelper(x: StringIriInterpretedName) {
+    def toXML: Elem = <cl:Data xmlns:cl="{URI_XCL2}" datatype="{StringEscapeUtils escapeXml11 ((x datatype) toString)}">
+                        { StringEscapeUtils escapeXml11 ((x symbol) toString) }
+                      </cl:Data>
+  }
+  implicit class FunctionalTermXMLHelper(x: FunctionalTerm) {
+    def toXML: Elem = <cl:Apply xmlns:cl="{URI_XCL2}">
+                        { ((x comments) toXML) }
+                        { ((x operator) toXML) }
+                        { ((x args) toXML) }
+                      </cl:Apply>
+  }
+  implicit class TermXMLHelper(x: Term) {
+    def toXML: Elem = x match {
+      case a: StringInterpretableName => (a toXML)
+      case a: StringIriInterpretedName => (a toXML)
+      case a: FunctionalTerm => (a toXML)
+    }
+  }
+  implicit class StringSequenceMarkerXMLHelper(x: StringSequenceMarker) {
+    def toXML: Elem = <cl:Marker xmlns:cl="{URI_XCL2}">{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Marker>
+  }
+  implicit class TermOrSequenceMarkerXMLHelper(x: TermOrSequenceMarker) {
+    def toXML: Elem = x match {
+      case a: StringInterpretableName => (a toXML)
+      case a: StringIriInterpretedName => (a toXML)
+      case a: StringSequenceMarker => (a toXML)
+      case a: FunctionalTerm => (a toXML)
+    }
+  }
+  implicit class CommentSetXMLHelper(x: Set[_ <: Comment]) {
+    def toXML: NodeSeq = {
+      val y = (x.toSeq)
+      for (comment <- y) yield (comment toXML)
+    }
+  }
+  implicit class TermSequenceXMLHelper(x: List[TermOrSequenceMarker]) {
+    def toXML: NodeSeq = {
+      val y = (x.toSeq)
+      for (tosm <- x) yield (tosm toXML)
+    }
+  }
+  implicit class AtomicSentenceXMLHelper(x: AtomicSentence) {
+    def toXML: Elem = <cl:Atom xmlns:cl="{URI_XCL2}">
+                        { ((x comments) toXML) }
+                        { ((x operator) toXML) }
+                        { ((x args) toXML) }
+                      </cl:Atom>
+  }
+
 }
 sealed trait ExpressionLike extends KnowledgeExpressionLike with LazyLogging {
   def language() = SCL.LANG
@@ -70,6 +137,12 @@ case class FunctionalTerm(
 sealed trait Expression extends ExpressionLike
 sealed trait BasicExpression extends BasicExpressionLike with Expression with Commentable {
   def comments: Set[_ <: Comment]
+}
+object BasicExpression {
+  def unapply(e: BasicExpression): Option[(Set[_ <: Comment])] =
+    Option(e) map { e =>
+      (e.comments)
+    }
 }
 sealed trait Sentence extends BasicExpression {
   def comments: Set[_ <: Comment]
@@ -143,17 +216,28 @@ case class AtomicSentence(
   comments: Set[_ <: Comment],
   operator: Term,
   args: List[TermOrSequenceMarker]) extends SimpleSentence
+
 case class Equation(comments: Set[_ <: Comment], terms: Set[_ <: Term]) extends SimpleSentence {
   require(!((terms.size < 1) || (terms.size > 2)), "Terms size must be 1 or 2")
+
+  def this(comments: Set[_ <: Comment], left: Term, right: Term) {
+    this(comments, Set(left, right))
+  }
 }
 
 case class Biconditional(comments: Set[_ <: Comment], sentences: Set[_ <: Sentence]) extends BooleanSentence {
   require(!((sentences.size < 1) || (sentences.size > 2)), "Sentences size must be 1 or 2")
+
+  def this(comments: Set[_ <: Comment], left: Sentence, right: Sentence) {
+    this(comments, Set(left, right))
+  }
+
 }
 
 case class Implication(comments: Set[_ <: Comment], antecedent: Sentence, consequent: Sentence) extends BooleanSentence
 case class Conjunction(comments: Set[_ <: Comment], conjuncts: Set[_ <: Sentence]) extends BooleanSentence
 case class Disjunction(comments: Set[_ <: Comment], disjuncts: Set[_ <: Sentence]) extends BooleanSentence
+case class Negation(comments: Set[_ <: Comment], body: Set[_ <: Sentence]) extends BooleanSentence
 case class Existential(
   comments: Set[_ <: Comment],
   bindings: Set[_ <: InterpretableName],
