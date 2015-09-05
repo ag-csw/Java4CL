@@ -282,7 +282,7 @@ object AtomicSentenceLaws extends SimpleSentenceLaws {
   def atomXMLIdentity: Prop = Prop.forAll { (atom: AtomicSentence) =>
     !Prop.throws(classOf[Exception]) {
       val x = (atom toXML)
-      println((x toString))
+      logger.debug(x toString)
     }
   }
 
@@ -305,6 +305,13 @@ object EquationLaws extends SimpleSentenceLaws {
     (right: Term)) =>
       (new Equation(comments, left, right) equals new Equation(comments, right, left))
 
+  }
+
+  def equalXMLIdentity: Prop = Prop.forAll { (eq: Equation) =>
+    !Prop.throws(classOf[Exception]) {
+      val x = (eq toXML)
+      println((x toString))
+    }
   }
 
   def equals: RuleSet = new RuleSet {

@@ -69,6 +69,12 @@ object XMLHelper {
       for (comment <- y) yield (comment toXML)
     }
   }
+  implicit class TermSetXMLHelper(x: Set[_ <: Term]) {
+    def toXML: NodeSeq = {
+      val y = (x.toSeq)
+      for (term <- y) yield (term toXML)
+    }
+  }
   implicit class TermSequenceXMLHelper(x: List[TermOrSequenceMarker]) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
@@ -81,6 +87,15 @@ object XMLHelper {
                         { ((x operator) toXML) }
                         { ((x args) toXML) }
                       </cl:Atom>
+  }
+  implicit class EautionXMLHelper(x: Equation) {
+    def toXML: Elem = {
+      <cl:Equal xmlns:cl={ SCL.URI_XCL2 }>
+        { ((x comments) toXML) }
+        { ((x terms) toXML) }
+        { if (((x terms) size) == 1) ((x terms) toXML) }
+      </cl:Equal>
+    }
   }
 
 }

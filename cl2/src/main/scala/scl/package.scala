@@ -14,6 +14,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import com.typesafe.scalalogging._
+
 package object scl {
 
   val MIN_SUCCESSFUL = 100
