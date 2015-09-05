@@ -268,6 +268,16 @@ object Generators extends LazyLogging {
 
   implicit val arbBiconditional = Arbitrary(bicondgen(depth))
 
+  // Equation
+  def equalsgen(d: Int): Gen[Equation] =
+    for {
+      comments <- commentsetgen
+      left <- termgen(d)
+      right <- termgen(d)
+    } yield new Equation(comments, Set(left, right))
+
+  implicit val arbEquation = Arbitrary(equalsgen(depth))
+
   // Conjunction
   def and0gen: Gen[Conjunction] =
     for {
@@ -382,17 +392,43 @@ object Generators extends LazyLogging {
 
   implicit val arbExistential = Arbitrary(existsgen(depth))
 
+  // Universal
+  def forall0gen: Gen[Universal] =
+    for {
+      comments <- commentsetgen
+      bindings <- bindingsetgen
+      body <- atomgen(0)
+    } yield new Universal(comments, bindings, body)
+
+  /**
+   * generator for recursively defined existential sentences,
+   * of depth d
+   */
+  def forallgen(d: Int): Gen[Universal] =
+    if (d <= 0) { forall0gen }
+    else {
+      for {
+        comments <- commentsetgen
+        bindings <- bindingsetgen
+        body <- sentencegen(d - 1)
+      } yield new Universal(comments, bindings, body)
+    }
+
+  implicit val arbUniversal = Arbitrary(forallgen(depth))
+
   // SimpleSentence
   // TODO add equations
   def simplesentencegen(d: Int): Gen[SimpleSentence] = Gen.frequency(
-    (1, atomgen(d)))
+    (1, atomgen(d)),
+    (MAX_SIZE, equalsgen(d)))
 
   implicit val arbSimpleSentence = Arbitrary(simplesentencegen(depth))
 
   // QuantifiedSentence
   // TODO add universal
   def quantifiedsentencegen(d: Int): Gen[QuantifiedSentence] = Gen.frequency(
-    (1, existsgen(d)))
+    (1, existsgen(d)),
+    (1, forallgen(d)))
 
   implicit val arbQuantifiedSentence = Arbitrary(quantifiedsentencegen(depth))
 
