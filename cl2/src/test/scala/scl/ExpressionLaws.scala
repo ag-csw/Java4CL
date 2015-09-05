@@ -115,6 +115,16 @@ trait BasicExpressionLaws extends ExpressionLaws {
 
   }
 */
+
+  def basicExpressionCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpressionLike) =>
+    !Prop.throws(classOf[Exception]) {
+      e match {
+        case BasicExpression(comments) => (comments size)
+        case _ => None
+      }
+    }
+  }
+
   def bexpression: RuleSet = new RuleSet {
     def name = "basic expression"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
@@ -123,6 +133,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
       ("A SCL.BasicExpression is basic (has no structure)", basicExpressionIsBasicIdentity),
       ("SCL.BasicExpression Equality Depends on Comments", basicExpressionEqualityDependsOnCommentsIdentity),
       ("A SCL.BasicExpression Equals its Copy", basicExpressionIsEqualToItsCopyIdentity),
+      ("A SCL.BasicExpression Comment set is Pattern-Matchable", basicExpressionCommentIsMatchableIdentity),
       // ("SCL.BasicExpressions to String gives Well-formed XML", basicEexpressionToStringIsWellFormedXMLIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }
@@ -133,11 +144,21 @@ object BasicExpressionLaws extends BasicExpressionLaws
 
 trait TextLaws extends ExpressionLaws {
 
+  def textCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpression) =>
+    !Prop.throws(classOf[Exception]) {
+      e match {
+        case Text(comments) => (comments size)
+        case _ => None
+      }
+    }
+  }
+
   def text: RuleSet = new RuleSet {
     def name = "text"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(expression)
-    def props = Seq()
+    def props = Seq(
+      ("A SCL.Text Comment set is Pattern-Matchable", textCommentIsMatchableIdentity))
   }
 
 }
@@ -167,7 +188,7 @@ trait SentenceLaws extends ExpressionLaws {
     def parents: Seq[RuleSet] = Seq(expression)
     def props = Seq(
       ("A SCL.Sentence is Commentable.", sentenceIsCommentableIdentity),
-      ("A SCL.Sentence comments is pattern-matchable.", sentenceCommentIsMatchableIdentity))
+      ("A SCL.Sentence Comment set is pattern-matchable.", sentenceCommentIsMatchableIdentity))
   }
 
 }
@@ -176,11 +197,22 @@ object SentenceLaws extends SentenceLaws
 
 trait SimpleSentenceLaws extends SentenceLaws {
 
+  def simpleSentenceCommentIsMatchableIdentity: Prop = Prop.forAll { (e: Sentence) =>
+    !Prop.throws(classOf[Exception]) {
+      e match {
+        case SimpleSentence(comments) => (comments size)
+        case _ => None
+      }
+    }
+  }
+
   def simple: RuleSet = new RuleSet {
     def name = "simple"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
-    def props = Seq()
+    def props = Seq(
+      ("A SCL.SimpleSentence Comment set is pattern-matchable.", simpleSentenceCommentIsMatchableIdentity))
+
   }
 
 }
@@ -245,11 +277,21 @@ object EquationLaws extends SimpleSentenceLaws {
 
 trait BooleanSentenceLaws extends SentenceLaws {
 
+  def booleanSentenceCommentIsMatchableIdentity: Prop = Prop.forAll { (e: Sentence) =>
+    !Prop.throws(classOf[Exception]) {
+      e match {
+        case BooleanSentence(comments) => (comments size)
+        case _ =>
+      }
+    }
+  }
+
   def bool: RuleSet = new RuleSet {
     def name = "bool"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
-    def props = Seq()
+    def props = Seq(
+      ("A SCL.BooleanSentence Comment set is pattern-matchable.", booleanSentenceCommentIsMatchableIdentity))
   }
 
 }
@@ -317,11 +359,21 @@ object NegationLaws extends BooleanSentenceLaws {
 
 trait QuantifiedSentenceLaws extends BooleanSentenceLaws {
 
+  def quantifiedSentenceCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BooleanSentence) =>
+    !Prop.throws(classOf[Exception]) {
+      e match {
+        case QuantifiedSentence(comments, _, _) => (comments size)
+        case _ =>
+      }
+    }
+  }
+
   def quant: RuleSet = new RuleSet {
     def name = "quant"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
-    def props = Seq()
+    def props = Seq(
+      ("A SCL.QuantifiedSentence Comment set is pattern-matchable.", quantifiedSentenceCommentIsMatchableIdentity))
   }
 }
 
