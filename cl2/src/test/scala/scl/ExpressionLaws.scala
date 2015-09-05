@@ -192,6 +192,7 @@ object AtomicSentenceLaws extends SimpleSentenceLaws {
   def atomXMLIdentity: Prop = Prop.forAll { (atom: AtomicSentence) =>
     !Prop.throws(classOf[Exception]) {
       val x = (atom toXML)
+      println((x toString))
     }
   }
 
@@ -200,7 +201,8 @@ object AtomicSentenceLaws extends SimpleSentenceLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(simple)
     def props = Seq(
-      ("Null Constructor Argument Exception", atomArgumentShouldNotBeNull))
+      ("Null Constructor Argument Exception", atomArgumentShouldNotBeNull),
+      ("Atomic Sentences Can Be Expressed in XCL2", atomXMLIdentity))
   }
 }
 

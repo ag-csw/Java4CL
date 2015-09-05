@@ -23,7 +23,7 @@ object SCL {
 }
 object XMLHelper {
   implicit class StringCommentXMLHelper(x: StringComment) {
-    def toXML: Elem = <cl:Comment xmlns:cl="{URI_XCL2}">{ StringEscapeUtils escapeXml11 ((x data) toString) }</cl:Comment>
+    def toXML: Elem = <cl:Comment xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils escapeXml11 ((x data) toString) }</cl:Comment>
   }
   implicit class CommentXMLHelper(x: Comment) {
     def toXML: Elem = x match {
@@ -31,15 +31,15 @@ object XMLHelper {
     }
   }
   implicit class StringInterpretableNameXMLHelper(x: StringInterpretableName) {
-    def toXML: Elem = <cl:Name xmlns:cl="{URI_XCL2}">{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Name>
+    def toXML: Elem = <cl:Name xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Name>
   }
   implicit class StringIriInterpretedNameXMLHelper(x: StringIriInterpretedName) {
-    def toXML: Elem = <cl:Data xmlns:cl="{URI_XCL2}" datatype="{StringEscapeUtils escapeXml11 ((x datatype) toString)}">
+    def toXML: Elem = <cl:Data xmlns:cl={ SCL.URI_XCL2 } datatype={ StringEscapeUtils escapeXml11 ((x datatype) toString) }>
                         { StringEscapeUtils escapeXml11 ((x symbol) toString) }
                       </cl:Data>
   }
   implicit class FunctionalTermXMLHelper(x: FunctionalTerm) {
-    def toXML: Elem = <cl:Apply xmlns:cl="{URI_XCL2}">
+    def toXML: Elem = <cl:Apply xmlns:cl={ SCL.URI_XCL2 }>
                         { ((x comments) toXML) }
                         { ((x operator) toXML) }
                         { ((x args) toXML) }
@@ -53,7 +53,7 @@ object XMLHelper {
     }
   }
   implicit class StringSequenceMarkerXMLHelper(x: StringSequenceMarker) {
-    def toXML: Elem = <cl:Marker xmlns:cl="{URI_XCL2}">{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Marker>
+    def toXML: Elem = <cl:Marker xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Marker>
   }
   implicit class TermOrSequenceMarkerXMLHelper(x: TermOrSequenceMarker) {
     def toXML: Elem = x match {
@@ -76,7 +76,7 @@ object XMLHelper {
     }
   }
   implicit class AtomicSentenceXMLHelper(x: AtomicSentence) {
-    def toXML: Elem = <cl:Atom xmlns:cl="{URI_XCL2}">
+    def toXML: Elem = <cl:Atom xmlns:cl={ SCL.URI_XCL2 }>
                         { ((x comments) toXML) }
                         { ((x operator) toXML) }
                         { ((x args) toXML) }
