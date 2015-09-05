@@ -122,7 +122,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
     def props = Seq(
       ("A SCL.BasicExpression is basic (has no structure)", basicExpressionIsBasicIdentity),
       ("SCL.BasicExpression Equality Depends on Comments", basicExpressionEqualityDependsOnCommentsIdentity),
-      ("A SCL.BasicExpression Equals its Copy", basicExpressionEqualityDependsOnCommentsIdentity),
+      ("A SCL.BasicExpression Equals its Copy", basicExpressionIsEqualToItsCopyIdentity),
       // ("SCL.BasicExpressions to String gives Well-formed XML", basicEexpressionToStringIsWellFormedXMLIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }

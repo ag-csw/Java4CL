@@ -119,15 +119,15 @@ object Commentable {
     }
 }
 
-case class Comment(data: Object) extends Fragment
+abstract case class Comment(data: Object) extends Fragment
 class StringComment(data: String) extends Comment(data)
-case class InterpretableName(symbol: Object) extends Name
+abstract case class InterpretableName(symbol: Object) extends Name
 class StringInterpretableName(symbol: String) extends InterpretableName(symbol)
-case class InterpretedName(symbol: Object, datatype: Object) extends Name
+abstract case class InterpretedName(symbol: Object, datatype: Object) extends Name
 class StringIriInterpretedName(symbol: String, datatype: String) extends InterpretedName(symbol, datatype) {
   def this(s: String) = this(s, URI_XSD_STRING)
 }
-case class SequenceMarker(symbol: Object) extends TermOrSequenceMarker
+abstract case class SequenceMarker(symbol: Object) extends TermOrSequenceMarker
 class StringSequenceMarker(symbol: String) extends SequenceMarker(symbol)
 case class FunctionalTerm(
   comments: Set[_ <: Comment],
