@@ -150,17 +150,6 @@ object Generators extends LazyLogging {
     } yield new FunctionalTerm(comments, operator, args)
 
   /**
-   * generator for functional terms with depth 1,
-   * possibly having nested zero-depth functional terms
-   */
-  val functionalterm1gen: Gen[FunctionalTerm] =
-    for {
-      comments <- commentsetgen
-      operator <- term0gen
-      args <- term0sequencegen
-    } yield new FunctionalTerm(comments, operator, args)
-
-  /**
    * generator for recursively defined functional terms,
    * of depth d
    */
@@ -177,14 +166,6 @@ object Generators extends LazyLogging {
   implicit val arbFunctionalTerm = Arbitrary(functionaltermgen(depth))
 
   // Term
-  val term0gen: Gen[Term] = Gen.frequency(
-    (MAX_SIZE, namegen),
-    (1, functionalterm0gen))
-
-  val term1gen: Gen[Term] = Gen.frequency(
-    (MAX_SIZE, namegen),
-    (1, functionalterm1gen))
-
   def termgen(d: Int): Gen[Term] = Gen.frequency(
     (MAX_SIZE, namegen),
     (1, functionaltermgen(d)))
@@ -196,19 +177,11 @@ object Generators extends LazyLogging {
     (1, namegen),
     (1, sequencemarkergen))
 
-  val term0orsequencemarkergen: Gen[TermOrSequenceMarker] = Gen.frequency(
-    (1, term0gen),
-    (1, sequencemarkergen))
-
-  val term1orsequencemarkergen: Gen[TermOrSequenceMarker] = Gen.frequency(
-    (1, term1gen),
-    (1, sequencemarkergen))
-
   def termorsequencemarkergen(d: Int): Gen[TermOrSequenceMarker] = Gen.frequency(
     (1, termgen(d)),
     (1, sequencemarkergen))
 
-  implicit val arbTermOrSequenceMarker = Arbitrary(term1orsequencemarkergen)
+  implicit val arbTermOrSequenceMarker = Arbitrary(termorsequencemarkergen(depth))
 
   // TermSequence
   /**
@@ -218,14 +191,6 @@ object Generators extends LazyLogging {
 
   // TODO need other types of sequences
   val namesequencegen = namesequencelistgen
-
-  /**
-   * generator for terms sequences containing functional term of depth at most zero
-   */
-  val term0sequencelistgen: Gen[List[TermOrSequenceMarker]] = Gen listOf (term0orsequencemarkergen)
-
-  // TODO need other types of sequences
-  val term0sequencegen = term0sequencelistgen
 
   def termsequencelistgen(d: Int): Gen[List[TermOrSequenceMarker]] = Gen listOf (termorsequencemarkergen(d))
 
@@ -245,11 +210,15 @@ object Generators extends LazyLogging {
   implicit val arbAtomicSentence = Arbitrary(atomgen(depth))
 
   // Biconditional
+  /**
+   * generator for zero-depth biconditionals,
+   * containing only simple sentences
+   */
   def bicond0gen: Gen[Biconditional] =
     for {
       comments <- commentsetgen
-      left <- atomgen(0)
-      right <- atomgen(0)
+      left <- simplesentencegen(0)
+      right <- simplesentencegen(0)
     } yield new Biconditional(comments, Set(left, right))
 
   /**
@@ -326,7 +295,7 @@ object Generators extends LazyLogging {
   def not0gen: Gen[Negation] =
     for {
       comments <- commentsetgen
-      body <- atomgen(0)
+      body <- simplesentencegen(0)
     } yield new Negation(comments, body)
 
   /**
@@ -348,8 +317,8 @@ object Generators extends LazyLogging {
   def if0gen: Gen[Implication] =
     for {
       comments <- commentsetgen
-      antecedent <- atomgen(0)
-      consequent <- atomgen(0)
+      antecedent <- simplesentencegen(0)
+      consequent <- simplesentencegen(0)
     } yield new Implication(comments, antecedent, consequent)
 
   /**
@@ -373,7 +342,7 @@ object Generators extends LazyLogging {
     for {
       comments <- commentsetgen
       bindings <- bindingsetgen
-      body <- atomgen(0)
+      body <- simplesentencegen(0)
     } yield new Existential(comments, bindings, body)
 
   /**
@@ -397,7 +366,7 @@ object Generators extends LazyLogging {
     for {
       comments <- commentsetgen
       bindings <- bindingsetgen
-      body <- atomgen(0)
+      body <- simplesentencegen(0)
     } yield new Universal(comments, bindings, body)
 
   /**
@@ -468,6 +437,38 @@ object Generators extends LazyLogging {
 
   implicit val arbSentenceSet = Arbitrary(sentencesetgen(depth))
 
+  // Titling
+  def titlinggen(d: Int): Gen[Titling] =
+    for {
+      comments <- commentsetgen
+      title <- namegen
+      body <- textgen(d)
+    } yield new Titling(comments, title, body)
+
+  implicit val arbTitling = Arbitrary(titlinggen(depth))
+
+  // InDiscourseStatement
+  def indisgen(d: Int): Gen[InDiscourseStatement] =
+    for {
+      comments <- commentsetgen
+      tosms <- tosmsetgen(d)
+    } yield new InDiscourseStatement(comments, tosms)
+
+  implicit val arbInDiscourseStatement = Arbitrary(indisgen(depth))
+
+  // DiscourseStatement
+
+  def discoursegen(d: Int): Gen[DiscourseStatement] = Gen.frequency(
+    (1, indisgen(d)))
+
+  // Statement
+
+  def statementgen(d: Int): Gen[Statement] = Gen.frequency(
+    (MAX_SIZE, discoursegen(d)),
+    (1, titlinggen(d)))
+
+  implicit val arbStatement = Arbitrary(statementgen(depth))
+
   // TextConstruction
   def construct0gen: Gen[TextConstruction] =
     for {
@@ -490,10 +491,45 @@ object Generators extends LazyLogging {
 
   implicit val arbTextConstruction = Arbitrary(constructgen(depth))
 
+  // DomainRestriction
+  def restrict0gen: Gen[DomainRestriction] =
+    for {
+      comments <- commentsetgen
+      domain <- termgen(0)
+      body <- textgen(0)
+    } yield new DomainRestriction(comments, domain, body)
+
+  /**
+   * generator for recursively defined domain restrictions,
+   * of depth d
+   */
+  def restrictgen(d: Int): Gen[DomainRestriction] =
+    if (d <= 0) { restrict0gen }
+    else {
+      for {
+        comments <- commentsetgen
+        domain <- termgen(0)
+        body <- textgen(d - 1)
+      } yield new DomainRestriction(comments, domain, body)
+    }
+
+  implicit val arbDomainRestriction = Arbitrary(restrictgen(depth))
+
+  // Importation
+  def importgen: Gen[Importation] =
+    for {
+      comments <- commentsetgen
+      title <- namegen
+    } yield new Importation(comments, title)
+
+  implicit val arbImportation = Arbitrary(importgen)
+
   // Text
 
-  // TODO add other kinds of texts: imports, domain restrictions
-  def textgen(d: Int): Gen[Text] = constructgen(d)
+  def textgen(d: Int): Gen[Text] = Gen.frequency(
+    (MAX_SIZE * MAX_SIZE, importgen),
+    (MAX_SIZE, restrictgen(d)),
+    (1, constructgen(d)))
 
   implicit val arbText = Arbitrary(textgen(depth))
 
@@ -520,6 +556,7 @@ object Generators extends LazyLogging {
   // TODO add structured expressions
   def expressiongen(d: Int): Gen[Expression] = Gen.frequency(
     (MAX_SIZE * MAX_SIZE, sentencegen(d)),
+    (1, statementgen(d)),
     (1, textgen(d)))
 
   implicit val arbExpression = Arbitrary(expressiongen(depth))
@@ -545,6 +582,17 @@ object Generators extends LazyLogging {
     (1, bindingsetlistgen))
 
   implicit val arbbindingset = Arbitrary(bindingsetgen)
+
+  // Set[TermOrSequenceMarker]
+  def tosmsetlistgen(d: Int): Gen[Set[_ <: TermOrSequenceMarker]] =
+    for { a <- Gen listOf (termorsequencemarkergen(d)) }
+      yield a.toSet[TermOrSequenceMarker]
+
+  // TODO need other types of sets
+  def tosmsetgen(d: Int): Gen[Set[_ <: TermOrSequenceMarker]] = Gen.frequency(
+    (1, tosmsetlistgen(d)))
+
+  implicit val arbtosmset = Arbitrary(tosmsetgen(depth))
 
   // BasicExpressionLike
   def basicexpressionlikegen(d: Int): Gen[BasicExpressionLike] = Gen.frequency(

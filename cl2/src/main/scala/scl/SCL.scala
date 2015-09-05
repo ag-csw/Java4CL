@@ -131,10 +131,10 @@ object Statement {
 }
 sealed trait DiscourseStatement extends Statement {
   def comments: Set[_ <: Comment]
-  def terms: Set[_ <: Term]
+  def terms: Set[_ <: TermOrSequenceMarker]
 }
 object DiscourseStatement {
-  def unapply(e: DiscourseStatement): Option[(Set[_ <: Comment], Set[_ <: Term])] =
+  def unapply(e: DiscourseStatement): Option[(Set[_ <: Comment], Set[_ <: TermOrSequenceMarker])] =
     Option(e) map { e =>
       (e.comments, e.terms)
     }
@@ -184,8 +184,8 @@ case class Universal(
   bindings: Set[_ <: InterpretableName],
   body: Sentence) extends QuantifiedSentence
 
-case class InDiscourseStatement(comments: Set[_ <: Comment], terms: Set[_ <: Term]) extends DiscourseStatement
-case class OutDiscourseStatement(comments: Set[_ <: Comment], terms: Set[_ <: Term]) extends DiscourseStatement
+case class InDiscourseStatement(comments: Set[_ <: Comment], terms: Set[_ <: TermOrSequenceMarker]) extends DiscourseStatement
+case class OutDiscourseStatement(comments: Set[_ <: Comment], terms: Set[_ <: TermOrSequenceMarker]) extends DiscourseStatement
 case class Titling(comments: Set[_ <: Comment], title: Name, body: Text) extends Statement
 case class Schema(
   comments: Set[_ <: Comment],
