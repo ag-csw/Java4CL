@@ -174,7 +174,7 @@ case class Biconditional(comments: Set[_ <: Comment], sentences: Set[_ <: Senten
 case class Implication(comments: Set[_ <: Comment], antecedent: Sentence, consequent: Sentence) extends BooleanSentence
 case class Conjunction(comments: Set[_ <: Comment], conjuncts: Set[_ <: Sentence]) extends BooleanSentence
 case class Disjunction(comments: Set[_ <: Comment], disjuncts: Set[_ <: Sentence]) extends BooleanSentence
-case class Negation(comments: Set[_ <: Comment], body: Set[_ <: Sentence]) extends BooleanSentence
+case class Negation(comments: Set[_ <: Comment], body: Sentence) extends BooleanSentence
 case class Existential(
   comments: Set[_ <: Comment],
   bindings: Set[_ <: InterpretableName],

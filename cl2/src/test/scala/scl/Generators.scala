@@ -312,6 +312,52 @@ object Generators extends LazyLogging {
 
   implicit val arbDisjunction = Arbitrary(orgen(depth))
 
+  // Negation
+  def not0gen: Gen[Negation] =
+    for {
+      comments <- commentsetgen
+      body <- atomgen(0)
+    } yield new Negation(comments, body)
+
+  /**
+   * generator for recursively defined Negation sentences,
+   * of depth d
+   */
+  def notgen(d: Int): Gen[Negation] =
+    if (d <= 0) { not0gen }
+    else {
+      for {
+        comments <- commentsetgen
+        body <- sentencegen(d - 1)
+      } yield new Negation(comments, body)
+    }
+
+  implicit val arbNegation = Arbitrary(notgen(depth))
+
+  // Implication
+  def if0gen: Gen[Implication] =
+    for {
+      comments <- commentsetgen
+      antecedent <- atomgen(0)
+      consequent <- atomgen(0)
+    } yield new Implication(comments, antecedent, consequent)
+
+  /**
+   * generator for recursively defined Implication sentences,
+   * of depth d
+   */
+  def ifgen(d: Int): Gen[Implication] =
+    if (d <= 0) { if0gen }
+    else {
+      for {
+        comments <- commentsetgen
+        antecedent <- sentencegen(d - 1)
+        consequent <- sentencegen(d - 1)
+      } yield new Implication(comments, antecedent, consequent)
+    }
+
+  implicit val arbImplication = Arbitrary(ifgen(depth))
+
   // Existential
   def exists0gen: Gen[Existential] =
     for {
@@ -354,6 +400,8 @@ object Generators extends LazyLogging {
   // TODO add more types of Sentence (implies and equivalence and negation)
   def booleansentencegen(d: Int): Gen[BooleanSentence] = Gen.frequency(
     (MAX_SIZE / 2, bicondgen(d)),
+    (MAX_SIZE / 2, ifgen(d)),
+    (MAX_SIZE, notgen(d)),
     (MAX_SIZE, quantifiedsentencegen(d)),
     (1, andgen(d)),
     (1, orgen(d)))
