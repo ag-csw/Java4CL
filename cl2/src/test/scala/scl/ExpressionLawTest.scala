@@ -31,6 +31,9 @@ class ExpressionLawTest extends FunSuiteLike with Discipline {
 
   checkAll("BasicExpression", BasicExpressionLaws.bexpression)
 
+  checkAll("Text", TextLaws.text)
+  checkAll("TextConstruction", TextConstructionLaws.construct)
+  checkAll("Statement", StatementLaws.statement)
   checkAll("Sentence", SentenceLaws.sentence)
 
   checkAll("SimpleSentence", SimpleSentenceLaws.simple)

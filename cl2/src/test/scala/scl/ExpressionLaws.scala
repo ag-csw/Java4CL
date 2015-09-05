@@ -165,6 +165,47 @@ trait TextLaws extends ExpressionLaws {
 
 object TextLaws extends TextLaws
 
+object TextConstructionLaws extends TextLaws {
+
+  def construct: RuleSet = new RuleSet {
+    def name = "construct"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expression)
+    def props = Seq()
+  }
+
+}
+
+trait StatementLaws extends ExpressionLaws {
+
+  def statementIsCommentableIdentity: Prop = Prop.forAll { (s: Statement) =>
+    !Prop.throws(classOf[Exception]) {
+      (s comments)
+    }
+  }
+
+  def statementCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpression) =>
+    !Prop.throws(classOf[Exception]) {
+      e match {
+        case Statement(comments) => true
+        case _ => false
+      }
+    }
+  }
+
+  def statement: RuleSet = new RuleSet {
+    def name = "statement"
+    def bases: Seq[(String, Laws#RuleSet)] = Seq()
+    def parents: Seq[RuleSet] = Seq(expression)
+    def props = Seq(
+      ("A SCL.Statement is Commentable.", statementIsCommentableIdentity),
+      ("A SCL.Statement Comment set is pattern-matchable.", statementCommentIsMatchableIdentity))
+  }
+
+}
+
+object StatementLaws extends StatementLaws
+
 trait SentenceLaws extends ExpressionLaws {
 
   def sentenceIsCommentableIdentity: Prop = Prop.forAll { (s: Sentence) =>

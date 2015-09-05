@@ -572,6 +572,7 @@ object Generators extends LazyLogging {
   // TODO add statements also
   def bexpressiongen(d: Int): Gen[BasicExpression] = Gen.frequency(
     (MAX_SIZE, sentencegen(d)),
+    (MAX_SIZE, statementgen(d)),
     (1, textgen(d)))
 
   implicit val arbBasicExpression = Arbitrary(bexpressiongen(depth))
@@ -640,11 +641,15 @@ object Generators extends LazyLogging {
 
   implicit val arbtosmset = Arbitrary(tosmsetgen(depth))
 
-  // BasicExpressionLike
-  def basicexpressionlikegen(d: Int): Gen[BasicExpressionLike] = Gen.frequency(
+  // Fragment
+  def fragmentgen(d: Int): Gen[Fragment] = Gen.frequency(
     (MAX_SIZE, termgen(d)),
     (MAX_SIZE, sequencemarkergen),
     (MAX_SIZE, commentgen))
+
+  // BasicExpressionLike
+  def basicexpressionlikegen(d: Int): Gen[BasicExpressionLike] = Gen.oneOf(
+    fragmentgen(d), bexpressiongen(d))
 
   implicit val arbBasicExpressionLike = Arbitrary(basicexpressionlikegen(depth))
 
