@@ -21,69 +21,6 @@ object SCL {
     "Common Logic 2", classOf[BasicExpressionLike], COMPLETE_CL_LOGIC)
   val URI_XCL2 = "http://purl.org/xcl/2.0/"
 }
-object XMLHelper {
-  implicit class StringCommentXMLHelper(x: StringComment) {
-    def toXML: Elem = <cl:Comment xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils escapeXml11 ((x data) toString) }</cl:Comment>
-  }
-  implicit class CommentXMLHelper(x: Comment) {
-    def toXML: Elem = x match {
-      case a: StringComment => (a toXML)
-    }
-  }
-  implicit class StringInterpretableNameXMLHelper(x: StringInterpretableName) {
-    def toXML: Elem = <cl:Name xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Name>
-  }
-  implicit class StringIriInterpretedNameXMLHelper(x: StringIriInterpretedName) {
-    def toXML: Elem = <cl:Data xmlns:cl={ SCL.URI_XCL2 } datatype={ StringEscapeUtils escapeXml11 ((x datatype) toString) }>
-                        { StringEscapeUtils escapeXml11 ((x symbol) toString) }
-                      </cl:Data>
-  }
-  implicit class FunctionalTermXMLHelper(x: FunctionalTerm) {
-    def toXML: Elem = <cl:Apply xmlns:cl={ SCL.URI_XCL2 }>
-                        { ((x comments) toXML) }
-                        { ((x operator) toXML) }
-                        { ((x args) toXML) }
-                      </cl:Apply>
-  }
-  implicit class TermXMLHelper(x: Term) {
-    def toXML: Elem = x match {
-      case a: StringInterpretableName => (a toXML)
-      case a: StringIriInterpretedName => (a toXML)
-      case a: FunctionalTerm => (a toXML)
-    }
-  }
-  implicit class StringSequenceMarkerXMLHelper(x: StringSequenceMarker) {
-    def toXML: Elem = <cl:Marker xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Marker>
-  }
-  implicit class TermOrSequenceMarkerXMLHelper(x: TermOrSequenceMarker) {
-    def toXML: Elem = x match {
-      case a: StringInterpretableName => (a toXML)
-      case a: StringIriInterpretedName => (a toXML)
-      case a: StringSequenceMarker => (a toXML)
-      case a: FunctionalTerm => (a toXML)
-    }
-  }
-  implicit class CommentSetXMLHelper(x: Set[_ <: Comment]) {
-    def toXML: NodeSeq = {
-      val y = (x.toSeq)
-      for (comment <- y) yield (comment toXML)
-    }
-  }
-  implicit class TermSequenceXMLHelper(x: List[TermOrSequenceMarker]) {
-    def toXML: NodeSeq = {
-      val y = (x.toSeq)
-      for (tosm <- x) yield (tosm toXML)
-    }
-  }
-  implicit class AtomicSentenceXMLHelper(x: AtomicSentence) {
-    def toXML: Elem = <cl:Atom xmlns:cl={ SCL.URI_XCL2 }>
-                        { ((x comments) toXML) }
-                        { ((x operator) toXML) }
-                        { ((x args) toXML) }
-                      </cl:Atom>
-  }
-
-}
 sealed trait ExpressionLike extends KnowledgeExpressionLike with LazyLogging {
   def language() = SCL.LANG
 }
@@ -92,19 +29,19 @@ sealed trait Fragment extends BasicExpressionLike
 sealed trait TermOrSequenceMarker extends Fragment
 sealed trait Term extends TermOrSequenceMarker
 sealed trait NameOrSequenceMarker extends TermOrSequenceMarker {
-  def symbol: Object
+  def symbol: java.io.Serializable
 }
 object NameOrSequenceMarker {
-  def unapply(e: NameOrSequenceMarker): Option[(Object)] =
+  def unapply(e: NameOrSequenceMarker): Option[(_ <: java.io.Serializable)] =
     Option(e) map { e =>
       (e.symbol)
     }
 }
 sealed trait Name extends NameOrSequenceMarker with Term {
-  def symbol: Object
+  def symbol: java.io.Serializable
 }
 object Name {
-  def unapply(e: Name): Option[(Object)] =
+  def unapply(e: Name): Option[(_ <: java.io.Serializable)] =
     Option(e) map { e =>
       (e.symbol)
     }
@@ -119,15 +56,15 @@ object Commentable {
     }
 }
 
-abstract case class Comment(data: Object) extends Fragment
+abstract case class Comment(data: java.io.Serializable) extends Fragment
 class StringComment(data: String) extends Comment(data)
-abstract case class InterpretableName(symbol: Object) extends Name
+abstract case class InterpretableName(symbol: java.io.Serializable) extends Name
 class StringInterpretableName(symbol: String) extends InterpretableName(symbol)
-abstract case class InterpretedName(symbol: Object, datatype: Object) extends Name
+abstract case class InterpretedName(symbol: java.io.Serializable, datatype: java.io.Serializable) extends Name
 class StringIriInterpretedName(symbol: String, datatype: String) extends InterpretedName(symbol, datatype) {
   def this(s: String) = this(s, URI_XSD_STRING)
 }
-abstract case class SequenceMarker(symbol: Object) extends TermOrSequenceMarker
+abstract case class SequenceMarker(symbol: java.io.Serializable) extends TermOrSequenceMarker
 class StringSequenceMarker(symbol: String) extends SequenceMarker(symbol)
 case class FunctionalTerm(
   comments: Set[_ <: Comment],
