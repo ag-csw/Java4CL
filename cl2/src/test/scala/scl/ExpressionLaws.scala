@@ -115,6 +115,26 @@ trait BasicExpressionLaws extends ExpressionLaws {
 
   }
 */
+  def basicXMLIdentity: Prop = Prop.forAll { (basic: BasicExpression) =>
+    !Prop.throws(classOf[Exception]) {
+      try {
+        logger.debug(basic toString)
+        logger.debug("Starting Conversion to XML")
+        val xmlBody = (basic toXML)
+        logger.debug("Starting Conversion to String")
+        val xmlStringBody = (xmlBody toString)
+        logger.debug(xmlStringBody)
+        val xmlDeclaration = "<?xml version=\"1.1\"?>"
+        val testxml = xmlDeclaration + xmlStringBody
+        validate(testxml)
+      } catch {
+        case e: Exception => {
+          logger.debug("FAILURE:  basicXMLIdentity " + (e getCause))
+          throw new Exception()
+        }
+      }
+    }
+  }
 
   def basicExpressionCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpressionLike) =>
     !Prop.throws(classOf[Exception]) {
@@ -134,7 +154,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
       ("SCL.BasicExpression Equality Depends on Comments", basicExpressionEqualityDependsOnCommentsIdentity),
       ("A SCL.BasicExpression Equals its Copy", basicExpressionIsEqualToItsCopyIdentity),
       ("A SCL.BasicExpression Comment set is Pattern-Matchable", basicExpressionCommentIsMatchableIdentity),
-      // ("SCL.BasicExpressions to String gives Well-formed XML", basicEexpressionToStringIsWellFormedXMLIdentity),
+      ("SCL.BasicExpressions Can Be Expressed in XCL2", basicXMLIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }
 
@@ -310,7 +330,7 @@ object EquationLaws extends SimpleSentenceLaws {
   def equalXMLIdentity: Prop = Prop.forAll { (eq: Equation) =>
     !Prop.throws(classOf[Exception]) {
       val x = (eq toXML)
-      println((x toString))
+      logger.debug((x toString))
     }
   }
 
@@ -319,7 +339,8 @@ object EquationLaws extends SimpleSentenceLaws {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
-      ("A SCL.Equation is unoriented with respect to its term arguments", equalUnorientedIdentity))
+      ("A SCL.Equation is unoriented with respect to its term arguments", equalUnorientedIdentity),
+      ("Equation Can Be Expressed in XCL2", equalXMLIdentity))
   }
 }
 
@@ -356,12 +377,20 @@ object BiconditionalLaws extends BooleanSentenceLaws {
       (new Biconditional(comments, left, right) equals new Biconditional(comments, right, left))
   }
 
+  def bicondXMLIdentity: Prop = Prop.forAll { (s: Biconditional) =>
+    !Prop.throws(classOf[Exception]) {
+      val x = (s toXML)
+      logger.debug((x toString))
+    }
+  }
+
   def bicond: RuleSet = new RuleSet {
     def name = "bicond"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
-      ("A SCL.Biconditional is unoriented with respect to its sentence arguments", bicondUnorientedIdentity))
+      ("A SCL.Biconditional is unoriented with respect to its sentence arguments", bicondUnorientedIdentity),
+      ("Biconditionals Can Be Expressed in XCL2", bicondXMLIdentity))
   }
 }
 

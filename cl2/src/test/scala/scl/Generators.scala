@@ -166,9 +166,12 @@ object Generators extends LazyLogging {
   implicit val arbFunctionalTerm = Arbitrary(functionaltermgen(depth))
 
   // Term
-  def termgen(d: Int): Gen[Term] = Gen.frequency(
-    (MAX_SIZE, namegen),
-    (1, functionaltermgen(d)))
+  def termgen(d: Int): Gen[Term] =
+    if (d <= 0) { namegen } else {
+      Gen.frequency(
+        (MAX_SIZE, namegen),
+        (1, functionaltermgen(d - 1)))
+    }
 
   implicit val arbTerm = Arbitrary(termgen(depth))
 
@@ -389,7 +392,7 @@ object Generators extends LazyLogging {
   // TODO add equations
   def simplesentencegen(d: Int): Gen[SimpleSentence] = Gen.frequency(
     (1, atomgen(d)),
-    (MAX_SIZE, equalsgen(d)))
+    (1, equalsgen(d)))
 
   implicit val arbSimpleSentence = Arbitrary(simplesentencegen(depth))
 
@@ -404,19 +407,23 @@ object Generators extends LazyLogging {
   // BooleanSentence
   // TODO add more types of Sentence (implies and equivalence and negation)
   def booleansentencegen(d: Int): Gen[BooleanSentence] = Gen.frequency(
-    (MAX_SIZE / 2, bicondgen(d)),
-    (MAX_SIZE / 2, ifgen(d)),
-    (MAX_SIZE, notgen(d)),
-    (MAX_SIZE, quantifiedsentencegen(d)),
-    (1, andgen(d)),
+    //(MAX_SIZE / 2, bicondgen(d)),
+    //(MAX_SIZE / 2, ifgen(d)),
+    //(MAX_SIZE, notgen(d)),
+    //(MAX_SIZE, quantifiedsentencegen(d)),
+    //(1, andgen(d)),
     (1, orgen(d)))
 
   implicit val arbBooleanSentence = Arbitrary(booleansentencegen(depth))
 
   // Sentence
-  def sentencegen(d: Int): Gen[Sentence] = Gen.frequency(
-    (MAX_SIZE, simplesentencegen(d)),
-    (1, booleansentencegen(d)))
+
+  def sentencegen(d: Int): Gen[Sentence] =
+    if (d <= 0) { simplesentencegen(0) } else {
+      Gen.frequency(
+        (1, simplesentencegen(d)),
+        (1, booleansentencegen(d - 1)))
+    }
 
   implicit val arbSentence = Arbitrary(sentencegen(depth))
 
@@ -438,12 +445,22 @@ object Generators extends LazyLogging {
   implicit val arbSentenceSet = Arbitrary(sentencesetgen(depth))
 
   // Titling
-  def titlinggen(d: Int): Gen[Titling] =
+  def titling0gen: Gen[Titling] =
     for {
       comments <- commentsetgen
       title <- namegen
-      body <- textgen(d)
+      body <- text0gen
     } yield new Titling(comments, title, body)
+
+  def titlinggen(d: Int): Gen[Titling] =
+    if (d <= 0) { titling0gen }
+    else {
+      for {
+        comments <- commentsetgen
+        title <- namegen
+        body <- textgen(d)
+      } yield new Titling(comments, title, body)
+    }
 
   implicit val arbTitling = Arbitrary(titlinggen(depth))
 
@@ -560,16 +577,22 @@ object Generators extends LazyLogging {
   implicit val arbImportation = Arbitrary(importgen)
 
   // Text
-
-  def textgen(d: Int): Gen[Text] = Gen.frequency(
+  def text0gen: Gen[Text] = Gen.frequency(
     (MAX_SIZE, importgen),
-    (1, restrictgen(d)),
-    (1, constructgen(d)))
+    (1, construct0gen))
+
+  def textgen(d: Int): Gen[Text] =
+    if (d <= 0) { text0gen }
+    else {
+      Gen.frequency(
+        (MAX_SIZE, importgen),
+        (1, restrictgen(d - 1)),
+        (1, constructgen(d - 1)))
+    }
 
   implicit val arbText = Arbitrary(textgen(depth))
 
   // BasicExpression
-  // TODO add statements also
   def bexpressiongen(d: Int): Gen[BasicExpression] = Gen.frequency(
     (MAX_SIZE, sentencegen(d)),
     (MAX_SIZE, statementgen(d)),
