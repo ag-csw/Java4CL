@@ -17,9 +17,10 @@
 package cl2
 
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{ FlatSpec, Matchers, Ignore }
 import scala.language.postfixOps
 
+@Ignore
 class CLConjunctionTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

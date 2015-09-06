@@ -20,7 +20,9 @@ import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import java.util.Arrays;
 import scala.language.postfixOps
+import org.scalatest._
 
+@Ignores
 class CLUniversalTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

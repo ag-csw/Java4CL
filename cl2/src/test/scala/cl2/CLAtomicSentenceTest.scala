@@ -17,11 +17,12 @@
 package cl2
 
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.{ FlatSpec, Matchers }
+import org.scalatest.{ FlatSpec, Matchers, Ignore }
 import CLGenerators._
 import scala.language.postfixOps
 import com.typesafe.scalalogging._
 
+@Ignore
 class CLAtomicSentenceTest extends FlatSpec with LazyLogging
     with Matchers
     with PropertyChecks {

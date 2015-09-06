@@ -305,4 +305,33 @@ object XMLHelper {
     }
   }
 
+  object Parser {
+    trait XCLParsable[T] {
+      def fromXML(x: Elem): T
+    }
+    object XCLParsable {
+      implicit object XCLParsableComment
+          extends XCLParsable[Comment] {
+        // TODO stub
+        def fromXML(x: Elem): Comment = {
+          val data: String = x.text
+          new StringComment(data)
+        }
+      }
+      implicit object XCLParsableAtomicSentence
+          extends XCLParsable[AtomicSentence] {
+        // TODO stub
+        def fromXML(x: Elem): AtomicSentence = {
+          //val cfilter: Elem => Boolean = s => (s.label equals "Comment")
+          //val cparse: Elem => Comment = XCLParsableComment.fromXML
+          //val comments: Set[Comment] = x.child.filter(cfilter).map(cparse).toSet
+          val comments: Set[Comment] = Set.empty[Comment]
+          val operator: Term = null
+          val args: List[TermOrSequenceMarker] = Nil
+          AtomicSentence(comments, operator, args)
+        }
+      }
+    }
+  }
+
 }

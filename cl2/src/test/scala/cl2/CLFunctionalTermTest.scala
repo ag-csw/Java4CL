@@ -20,7 +20,9 @@ import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import CLGenerators._
 import scala.language.postfixOps
+import org.scalatest._
 
+@Ignore
 class CLFunctionalTermTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

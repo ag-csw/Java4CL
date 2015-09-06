@@ -20,7 +20,9 @@ import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import scala.language.postfixOps
 import cl2.xcl2.WellFormedXMLValidator._
+import org.scalatest._
 
+@Ignore
 class CLStringCommentTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

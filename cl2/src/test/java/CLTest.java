@@ -4,11 +4,12 @@ import static org.junit.Assert.assertTrue;
 import hashenvironment.HashFocusedKRRLanguageEnvironment;
 
 import org.junit.Test;
+import org.junit.Ignore;
 
 import cl2.CL;
 import cl2.CLStringComment;
 
-public class CLTest {
+@Ignore public class CLTest {
 
 	@Test
 	public void testLang() {

@@ -16,8 +16,10 @@
 
 package cl2
 
+import org.scalatest._
 import scala.language.postfixOps
 
+@Ignore
 class CLExpressionLawTest extends FunSuiteLike with Discipline {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

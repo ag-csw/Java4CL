@@ -20,7 +20,9 @@ import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import CLStringIriInterpretedName.createCLStringIriInterpretedNameFromStringIRI
 import scala.language.postfixOps
+import org.scalatest._
 
+@Ignore
 class CLStringIriInterpretedNameTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

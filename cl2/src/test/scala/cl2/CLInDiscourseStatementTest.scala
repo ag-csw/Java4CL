@@ -20,7 +20,9 @@ import collection.JavaConversions._
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ FlatSpec, Matchers }
 import scala.language.postfixOps
+import org.scalatest._
 
+@Ignore
 class CLInDiscourseStatementTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(
