@@ -50,7 +50,7 @@ This importation should create Maven, Java and Scala natures as appropriate for 
 During development it might be desirable to make use of Eclipse's automatic
 building mechanism.
 
-**Note:** There seems to be a problem with the Scala tools in combination with automatic building enabled in Eclipse, which leads to false Scala related error messages in Scala source editors and Eclipse's problem view. Therefore, it might be desirable to turn Eclipse's auto build feature off while working with Scala. The Scala syntax checker will still work with automatic building disabled, except for cross-project references.
+**Note:** There seems to be a problem with the Scala tools in combination with automatic building enabled in Eclipse, which leads to false Scala related error messages in Scala source editors and Eclipse's problem view. Therefore, it might be desirable to turn Eclipse's auto build feature off while working with Scala. The Scala syntax checker will still work with automatic building disabled, except for cross-project references. Sometimes it helps to restart the Scala presentation compiler (right-click on project > Scala > Restart ...
 
 In order to keep Eclipse's classpath information consistent
 with the information provided by Maven, after changes to the classpath, right
