@@ -64,7 +64,7 @@ abstract case class InterpretedName(symbol: java.io.Serializable, datatype: java
 class StringIriInterpretedName(symbol: String, datatype: String) extends InterpretedName(symbol, datatype) {
   def this(s: String) = this(s, URI_XSD_STRING)
 }
-abstract case class SequenceMarker(symbol: java.io.Serializable) extends TermOrSequenceMarker
+abstract case class SequenceMarker(symbol: java.io.Serializable) extends NameOrSequenceMarker
 class StringSequenceMarker(symbol: String) extends SequenceMarker(symbol)
 case class FunctionalTerm(
   comments: Set[_ <: Comment],

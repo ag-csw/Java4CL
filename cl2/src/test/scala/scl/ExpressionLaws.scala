@@ -409,13 +409,25 @@ object BiconditionalLaws extends BooleanSentenceLaws {
     }
   }
 
+  def bicondXMLRoundTripIdentity(implicit ev: XCLParsable[Biconditional]): Prop = Prop.forAll { (bicond: Biconditional) =>
+    {
+      logger.debug("Bicond RoundTrip Identity Input : " + (bicond toString))
+      logger.debug("Bicond RoundTrip Identity XML   : " + (bicond toXML))
+      val bicond2: Biconditional = (ev.fromXML(bicond toXML)).get
+      logger.debug("Bicond RoundTrip Identity Output: " + (bicond2 toString))
+      logger.debug("Bicond RoundTrip Identity XML   : " + (bicond2 toXML))
+      (bicond2 equals bicond)
+    }
+  }
+
   def bicond: RuleSet = new RuleSet {
     def name = "bicond"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
       ("A SCL.Biconditional is unoriented with respect to its sentence arguments", bicondUnorientedIdentity),
-      ("Biconditionals Can Be Expressed in XCL2", bicondXMLIdentity))
+      ("Biconditionals Can Be Expressed in XCL2", bicondXMLIdentity),
+      ("Biconditional is Preserved when converting to XML and the parsing", bicondXMLRoundTripIdentity))
   }
 }
 
