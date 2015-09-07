@@ -351,13 +351,21 @@ object EquationLaws extends SimpleSentenceLaws {
     }
   }
 
+  def eqXMLRoundTripIdentity(implicit ev: XCLParsable[Equation]): Prop = Prop.forAll { (eq: Equation) =>
+    {
+      val eq2: Equation = (ev.fromXML(eq toXML)).get
+      (eq2 equals eq)
+    }
+  }
+
   def equals: RuleSet = new RuleSet {
     def name = "equals"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(sentence)
     def props = Seq(
       ("A SCL.Equation is unoriented with respect to its term arguments", equalUnorientedIdentity),
-      ("Equation Can Be Expressed in XCL2", equalXMLIdentity))
+      ("Equation Can Be Expressed in XCL2", equalXMLIdentity),
+      ("Equation is Preserved when converting to XML and the parsing", eqXMLRoundTripIdentity))
   }
 }
 

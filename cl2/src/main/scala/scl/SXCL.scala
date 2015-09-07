@@ -348,7 +348,6 @@ object Parser {
     }
     implicit object XCLParsableFunctionalTerm
         extends XCLParsable[FunctionalTerm] {
-      // TODO stub
       def fromXML(x: Elem): Try[FunctionalTerm] = Try({
         val comments: Set[Comment] = commentSetParse(x)
         val argsAll: List[TermOrSequenceMarker] = tosmSeqParse(x)
@@ -389,7 +388,6 @@ object Parser {
     }
     implicit object XCLParsableAtomicSentence
         extends XCLParsable[AtomicSentence] {
-      // TODO stub
       def fromXML(x: Elem): Try[AtomicSentence] = Try({
         val comments: Set[Comment] = commentSetParse(x)
         val argsAll: List[TermOrSequenceMarker] = tosmSeqParse(x)
@@ -398,6 +396,15 @@ object Parser {
         }
         val args: List[TermOrSequenceMarker] = argsAll.tail
         AtomicSentence(comments, operator, args)
+      })
+    }
+
+    implicit object XCLParsableEquation
+        extends XCLParsable[Equation] {
+      def fromXML(x: Elem): Try[Equation] = Try({
+        val comments: Set[Comment] = commentSetParse(x)
+        val args: Set[Term] = termSetParse(x)
+        Equation(comments, args)
       })
     }
 
@@ -412,6 +419,12 @@ object Parser {
       case s: Success[TermOrSequenceMarker] => s get
     }
     def tosmSeqParse(x: Node): List[TermOrSequenceMarker] = (x child) collect _tosmParse toList
+
+    val _tryTermParse: PartialFunction[Node, Try[Term]] = { case x: Elem => (XCLParsableTerm fromXML x) }
+    val _termParse: PartialFunction[Node, Term] = _tryTermParse andThenPartial {
+      case s: Success[Term] => s get
+    }
+    def termSetParse(x: Node): Set[Term] = (x child) collect _termParse toSet
 
   }
 
