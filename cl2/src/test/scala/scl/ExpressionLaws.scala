@@ -244,6 +244,17 @@ trait SentenceLaws extends ExpressionLaws {
     }
   }
 
+  def sentenceXMLRoundTripIdentity(implicit ev: XCLParsable[Sentence]): Prop = Prop.forAll { (sent: Sentence) =>
+    {
+      logger.debug("Sentence RoundTrip Identity Input : " + (sent toString))
+      logger.debug("Sentence RoundTrip Identity XML   : " + (sent toXML))
+      val othersent: Sentence = (ev.fromXML(sent toXML)).get
+      logger.debug("Sentence RoundTrip Identity Output: " + (othersent toString))
+      logger.debug("Sentence RoundTrip Identity XML   : " + (othersent toXML))
+      (othersent equals sent)
+    }
+  }
+
   def sentence: RuleSet = new RuleSet {
     def name = "sentence"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()

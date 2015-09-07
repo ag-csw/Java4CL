@@ -1,16 +1,12 @@
 package scl
 
-import scala.language.postfixOps
-import com.typesafe.scalalogging._
-import api4kbj.KnowledgeExpressionLike
-import api4kbj.BasicKnowledgeExpressionLike
 import api4kba.AbstractKRRLanguage
 import api4kba.AbstractKRRLogic
-import language.existentials
-import org.apache.commons.lang3.StringEscapeUtils
+import api4kbj.KnowledgeExpressionLike
+import api4kbj.BasicKnowledgeExpressionLike
+import com.typesafe.scalalogging._
+import scala.language.{ postfixOps, existentials }
 import XMLHelper._
-import scala.xml.Elem
-import scala.xml.NodeSeq
 
 /**
  * @author taraathan
