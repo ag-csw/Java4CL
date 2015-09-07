@@ -22,7 +22,7 @@ import java.util.Arrays;
 import scala.language.postfixOps
 import org.scalatest._
 
-@Ignores
+@Ignore
 class CLUniversalTest extends FlatSpec with Matchers with PropertyChecks {
   implicit override val generatorDrivenConfig =
     PropertyCheckConfig(

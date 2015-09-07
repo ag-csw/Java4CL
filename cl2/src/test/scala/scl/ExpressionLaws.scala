@@ -23,7 +23,8 @@ import Generators._
 import scala.language.postfixOps
 import com.typesafe.scalalogging.LazyLogging
 import XMLHelper._
-
+import Parser._
+import scala.util.{ Try, Success, Failure }
 /**
  * Laws that must be obeyed by any `SCL.expression`.
  */
@@ -306,13 +307,29 @@ object AtomicSentenceLaws extends SimpleSentenceLaws {
     }
   }
 
+  def atomXMLRoundTripNumberOfCommentsIdentity(implicit ev: XCLParsable[AtomicSentence]): Prop = Prop.forAll { (atom: AtomicSentence) =>
+    {
+      val atom2: AtomicSentence = (ev.fromXML(atom toXML)).get
+      (((atom2 comments) size) equals ((atom comments) size))
+    }
+  }
+
+  def atomXMLRoundTripIdentity(implicit ev: XCLParsable[AtomicSentence]): Prop = Prop.forAll { (atom: AtomicSentence) =>
+    {
+      val atom2: AtomicSentence = (ev.fromXML(atom toXML)).get
+      (atom2 equals atom)
+    }
+  }
+
   def atom: RuleSet = new RuleSet {
     def name = "atom"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq(simple)
     def props = Seq(
       ("Null Constructor Argument Exception", atomArgumentShouldNotBeNull),
-      ("Atomic Sentences Can Be Expressed in XCL2", atomXMLIdentity))
+      ("Atomic Sentences Can Be Expressed in XCL2", atomXMLIdentity),
+      ("Number of Comments is Preserved when converting to XML and the parsing", atomXMLRoundTripNumberOfCommentsIdentity),
+      ("Atomic Sentence is Preserved when converting to XML and the parsing", atomXMLRoundTripIdentity))
   }
 }
 

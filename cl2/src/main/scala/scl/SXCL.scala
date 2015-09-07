@@ -9,10 +9,10 @@ import api4kba.AbstractKRRLogic
 import language.existentials
 import org.apache.commons.lang3.StringEscapeUtils
 import XMLHelper._
-import scala.xml.Elem
-import scala.xml.NodeSeq
+import scala.xml.{ Elem, Node, NodeSeq }
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.lang3.SerializationUtils
+import scala.util.{ Try, Success, Failure }
 
 /**
  * @author taraathan
@@ -304,34 +304,119 @@ object XMLHelper {
       for (basic <- y) yield (basic toXML)
     }
   }
+}
+object Parser {
+  trait XCLParsable[T] {
+    def fromXML(x: Elem): Try[T]
+  }
+  object XCLParsable {
+    implicit object XCLParsableComment
+        extends XCLParsable[Comment] {
+      // TODO parse data datatype
+      def fromXML(x: Elem): Try[Comment] =
+        Try(
+          x match {
+            case e: Elem if (isXCLComment(e)) => new StringComment(StringEscapeUtils unescapeXml (x text))
+          })
+    }
+    implicit object XCLParsableInterpretableName
+        extends XCLParsable[InterpretableName] {
+      // TODO parse symbol datatype
+      def fromXML(x: Elem): Try[InterpretableName] =
+        Try(
+          x match {
+            case e: Elem if (isXCLInterpretableName(e)) => new StringInterpretableName(StringEscapeUtils unescapeXml (x text))
+          })
+    }
+    implicit object XCLParsableInterpretedName
+        extends XCLParsable[InterpretedName] {
+      // TODO parse datatype
+      def fromXML(x: Elem): Try[InterpretedName] =
+        Try(
+          x match {
+            case e: Elem if (isXCLInterpretedName(e)) => new StringIriInterpretedName(StringEscapeUtils unescapeXml (x text))
+          })
+    }
+    implicit object XCLParsableSequenceMarker
+        extends XCLParsable[SequenceMarker] {
+      // TODO parse symbol datatype
+      def fromXML(x: Elem): Try[SequenceMarker] =
+        Try(
+          x match {
+            case e: Elem if (isXCLSequenceMarker(e)) => new StringSequenceMarker(StringEscapeUtils unescapeXml (x text))
+          })
+    }
+    implicit object XCLParsableFunctionalTerm
+        extends XCLParsable[FunctionalTerm] {
+      // TODO stub
+      def fromXML(x: Elem): Try[FunctionalTerm] = Try({
+        val comments: Set[Comment] = commentSetParse(x)
+        val argsAll: List[TermOrSequenceMarker] = tosmSeqParse(x)
+        val operator: Term = argsAll.head match {
+          case t: Term => t
+        }
+        val args: List[TermOrSequenceMarker] = argsAll.tail
+        FunctionalTerm(comments, operator, args)
+      })
+    }
+    def isXCLComment(x: Node): Boolean = ((x label) equals "Comment")
+    def isXCLInterpretableName(x: Node): Boolean = ((x label) equals "Name")
+    def isXCLInterpretedName(x: Node): Boolean = ((x label) equals "Data")
+    def isXCLFunctionalTerm(x: Node): Boolean = ((x label) equals "Apply")
+    def isXCLSequenceMarker(x: Node): Boolean = ((x label) equals "Marker")
+    def isXCLName(x: Node): Boolean = isXCLInterpretableName(x) || isXCLInterpretedName(x)
+    def isXCLNOSM(x: Node): Boolean = isXCLName(x) || isXCLSequenceMarker(x)
+    def isXCLTerm(x: Node): Boolean = isXCLName(x) || isXCLFunctionalTerm(x)
+    def isXCLTOSM(x: Node): Boolean = isXCLTerm(x) || isXCLSequenceMarker(x)
+    implicit object XCLParsableTerm
+        extends XCLParsable[Term] {
+      // TODO stub
+      def fromXML(x: Elem): Try[Term] =
+        Try(
+          x match {
+            case e: Elem if (isXCLInterpretableName(e)) => XCLParsableInterpretableName.fromXML(e) get
+            case e: Elem if (isXCLInterpretedName(e)) => XCLParsableInterpretedName.fromXML(e) get
+            case e: Elem if (isXCLFunctionalTerm(e)) => XCLParsableFunctionalTerm.fromXML(e) get
+          })
+    }
+    implicit object XCLParsableTOSM
+        extends XCLParsable[TermOrSequenceMarker] {
+      // TODO stub
+      def fromXML(x: Elem): Try[TermOrSequenceMarker] = Try(x match {
+        case e: Elem if (isXCLTerm(e)) => XCLParsableTerm.fromXML(e) get
+        case e: Elem if (isXCLSequenceMarker(e)) => XCLParsableSequenceMarker.fromXML(e) get
+      })
+    }
+    implicit object XCLParsableAtomicSentence
+        extends XCLParsable[AtomicSentence] {
+      // TODO stub
+      def fromXML(x: Elem): Try[AtomicSentence] = Try({
+        val comments: Set[Comment] = commentSetParse(x)
+        val argsAll: List[TermOrSequenceMarker] = tosmSeqParse(x)
+        val operator: Term = argsAll.head match {
+          case t: Term => t
+        }
+        val args: List[TermOrSequenceMarker] = argsAll.tail
+        AtomicSentence(comments, operator, args)
+      })
+    }
 
-  object Parser {
-    trait XCLParsable[T] {
-      def fromXML(x: Elem): T
+    val _tryCommentParse: PartialFunction[Node, Try[Comment]] = { case x: Elem => (XCLParsableComment fromXML x) }
+    val _commentParse: PartialFunction[Node, Comment] = _tryCommentParse andThenPartial {
+      case s: Success[Comment] => s get
     }
-    object XCLParsable {
-      implicit object XCLParsableComment
-          extends XCLParsable[Comment] {
-        // TODO stub
-        def fromXML(x: Elem): Comment = {
-          val data: String = x.text
-          new StringComment(data)
-        }
-      }
-      implicit object XCLParsableAtomicSentence
-          extends XCLParsable[AtomicSentence] {
-        // TODO stub
-        def fromXML(x: Elem): AtomicSentence = {
-          //val cfilter: Elem => Boolean = s => (s.label equals "Comment")
-          //val cparse: Elem => Comment = XCLParsableComment.fromXML
-          //val comments: Set[Comment] = x.child.filter(cfilter).map(cparse).toSet
-          val comments: Set[Comment] = Set.empty[Comment]
-          val operator: Term = null
-          val args: List[TermOrSequenceMarker] = Nil
-          AtomicSentence(comments, operator, args)
-        }
-      }
+    def commentSetParse(x: Node): Set[Comment] = (x child) collect _commentParse toSet
+
+    val _tryTosmParse: PartialFunction[Node, Try[TermOrSequenceMarker]] = { case x: Elem => (XCLParsableTOSM fromXML x) }
+    val _tosmParse: PartialFunction[Node, TermOrSequenceMarker] = _tryTosmParse andThenPartial {
+      case s: Success[TermOrSequenceMarker] => s get
     }
+    def tosmSeqParse(x: Node): List[TermOrSequenceMarker] = (x child) collect _tosmParse toList
+
   }
 
+  implicit class ComposePartial[A, B](pf: PartialFunction[A, B]) {
+    def andThenPartial[C](that: PartialFunction[B, C]): PartialFunction[A, C] =
+      Function.unlift(pf.lift(_) flatMap that.lift)
+  }
 }
