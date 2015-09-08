@@ -146,6 +146,17 @@ trait BasicExpressionLaws extends ExpressionLaws {
     }
   }
 
+  def basicExpressionXMLRoundTripIdentity(implicit ev: XCLParsable[BasicExpression]): Prop = Prop.forAll { (basic: BasicExpression) =>
+    {
+      logger.debug("BasicExpression RoundTrip Identity Input : " + (basic toString))
+      logger.debug("BasicExpression RoundTrip Identity XML   : " + (basic toXML))
+      val otherbasic: BasicExpression = (ev.fromXML(basic toXML)).get
+      logger.debug("BasicExpression RoundTrip Identity Output: " + (otherbasic toString))
+      logger.debug("BasicExpression RoundTrip Identity XML   : " + (otherbasic toXML))
+      (otherbasic equals basic)
+    }
+  }
+
   def bexpression: RuleSet = new RuleSet {
     def name = "basic expression"
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
@@ -156,6 +167,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
       ("A SCL.BasicExpression Equals its Copy", basicExpressionIsEqualToItsCopyIdentity),
       ("A SCL.BasicExpression Comment set is Pattern-Matchable", basicExpressionCommentIsMatchableIdentity),
       ("SCL.BasicExpressions Can Be Expressed in XCL2", basicXMLIdentity),
+      ("SCL.BasicExpressions Can Be Round-Tripped throug XCL2", basicExpressionXMLRoundTripIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }
 

@@ -168,58 +168,58 @@ object XMLHelper {
 
   implicit class ConjunctionXMLHelper(x: Conjunction) {
     def toXML: Elem = {
-      <cl:Conjunction xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:And xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x conjuncts) toXML) }
-      </cl:Conjunction>
+      </cl:And>
     }
   }
 
   implicit class DisjunctionXMLHelper(x: Disjunction) {
     def toXML: Elem = {
-      <cl:Disjunction xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Or xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x disjuncts) toXML) }
-      </cl:Disjunction>
+      </cl:Or>
     }
   }
 
   implicit class NegationXMLHelper(x: Negation) {
     def toXML: Elem = {
-      <cl:Negation xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Not xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x body) toXML) }
-      </cl:Negation>
+      </cl:Not>
     }
   }
 
   implicit class ImplicationXMLHelper(x: Implication) {
     def toXML: Elem = {
-      <cl:Implication xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Implies xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x antecedent) toXML) }
         { ((x consequent) toXML) }
-      </cl:Implication>
+      </cl:Implies>
     }
   }
 
   implicit class ExistentialXMLHelper(x: Existential) {
     def toXML: Elem = {
-      <cl:Existential xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Exists xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x bindings) toXML) }
         { ((x body) toXML) }
-      </cl:Existential>
+      </cl:Exists>
     }
   }
 
   implicit class UniversalXMLHelper(x: Universal) {
     def toXML: Elem = {
-      <cl:Universal xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Forall xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x bindings) toXML) }
         { ((x body) toXML) }
-      </cl:Universal>
+      </cl:Forall>
     }
   }
 
@@ -284,19 +284,19 @@ object XMLHelper {
 
   implicit class InDiscourseStatementXMLHelper(x: InDiscourseStatement) {
     def toXML: Elem = {
-      <cl:InDiscourseStatement xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:In xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x terms) toXML) }
-      </cl:InDiscourseStatement>
+      </cl:In>
     }
   }
 
   implicit class OutDiscourseStatementXMLHelper(x: OutDiscourseStatement) {
     def toXML: Elem = {
-      <cl:OutDiscourseStatement xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Out xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x terms) toXML) }
-      </cl:OutDiscourseStatement>
+      </cl:Out>
     }
   }
 
@@ -317,29 +317,29 @@ object XMLHelper {
 
   implicit class TextConstructionXMLHelper(x: TextConstruction) {
     def toXML: Elem = {
-      <cl:TextConstruction xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Construct xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x expressions) toXML) }
-      </cl:TextConstruction>
+      </cl:Construct>
     }
   }
 
   implicit class DomainRestrictionXMLHelper(x: DomainRestriction) {
     def toXML: Elem = {
-      <cl:DomainRestriction xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Restrict xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x domain) toXML) }
         { ((x body) toXML) }
-      </cl:DomainRestriction>
+      </cl:Restrict>
     }
   }
 
   implicit class ImportationXMLHelper(x: Importation) {
     def toXML: Elem = {
-      <cl:Importation xmlns:cl={ SCL.URI_XCL2 }>
+      <cl:Import xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
         { ((x title) toXML) }
-      </cl:Importation>
+      </cl:Import>
     }
   }
 
@@ -422,10 +422,10 @@ object Parser {
       def fromXML(x: Elem): Try[FunctionalTerm] = Try({
         val comments: CommentSet = commentSetParse(x)
         val argsAll: TermSequence = tosmSeqParse(x)
-        val operator: Term = argsAll.head match {
+        val operator: Term = (argsAll head) match {
           case t: Term => t
         }
-        val args: TermSequence = argsAll.tail
+        val args: TermSequence = (argsAll tail)
         FunctionalTerm(comments, operator, args)
       })
     }
@@ -460,15 +460,25 @@ object Parser {
     def isXCLTOSM(x: Node): Boolean =
       isXCLTerm(x) || isXCLSequenceMarker(x)
 
-    implicit object XCLParsableTerm
-        extends XCLParsable[Term] {
-      def fromXML(x: Elem): Try[Term] =
+    implicit object XCLParsableName
+        extends XCLParsable[Name] {
+      def fromXML(x: Elem): Try[Name] =
         Try(
           x match {
             case e: Elem if (isXCLInterpretableName(e)) =>
               XCLParsableInterpretableName.fromXML(e) get
             case e: Elem if (isXCLInterpretedName(e)) =>
               XCLParsableInterpretedName.fromXML(e) get
+          })
+    }
+
+    implicit object XCLParsableTerm
+        extends XCLParsable[Term] {
+      def fromXML(x: Elem): Try[Term] =
+        Try(
+          x match {
+            case e: Elem if (isXCLName(e)) =>
+              XCLParsableName.fromXML(e) get
             case e: Elem if (isXCLFunctionalTerm(e)) =>
               XCLParsableFunctionalTerm.fromXML(e) get
           })
@@ -484,12 +494,22 @@ object Parser {
       })
     }
 
+    implicit object XCLParsableNOSM
+        extends XCLParsable[NameOrSequenceMarker] {
+      def fromXML(x: Elem): Try[NameOrSequenceMarker] = Try(x match {
+        case e: Elem if (isXCLName(e)) =>
+          XCLParsableName.fromXML(e) get
+        case e: Elem if (isXCLSequenceMarker(e)) =>
+          XCLParsableSequenceMarker.fromXML(e) get
+      })
+    }
+
     implicit object XCLParsableAtomicSentence
         extends XCLParsable[AtomicSentence] {
       def fromXML(x: Elem): Try[AtomicSentence] = Try({
         val comments: CommentSet = commentSetParse(x)
         val argsAll: TermSequence = tosmSeqParse(x)
-        val operator: Term = argsAll.head match {
+        val operator: Term = (argsAll head) match {
           case t: Term => t
         }
         val args: TermSequence = argsAll.tail
@@ -520,8 +540,8 @@ object Parser {
       def fromXML(x: Elem): Try[Implication] = Try({
         val comments: CommentSet = commentSetParse(x)
         val args: List[Sentence] = sentenceSeqParse(x)
-        val antecedent: Sentence = args head
-        val consequent: Sentence = (args tail).head
+        val antecedent: Sentence = (args head)
+        val consequent: Sentence = ((args tail) head)
         Implication(comments, antecedent, consequent)
       })
     }
@@ -549,7 +569,7 @@ object Parser {
       def fromXML(x: Elem): Try[Negation] = Try({
         val comments: CommentSet = commentSetParse(x)
         val args: List[Sentence] = sentenceSeqParse(x)
-        val body: Sentence = args.head
+        val body: Sentence = (args head)
         Negation(comments, body)
       })
     }
@@ -560,7 +580,7 @@ object Parser {
         val comments: CommentSet = commentSetParse(x)
         val bindings: BindingSet = bindingSetParse(x)
         val args: List[Sentence] = sentenceSeqParse(x)
-        val body: Sentence = args.head
+        val body: Sentence = (args head)
         Existential(comments, bindings, body)
       })
     }
@@ -571,7 +591,7 @@ object Parser {
         val comments: CommentSet = commentSetParse(x)
         val bindings: BindingSet = bindingSetParse(x)
         val args: List[Sentence] = sentenceSeqParse(x)
-        val body: Sentence = args.head
+        val body: Sentence = (args head)
         Universal(comments, bindings, body)
       })
     }
@@ -590,16 +610,16 @@ object Parser {
       isInXCLNamespace(x) && ((x label) equals "Biconditional")
 
     def isXCLImplication(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Implication")
+      isInXCLNamespace(x) && ((x label) equals "Implies")
 
     def isXCLConjunction(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Conjunction")
+      isInXCLNamespace(x) && ((x label) equals "And")
 
     def isXCLDisjunction(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Disjunction")
+      isInXCLNamespace(x) && ((x label) equals "Or")
 
     def isXCLNegation(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Negation")
+      isInXCLNamespace(x) && ((x label) equals "Not")
 
     def isXCLBooleanSentence(x: Node): Boolean =
       isXCLBiconditional(x) ||
@@ -609,10 +629,10 @@ object Parser {
         isXCLNegation(x)
 
     def isXCLExistential(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Existential")
+      isInXCLNamespace(x) && ((x label) equals "Exists")
 
     def isXCLUniversal(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Universal")
+      isInXCLNamespace(x) && ((x label) equals "Forall")
 
     def isXCLQuantifiedSentence(x: Node): Boolean =
       isXCLExistential(x) ||
@@ -665,7 +685,7 @@ object Parser {
           })
     }
 
-    // TODO add XCLBooleanSentence, etc.
+    // Sentence
     implicit object XCLParsableSentence
         extends XCLParsable[Sentence] {
       def fromXML(x: Elem): Try[Sentence] =
@@ -680,18 +700,18 @@ object Parser {
           })
     }
 
-    // TODO Titling
-    /* implicit object XCLParsableTitling
+    // Titling
+    implicit object XCLParsableTitling
         extends XCLParsable[Titling] {
       def fromXML(x: Elem): Try[Titling] = Try({
         val comments: CommentSet = commentSetParse(x)
-        val terms: TermSequence = tosmSeqParse(x)
-        val title = terms head
+        val names: List[Name] = nameSeqParse(x)
+        val title = names head
         val args: List[Text] = textSeqParse(x)
-        val body: Sentence = args.head
+        val body: Text = (args head)
         Titling(comments, title, body)
       })
-    }*/
+    }
 
     implicit object XCLParsableInDiscourseStatement
         extends XCLParsable[InDiscourseStatement] {
@@ -717,7 +737,7 @@ object Parser {
         val comments: CommentSet = commentSetParse(x)
         val seqbindings: SeqBindingSet = seqBindingSetParse(x)
         val args: List[SentenceOrSchema] = sentenceOrSchemaSeqParse(x)
-        val body: SentenceOrSchema = args.head
+        val body: SentenceOrSchema = (args head)
         Schema(comments, seqbindings, body)
       })
     }
@@ -750,6 +770,11 @@ object Parser {
       isXCLInDiscourseStatement(x) ||
         isXCLOutDiscourseStatement(x)
 
+    def isXCLStatement(x: Node): Boolean =
+      isXCLTitling(x) ||
+        isXCLDiscourseStatement(x) ||
+        isXCLSchema(x)
+
     implicit object XCLParsableStatement
         extends XCLParsable[Statement] {
       def fromXML(x: Elem): Try[Statement] =
@@ -757,6 +782,8 @@ object Parser {
           x match {
             case e: Elem if (isXCLDiscourseStatement(e)) =>
               XCLParsableDiscourseStatement.fromXML(e) get
+            case e: Elem if (isXCLTitling(e)) =>
+              XCLParsableTitling.fromXML(e) get
             case e: Elem if (isXCLSchema(e)) =>
               XCLParsableSchema.fromXML(e) get
           })
@@ -774,6 +801,79 @@ object Parser {
           })
     }
 
+    implicit object XCLParsableTextConstruction
+        extends XCLParsable[TextConstruction] {
+      def fromXML(x: Elem): Try[TextConstruction] = Try({
+        val comments: CommentSet = commentSetParse(x)
+        val texts: BasicExpressionSet = basicExpressionSetParse(x)
+        TextConstruction(comments, texts)
+      })
+    }
+
+    implicit object XCLParsableDomainRestriction
+        extends XCLParsable[DomainRestriction] {
+      def fromXML(x: Elem): Try[DomainRestriction] = Try({
+        val comments: CommentSet = commentSetParse(x)
+        val terms: List[Term] = termSeqParse(x)
+        val domain: Term = (terms head)
+        val texts: List[Text] = textSeqParse(x)
+        val body: Text = (texts head)
+        DomainRestriction(comments, domain, body)
+      })
+    }
+
+    implicit object XCLParsableImportation
+        extends XCLParsable[Importation] {
+      def fromXML(x: Elem): Try[Importation] = Try({
+        val comments: CommentSet = commentSetParse(x)
+        val names: List[Name] = nameSeqParse(x)
+        val title: Name = (names head)
+        Importation(comments, title)
+      })
+    }
+
+    def isXCLTextConstruction(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "Construct")
+
+    def isXCLDomainRestriction(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "Restrict")
+
+    def isXCLImportation(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "Import")
+
+    def isXCLText(x: Node): Boolean =
+      isXCLTextConstruction(x) ||
+        isXCLDomainRestriction(x) ||
+        isXCLImportation(x)
+
+    implicit object XCLParsableText
+        extends XCLParsable[Text] {
+      def fromXML(x: Elem): Try[Text] =
+        Try(
+          x match {
+            case e: Elem if (isXCLTextConstruction(e)) =>
+              XCLParsableTextConstruction.fromXML(e) get
+            case e: Elem if (isXCLDomainRestriction(e)) =>
+              XCLParsableDomainRestriction.fromXML(e) get
+            case e: Elem if (isXCLImportation(e)) =>
+              XCLParsableImportation.fromXML(e) get
+          })
+    }
+
+    implicit object XCLParsableBasicExpression
+        extends XCLParsable[BasicExpression] {
+      def fromXML(x: Elem): Try[BasicExpression] =
+        Try(
+          x match {
+            case e: Elem if (isXCLSentence(e)) =>
+              XCLParsableSentence.fromXML(e) get
+            case e: Elem if (isXCLStatement(e)) =>
+              XCLParsableStatement.fromXML(e) get
+            case e: Elem if (isXCLText(e)) =>
+              XCLParsableText.fromXML(e) get
+          })
+    }
+
     val _tryCommentParse: PartialFunction[Node, Try[Comment]] =
       { case x: Elem => (XCLParsableComment fromXML x) }
     val _commentParse: PartialFunction[Node, Comment] =
@@ -782,6 +882,15 @@ object Parser {
       }
 
     def commentSetParse(x: Node): CommentSet = (x child) collect _commentParse toSet
+
+    val _tryNameParse: PartialFunction[Node, Try[Name]] =
+      { case x: Elem => (XCLParsableName fromXML x) }
+    val _nameParse: PartialFunction[Node, Name] =
+      _tryNameParse andThenPartial {
+        case s: Success[Name] => s get
+      }
+
+    def nameSeqParse(x: Node): List[Name] = (x child) collect _nameParse toList
 
     val _tryTosmParse: PartialFunction[Node, Try[TermOrSequenceMarker]] =
       { case x: Elem => (XCLParsableTOSM fromXML x) }
@@ -800,6 +909,8 @@ object Parser {
       _tryTermParse andThenPartial {
         case s: Success[Term] => s get
       }
+
+    def termSeqParse(x: Node): List[Term] = (x child) collect _termParse toList
 
     def termSetParse(x: Node): TermSet = (x child) collect _termParse toSet
 
@@ -844,13 +955,22 @@ object Parser {
     def sentenceOrSchemaSeqParse(x: Node): List[SentenceOrSchema] =
       (x child) collect _sentenceOrSchemaParse toList
 
-    /*val _tryTextParse: PartialFunction[Node, Try[Text]] =
-     * { case x: Elem => (XCLParsableText fromXML x) }
+    val _tryTextParse: PartialFunction[Node, Try[Text]] =
+      { case x: Elem => (XCLParsableText fromXML x) }
     val _textParse: PartialFunction[Node, Text] = _tryTextParse andThenPartial {
       case s: Success[Text] => s get
     }
     def textSetParse(x: Node): Set[Text] = (x child) collect _textParse toSet
-    def textSeqParse(x: Node): List[Text] = (x child) collect _textParse toList*/
+
+    def textSeqParse(x: Node): List[Text] = (x child) collect _textParse toList
+
+    val _tryBasicExpressionParse: PartialFunction[Node, Try[BasicExpression]] =
+      { case x: Elem => (XCLParsableBasicExpression fromXML x) }
+    val _basicExpressionParse: PartialFunction[Node, BasicExpression] = _tryBasicExpressionParse andThenPartial {
+      case s: Success[BasicExpression] => s get
+    }
+
+    def basicExpressionSetParse(x: Node): Set[BasicExpression] = (x child) collect _basicExpressionParse toSet
   }
 
   implicit class ComposePartial[A, B](pf: PartialFunction[A, B]) {
