@@ -267,12 +267,18 @@ object XMLHelper {
     }
   }
 
-  implicit class StatementXMLHelper(x: Statement) {
+  implicit class DiscourseStatementXMLHelper(x: Statement) {
     def toXML: Elem = x match {
-      case a: Titling               => (a toXML)
-      case a: Schema                => (a toXML)
       case a: InDiscourseStatement  => (a toXML)
       case a: OutDiscourseStatement => (a toXML)
+    }
+  }
+
+  implicit class StatementXMLHelper(x: Statement) {
+    def toXML: Elem = x match {
+      case a: Titling            => (a toXML)
+      case a: Schema             => (a toXML)
+      case a: DiscourseStatement => (a toXML)
     }
   }
 
