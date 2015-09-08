@@ -7,6 +7,8 @@ Coverage: [![codecov.io](http://codecov.io/github/ag-csw/Java4CL/coverage.svg?br
 --------
 ![codecov.io](http://codecov.io/github/ag-csw/Java4CL/branch.svg?branch=java8)
 
+Continuous Integration using [https://travis-ci.org/ag-csw/Java4CL](Travis CI).
+
 Java
 ----
 Java 1.8 is required for this project, primarily for the default methods in interfaces. Occasionally, lambda expressions and method references are also used.
