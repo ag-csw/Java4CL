@@ -85,19 +85,19 @@ object Generators extends LazyLogging {
    * generator of SCL comment sets (list-based instances), which may be
    * used in generators of "commentable" SCL terms and expressions
    */
-  val commentlistsetgen: Gen[Set[_ <: Comment]] =
+  val commentlistsetgen: Gen[CommentSet] =
     for { a <- Gen listOf (commentArbGen) }
       yield a.toSet[Comment]
 
   // TODO include other specific kinds of Sets??
-  val commentsetgen: Gen[Set[_ <: Comment]] = Gen.frequency(
+  val commentsetgen: Gen[CommentSet] = Gen.frequency(
     (1, commentlistsetgen))
 
-  val commentemptysetgen: Gen[Set[_ <: Comment]] = Set.empty[Comment]
+  val commentemptysetgen: Gen[CommentSet] = Set.empty[Comment]
 
-  val commentSetArbGen: Gen[Set[_ <: Comment]] = if (DEBUGEMPTYCOLLECTION) commentemptysetgen else commentsetgen
+  val commentSetArbGen: Gen[CommentSet] = if (DEBUGEMPTYCOLLECTION) commentemptysetgen else commentsetgen
 
-  implicit val arbCommentSet: Arbitrary[Set[_ <: Comment]] = Arbitrary(commentSetArbGen)
+  implicit val arbCommentSet: Arbitrary[CommentSet] = Arbitrary(commentSetArbGen)
 
   // InterpretableName
   /**
@@ -219,19 +219,19 @@ object Generators extends LazyLogging {
    */
   val namesequencelistgen: Gen[List[NameOrSequenceMarker]] = Gen listOf (nameorsequencemarkergen)
 
-  val namesequenceemptylistgen: Gen[List[TermOrSequenceMarker]] = Nil
+  val namesequenceemptylistgen: Gen[List[NameOrSequenceMarker]] = Nil
 
   // TODO need other types of sequences
   val namesequenceArbgen = if (DEBUGEMPTYCOLLECTION) namesequenceemptylistgen else namesequencelistgen
 
-  def termsequencelistgen(d: Int): Gen[List[TermOrSequenceMarker]] = Gen listOf (termorsequencemarkerArbGen(d))
+  def termsequencelistgen(d: Int): Gen[TermSequence] = Gen listOf (termorsequencemarkerArbGen(d))
 
   // TODO need other types of sequences
-  def termsequencegen(d: Int): Gen[List[TermOrSequenceMarker]] = termsequencelistgen(d)
+  def termsequencegen(d: Int): Gen[TermSequence] = termsequencelistgen(d)
 
-  def termsequenceArbgen(d: Int): Gen[List[TermOrSequenceMarker]] = if (DEBUGEMPTYCOLLECTION) namesequenceemptylistgen else termsequencegen(d)
+  def termsequenceArbgen(d: Int): Gen[TermSequence] = if (DEBUGEMPTYCOLLECTION) namesequenceemptylistgen else termsequencegen(d)
 
-  implicit val arbTermSequence: Arbitrary[List[TermOrSequenceMarker]] = Arbitrary(termsequenceArbgen(depth))
+  implicit val arbTermSequence: Arbitrary[TermSequence] = Arbitrary(termsequenceArbgen(depth))
 
   // AtomicSentence
   def atomgen(d: Int): Gen[AtomicSentence] =
@@ -460,21 +460,21 @@ object Generators extends LazyLogging {
   implicit val arbSentence: Arbitrary[Sentence] = Arbitrary(sentencegen(depth))
 
   // SentenceSet
-  def atomsetlistgen(d: Int): Gen[Set[_ <: Sentence]] =
+  def atomsetlistgen(d: Int): Gen[SentenceSet] =
     for { a <- Gen listOf (atomgen(d)) }
       yield a.toSet[Sentence]
 
   // TODO need other types of sequences
-  def atomsetgen(d: Int): Gen[Set[_ <: Sentence]] = atomsetlistgen(d)
+  def atomsetgen(d: Int): Gen[SentenceSet] = atomsetlistgen(d)
 
-  def sentencesetlistgen(d: Int): Gen[Set[_ <: Sentence]] =
+  def sentencesetlistgen(d: Int): Gen[SentenceSet] =
     for { a <- Gen listOf (sentencegen(d)) }
       yield a.toSet[Sentence]
 
   // TODO need other types of sets
-  def sentencesetgen(d: Int): Gen[Set[_ <: Sentence]] = sentencesetlistgen(d)
+  def sentencesetgen(d: Int): Gen[SentenceSet] = sentencesetlistgen(d)
 
-  implicit val arbSentenceSet: Arbitrary[Set[_ <: Sentence]] = Arbitrary(sentencesetgen(depth))
+  implicit val arbSentenceSet: Arbitrary[SentenceSet] = Arbitrary(sentencesetgen(depth))
 
   // Titling
   def titling0gen: Gen[Titling] =
@@ -556,24 +556,16 @@ object Generators extends LazyLogging {
   implicit val arbStatement: Arbitrary[Statement] = Arbitrary(statementgen(depth))
 
   // TextConstruction
-  def construct0gen: Gen[TextConstruction] =
-    for {
-      comments <- commentSetArbGen
-      sentences <- sentencesetgen(0)
-    } yield new TextConstruction(comments, sentences)
 
   /**
    * generator for recursively defined text constructions,
    * of depth d
    */
   def constructgen(d: Int): Gen[TextConstruction] =
-    if (d <= 0) { construct0gen }
-    else {
-      for {
-        comments <- commentSetArbGen
-        expressions <- bexpressionsetgen(d - 1)
-      } yield new TextConstruction(comments, expressions)
-    }
+    for {
+      comments <- commentSetArbGen
+      expressions <- bexpressionsetgen(d)
+    } yield new TextConstruction(comments, expressions)
 
   implicit val arbTextConstruction: Arbitrary[TextConstruction] = Arbitrary(constructgen(depth))
 
@@ -613,7 +605,7 @@ object Generators extends LazyLogging {
   // Text
   def text0gen: Gen[Text] = Gen.frequency(
     (MAX_SIZE, importgen),
-    (1, construct0gen))
+    (1, constructgen(0)))
 
   def textgen(d: Int): Gen[Text] =
     if (d <= 0) { text0gen }
@@ -621,82 +613,83 @@ object Generators extends LazyLogging {
       Gen.frequency(
         (MAX_SIZE, importgen),
         (1, restrictgen(d - 1)),
-        (1, constructgen(d - 1)))
+        (1, constructgen(d)))
     }
 
   implicit val arbText: Arbitrary[Text] = Arbitrary(textgen(depth))
 
   // BasicExpression
-  def bexpressiongen(d: Int): Gen[BasicExpression] = Gen.frequency(
-    (MAX_SIZE, sentencegen(d)),
-    (MAX_SIZE, statementgen(d)),
-    (1, textgen(d)))
+  def bexpression0gen: Gen[BasicExpression] = sentencegen(0)
+
+  def bexpressiongen(d: Int): Gen[BasicExpression] =
+    if (d == 0) bexpression0gen else
+      Gen.frequency(
+        (MAX_SIZE, sentencegen(d)),
+        (MAX_SIZE, statementgen(d - 1)),
+        (1, textgen(d - 1)))
 
   implicit val arbBasicExpression: Arbitrary[BasicExpression] = Arbitrary(bexpressiongen(depth))
 
   // BasicExpressionSet
-  def bexpressionsetlistgen(d: Int): Gen[Set[_ <: BasicExpression]] =
+  def bexpressionsetlistgen(d: Int): Gen[BasicExpressionSet] =
     for { a <- Gen listOf (bexpressiongen(d)) }
       yield a.toSet[BasicExpression]
 
   // TODO need other types of sets
-  def bexpressionsetgen(d: Int): Gen[Set[_ <: BasicExpression]] = Gen.frequency(
+  def bexpressionsetgen(d: Int): Gen[BasicExpressionSet] = Gen.frequency(
     (1, bexpressionsetlistgen(d)))
 
-  implicit val arbExpressionSet: Arbitrary[Set[_ <: BasicExpression]] = Arbitrary(bexpressionsetgen(depth))
+  implicit val arbBasicExpressionSet: Arbitrary[BasicExpressionSet] = Arbitrary(bexpressionsetgen(depth))
 
   // Expression
   // TODO add structured expressions
-  def expressiongen(d: Int): Gen[Expression] = Gen.frequency(
-    (MAX_SIZE * MAX_SIZE, sentencegen(d)),
-    (1, statementgen(d)),
-    (1, textgen(d)))
+  def expressiongen(d: Int): Gen[Expression] = bexpressiongen(d)
 
   implicit val arbExpression: Arbitrary[Expression] = Arbitrary(expressiongen(depth))
 
   // ExpressionSet
-  def expressionsetlistgen(d: Int): Gen[Set[_ <: Expression]] =
+  def expressionsetlistgen(d: Int): Gen[Set[Expression]] =
     for { a <- Gen listOf (expressiongen(d)) }
       yield a.toSet[Expression]
 
   // TODO need other types of sets
-  def expressionsetgen(d: Int): Gen[Set[_ <: Expression]] = Gen.frequency(
+  def expressionsetgen(d: Int): Gen[Set[Expression]] = Gen.frequency(
     (1, expressionsetlistgen(d)))
 
-  implicit val arbBasicExpressionSet: Arbitrary[Set[_ <: Expression]] = Arbitrary(bexpressionsetgen(depth))
+  implicit val arbExpressionSet: Arbitrary[Set[Expression]] = Arbitrary(expressionsetgen(depth))
 
-  // Set[InterpretableName]
-  def bindingsetlistgen: Gen[Set[_ <: InterpretableName]] =
+  // BindingSet
+  def bindingsetlistgen: Gen[BindingSet] =
     for { a <- Gen listOf (inameArbGen) }
       yield a.toSet[InterpretableName]
 
   // TODO need other types of sets
-  def bindingsetgen: Gen[Set[_ <: InterpretableName]] = Gen.frequency(
+  def bindingsetgen: Gen[BindingSet] = Gen.frequency(
     (1, bindingsetlistgen))
 
-  implicit val arbbindingset: Arbitrary[Set[_ <: InterpretableName]] = Arbitrary(bindingsetgen)
+  implicit val arbbindingset: Arbitrary[BindingSet] = Arbitrary(bindingsetgen)
 
-  // Set[SequenceMarker]
-  def seqbindingsetlistgen: Gen[Set[_ <: SequenceMarker]] =
+  // SeqBindingSet
+  def seqbindingsetlistgen: Gen[SeqBindingSet] =
     for { a <- Gen listOf (sequencemarkerArbGen) }
       yield a.toSet[SequenceMarker]
 
   // TODO need other types of sets
-  def seqbindingsetgen: Gen[Set[_ <: SequenceMarker]] = Gen.frequency(
+  def seqbindingsetgen: Gen[SeqBindingSet] = Gen.frequency(
     (1, seqbindingsetlistgen))
 
-  implicit val arbseqbindingset: Arbitrary[Set[_ <: SequenceMarker]] = Arbitrary(seqbindingsetgen)
+  implicit val arbseqbindingset: Arbitrary[SeqBindingSet] = Arbitrary(seqbindingsetgen)
 
-  // Set[TermOrSequenceMarker]
-  def tosmsetlistgen(d: Int): Gen[Set[_ <: TermOrSequenceMarker]] =
+  // TOSMSet
+  def tosmsetlistgen(d: Int): Gen[TOSMSet] =
     for { a <- Gen listOf (termorsequencemarkerArbGen(d)) }
       yield a.toSet[TermOrSequenceMarker]
 
   // TODO need other types of sets
-  def tosmsetgen(d: Int): Gen[Set[_ <: TermOrSequenceMarker]] = Gen.frequency(
+  def tosmsetgen(d: Int): Gen[TOSMSet] = Gen.frequency(
     (1, tosmsetlistgen(d)))
 
-  implicit val arbtosmset: Arbitrary[Set[_ <: TermOrSequenceMarker]] = Arbitrary(tosmsetgen(depth))
+  implicit val arbtosmset: Arbitrary[TOSMSet] = Arbitrary(tosmsetgen(depth))
 
   // Fragment
   def fragmentgen(d: Int): Gen[Fragment] = Gen.frequency(

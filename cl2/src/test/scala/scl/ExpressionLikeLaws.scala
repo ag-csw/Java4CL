@@ -187,7 +187,7 @@ object SequenceMarkerLaws extends SequenceMarkerLaws
 
 object FunctionalTermLaws extends TermLaws {
 
-  def expressionLikeArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: Set[_ <: Comment]), (operator: Term), (terms: List[TermOrSequenceMarker])) =>
+  def expressionLikeArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: CommentSet), (operator: Term), (terms: TermSequence)) =>
     {
       Prop.throws(classOf[NullPointerException]) {
         val term = new FunctionalTerm(null, operator, terms)

@@ -84,22 +84,22 @@ trait BasicExpressionLaws extends ExpressionLaws {
 
   def basicExpressionIsEqualToItsCopyIdentity: Prop = Prop.forAll { (bexpression1: BasicExpression) =>
     val bexpression2 = bexpression1 match {
-      case a: AtomicSentence => a.copy(comments = a.comments, operator = a.operator, args = a.args)
-      case b: Biconditional => b.copy(comments = b.comments, sentences = b.sentences)
-      case c: Conjunction => c.copy(comments = c.comments, conjuncts = c.conjuncts)
-      case d: Disjunction => d.copy(comments = d.comments, disjuncts = d.disjuncts)
-      case e: Equation => e.copy(comments = e.comments, terms = e.terms)
-      case n: Implication => n.copy(comments = n.comments, antecedent = n.antecedent, consequent = n.consequent)
-      case n: Negation => n.copy(comments = n.comments, body = n.body)
-      case u: Universal => u.copy(comments = u.comments, bindings = u.bindings, body = u.body)
-      case x: Existential => x.copy(comments = x.comments, bindings = x.bindings, body = x.body)
-      case s: InDiscourseStatement => s.copy(comments = s.comments, terms = s.terms)
+      case a: AtomicSentence        => a.copy(comments = a.comments, operator = a.operator, args = a.args)
+      case b: Biconditional         => b.copy(comments = b.comments, sentences = b.sentences)
+      case c: Conjunction           => c.copy(comments = c.comments, conjuncts = c.conjuncts)
+      case d: Disjunction           => d.copy(comments = d.comments, disjuncts = d.disjuncts)
+      case e: Equation              => e.copy(comments = e.comments, terms = e.terms)
+      case n: Implication           => n.copy(comments = n.comments, antecedent = n.antecedent, consequent = n.consequent)
+      case n: Negation              => n.copy(comments = n.comments, body = n.body)
+      case u: Universal             => u.copy(comments = u.comments, bindings = u.bindings, body = u.body)
+      case x: Existential           => x.copy(comments = x.comments, bindings = x.bindings, body = x.body)
+      case s: InDiscourseStatement  => s.copy(comments = s.comments, terms = s.terms)
       case s: OutDiscourseStatement => s.copy(comments = s.comments, terms = s.terms)
-      case s: Titling => s.copy(comments = s.comments, title = s.title, body = s.body)
-      case x: Schema => x.copy(comments = x.comments, seqbindings = x.seqbindings, body = x.body)
-      case t: TextConstruction => t.copy(comments = t.comments, expressions = t.expressions)
-      case s: DomainRestriction => s.copy(comments = s.comments, domain = s.domain, body = s.body)
-      case s: Importation => s.copy(comments = s.comments, title = s.title)
+      case s: Titling               => s.copy(comments = s.comments, title = s.title, body = s.body)
+      case x: Schema                => x.copy(comments = x.comments, seqbindings = x.seqbindings, body = x.body)
+      case t: TextConstruction      => t.copy(comments = t.comments, expressions = t.expressions)
+      case s: DomainRestriction     => s.copy(comments = s.comments, domain = s.domain, body = s.body)
+      case s: Importation           => s.copy(comments = s.comments, title = s.title)
     }
     ((bexpression1 equals bexpression2) && (bexpression2 equals bexpression1))
   }
@@ -141,7 +141,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case BasicExpression(comments) => (comments size)
-        case _ => None
+        case _                         => None
       }
     }
   }
@@ -169,7 +169,7 @@ trait TextLaws extends ExpressionLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case Text(comments) => (comments size)
-        case _ => None
+        case _              => None
       }
     }
   }
@@ -209,7 +209,7 @@ trait StatementLaws extends ExpressionLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case Statement(comments) => true
-        case _ => false
+        case _                   => false
       }
     }
   }
@@ -239,7 +239,7 @@ trait SentenceLaws extends ExpressionLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case Sentence(comments) => true
-        case _ => false
+        case _                  => false
       }
     }
   }
@@ -274,7 +274,7 @@ trait SimpleSentenceLaws extends SentenceLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case SimpleSentence(comments) => (comments size)
-        case _ => None
+        case _                        => None
       }
     }
   }
@@ -294,7 +294,7 @@ object SimpleSentenceLaws extends SimpleSentenceLaws
 
 object AtomicSentenceLaws extends SimpleSentenceLaws {
 
-  def atomArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: Set[_ <: Comment]), (operator: Term), (terms: List[TermOrSequenceMarker])) =>
+  def atomArgumentShouldNotBeNull: Prop = Prop.forAll { ((comments: CommentSet), (operator: Term), (terms: TermSequence)) =>
     {
       Prop.throws(classOf[NullPointerException]) {
         val atom = new AtomicSentence(null, operator, terms)
@@ -348,7 +348,7 @@ object EquationLaws extends SimpleSentenceLaws {
 
   def equalUnorientedIdentity: Prop = Prop.forAll {
     (
-    (comments: Set[_ <: Comment]),
+    (comments: CommentSet),
     (left: Term),
     (right: Term)) =>
       (new Equation(comments, left, right) equals new Equation(comments, right, left))
@@ -386,7 +386,7 @@ trait BooleanSentenceLaws extends SentenceLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case BooleanSentence(comments) => (comments size)
-        case _ =>
+        case _                         =>
       }
     }
   }
@@ -407,7 +407,7 @@ object BiconditionalLaws extends BooleanSentenceLaws {
 
   def bicondUnorientedIdentity: Prop = Prop.forAll {
     (
-    (comments: Set[_ <: Comment]),
+    (comments: CommentSet),
     (left: Sentence),
     (right: Sentence)) =>
       (new Biconditional(comments, left, right) equals new Biconditional(comments, right, left))
@@ -488,7 +488,7 @@ trait QuantifiedSentenceLaws extends BooleanSentenceLaws {
     !Prop.throws(classOf[Exception]) {
       e match {
         case QuantifiedSentence(comments, _, _) => (comments size)
-        case _ =>
+        case _                                  =>
       }
     }
   }

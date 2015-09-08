@@ -33,5 +33,14 @@ package object scl {
   type Laws = org.typelevel.discipline.Laws
   type FunSuiteLike = org.scalatest.FunSuiteLike
   type Prop = org.scalacheck.Prop
+  type CommentSet = Set[Comment]
+  type TermSequence = List[TermOrSequenceMarker]
+  type TOSMSet = Set[TermOrSequenceMarker]
+  type NOSMSet = Set[NameOrSequenceMarker]
+  type TermSet = Set[Term]
+  type SentenceSet = Set[Sentence]
+  type BasicExpressionSet = Set[BasicExpression]
+  type BindingSet = Set[InterpretableName]
+  type SeqBindingSet = Set[SequenceMarker]
 
 }
