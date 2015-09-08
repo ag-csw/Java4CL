@@ -22,8 +22,8 @@ import cl2.xcl2.WellFormedXMLValidator._
 import Generators._
 import scala.language.postfixOps
 import com.typesafe.scalalogging.LazyLogging
-import XMLHelper._
-import Parser._
+import SXCLManifester._
+import SXCLParser._
 import scala.util.{ Try, Success, Failure }
 /**
  * Laws that must be obeyed by any `SCL.expression`.
