@@ -115,7 +115,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
     }
 
   }
-*/
+  */
   def basicXMLIdentity: Prop = Prop.forAll { (basic: BasicExpression) =>
     !Prop.throws(classOf[Exception]) {
       try {
@@ -482,9 +482,9 @@ object NegationLaws extends BooleanSentenceLaws {
   }
 }
 
-trait QuantifiedSentenceLaws extends BooleanSentenceLaws {
+trait QuantifiedSentenceLaws extends SentenceLaws {
 
-  def quantifiedSentenceCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BooleanSentence) =>
+  def quantifiedSentenceCommentIsMatchableIdentity: Prop = Prop.forAll { (e: Sentence) =>
     !Prop.throws(classOf[Exception]) {
       e match {
         case QuantifiedSentence(comments, _, _) => (comments size)

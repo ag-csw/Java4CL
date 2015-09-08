@@ -162,7 +162,8 @@ object Generators extends LazyLogging {
   implicit val arbSequenceMarker: Arbitrary[SequenceMarker] = Arbitrary(sequencemarkerArbGen)
 
   // FunctionalTerm
-  val depth = if (DEBUGDEPTH) 1 else 4;
+  val maxDepth = 4;
+  val depth = if (DEBUGDEPTH) 1 else maxDepth;
   /**
    * generator for zero-depth functional terms,
    * having no nested functional terms
@@ -442,7 +443,6 @@ object Generators extends LazyLogging {
     (MAX_SIZE / 2, bicondgen(d)),
     (MAX_SIZE / 2, ifgen(d)),
     (MAX_SIZE, notgen(d)),
-    (MAX_SIZE, quantifiedsentencegen(d)),
     (1, andgen(d)),
     (1, orgen(d)))
 
@@ -454,7 +454,8 @@ object Generators extends LazyLogging {
     if (d <= 0) { simplesentencegen(0) } else {
       Gen.frequency(
         (1, simplesentencegen(d)),
-        (1, booleansentencegen(d - 1)))
+        (1, booleansentencegen(d - 1)),
+        (1, quantifiedsentencegen(d - 1)))
     }
 
   implicit val arbSentence: Arbitrary[Sentence] = Arbitrary(sentencegen(depth))
