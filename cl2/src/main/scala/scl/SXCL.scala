@@ -618,6 +618,11 @@ object Parser {
       isXCLExistential(x) ||
         isXCLUniversal(x)
 
+    def isXCLSentence(x: Node): Boolean =
+      isXCLSimpleSentence(x) ||
+        isXCLBooleanSentence(x) ||
+        isXCLQuantifiedSentence(x)
+
     implicit object XCLParsableSimpleSentence
         extends XCLParsable[SimpleSentence] {
       def fromXML(x: Elem): Try[SimpleSentence] =
@@ -675,28 +680,6 @@ object Parser {
           })
     }
 
-    def isXCLTitling(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Titling")
-
-    def isXCLInDiscourseStatement(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "In")
-
-    def isXCLOutDiscourseStatement(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Out")
-
-    def isXCLSchema(x: Node): Boolean =
-      isInXCLNamespace(x) && ((x label) equals "Schema")
-
-    implicit object XCLParsableStatement
-        extends XCLParsable[Statement] {
-      def fromXML(x: Elem): Try[Statement] =
-        Try(
-          x match {
-            case e: Elem if (isXCLInDiscourseStatement(e)) =>
-              XCLParsableInDiscourseStatement.fromXML(e) get
-          })
-    }
-
     // TODO Titling
     /* implicit object XCLParsableTitling
         extends XCLParsable[Titling] {
@@ -718,8 +701,78 @@ object Parser {
         InDiscourseStatement(comments, terms)
       })
     }
-    // TODO OutDiscourseStatement
-    // TODO Schema
+
+    implicit object XCLParsableOutDiscourseStatement
+        extends XCLParsable[OutDiscourseStatement] {
+      def fromXML(x: Elem): Try[OutDiscourseStatement] = Try({
+        val comments: CommentSet = commentSetParse(x)
+        val terms: TOSMSet = tosmSetParse(x)
+        OutDiscourseStatement(comments, terms)
+      })
+    }
+
+    implicit object XCLParsableSchema
+        extends XCLParsable[Schema] {
+      def fromXML(x: Elem): Try[Schema] = Try({
+        val comments: CommentSet = commentSetParse(x)
+        val seqbindings: SeqBindingSet = seqBindingSetParse(x)
+        val args: List[SentenceOrSchema] = sentenceOrSchemaSeqParse(x)
+        val body: SentenceOrSchema = args.head
+        Schema(comments, seqbindings, body)
+      })
+    }
+
+    def isXCLTitling(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "Titling")
+
+    def isXCLInDiscourseStatement(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "In")
+
+    def isXCLOutDiscourseStatement(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "Out")
+
+    def isXCLSchema(x: Node): Boolean =
+      isInXCLNamespace(x) && ((x label) equals "Schema")
+
+    implicit object XCLParsableDiscourseStatement
+        extends XCLParsable[DiscourseStatement] {
+      def fromXML(x: Elem): Try[DiscourseStatement] =
+        Try(
+          x match {
+            case e: Elem if (isXCLInDiscourseStatement(e)) =>
+              XCLParsableInDiscourseStatement.fromXML(e) get
+            case e: Elem if (isXCLOutDiscourseStatement(e)) =>
+              XCLParsableOutDiscourseStatement.fromXML(e) get
+          })
+    }
+
+    def isXCLDiscourseStatement(x: Node): Boolean =
+      isXCLInDiscourseStatement(x) ||
+        isXCLOutDiscourseStatement(x)
+
+    implicit object XCLParsableStatement
+        extends XCLParsable[Statement] {
+      def fromXML(x: Elem): Try[Statement] =
+        Try(
+          x match {
+            case e: Elem if (isXCLDiscourseStatement(e)) =>
+              XCLParsableDiscourseStatement.fromXML(e) get
+            case e: Elem if (isXCLSchema(e)) =>
+              XCLParsableSchema.fromXML(e) get
+          })
+    }
+
+    implicit object XCLParsableSentenceOrSchema
+        extends XCLParsable[SentenceOrSchema] {
+      def fromXML(x: Elem): Try[SentenceOrSchema] =
+        Try(
+          x match {
+            case e: Elem if (isXCLSentence(e)) =>
+              XCLParsableSentence.fromXML(e) get
+            case e: Elem if (isXCLSchema(e)) =>
+              XCLParsableSchema.fromXML(e) get
+          })
+    }
 
     val _tryCommentParse: PartialFunction[Node, Try[Comment]] =
       { case x: Elem => (XCLParsableComment fromXML x) }
@@ -771,6 +824,25 @@ object Parser {
       }
 
     def bindingSetParse(x: Node): BindingSet = (x child) collect _bindingParse toSet
+
+    val _trySequenceMarkerParse: PartialFunction[Node, Try[SequenceMarker]] =
+      { case x: Elem => (XCLParsableSequenceMarker fromXML x) }
+    val _seqBindingParse: PartialFunction[Node, SequenceMarker] =
+      _trySequenceMarkerParse andThenPartial {
+        case s: Success[SequenceMarker] => s get
+      }
+
+    def seqBindingSetParse(x: Node): SeqBindingSet = (x child) collect _seqBindingParse toSet
+
+    val _trySentenceOrSchemaParse: PartialFunction[Node, Try[SentenceOrSchema]] =
+      { case x: Elem => (XCLParsableSentenceOrSchema fromXML x) }
+    val _sentenceOrSchemaParse: PartialFunction[Node, SentenceOrSchema] =
+      _trySentenceOrSchemaParse andThenPartial {
+        case s: Success[SentenceOrSchema] => s get
+      }
+
+    def sentenceOrSchemaSeqParse(x: Node): List[SentenceOrSchema] =
+      (x child) collect _sentenceOrSchemaParse toList
 
     /*val _tryTextParse: PartialFunction[Node, Try[Text]] =
      * { case x: Elem => (XCLParsableText fromXML x) }
