@@ -6,7 +6,6 @@ import api4kbj.KnowledgeExpressionLike
 import api4kbj.BasicKnowledgeExpressionLike
 import com.typesafe.scalalogging._
 import scala.language.{ postfixOps, existentials }
-import XMLHelper._
 
 /**
  * @author taraathan

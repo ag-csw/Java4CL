@@ -6,10 +6,16 @@
    <parameter name="maxFileLength"><![CDATA[800]]></parameter>
   </parameters>
  </check>
+ <check class="org.scalastyle.file.FileLengthChecker" level="error" enabled="true">
+  <parameters>
+   <parameter name="maxFileLength"><![CDATA[1000]]></parameter>
+  </parameters>
+ </check>
  <check class="org.scalastyle.file.HeaderMatchesChecker" level="warning" enabled="true">
   <parameters>
-   <parameter name="header"><![CDATA[// Copyright (C) 2015 Athan Services.
-// See the LICENCE.txt file distributed with this work for additional
+   <parameter name="header"><![CDATA[// Copyright (C) 2015 Athan Services,
+   Corporate Semantic Web Workgroup at the Free University of Berlin.
+// See the LICENSE.txt file distributed with this work for additional
 // information regarding copyright ownership.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -161,7 +167,7 @@
  <check class="org.scalastyle.scalariform.EnsureSingleSpaceAfterTokenChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.EnsureSingleSpaceBeforeTokenChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.NonASCIICharacterChecker" level="warning" enabled="false"></check>
- <check class="org.scalastyle.file.IndentationChecker" level="warning" enabled="true">
+ <check class="org.scalastyle.file.IndentationChecker" level="warning" enabled="false">
   <parameters>
    <parameter name="tabSize"><![CDATA[2]]></parameter>
   </parameters>
