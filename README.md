@@ -7,7 +7,7 @@ Coverage: [![codecov.io](http://codecov.io/github/ag-csw/Java4CL/coverage.svg?br
 --------
 ![codecov.io](http://codecov.io/github/ag-csw/Java4CL/branch.svg?branch=java8)
 
-Continuous Integration using [https://travis-ci.org/ag-csw/Java4CL](Travis CI).
+Continuous Integration using [Travis CI](https://travis-ci.org/ag-csw/Java4CL).
 
 Java
 ----
