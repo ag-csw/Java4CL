@@ -23,7 +23,6 @@ import Generators._
 import scala.language.postfixOps
 import com.typesafe.scalalogging.LazyLogging
 import SXCLManifester._
-import SXCLParser._
 import scala.util.{ Try, Success, Failure }
 /**
  * Laws that must be obeyed by any `SCL.expression`.
@@ -146,7 +145,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
     }
   }
 
-  def basicExpressionXMLRoundTripIdentity(implicit ev: XCLParsable[BasicExpression]): Prop = Prop.forAll { (basic: BasicExpression) =>
+  def basicExpressionXMLRoundTripIdentity(implicit ev: SXCLParser[BasicExpression]): Prop = Prop.forAll { (basic: BasicExpression) =>
     {
       logger.debug("BasicExpression RoundTrip Identity Input : " + (basic toString))
       logger.debug("BasicExpression RoundTrip Identity XML   : " + (basic toXML))
@@ -167,7 +166,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
       ("A SCL.BasicExpression Equals its Copy", basicExpressionIsEqualToItsCopyIdentity),
       ("A SCL.BasicExpression Comment set is Pattern-Matchable", basicExpressionCommentIsMatchableIdentity),
       ("SCL.BasicExpressions Can Be Expressed in XCL2", basicXMLIdentity),
-      ("SCL.BasicExpressions Can Be Round-Tripped throug XCL2", basicExpressionXMLRoundTripIdentity),
+      ("SCL.BasicExpressions Can Be Round-Tripped through XCL2", basicExpressionXMLRoundTripIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }
 
@@ -256,16 +255,22 @@ trait SentenceLaws extends ExpressionLaws {
     }
   }
 
-  def sentenceXMLRoundTripIdentity(implicit ev: XCLParsable[Sentence]): Prop = Prop.forAll { (sent: Sentence) =>
-    {
-      logger.debug("Sentence RoundTrip Identity Input : " + (sent toString))
-      logger.debug("Sentence RoundTrip Identity XML   : " + (sent toXML))
-      val othersent: Sentence = (ev.fromXML(sent toXML)).get
-      logger.debug("Sentence RoundTrip Identity Output: " + (othersent toString))
-      logger.debug("Sentence RoundTrip Identity XML   : " + (othersent toXML))
-      (othersent equals sent)
+  def sentenceXMLRoundTripIdentity(implicit ev: SXCLParser[Sentence]): Prop =
+    Prop.forAll { (sent: Sentence) =>
+      {
+        logger.debug("Sentence RoundTrip Identity Input : " + (sent toString))
+        logger.debug("Sentence RoundTrip Identity XML   : " + (sent toXML))
+        val othersent: Sentence = (ev.fromXML(sent toXML)).get
+        logger.debug("Sentence RoundTrip Identity Output: " + (othersent toString))
+        logger.debug("Sentence RoundTrip Identity XML   : " + (othersent toXML))
+        (othersent equals sent)
+      }
     }
-  }
+
+  // TODO move to ManifestationLaws
+  def sentenceXMLParserCheckIdentity(implicit ev: SXCLParser[Sentence]): Prop =
+    Prop.forAll { (e: Statement) => (ev.fromXML(e toXML)).isFailure
+    }
 
   def sentence: RuleSet = new RuleSet {
     def name = "sentence"
@@ -273,7 +278,10 @@ trait SentenceLaws extends ExpressionLaws {
     def parents: Seq[RuleSet] = Seq(expression)
     def props = Seq(
       ("A SCL.Sentence is Commentable.", sentenceIsCommentableIdentity),
-      ("A SCL.Sentence Comment set is pattern-matchable.", sentenceCommentIsMatchableIdentity))
+      ("The SCL.Sentence Parser fails when passed a non-Sentence XML Element.",
+        sentenceXMLParserCheckIdentity),
+      ("A SCL.Sentence Comment set is pattern-matchable.",
+        sentenceCommentIsMatchableIdentity))
   }
 
 }
@@ -330,19 +338,31 @@ object AtomicSentenceLaws extends SimpleSentenceLaws {
     }
   }
 
-  def atomXMLRoundTripNumberOfCommentsIdentity(implicit ev: XCLParsable[AtomicSentence]): Prop = Prop.forAll { (atom: AtomicSentence) =>
+  def atomXMLRoundTripNumberOfCommentsIdentity(implicit ev: SXCLParser[AtomicSentence]): Prop = Prop.forAll { (atom: AtomicSentence) =>
     {
       val atom2: AtomicSentence = (ev.fromXML(atom toXML)).get
       (((atom2 comments) size) equals ((atom comments) size))
     }
   }
 
-  def atomXMLRoundTripIdentity(implicit ev: XCLParsable[AtomicSentence]): Prop = Prop.forAll { (atom: AtomicSentence) =>
-    {
-      val atom2: AtomicSentence = (ev.fromXML(atom toXML)).get
-      (atom2 equals atom)
+  def atomXMLRoundTripIdentity(implicit ev: SXCLParser[AtomicSentence]): Prop =
+    Prop.forAll { (atom: AtomicSentence) =>
+      {
+        val atom2: AtomicSentence = (ev.fromXML(atom toXML)).get
+        (atom2 equals atom)
+      }
     }
-  }
+
+  /* This test fails randomly. Scalas XML support is bad.
+  def emptyNamespaceCheck(implicit ev: SXCLParser[BasicExpressionLike]): Prop =
+    Prop.forAll { (atom: AtomicSentence) =>
+      {
+        val atomXML: scala.xml.Elem = (atom toXML)
+        val op: scala.xml.Elem = (ev.xmlOperator(atomXML)).get
+        (op.getNamespace(null) == null)
+      }
+    }
+    */
 
   def atom: RuleSet = new RuleSet {
     def name = "atom"
@@ -352,6 +372,7 @@ object AtomicSentenceLaws extends SimpleSentenceLaws {
       ("Null Constructor Argument Exception", atomArgumentShouldNotBeNull),
       ("Atomic Sentences Can Be Expressed in XCL2", atomXMLIdentity),
       ("Number of Comments is Preserved when converting to XML and the parsing", atomXMLRoundTripNumberOfCommentsIdentity),
+      //("Nested Element has no namespace for the default prefix", emptyNamespaceCheck),
       ("Atomic Sentence is Preserved when converting to XML and the parsing", atomXMLRoundTripIdentity))
   }
 }
@@ -374,7 +395,7 @@ object EquationLaws extends SimpleSentenceLaws {
     }
   }
 
-  def eqXMLRoundTripIdentity(implicit ev: XCLParsable[Equation]): Prop = Prop.forAll { (eq: Equation) =>
+  def eqXMLRoundTripIdentity(implicit ev: SXCLParser[Equation]): Prop = Prop.forAll { (eq: Equation) =>
     {
       val eq2: Equation = (ev.fromXML(eq toXML)).get
       (eq2 equals eq)
@@ -432,7 +453,7 @@ object BiconditionalLaws extends BooleanSentenceLaws {
     }
   }
 
-  def bicondXMLRoundTripIdentity(implicit ev: XCLParsable[Biconditional]): Prop = Prop.forAll { (bicond: Biconditional) =>
+  def bicondXMLRoundTripIdentity(implicit ev: SXCLParser[Biconditional]): Prop = Prop.forAll { (bicond: Biconditional) =>
     {
       logger.debug("Bicond RoundTrip Identity Input : " + (bicond toString))
       logger.debug("Bicond RoundTrip Identity XML   : " + (bicond toXML))

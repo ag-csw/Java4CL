@@ -1,9 +1,7 @@
 package scl
 
-import api4kba.AbstractKRRLanguage
-import api4kba.AbstractKRRLogic
-import api4kbj.KnowledgeExpressionLike
-import api4kbj.BasicKnowledgeExpressionLike
+import api4kba.{ AbstractKRRLanguage, AbstractKRRLogic, AbstractKRRDialect }
+import api4kbj.{ KnowledgeExpressionLike, BasicKnowledgeExpressionLike, KRRLanguage }
 import com.typesafe.scalalogging._
 import scala.language.{ postfixOps, existentials }
 
@@ -15,10 +13,11 @@ object SCL {
   val LANG = AbstractKRRLanguage.language(
     "Common Logic 2", classOf[BasicExpressionLike], COMPLETE_CL_LOGIC)
   val URI_XCL2 = "http://purl.org/xcl/2.0/"
+  val XCL2 = new AbstractKRRDialect("XCL2", LANG) {}
 }
 
 sealed trait ExpressionLike extends KnowledgeExpressionLike with LazyLogging {
-  def language(): AbstractKRRLanguage = SCL.LANG
+  val language: KRRLanguage = SCL.LANG
 }
 
 sealed trait BasicExpressionLike extends BasicKnowledgeExpressionLike

@@ -13,12 +13,12 @@ import SCL._
  */
 object SXCLManifester {
 
-  implicit class StringCommentXMLHelper(x: StringComment) {
+  implicit class StringCommentXCLManifester(x: StringComment) {
     def toXML: Elem =
       <cl:Comment xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils escapeXml11((x data) toString) }</cl:Comment>
   }
 
-  implicit class CommentXMLHelper(x: Comment) {
+  implicit class CommentXCLManifester(x: Comment) {
     def label: String = "Comment"
     def toXML: Elem = x match {
       case a: StringComment =>
@@ -28,12 +28,12 @@ object SXCLManifester {
     }
   }
 
-  implicit class StringInterpretableNameXMLHelper(x: StringInterpretableName) {
+  implicit class StringInterpretableNameXCLManifester(x: StringInterpretableName) {
     def toXML: Elem =
       <cl:Name xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Name>
   }
 
-  implicit class InterpretableNameXMLHelper(x: InterpretableName) {
+  implicit class InterpretableNameXCLManifester(x: InterpretableName) {
     def toXML: Elem = x match {
       case a: StringInterpretableName =>
         (a toXML)
@@ -42,13 +42,13 @@ object SXCLManifester {
     }
   }
 
-  implicit class StringIriInterpretedNameXMLHelper(x: StringIriInterpretedName) {
+  implicit class StringIriInterpretedNameXCLManifester(x: StringIriInterpretedName) {
     def toXML: Elem =
       <cl:Data xmlns:cl={ SCL.URI_XCL2 } datatype={ StringEscapeUtils escapeXml11((x datatype) toString) }>{ StringEscapeUtils escapeXml11((x symbol) toString) }</cl:Data>
   }
 
   // TODO add datatype
-  implicit class InterpretedNameXMLHelper(x: InterpretedName) {
+  implicit class InterpretedNameXCLManifester(x: InterpretedName) {
     def toXML: Elem = x match {
       case a: StringIriInterpretedName => (a toXML)
       case _ =>
@@ -56,7 +56,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class FunctionalTermXMLHelper(x: FunctionalTerm) {
+  implicit class FunctionalTermXCLManifester(x: FunctionalTerm) {
     def toXML: Elem =
       <cl:Apply xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -65,7 +65,7 @@ object SXCLManifester {
       </cl:Apply>
   }
 
-  implicit class TermXMLHelper(x: Term) {
+  implicit class TermXCLManifester(x: Term) {
     def toXML: Elem = x match {
       case a: InterpretableName => (a toXML)
       case a: InterpretedName   => (a toXML)
@@ -73,12 +73,12 @@ object SXCLManifester {
     }
   }
 
-  implicit class StringSequenceMarkerXMLHelper(x: StringSequenceMarker) {
+  implicit class StringSequenceMarkerXCLManifester(x: StringSequenceMarker) {
     def toXML: Elem =
       <cl:Marker xmlns:cl={ SCL.URI_XCL2 }>{ StringEscapeUtils.escapeXml11((x symbol) toString) }</cl:Marker>
   }
 
-  implicit class SequenceMarkerXMLHelper(x: SequenceMarker) {
+  implicit class SequenceMarkerXCLManifester(x: SequenceMarker) {
     def toXML: Elem = x match {
       case a: StringSequenceMarker =>
         (a toXML)
@@ -89,55 +89,55 @@ object SXCLManifester {
     }
   }
 
-  implicit class TermOrSequenceMarkerXMLHelper(x: TermOrSequenceMarker) {
+  implicit class TermOrSequenceMarkerXCLManifester(x: TermOrSequenceMarker) {
     def toXML: Elem = x match {
       case a: Term           => (a toXML)
       case a: SequenceMarker => (a toXML)
     }
   }
 
-  implicit class CommentSetXMLHelper(x: CommentSet) {
+  implicit class CommentSetXCLManifester(x: CommentSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (comment <- y) yield (comment toXML)
     }
   }
 
-  implicit class TermSetXMLHelper(x: TermSet) {
+  implicit class TermSetXCLManifester(x: TermSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (term <- y) yield (term toXML)
     }
   }
 
-  implicit class BindingSetXMLHelper(x: BindingSet) {
+  implicit class BindingSetXCLManifester(x: BindingSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (name <- y) yield (name toXML)
     }
   }
 
-  implicit class SeqBindingSetXMLHelper(x: SeqBindingSet) {
+  implicit class SeqBindingSetXCLManifester(x: SeqBindingSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (seq <- y) yield (seq toXML)
     }
   }
 
-  implicit class TermSequenceXMLHelper(x: TermSequence) {
+  implicit class TermSequenceXCLManifester(x: TermSequence) {
     def toXML: NodeSeq = {
       for (tosm <- x) yield (tosm toXML)
     }
   }
 
-  implicit class TermOrSequenceMarkerSetXMLHelper(x: TOSMSet) {
+  implicit class TermOrSequenceMarkerSetXCLManifester(x: TOSMSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (tosm <- y) yield (tosm toXML)
     }
   }
 
-  implicit class AtomicSentenceXMLHelper(x: AtomicSentence) {
+  implicit class AtomicSentenceXCLManifester(x: AtomicSentence) {
     def toXML: Elem =
       <cl:Atom xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -146,7 +146,7 @@ object SXCLManifester {
       </cl:Atom>
   }
 
-  implicit class EquationXMLHelper(x: Equation) {
+  implicit class EquationXCLManifester(x: Equation) {
     def toXML: Elem = {
       <cl:Equal xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -156,7 +156,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class BiconditionalXMLHelper(x: Biconditional) {
+  implicit class BiconditionalXCLManifester(x: Biconditional) {
     def toXML: Elem = {
       <cl:Biconditional xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -166,7 +166,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class ConjunctionXMLHelper(x: Conjunction) {
+  implicit class ConjunctionXCLManifester(x: Conjunction) {
     def toXML: Elem = {
       <cl:And xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -175,7 +175,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class DisjunctionXMLHelper(x: Disjunction) {
+  implicit class DisjunctionXCLManifester(x: Disjunction) {
     def toXML: Elem = {
       <cl:Or xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -184,7 +184,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class NegationXMLHelper(x: Negation) {
+  implicit class NegationXCLManifester(x: Negation) {
     def toXML: Elem = {
       <cl:Not xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -193,7 +193,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class ImplicationXMLHelper(x: Implication) {
+  implicit class ImplicationXCLManifester(x: Implication) {
     def toXML: Elem = {
       <cl:Implies xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -203,7 +203,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class ExistentialXMLHelper(x: Existential) {
+  implicit class ExistentialXCLManifester(x: Existential) {
     def toXML: Elem = {
       <cl:Exists xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -213,7 +213,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class UniversalXMLHelper(x: Universal) {
+  implicit class UniversalXCLManifester(x: Universal) {
     def toXML: Elem = {
       <cl:Forall xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -223,14 +223,14 @@ object SXCLManifester {
     }
   }
 
-  implicit class SimpleSentenceXMLHelper(x: SimpleSentence) {
+  implicit class SimpleSentenceXCLManifester(x: SimpleSentence) {
     def toXML: Elem = x match {
       case a: AtomicSentence => (a toXML)
       case a: Equation       => (a toXML)
     }
   }
 
-  implicit class BooleanSentenceXMLHelper(x: BooleanSentence) {
+  implicit class BooleanSentenceXCLManifester(x: BooleanSentence) {
     def toXML: Elem = x match {
       case a: Negation      => (a toXML)
       case a: Conjunction   => (a toXML)
@@ -240,14 +240,14 @@ object SXCLManifester {
     }
   }
 
-  implicit class QuantifiedSentenceXMLHelper(x: QuantifiedSentence) {
+  implicit class QuantifiedSentenceXCLManifester(x: QuantifiedSentence) {
     def toXML: Elem = x match {
       case a: Existential => (a toXML)
       case a: Universal   => (a toXML)
     }
   }
 
-  implicit class SentenceXMLHelper(x: Sentence) {
+  implicit class SentenceXCLManifester(x: Sentence) {
     def toXML: Elem = x match {
       case a: SimpleSentence     => (a toXML)
       case a: BooleanSentence    => (a toXML)
@@ -255,14 +255,14 @@ object SXCLManifester {
     }
   }
 
-  implicit class SentenceSetXMLHelper(x: SentenceSet) {
+  implicit class SentenceSetXCLManifester(x: SentenceSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (sentence <- y) yield (sentence toXML)
     }
   }
 
-  implicit class TitlingXMLHelper(x: Titling) {
+  implicit class TitlingXCLManifester(x: Titling) {
     def toXML: Elem = {
       <cl:Titling xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -272,7 +272,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class SchemaXMLHelper(x: Schema) {
+  implicit class SchemaXCLManifester(x: Schema) {
     def toXML: Elem = {
       <cl:Schema xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -282,7 +282,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class InDiscourseStatementXMLHelper(x: InDiscourseStatement) {
+  implicit class InDiscourseStatementXCLManifester(x: InDiscourseStatement) {
     def toXML: Elem = {
       <cl:In xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -291,7 +291,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class OutDiscourseStatementXMLHelper(x: OutDiscourseStatement) {
+  implicit class OutDiscourseStatementXCLManifester(x: OutDiscourseStatement) {
     def toXML: Elem = {
       <cl:Out xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -300,14 +300,14 @@ object SXCLManifester {
     }
   }
 
-  implicit class DiscourseStatementXMLHelper(x: DiscourseStatement) {
+  implicit class DiscourseStatementXCLManifester(x: DiscourseStatement) {
     def toXML: Elem = x match {
       case a: InDiscourseStatement  => (a toXML)
       case a: OutDiscourseStatement => (a toXML)
     }
   }
 
-  implicit class StatementXMLHelper(x: Statement) {
+  implicit class StatementXCLManifester(x: Statement) {
     def toXML: Elem = x match {
       case a: Titling            => (a toXML)
       case a: Schema             => (a toXML)
@@ -315,7 +315,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class TextConstructionXMLHelper(x: TextConstruction) {
+  implicit class TextConstructionXCLManifester(x: TextConstruction) {
     def toXML: Elem = {
       <cl:Construct xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -324,7 +324,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class DomainRestrictionXMLHelper(x: DomainRestriction) {
+  implicit class DomainRestrictionXCLManifester(x: DomainRestriction) {
     def toXML: Elem = {
       <cl:Restrict xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -334,7 +334,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class ImportationXMLHelper(x: Importation) {
+  implicit class ImportationXCLManifester(x: Importation) {
     def toXML: Elem = {
       <cl:Import xmlns:cl={ SCL.URI_XCL2 }>
         { ((x comments) toXML) }
@@ -343,7 +343,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class TextXMLHelper(x: Text) {
+  implicit class TextXCLManifester(x: Text) {
     def toXML: Elem = x match {
       case a: TextConstruction  => (a toXML)
       case a: DomainRestriction => (a toXML)
@@ -351,7 +351,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class BasicExpressionXMLHelper(x: BasicExpression) {
+  implicit class BasicExpressionXCLManifester(x: BasicExpression) {
     def toXML: Elem = x match {
       case a: Text      => (a toXML)
       case a: Statement => (a toXML)
@@ -359,7 +359,7 @@ object SXCLManifester {
     }
   }
 
-  implicit class BasicExpressionSetXMLHelper(x: BasicExpressionSet) {
+  implicit class BasicExpressionSetXCLManifester(x: BasicExpressionSet) {
     def toXML: NodeSeq = {
       val y = (x.toSeq)
       for (basic <- y) yield (basic toXML)
