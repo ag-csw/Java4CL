@@ -9,10 +9,10 @@ import api4kba.AbstractKRRLogic;
  */
 public class OWL2 {
 	
-	public static AbstractKRRLogic OWL2_LOGIC = AbstractKRRLogic.logic("OWL 2 logic");
+	public static AbstractKRRLogic OWL2_DL_LOGIC = AbstractKRRLogic.logic("OWL 2 DL logic");
 	
 	public static AbstractKRRLanguage LANG = AbstractKRRLanguage.language(
-			"OWL 2", OWL2ExpressionLike.class, OWL2_LOGIC);
+			"OWL 2", OWL2ExpressionLike.class, OWL2_DL_LOGIC);
 	
 	// private constructor to enforce non-instantiability
 	private OWL2() {

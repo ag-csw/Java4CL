@@ -2,16 +2,17 @@ package de.fuberlin.csw.api4kp.owl2;
 
 import org.semanticweb.owlapi.model.OWLObject;
 
-import api4kba.AbstractBasicKnowledgeExpression;
-import api4kbj.BasicKnowledgeExpression;
+import api4kba.AbstractBasicKnowledgeExpressionLike;
 
 /**
  * 
  * @author ralph
  * 
  * TODO There is a CL2 commentable -> api4kb?
+ * TODO this should be an ExpressionLike
+ * TODO difference in annotations for OWLOntology vs. other OWL objects
  */
-public abstract class OWL2Expression<T extends OWLObject> extends AbstractBasicKnowledgeExpression implements OWL2KnowledgeResource, BasicKnowledgeExpression , OWL2Annotatable {
+public abstract class OWL2Expression<T extends OWLObject> extends AbstractBasicKnowledgeExpressionLike implements /*OWL2KnowledgeResource,*/  OWL2Annotatable {
 	
 	private T target;
 	
