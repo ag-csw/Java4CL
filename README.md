@@ -1,6 +1,8 @@
 Java4CL
 =======
 
+[![Join the chat at https://gitter.im/ag-csw/Java4CL](https://badges.gitter.im/ag-csw/Java4CL.svg)](https://gitter.im/ag-csw/Java4CL?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A Java library for ISO Common Logic ontologies.
 
 Gitter Chat: (https://gitter.im/ag-csw/Java4CL)
