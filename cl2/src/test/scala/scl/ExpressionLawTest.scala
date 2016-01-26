@@ -27,7 +27,7 @@ class ExpressionLawTest extends FunSuiteLike with Discipline {
       maxSize = MAX_SIZE,
       workers = WORKERS)
 
-  checkAll("Expression", ExpressionLaws.expression)
+  //checkAll("Expression", ExpressionLaws.expression)
 
   checkAll("BasicExpression", BasicExpressionLaws.bexpression)
 

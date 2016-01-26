@@ -15,6 +15,7 @@
 // limitations under the License.
 
 import com.typesafe.scalalogging._
+import cats.laws.IsEq
 
 package object scl {
 
@@ -46,6 +47,10 @@ package object scl {
   implicit class ComposePartial[A, B](pf: PartialFunction[A, B]) {
     def andThenPartial[C](that: PartialFunction[B, C]): PartialFunction[A, C] =
       Function.unlift(pf.lift(_) flatMap that.lift)
+  }
+
+  implicit final class IsEqArrow[A](val lhs: A) extends AnyVal {
+    def <->(rhs: A): IsEq[A] = IsEq(lhs, rhs)
   }
 
 }

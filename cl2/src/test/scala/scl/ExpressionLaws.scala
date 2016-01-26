@@ -16,25 +16,28 @@
 
 package scl
 
+import api4kbj.KRRLanguage
+
 import cl2.functionconversions._
 import org.scalatest.{ FunSuite, Matchers }
 import cl2.xcl2.WellFormedXMLValidator._
 import Generators._
 import scala.language.postfixOps
 import com.typesafe.scalalogging.LazyLogging
-import SXCLManifester._
 import scala.util.{ Try, Success, Failure }
+import cats._, cats.std.all._, cats.syntax.eq._
+import cats.laws._
+import ExpressionEq._
+import SXCLManifester._
+
 /**
  * Laws that must be obeyed by any `SCL.expression`.
  */
-trait ExpressionLaws extends Laws with Matchers with LazyLogging {
+trait ExpressionLaws[T <: Expression] extends Laws with Matchers with LazyLogging {
 
   // TODO lift to ExpressionLike
-  def expressionUsesLanguageIdentity: Prop = Prop.forAll { (expression: Expression) =>
-    {
-      (expression language) == (SCL LANG)
-    }
-  }
+  def expressionUsesLanguageIdentity(expression: T): IsEq[KRRLanguage] =
+    (expression language) <-> (SCL LANG)
 
   // TODO lift to api4kbj.KnowledgeExpressionLike
   def expressionHasExpressionAbstractionLevelIdentity: Prop = Prop.forAll { (expression: Expression) =>
@@ -56,7 +59,6 @@ trait ExpressionLaws extends Laws with Matchers with LazyLogging {
     def bases: Seq[(String, Laws#RuleSet)] = Seq()
     def parents: Seq[RuleSet] = Seq()
     def props = Seq(
-      ("A SCL.Expression uses the Common Logic language", expressionUsesLanguageIdentity),
       ("A SCL.Expression has the EXPRESSION abstraction level", expressionHasExpressionAbstractionLevelIdentity),
       ("A SCL.Expression equals itself", expressionEqualsItselfIdentity),
       ("A SCL.Expression is not equal null", expressionNotEqualNullIdentity))
@@ -64,9 +66,12 @@ trait ExpressionLaws extends Laws with Matchers with LazyLogging {
 
 }
 
-object ExpressionLaws extends ExpressionLaws
+object ExpressionLaws {
+  def apply[T <: Expression]: ExpressionLaws[T] =
+    new ExpressionLaws[T] {}
+}
 
-trait BasicExpressionLaws extends ExpressionLaws {
+trait BasicExpressionLaws extends ExpressionLaws[BasicExpression] {
 
   // TODO lift to api4kbj.Basic
   def basicExpressionIsBasicIdentity: Prop = Prop.forAll { (bexpression: BasicExpression) =>
@@ -100,21 +105,22 @@ trait BasicExpressionLaws extends ExpressionLaws {
       case s: DomainRestriction     => s.copy(comments = s.comments, domain = s.domain, body = s.body)
       case s: Importation           => s.copy(comments = s.comments, title = s.title)
     }
-    ((bexpression1 equals bexpression2) && (bexpression2 equals bexpression1))
+    ((bexpression1 equals bexpression2)
+      && (bexpression2 equals bexpression1)
+      && (bexpression1 === bexpression2))
+
   }
 
-  /*
   def basicEexpressionToStringIsWellFormedXMLIdentity: Prop = Prop.forAll { (bexpression: BasicExpression) =>
     {
       val xmlDeclaration = "<?xml version=\"1.1\"?>"
-      val xmlBody = ((bexpression toXCL) replaceFirst (">", " xmlns:cl=\"" + SCL.URI_XCL2 + "\">"))
-      val testxml = xmlDeclaration + xmlBody
+      val testxml = xmlDeclaration + ((bexpression toXML) toString)
       validate(testxml)
       true
     }
 
   }
-  */
+
   def basicXMLIdentity: Prop = Prop.forAll { (basic: BasicExpression) =>
     !Prop.throws(classOf[Exception]) {
       try {
@@ -136,12 +142,19 @@ trait BasicExpressionLaws extends ExpressionLaws {
     }
   }
 
-  def basicExpressionCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpressionLike) =>
+  def basicExpressionCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpression) =>
     !Prop.throws(classOf[Exception]) {
       e match {
         case BasicExpression(comments) => (comments size)
         case _                         => None
       }
+    }
+  }
+
+  def basicExpressionisShowableIdentity: Prop = Prop.forAll { (e: BasicExpression) =>
+    !Prop.throws(classOf[Exception]) {
+      true
+      //      e.show
     }
   }
 
@@ -166,6 +179,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
       ("A SCL.BasicExpression Equals its Copy", basicExpressionIsEqualToItsCopyIdentity),
       ("A SCL.BasicExpression Comment set is Pattern-Matchable", basicExpressionCommentIsMatchableIdentity),
       ("SCL.BasicExpressions Can Be Expressed in XCL2", basicXMLIdentity),
+      ("SCL.BasicExpressions Can Be Expressed in Well-Formed XCL2", basicEexpressionToStringIsWellFormedXMLIdentity),
       ("SCL.BasicExpressions Can Be Round-Tripped through XCL2", basicExpressionXMLRoundTripIdentity),
       ("SCL.BasicExpressions are Disjoint from SCL.Terms", basicExpressionNotEqualTOSMIdentity))
   }
@@ -174,7 +188,7 @@ trait BasicExpressionLaws extends ExpressionLaws {
 
 object BasicExpressionLaws extends BasicExpressionLaws
 
-trait TextLaws extends ExpressionLaws {
+trait TextLaws extends ExpressionLaws[Text] {
 
   def textCommentIsMatchableIdentity: Prop = Prop.forAll { (e: BasicExpression) =>
     !Prop.throws(classOf[Exception]) {
@@ -208,7 +222,7 @@ object TextConstructionLaws extends TextLaws {
 
 }
 
-trait StatementLaws extends ExpressionLaws {
+trait StatementLaws extends ExpressionLaws[Statement] {
 
   def statementIsCommentableIdentity: Prop = Prop.forAll { (s: Statement) =>
     !Prop.throws(classOf[Exception]) {
@@ -238,7 +252,7 @@ trait StatementLaws extends ExpressionLaws {
 
 object StatementLaws extends StatementLaws
 
-trait SentenceLaws extends ExpressionLaws {
+trait SentenceLaws extends ExpressionLaws[Sentence] {
 
   def sentenceIsCommentableIdentity: Prop = Prop.forAll { (s: Sentence) =>
     !Prop.throws(classOf[Exception]) {
